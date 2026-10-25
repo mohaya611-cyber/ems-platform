@@ -1,0 +1,1262 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Al Hayat EMS">
+<meta name="robots" content="noindex, nofollow">
+<title>Al Hayat EMS</title>
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>
+:root{--navy:#0b2545;--navy2:#13315c;--blue:#1d8fe1;--blue-d:#1473b8;--teal:#12a3a3;--bg:#eef3f8;--card:#fff;--line:#d9e2ec;--text:#16212e;--muted:#5d6b7c;--ok:#1b9a5a;--warn:#e08a00;--bad:#d64545;--rad:12px;--shadow:0 1px 3px rgba(11,37,69,.12),0 4px 14px rgba(11,37,69,.06)}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.5 "Segoe UI",Tahoma,"Noto Sans Arabic",Arial,sans-serif}
+[hidden]{display:none!important}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:var(--blue-d)}
+/* header */
+.topbar{background:linear-gradient(90deg,var(--navy),var(--navy2));color:#fff;position:sticky;top:0;z-index:20;box-shadow:0 2px 8px rgba(0,0,0,.2)}
+.topbar-in{display:flex;align-items:center;gap:12px;padding:10px 16px;max-width:1400px;margin:0 auto}
+.brand{display:flex;align-items:center;gap:10px;min-width:0;flex:1}
+.brand img,.brand svg{width:44px;height:44px;border-radius:10px;flex:none;background:#fff;object-fit:contain;padding:2px}
+.brand b{display:block;font-size:17px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.brand small{display:block;opacity:.8;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tools{display:flex;align-items:center;gap:8px;flex:none}
+.live{display:inline-flex;align-items:center;gap:6px;font-size:12px;background:rgba(255,255,255,.12);padding:4px 10px;border-radius:99px}
+.live i{width:8px;height:8px;border-radius:50%;background:#7ee2a8}
+.live.off i{background:#ffb4a8}
+.who{font-size:13px;text-align:end;line-height:1.2;display:none}
+.who small{opacity:.75;display:block}
+.nav{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:60px;z-index:15}
+.nav-in{display:flex;gap:4px;overflow-x:auto;padding:6px 12px;max-width:1400px;margin:0 auto;scrollbar-width:none}
+.nav a{display:flex;align-items:center;gap:6px;padding:10px 14px;border-radius:10px;text-decoration:none;color:var(--navy);font-weight:600;white-space:nowrap;min-height:44px}
+.nav a:hover{background:#eaf2fb}
+.nav a.on{background:var(--navy);color:#fff}
+.badge-n{background:var(--bad);color:#fff;border-radius:99px;font-size:12px;padding:0 7px;min-width:20px;text-align:center}
+main{max-width:1400px;margin:0 auto;padding:16px}
+h1{font-size:22px;margin:4px 0 14px;color:var(--navy)}
+h2{font-size:18px;margin:0 0 10px;color:var(--navy)}
+/* controls */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:44px;padding:8px 18px;border:0;border-radius:10px;background:var(--blue);color:#fff;font-weight:600;cursor:pointer;text-decoration:none}
+.btn:hover{background:var(--blue-d)}
+.btn:disabled{opacity:.55;cursor:default}
+.btn.sec{background:#e4ecf5;color:var(--navy)}.btn.sec:hover{background:#d5e1ee}
+.btn.ghost{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.4);min-height:36px;padding:4px 12px}
+.btn.ghost:hover{background:rgba(255,255,255,.12)}
+.btn.bad{background:var(--bad)}.btn.ok{background:var(--ok)}.btn.warn{background:var(--warn)}
+.btn.big{min-height:56px;font-size:18px;width:100%}
+.btn.sm{min-height:34px;padding:4px 12px;font-size:14px;border-radius:8px}
+label{display:block;font-weight:600;font-size:14px;margin:12px 0 4px;color:var(--navy)}
+input[type=text],input[type=email],input[type=password],input[type=number],input[type=date],input[type=datetime-local],select,textarea{width:100%;min-height:46px;padding:9px 12px;border:1px solid #b8c6d6;border-radius:10px;background:#fff}
+textarea{min-height:92px;resize:vertical}
+input:focus,select:focus,textarea:focus{outline:3px solid rgba(29,143,225,.3);border-color:var(--blue)}
+input[readonly]{background:#f1f5f9;color:var(--muted)}
+.hint{font-size:13px;color:var(--muted);margin-top:4px}
+.chk{display:flex;align-items:center;gap:8px;margin:12px 0;font-weight:600}
+.chk input{width:22px;height:22px}
+/* cards */
+.card{background:var(--card);border-radius:var(--rad);box-shadow:var(--shadow);padding:16px}
+.grid{display:grid;gap:12px}
+.g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.kpis{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));margin-bottom:16px}
+.kpi{background:#fff;border-radius:var(--rad);box-shadow:var(--shadow);padding:14px;border-inline-start:5px solid var(--blue)}
+.kpi b{display:block;font-size:30px;line-height:1.1;color:var(--navy)}
+.kpi span{font-size:13px;color:var(--muted)}
+.kpi.c-ok{border-color:var(--ok)}.kpi.c-warn{border-color:var(--warn)}.kpi.c-bad{border-color:var(--bad)}.kpi.c-teal{border-color:var(--teal)}.kpi.c-gray{border-color:#8896a6}
+.filters{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;align-items:end;margin-bottom:14px}
+.filters label{margin:0 0 3px;font-size:13px}
+.filters .btns{display:flex;gap:8px}
+.st{display:inline-block;padding:3px 12px;border-radius:99px;font-size:13px;font-weight:700;white-space:nowrap}
+.st-new{background:#fff1d6;color:#8a5a00}.st-received{background:#d9ecff;color:#0e558f}.st-discharged{background:#dff5e8;color:#136b3f}.st-admitted{background:#e8e0fb;color:#4b2f9a}.st-icu{background:#ffe0e0;color:#a12626}.st-deceased{background:#e3e6ea;color:#2b3440}
+/* case cards */
+.cases{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(310px,1fr))}
+.case{background:#fff;border-radius:var(--rad);box-shadow:var(--shadow);padding:14px;display:flex;flex-direction:column;gap:8px;border-top:4px solid var(--blue);cursor:pointer}
+.case.s-new{border-color:var(--warn)}.case.s-discharged{border-color:var(--ok)}.case.s-icu{border-color:var(--bad)}.case.s-deceased{border-color:#2b3440}.case.s-admitted{border-color:#6a4ccf}
+.case-h{display:flex;justify-content:space-between;gap:8px;align-items:center}
+.case-h b{font-size:18px;color:var(--navy)}
+.case p{margin:0;font-size:15px}
+.meta{font-size:13px;color:var(--muted);display:flex;flex-wrap:wrap;gap:4px 14px}
+.thumbs{display:flex;gap:8px;flex-wrap:wrap}
+.thumbs a,.thumbs .th{display:block;width:84px;height:84px;border-radius:8px;overflow:hidden;border:1px solid var(--line);background:#f3f6fa;position:relative}
+.thumbs img{width:100%;height:100%;object-fit:cover}
+.thumbs .file{display:flex;align-items:center;justify-content:center;height:100%;font-weight:700;color:var(--navy);text-decoration:none;font-size:13px;text-align:center;padding:4px}
+.thumbs .rm{position:absolute;top:2px;inset-inline-end:2px;background:rgba(214,69,69,.95);color:#fff;border:0;border-radius:6px;width:26px;height:26px;cursor:pointer}
+.case.flash{animation:flash 2s}
+@keyframes flash{0%{box-shadow:0 0 0 4px rgba(29,143,225,.7)}100%{box-shadow:var(--shadow)}}
+.empty{text-align:center;color:var(--muted);padding:40px 10px}
+/* tables */
+.tw{overflow-x:auto;background:#fff;border-radius:var(--rad);box-shadow:var(--shadow)}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{padding:10px 12px;text-align:start;border-bottom:1px solid var(--line);vertical-align:top}
+th{background:#f3f7fb;color:var(--navy);font-size:13px;white-space:nowrap;position:sticky;top:0}
+tr.click{cursor:pointer}tr.click:hover td{background:#f6faff}
+td.nw{white-space:nowrap}
+.pager{display:flex;align-items:center;justify-content:center;gap:12px;margin:14px 0;color:var(--muted)}
+/* charts */
+.chart svg{width:100%;height:auto;display:block}
+.tabs{display:flex;gap:6px;margin-bottom:8px;flex-wrap:wrap}
+.tabs button{border:1px solid var(--line);background:#fff;border-radius:99px;padding:6px 14px;cursor:pointer;font-weight:600;color:var(--navy)}
+.tabs button.on{background:var(--navy);color:#fff;border-color:var(--navy)}
+.hbar{display:grid;grid-template-columns:110px 1fr 40px;gap:8px;align-items:center;margin:6px 0;font-size:14px}
+.hbar div.t{background:#e8eef5;border-radius:99px;height:14px;overflow:hidden}
+.hbar div.t i{display:block;height:100%;background:var(--blue);border-radius:99px}
+/* timeline */
+.tl{list-style:none;margin:0;padding:0}
+.tl li{position:relative;padding:0 0 12px;padding-inline-start:22px;font-size:14px}
+.tl li:before{content:"";position:absolute;inset-inline-start:4px;top:6px;width:10px;height:10px;border-radius:50%;background:var(--blue)}
+.tl li:after{content:"";position:absolute;inset-inline-start:8px;top:16px;bottom:-4px;width:2px;background:var(--line)}
+.tl li:last-child:after{display:none}
+/* modal / toast */
+.ovl{position:fixed;inset:0;background:rgba(8,20,38,.55);z-index:50;display:flex;align-items:flex-start;justify-content:center;padding:16px;overflow:auto}
+.modal{background:#fff;border-radius:16px;width:100%;max-width:720px;margin:auto;box-shadow:0 20px 60px rgba(0,0,0,.35)}
+.modal-h{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;border-bottom:1px solid var(--line);position:sticky;top:0;background:#fff;border-radius:16px 16px 0 0;z-index:2}
+.modal-h h2{margin:0}
+.x{border:0;background:#eef3f8;width:40px;height:40px;border-radius:50%;font-size:22px;cursor:pointer;color:var(--navy)}
+.modal-b{padding:16px 18px 20px}
+.dl{display:grid;grid-template-columns:140px 1fr;gap:6px 12px;font-size:15px}
+.dl dt{color:var(--muted);font-weight:600;font-size:14px}.dl dd{margin:0;word-break:break-word}
+.sbtn{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:8px}
+#toasts{position:fixed;bottom:16px;inset-inline:16px;display:flex;flex-direction:column;align-items:center;gap:8px;z-index:80;pointer-events:none}
+.toast{background:var(--navy);color:#fff;padding:12px 20px;border-radius:12px;box-shadow:0 8px 24px rgba(0,0,0,.3);max-width:520px;pointer-events:auto}
+.toast.err{background:var(--bad)}.toast.ok{background:var(--ok)}
+.err-msg{color:var(--bad);font-weight:600;margin-top:10px;min-height:1px}
+.secret{font-family:Consolas,monospace;font-size:18px;letter-spacing:2px;background:#f1f5f9;padding:10px;border-radius:8px;word-break:break-all;direction:ltr;text-align:left;user-select:all}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.sp{flex:1}
+/* login */
+.login-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:16px;background:linear-gradient(160deg,var(--navy),#17508f 60%,#1d8fe1)}
+.login{background:#fff;border-radius:18px;padding:26px 22px;width:100%;max-width:400px;box-shadow:0 20px 60px rgba(0,0,0,.35)}
+.login .logo{text-align:center;margin-bottom:10px}
+.login .logo img,.login .logo svg{width:110px;height:110px;border-radius:16px;object-fit:contain}
+.login h1{text-align:center;margin:6px 0 2px;font-size:22px}
+.login p.sub{text-align:center;color:var(--muted);margin:0 0 6px;font-size:14px}
+#printArea{display:none}
+@media (min-width:760px){.who{display:block}.brand b{font-size:19px}.nav{top:60px}}
+@media (max-width:560px){.dl{grid-template-columns:1fr}.dl dt{margin-top:6px}.hbar{grid-template-columns:90px 1fr 34px}.kpi b{font-size:26px}}
+@media print{
+  body{background:#fff}
+  body>*:not(#printArea){display:none!important}
+  #printArea{display:block!important;padding:0;color:#000;font-size:11px}
+  #printArea h1{font-size:18px}#printArea table{font-size:10px}#printArea th{position:static;background:#e8eef5!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  #printArea tr{page-break-inside:avoid}
+}
+.steps{display:flex;align-items:center;gap:0;margin-top:4px}
+.steps .s{flex:1;text-align:center;font-size:12px;color:var(--muted);position:relative;padding-top:16px}
+.steps .s:before{content:"";position:absolute;top:2px;left:0;right:0;height:4px;background:#dbe5ef}
+.steps .s:after{content:"";position:absolute;top:-2px;left:50%;margin-left:-6px;width:12px;height:12px;border-radius:50%;background:#dbe5ef;border:2px solid #fff}
+.steps .s.d{color:var(--navy);font-weight:600}.steps .s.d:before,.steps .s.d:after{background:var(--blue)}
+.steps .s:first-child:before{left:50%}.steps .s:last-child:before{right:50%}
+.note{background:#fff8e6;border:1px solid #f1d58a;border-radius:10px;padding:10px 14px;font-size:14px;margin:10px 0}
+.pill{display:inline-block;background:#e4ecf5;color:var(--navy);border-radius:99px;padding:2px 10px;font-size:12px;font-weight:700}
+.pill.g{background:#dff5e8;color:#136b3f}.pill.r{background:#ffe0e0;color:#a12626}
+.det{font-size:12.5px;color:#34465a;max-width:380px;word-break:break-word}
+
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--navy)}
+.topbar{top:env(safe-area-inset-top,0px)}
+.nav{top:calc(env(safe-area-inset-top,0px) + 64px)}
+.topbar-in,.nav-in,main,.demo-bar{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.demo-bar{background:#fff6dc;border-bottom:1px solid #ecd48a;display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding-top:7px;padding-bottom:7px;font-size:13px;color:#5b4300}
+.demo-bar .sp{flex:1}
+.demo-login{margin-top:16px;padding-top:12px;border-top:1px dashed var(--line);font-size:14px;color:var(--navy)}
+.login-wrap{padding-block:24px}
+.hbar span{min-width:0;overflow-wrap:anywhere}
+.tw{max-width:100%}
+@media (max-width:640px){.topbar{position:static}.nav{top:env(safe-area-inset-top,0px)}.topbar-in{flex-wrap:wrap}.brand{flex-basis:100%}.tools{width:100%;justify-content:flex-end;flex-wrap:wrap}.who{display:block}}
+
+.kpi em{display:block;font-style:normal;font-size:13px;color:var(--blue-d);font-weight:700;margin-top:2px}
+.tw table td.num,.tw table th.num{text-align:end;font-variant-numeric:tabular-nums;white-space:nowrap}
+.bar-in{display:inline-block;height:8px;border-radius:99px;background:var(--blue);vertical-align:middle;margin-inline-start:8px}
+.mini{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin-bottom:12px}
+
+</style>
+</head>
+<body>
+<div id="app"><div style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:#0b2545;color:#fff;font:16px system-ui;padding:24px;text-align:center">جاري التحميل…</div></div>
+<div id="toasts" aria-live="polite"></div>
+<div id="modalRoot"></div>
+<div id="printArea"></div>
+<script>const LOGO_URI="data:image/png;base64,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";window.__fbReady=new Promise(function(r){window.__fbResolve=r;});</script>
+<script>
+window.claude=window.claude||{use:async function(n){return n==='downloads'?{save:async function(o){var d=o.data,b=d instanceof Blob?d:new Blob([d]);var a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=o.filename;document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove();},4000);return {status:'saved'};}}:null;}};
+</script>
+<script>
+'use strict';
+// Arabic / English dictionary
+window.I18N = {
+  en: {
+    hospital: 'Al Hayat National Hospital', hospital_sub: 'مستشفى الحياة الوطني', system: 'EMS Patient Tracking & Management System',
+    login: 'Sign in', email: 'Email', password: 'Password', code: 'Authentication code (6 digits)', logout: 'Sign out', continue: 'Continue',
+    mfa_prompt: 'Enter the 6-digit code from your authenticator app.',
+    lang_toggle: 'العربية', live: 'Live', offline: 'Reconnecting…', security: 'Security', cancel: 'Cancel', save: 'Save', close: 'Close', back: 'Back', search: 'Search', reset: 'Reset', loading: 'Loading…', none: 'No records', yes: 'Yes', no: 'No', actions: 'Actions', details: 'Details', open: 'Open', total: 'Total', prev: 'Previous', next: 'Next', of: 'of', create: 'Create', edit: 'Edit', delete: 'Delete', download: 'Download', apply: 'Apply',
+    setup_title: 'Account setup required', change_pw: 'Change password', current_pw: 'Current password', new_pw: 'New password (min 10 chars, letters + digits)', pw_changed: 'Password changed', mfa_setup: 'Two-factor authentication', mfa_intro: 'Add this key to an authenticator app (Google Authenticator, Microsoft Authenticator, …) then enter the 6-digit code.', mfa_secret: 'Secret key', mfa_uri: 'Setup link (otpauth)', mfa_start: 'Generate key', mfa_enable: 'Enable', mfa_enabled_msg: 'Two-factor authentication is enabled', mfa_disable: 'Disable two-factor', mfa_required_note: 'Required for your account',
+    nav_new: 'New Case', nav_mine: 'My Cases', nav_status: 'Case Status', nav_incoming: 'Incoming Cases', nav_tracking: 'Patient Tracking', nav_update: 'Update Status',
+    nav_overview: 'Overview', nav_cases: 'All Cases', nav_stats: 'Statistics', nav_reports: 'Reports', nav_users: 'Users', nav_archive: 'Private Archive', nav_audit: 'Audit Log', nav_settings: 'Settings',
+    role_paramedic: 'Paramedic', role_er: 'Hospital / ER', role_admin: 'Admin',
+    f_case_number: 'Case Number', f_datetime: 'Date & Time', f_paramedic: 'Paramedic Name', f_visa: 'Visa Type', f_complaint: 'Chief Complaint', f_notes: 'Patient Notes', f_doc: 'Visa / Document Image', f_submit: 'Submit Case', f_auto: 'automatic', f_doc_hint: 'Take a photo or choose a file (JPG, PNG, WEBP – max 10 MB each, up to 6)',
+    f_arrival: 'ER arrival time', f_arrival_hint: 'Leave empty to use the current time', f_status: 'Patient status', f_created: 'Sent at', f_updated: 'Last update', f_updated_by: 'Updated by', f_all: 'All', f_from: 'From', f_to: 'To', f_search_ph: 'Case no., paramedic, complaint…', f_attachments: 'Documents', f_history: 'Edit history', f_timeline: 'Status timeline', f_by: 'by', f_archived_at: 'Archived', f_final: 'Final status', f_closed: 'Closed',
+    case_sent: 'Case submitted – the hospital can see it now', case_updated: 'Case updated', status_updated: 'Status updated', new_incoming: 'New incoming case', archived_ok: 'Case moved to the private archive', unarchived_ok: 'Case restored from the archive',
+    confirm_receipt: 'Confirm receipt', confirm_deceased: 'Record this patient as deceased?', confirm_archive: 'Move this case to the private archive?', confirm_delete_att: 'Remove this document?',
+    archive: 'Archive', unarchive: 'Restore', add_doc: 'Add document', remove: 'Remove', no_incoming: 'No incoming cases right now', no_open: 'No open cases',
+    st_new: 'New Case', st_received: 'Received by ER', st_discharged: 'Discharged', st_admitted: 'Admitted', st_icu: 'ICU Admission', st_deceased: 'Deceased',
+    visa_Umrah: 'Umrah', visa_Tourist: 'Tourist', visa_Visit: 'Visit', visa_Resident: 'Resident', visa_Saudi: 'Saudi', visa_Unknown: 'Unknown', visa_Other: 'Other',
+    k_total: 'Total Cases', k_today: "Today's Cases", k_month: 'Monthly Cases', k_received: 'Received Cases', k_discharged: 'Discharged Cases', k_admitted: 'Admitted Cases', k_icu: 'ICU Cases', k_deceased: 'Deceased Cases', k_pending: 'Pending Cases', k_in_er: 'Currently in ER',
+    k_received_hint: 'All cases received by the ER', k_pending_hint: 'Not received yet',
+    ch_daily: 'Daily (30 days)', ch_weekly: 'Weekly (12 weeks)', ch_monthly: 'Monthly (12 months)', ch_visa: 'By visa type', ch_status: 'By status', ch_paramedic: 'By paramedic', cases: 'cases',
+    rep_title: 'Cases report', rep_excel: 'Download Excel', rep_pdf: 'PDF / Print', rep_include: 'Include', rep_all: 'All cases', rep_active: 'Active only', rep_archived: 'Archived only', rep_generated: 'Generated', rep_summary: 'Summary', rep_hint: 'PDF opens the print dialog – choose “Save as PDF”.',
+    u_name: 'Name', u_role: 'Role', u_active: 'Active', u_mfa: '2FA', u_last: 'Last login', u_add: 'Add user', u_temp: 'Temporary password (shown once – the user must change it at first login)', u_reset_pw: 'Reset password', u_reset_mfa: 'Reset 2FA', u_deactivate: 'Deactivate', u_activate: 'Activate', u_mfa_req: 'Require 2FA', u_never: 'never',
+    au_when: 'When', au_user: 'User', au_action: 'Action', au_case: 'Case', au_details: 'Details', au_ip: 'IP',
+    s_title: 'Retention & archive policy', s_days: 'Move closed cases (discharged / deceased) to the private archive after (days)', s_auto: 'Archive automatically', s_run: 'Run archive now', s_ran: 'cases archived', s_backup: 'Database backup', s_backup_btn: 'Download backup', s_backup_hint: 'Snapshot of all case data. Uploaded documents live in the data/uploads folder and must be backed up with it. Cases are never deleted – only archived.', s_saved: 'Settings saved',
+    ov_recent: 'Latest cases',
+    a_login: 'Sign in', a_logout: 'Sign out', a_login_failed: 'Failed sign-in', a_case_create: 'Case created', a_case_update: 'Case edited', a_status_change: 'Status changed', a_attachment_add: 'Document added', a_attachment_view: 'Document viewed', a_attachment_delete: 'Document removed', a_case_archive: 'Case archived', a_case_unarchive: 'Case restored', a_case_delete_attempt: 'Delete attempt (blocked)', a_archive_access: 'Archive accessed', a_archive_case_view: 'Archived case opened', a_report_export: 'Report exported', a_report_view: 'Report viewed', a_user_create: 'User created', a_user_update: 'User edited', a_user_password_reset: 'Password reset', a_user_mfa_reset: '2FA reset', a_settings_update: 'Settings changed', a_backup_download: 'Backup downloaded', a_password_change: 'Password changed', a_mfa_enabled: '2FA enabled', a_mfa_disabled: '2FA disabled',
+    err_invalid_credentials: 'Wrong email or password', err_account_locked: 'Account temporarily locked – try again in 15 minutes', err_rate_limited: 'Too many attempts, try again later', err_unauthenticated: 'Session expired – please sign in again', err_forbidden: 'You do not have permission for this', err_delete_not_allowed: 'Cases cannot be deleted – they are archived instead', err_duplicate_case_number: 'This case number already exists', err_invalid_case_number: 'Invalid case number (letters, digits, - _ / only)', err_invalid_visa_type: 'Choose a visa type', err_complaint_required: 'Chief complaint is required', err_bad_file_type: 'Unsupported file – use JPG, PNG or WEBP', err_file_too_large: 'File is larger than 10 MB', err_too_many_files: 'Maximum 6 documents per case', err_weak_password: 'Password must be at least 10 characters with letters and digits', err_wrong_password: 'Current password is wrong', err_same_password: 'Choose a different password', err_invalid_mfa: 'Wrong authentication code', err_mfa_required_by_policy: '2FA is required for this account', err_case_locked: 'The hospital already received this case – it can no longer be edited', err_case_archived: 'The case is archived', err_only_closed_can_archive: 'Only discharged / deceased cases can be archived', err_arrival_in_future: 'Arrival time is in the future', err_arrival_before_case: 'Arrival time is before the case was sent', err_email_exists: 'Email already exists', err_invalid_email: 'Invalid email', err_name_required: 'Name is required', err_cannot_change_self: 'You cannot deactivate or demote yourself', err_last_admin: 'At least one active admin is required', err_setup_required: 'Finish the account setup first', err_server_error: 'Server error – please try again', err_not_found: 'Not found', err_too_large: 'Upload is too large', err_invalid_setting: 'Invalid value', err_csrf: 'Request blocked', network: 'Network error',
+  },
+  ar: {
+    hospital: 'مستشفى الحياة الوطني', hospital_sub: 'Al Hayat National Hospital', system: 'نظام متابعة وإدارة الحالات الإسعافية',
+    login: 'تسجيل الدخول', email: 'البريد الإلكتروني', password: 'كلمة المرور', code: 'رمز المصادقة (6 أرقام)', logout: 'تسجيل الخروج', continue: 'متابعة',
+    mfa_prompt: 'أدخل الرمز المكوّن من 6 أرقام من تطبيق المصادقة.',
+    lang_toggle: 'English', live: 'مباشر', offline: 'إعادة الاتصال…', security: 'الأمان', cancel: 'إلغاء', save: 'حفظ', close: 'إغلاق', back: 'رجوع', search: 'بحث', reset: 'مسح', loading: 'جارٍ التحميل…', none: 'لا توجد سجلات', yes: 'نعم', no: 'لا', actions: 'إجراءات', details: 'التفاصيل', open: 'فتح', total: 'الإجمالي', prev: 'السابق', next: 'التالي', of: 'من', create: 'إنشاء', edit: 'تعديل', delete: 'حذف', download: 'تحميل', apply: 'تطبيق',
+    setup_title: 'مطلوب إكمال إعداد الحساب', change_pw: 'تغيير كلمة المرور', current_pw: 'كلمة المرور الحالية', new_pw: 'كلمة المرور الجديدة (10 خانات على الأقل، حروف وأرقام)', pw_changed: 'تم تغيير كلمة المرور', mfa_setup: 'المصادقة الثنائية', mfa_intro: 'أضف هذا المفتاح إلى تطبيق مصادقة (Google Authenticator أو Microsoft Authenticator …) ثم أدخل الرمز المكوّن من 6 أرقام.', mfa_secret: 'المفتاح السري', mfa_uri: 'رابط الإعداد (otpauth)', mfa_start: 'إنشاء المفتاح', mfa_enable: 'تفعيل', mfa_enabled_msg: 'المصادقة الثنائية مفعّلة', mfa_disable: 'إيقاف المصادقة الثنائية', mfa_required_note: 'مطلوبة لحسابك',
+    nav_new: 'حالة جديدة', nav_mine: 'حالاتي', nav_status: 'متابعة الحالات', nav_incoming: 'الحالات الواردة', nav_tracking: 'متابعة المرضى', nav_update: 'تحديث الحالة',
+    nav_overview: 'نظرة عامة', nav_cases: 'كل الحالات', nav_stats: 'الإحصائيات', nav_reports: 'التقارير', nav_users: 'المستخدمون', nav_archive: 'الأرشيف الخاص', nav_audit: 'سجل العمليات', nav_settings: 'الإعدادات',
+    role_paramedic: 'مسعف', role_er: 'المستشفى / الطوارئ', role_admin: 'إدارة',
+    f_case_number: 'رقم البلاغ', f_datetime: 'التاريخ والوقت', f_paramedic: 'اسم المسعف', f_visa: 'نوع التأشيرة', f_complaint: 'الشكوى الرئيسية', f_notes: 'ملاحظات المريض', f_doc: 'صورة التأشيرة / المستند', f_submit: 'إرسال الحالة', f_auto: 'تلقائي', f_doc_hint: 'التقط صورة أو اختر ملفاً (JPG, PNG, WEBP – حتى 10 ميجا للملف، بحد أقصى 6)',
+    f_arrival: 'وقت الوصول للطوارئ', f_arrival_hint: 'اتركه فارغاً لاستخدام الوقت الحالي', f_status: 'حالة المريض', f_created: 'وقت الإرسال', f_updated: 'آخر تحديث', f_updated_by: 'حدّثها', f_all: 'الكل', f_from: 'من', f_to: 'إلى', f_search_ph: 'رقم البلاغ، المسعف، الشكوى…', f_attachments: 'المستندات', f_history: 'سجل التعديلات', f_timeline: 'مسار الحالة', f_by: 'بواسطة', f_archived_at: 'تاريخ الأرشفة', f_final: 'الحالة النهائية', f_closed: 'وقت الإغلاق',
+    case_sent: 'تم إرسال الحالة – تظهر الآن للمستشفى', case_updated: 'تم تحديث الحالة', status_updated: 'تم تحديث حالة المريض', new_incoming: 'حالة واردة جديدة', archived_ok: 'تم نقل الحالة إلى الأرشيف الخاص', unarchived_ok: 'تمت استعادة الحالة من الأرشيف',
+    confirm_receipt: 'تأكيد الاستقبال', confirm_deceased: 'تسجيل المريض كوفاة؟', confirm_archive: 'نقل هذه الحالة إلى الأرشيف الخاص؟', confirm_delete_att: 'إزالة هذا المستند؟',
+    archive: 'أرشفة', unarchive: 'استعادة', add_doc: 'إضافة مستند', remove: 'إزالة', no_incoming: 'لا توجد حالات واردة حالياً', no_open: 'لا توجد حالات مفتوحة',
+    st_new: 'حالة جديدة', st_received: 'تم استقبال المريض', st_discharged: 'خروج المريض', st_admitted: 'تنويم', st_icu: 'دخول العناية المركزة', st_deceased: 'وفاة',
+    visa_Umrah: 'عمرة', visa_Tourist: 'سياحة', visa_Visit: 'زيارة', visa_Resident: 'مقيم', visa_Saudi: 'سعودي', visa_Unknown: 'غير معروف', visa_Other: 'أخرى',
+    k_total: 'إجمالي الحالات', k_today: 'حالات اليوم', k_month: 'حالات الشهر', k_received: 'الحالات المستقبلة', k_discharged: 'حالات الخروج', k_admitted: 'حالات التنويم', k_icu: 'حالات العناية المركزة', k_deceased: 'حالات الوفاة', k_pending: 'حالات لم تُستقبل بعد', k_in_er: 'حالياً في الطوارئ',
+    k_received_hint: 'كل الحالات التي استقبلها الطوارئ', k_pending_hint: 'بانتظار الاستقبال',
+    ch_daily: 'يومي (30 يوماً)', ch_weekly: 'أسبوعي (12 أسبوعاً)', ch_monthly: 'شهري (12 شهراً)', ch_visa: 'حسب نوع التأشيرة', ch_status: 'حسب الحالة', ch_paramedic: 'حسب المسعف', cases: 'حالة',
+    rep_title: 'تقرير الحالات', rep_excel: 'تحميل Excel', rep_pdf: 'PDF / طباعة', rep_include: 'يشمل', rep_all: 'كل الحالات', rep_active: 'النشطة فقط', rep_archived: 'المؤرشفة فقط', rep_generated: 'تاريخ الإصدار', rep_summary: 'الملخص', rep_hint: 'زر PDF يفتح نافذة الطباعة – اختر «حفظ بصيغة PDF».',
+    u_name: 'الاسم', u_role: 'الدور', u_active: 'فعّال', u_mfa: 'المصادقة الثنائية', u_last: 'آخر دخول', u_add: 'إضافة مستخدم', u_temp: 'كلمة مرور مؤقتة (تظهر مرة واحدة – يجب تغييرها عند أول دخول)', u_reset_pw: 'إعادة تعيين كلمة المرور', u_reset_mfa: 'إعادة تعيين المصادقة', u_deactivate: 'إيقاف', u_activate: 'تفعيل', u_mfa_req: 'إلزام المصادقة الثنائية', u_never: 'لم يدخل بعد',
+    au_when: 'الوقت', au_user: 'المستخدم', au_action: 'العملية', au_case: 'الحالة', au_details: 'التفاصيل', au_ip: 'العنوان',
+    s_title: 'سياسة الأرشفة والاحتفاظ', s_days: 'نقل الحالات المغلقة (خروج / وفاة) إلى الأرشيف الخاص بعد (أيام)', s_auto: 'الأرشفة تلقائياً', s_run: 'تشغيل الأرشفة الآن', s_ran: 'حالة تمت أرشفتها', s_backup: 'نسخة احتياطية', s_backup_btn: 'تحميل نسخة احتياطية', s_backup_hint: 'نسخة من كل بيانات الحالات. المستندات المرفوعة في مجلد data/uploads ويجب نسخها معه. لا تُحذف الحالات أبداً – بل تُؤرشف فقط.', s_saved: 'تم حفظ الإعدادات',
+    ov_recent: 'أحدث الحالات',
+    a_login: 'تسجيل دخول', a_logout: 'تسجيل خروج', a_login_failed: 'محاولة دخول فاشلة', a_case_create: 'إنشاء حالة', a_case_update: 'تعديل حالة', a_status_change: 'تغيير حالة المريض', a_attachment_add: 'إضافة مستند', a_attachment_view: 'عرض مستند', a_attachment_delete: 'إزالة مستند', a_case_archive: 'أرشفة حالة', a_case_unarchive: 'استعادة حالة', a_case_delete_attempt: 'محاولة حذف (تم منعها)', a_archive_access: 'دخول الأرشيف', a_archive_case_view: 'فتح حالة مؤرشفة', a_report_export: 'تصدير تقرير', a_report_view: 'عرض تقرير', a_user_create: 'إنشاء مستخدم', a_user_update: 'تعديل مستخدم', a_user_password_reset: 'إعادة تعيين كلمة مرور', a_user_mfa_reset: 'إعادة تعيين المصادقة', a_settings_update: 'تغيير الإعدادات', a_backup_download: 'تحميل نسخة احتياطية', a_password_change: 'تغيير كلمة المرور', a_mfa_enabled: 'تفعيل المصادقة', a_mfa_disabled: 'إيقاف المصادقة',
+    err_invalid_credentials: 'البريد أو كلمة المرور غير صحيحة', err_account_locked: 'الحساب مقفل مؤقتاً – حاول بعد 15 دقيقة', err_rate_limited: 'محاولات كثيرة، حاول لاحقاً', err_unauthenticated: 'انتهت الجلسة – سجّل الدخول من جديد', err_forbidden: 'ليست لديك صلاحية لهذا الإجراء', err_delete_not_allowed: 'لا يمكن حذف الحالات – تُنقل إلى الأرشيف فقط', err_duplicate_case_number: 'رقم البلاغ مسجّل مسبقاً', err_invalid_case_number: 'رقم بلاغ غير صالح (حروف وأرقام و - _ / فقط)', err_invalid_visa_type: 'اختر نوع التأشيرة', err_complaint_required: 'الشكوى الرئيسية مطلوبة', err_bad_file_type: 'ملف غير مدعوم – استخدم JPG أو PNG أو WEBP', err_file_too_large: 'حجم الملف أكبر من 10 ميجا', err_too_many_files: 'الحد الأقصى 6 مستندات للحالة', err_weak_password: 'كلمة المرور يجب أن تكون 10 خانات على الأقل وتحتوي حروفاً وأرقاماً', err_wrong_password: 'كلمة المرور الحالية غير صحيحة', err_same_password: 'اختر كلمة مرور مختلفة', err_invalid_mfa: 'رمز المصادقة غير صحيح', err_mfa_required_by_policy: 'المصادقة الثنائية مطلوبة لهذا الحساب', err_case_locked: 'استقبل المستشفى الحالة – لا يمكن تعديلها الآن', err_case_archived: 'الحالة مؤرشفة', err_only_closed_can_archive: 'يمكن أرشفة حالات الخروج / الوفاة فقط', err_arrival_in_future: 'وقت الوصول في المستقبل', err_arrival_before_case: 'وقت الوصول قبل وقت إرسال الحالة', err_email_exists: 'البريد مستخدم مسبقاً', err_invalid_email: 'بريد غير صالح', err_name_required: 'الاسم مطلوب', err_cannot_change_self: 'لا يمكنك إيقاف حسابك أو تخفيض صلاحيتك', err_last_admin: 'يجب أن يبقى مدير واحد فعّال على الأقل', err_setup_required: 'أكمل إعداد الحساب أولاً', err_server_error: 'خطأ في الخادم – حاول مرة أخرى', err_not_found: 'غير موجود', err_too_large: 'حجم الرفع كبير جداً', err_invalid_setting: 'قيمة غير صالحة', err_csrf: 'تم رفض الطلب', network: 'خطأ في الاتصال',
+  },
+};
+
+Object.assign(I18N.ar,{forgot:'نسيت كلمة المرور',forgot_sent:'إذا كان البريد مسجّلاً وصلك رابط إعادة التعيين',forgot_need:'اكتب بريدك أولاً',u_temp:'كلمة المرور (تظهر مرة واحدة – سلّمها للمستخدم، ويقدر يغيّرها من رابط نسيت كلمة المرور)',reset_sent:'تم إرسال رابط إعادة تعيين كلمة المرور إلى بريد المستخدم',err_weak_password:'كلمة المرور لا تقل عن 8 خانات',err_account_disabled:'الحساب غير مفعّل أو غير مسجّل في النظام. تواصل مع مدير المنصة',err_db:'تعذّر الحفظ: ليست لديك صلاحية لهذا الإجراء أو انقطع الاتصال',err_rate_limited:'محاولات كثيرة، حاول بعد قليل',err_service_unavailable:'تعذّر الاتصال بالخدمة'});
+Object.assign(I18N.en,{forgot:'Forgot password',forgot_sent:'If the email is registered, a reset link was sent',forgot_need:'Enter your email first',u_temp:'Password (shown once – hand it to the user; they can change it with Forgot password)',reset_sent:'A password-reset link was sent to the user\'s email',err_weak_password:'Password must be at least 8 characters',err_account_disabled:'Account is inactive or not registered. Contact the platform admin',err_db:'Could not save: you do not have permission for this action, or the connection dropped',err_rate_limited:'Too many attempts, try again shortly',err_service_unavailable:'Cannot reach the service'});
+
+Object.assign(I18N.ar,{x_excel:'تصدير إلى Excel',x_archive:'تصدير الأرشيف إلى Excel',x_cases:'تصدير الحالات إلى Excel',x_saved:'تم تجهيز الملف',x_unavail:'التحميل غير متاح في هذا العرض',x_declined:'تم إلغاء الحفظ',x_min_receipt:'زمن الاستقبال (دقيقة)',x_min_close:'مدة البقاء حتى الإغلاق (دقيقة)',x_archived:'مؤرشفة',arch_all:'أرشفة كل الحالات المغلقة الآن',confirm_arch_all:'نقل كل حالات الخروج والوفاة إلى الأرشيف الخاص الآن؟',arch_done:'حالة تمت أرشفتها',
+ s_pct_total:'% من الإجمالي',s_pct_recv:'% من المستقبلة',s_rates:'المعدلات',s_timing:'الأزمنة',t_to_receipt:'من الإرسال إلى الاستقبال',t_to_close:'من الاستقبال إلى الإغلاق',t_avg:'المتوسط',t_median:'الوسيط',t_max:'الأطول',t_n:'عدد الحالات',ch_hour:'حسب ساعة اليوم',ch_weekday:'حسب اليوم',tb_status:'تفصيل الحالات',tb_visa:'تفصيل أنواع التأشيرات',tb_para:'تفصيل المسعفين',c_count:'العدد',c_pct:'النسبة',c_name:'الاسم',c_recv_avg:'متوسط زمن الاستقبال',m_metric:'المؤشر',m_arrived:'وصلت للطوارئ',
+ wd:['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'],unit_min:'د',unit_hr:'س',
+ st_sheet:'ملخص',sh_cases:'الحالات',sh_arch:'الأرشيف',sh_status:'حسب الحالة',sh_visa:'حسب التأشيرة',sh_para:'حسب المسعف',sh_hour:'حسب الساعة',sh_wd:'حسب اليوم',sh_daily:'آخر 30 يوم'});
+Object.assign(I18N.en,{x_excel:'Export to Excel',x_archive:'Export archive to Excel',x_cases:'Export cases to Excel',x_saved:'File ready',x_unavail:'Downloads are not available in this view',x_declined:'Save cancelled',x_min_receipt:'Time to receipt (min)',x_min_close:'Time to closure (min)',x_archived:'Archived',arch_all:'Archive all closed cases now',confirm_arch_all:'Move all discharged and deceased cases to the private archive now?',arch_done:'cases archived',
+ s_pct_total:'% of total',s_pct_recv:'% of received',s_rates:'Rates',s_timing:'Timing',t_to_receipt:'Sent to received',t_to_close:'Received to closed',t_avg:'Average',t_median:'Median',t_max:'Longest',t_n:'Cases',ch_hour:'By hour of day',ch_weekday:'By weekday',tb_status:'Status breakdown',tb_visa:'Visa type breakdown',tb_para:'Paramedic breakdown',c_count:'Count',c_pct:'Share',c_name:'Name',c_recv_avg:'Avg time to receipt',m_metric:'Metric',m_arrived:'Reached the ER',
+ wd:['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],unit_min:'m',unit_hr:'h',
+ st_sheet:'Summary',sh_cases:'Cases',sh_arch:'Archive',sh_status:'By status',sh_visa:'By visa type',sh_para:'By paramedic',sh_hour:'By hour',sh_wd:'By weekday',sh_daily:'Last 30 days'});
+
+</script>
+<script>
+
+</script>
+<script type="module">
+import { initializeApp, deleteApp } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js';
+import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut, createUserWithEmailAndPassword, sendPasswordResetEmail } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js';
+import { getFirestore, collection, doc, getDoc, getDocs, setDoc, onSnapshot, query, where, orderBy, limit } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js';
+const CFG = {
+  "apiKey": "AIzaSyDSm2MkDGoqiHFh4D6Lm6G6LkRx9ctRZLc",
+  "authDomain": "alhayat-ems-fb865.firebaseapp.com",
+  "projectId": "alhayat-ems-fb865",
+  "storageBucket": "alhayat-ems-fb865.firebasestorage.app",
+  "messagingSenderId": "665944058959",
+  "appId": "1:665944058959:web:586e2ecaab70a76ee0ce3a"
+};
+try {
+  const app = initializeApp(CFG), auth = getAuth(app), db = getFirestore(app);
+  const q = (col, ws, o) => { const parts = (ws || []).map((w) => where(w[0], w[1], w[2])); if (o && o.orderBy) parts.push(orderBy(o.orderBy[0], o.orderBy[1])); if (o && o.limit) parts.push(limit(o.limit)); return query(collection(db, col), ...parts); };
+  window.__fbResolve({
+    onAuth: (cb) => onAuthStateChanged(auth, cb),
+    currentUid: () => (auth.currentUser ? auth.currentUser.uid : null),
+    signIn: (e, p) => signInWithEmailAndPassword(auth, e, p),
+    signOut: () => signOut(auth),
+    resetEmail: (e) => sendPasswordResetEmail(auth, e),
+    createUser: async (e, p) => {
+      const sec = initializeApp(CFG, 'sec' + Date.now()), a2 = getAuth(sec);
+      try { const c = await createUserWithEmailAndPassword(a2, e, p); return c.user.uid; }
+      finally { try { await signOut(a2); } catch (_) {} try { await deleteApp(sec); } catch (_) {} }
+    },
+    get: async (col, id) => { const s = await getDoc(doc(db, col, id)); return s.exists() ? s.data() : null; },
+    getDocs: async (col, ws, o) => (await getDocs(q(col, ws, o))).docs.map((d) => ({ id: d.id, data: d.data() })),
+    set: (col, id, data) => setDoc(doc(db, col, id), data),
+    listen: (col, ws, o, ok, err) => onSnapshot(q(col, ws, o), (s) => ok(s.docChanges().map((c) => ({ type: c.type, id: c.doc.id, data: c.doc.data() }))), err),
+    listenDoc: (col, id, ok, err) => onSnapshot(doc(db, col, id), (s) => ok(s.exists() ? s.data() : null), err),
+  });
+} catch (e) { console.error(e); window.__fbResolve(null); }
+
+</script>
+<script>
+'use strict';
+// In-browser stand-in for the server (demo only): same API, fictional data kept in this browser.
+(() => {
+const KEY = 'ems-demo-v2', SES = 'ems-demo-user', TZ = 180, PW = 'Demo#Pass12345';
+const VISA = ['Umrah', 'Tourist', 'Visit', 'Resident', 'Saudi', 'Unknown', 'Other'];
+const STATUSES = ['new', 'received', 'discharged', 'admitted', 'icu', 'deceased'];
+const CLOSED = ['discharged', 'deceased'];
+const ROLES = ['paramedic', 'er', 'admin'];
+let DB, cur = null, FB = null, authUid = null, READY = null, subs = [], spec = {}, DATA = {}, PEND = [], lastU = 0;
+const shadow = {};
+const emptyDB = () => ({ users: [], cases: [], atts: [], audit: [], settings: { archive_after_days: 30, auto_archive: true } });
+DB = emptyDB();
+const uid = () => { let v = Math.floor((Date.now() - 1.7e12) / 10) * 100 + Math.floor(Math.random() * 100); if (v <= lastU) v = lastU + 1; lastU = v; return v; };
+const nowIso = () => new Date().toISOString();
+const localKey = (iso) => new Date(new Date(iso).getTime() + TZ * 60000).toISOString();
+const localDay = (iso) => localKey(iso).slice(0, 10);
+const isDate = (s) => typeof s === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(s);
+const clip = (s, n) => String(s == null ? '' : s).trim().slice(0, n);
+const E = (status, error) => { const e = new Error(error); e.status = status; e.error = error; return e; };
+const bad = (m) => E(400, m);
+
+function save() { return flush(); }
+function audit(user, action, c, details) {
+  DB.audit.push({ id: uid(), ts: nowIso(), user_id: user ? user.id : null, user_name: user ? user.name : 'system', action, case_id: c ? c.id : null, case_number: c ? c.case_number : null, details: details || null, ip: 'web' });
+}
+const setCur = (id) => { cur = id; };
+
+// ── live events
+const bus = new Set();
+function broadcast(type, c) {
+  const u = cur && DB.users.find((x) => x.id === cur); if (!u) return;
+  if (u.role === 'paramedic' && u.id !== c.paramedic_id) return;
+  const msg = { data: JSON.stringify({ type, id: c.id, case_number: c.case_number, status: c.status }) };
+  setTimeout(() => bus.forEach((es) => es.onmessage && es.onmessage(msg)), 0);
+}
+window.EventSource = class { constructor() { bus.add(this); setTimeout(() => this.onopen && this.onopen(), 50); } close() { bus.delete(this); } };
+
+// ── helpers
+const getCase = (id) => DB.cases.find((c) => c.id === id);
+const attCount = (c) => DB.atts.filter((a) => a.case_id === c.id && !a.deleted).length;
+const out = (c) => ({ ...c, att_count: attCount(c) });
+const pub = (u) => ({ id: u.id, name: u.name, email: u.email, role: u.role, mfa_enabled: false, mfa_required: false, must_change_pw: false, blocked: false });
+function canView(u, c) { if (!c) return false; if (u.role === 'admin') return true; if (c.archived) return false; if (u.role === 'er') return true; return c.paramedic_id === u.id; }
+function filt(q, user, archived) {
+  const st = q.status ? String(q.status).split(',').flatMap((s) => (s === 'open' ? ['received', 'admitted', 'icu'] : STATUSES.includes(s) ? [s] : [])) : [];
+  const ql = q.q ? clip(q.q, 60).toLowerCase() : '', cl = q.case ? clip(q.case, 40).toLowerCase() : '';
+  return (c) => {
+    if (archived === true && !c.archived) return false;
+    if (archived === false && c.archived) return false;
+    if (user.role === 'paramedic' && c.paramedic_id !== user.id) return false;
+    if (st.length && !st.includes(c.status)) return false;
+    if (q.visa && VISA.includes(q.visa) && c.visa_type !== q.visa) return false;
+    if (q.paramedic && /^\d+$/.test(q.paramedic) && c.paramedic_id !== +q.paramedic) return false;
+    if (cl && !c.case_number.toLowerCase().includes(cl)) return false;
+    const d = localDay(c.created_at);
+    if (isDate(q.from) && d < q.from) return false;
+    if (isDate(q.to) && d > q.to) return false;
+    if (ql && !(c.case_number + ' ' + c.paramedic_name + ' ' + c.chief_complaint).toLowerCase().includes(ql)) return false;
+    return true;
+  };
+}
+const sortCases = (a, dir) => a.sort((x, y) => (x.created_at === y.created_at ? x.id - y.id : x.created_at < y.created_at ? -1 : 1) * (dir === 'asc' ? 1 : -1));
+function runArchive(user, all) {
+  const cutoff = new Date(Date.now() - (all ? 0 : DB.settings.archive_after_days * 86400000)).toISOString();
+  const rows = DB.cases.filter((c) => !c.archived && c.closed_at && c.closed_at <= cutoff);
+  rows.forEach((c) => { c.archived = 1; c.archived_at = nowIso(); c.archived_by = user ? user.name : 'system'; audit(user, 'case_archive', c, { auto: !all }); });
+  return rows.length;
+}
+async function packImage(f) {
+  if (!/^image\/(jpeg|png|webp|gif)$/.test(f.type)) throw bad('bad_file_type');
+  if (f.size > 10 * 1024 * 1024) throw E(413, 'file_too_large');
+  const url = URL.createObjectURL(f);
+  try {
+    const img = await new Promise((ok, no) => { const i = new Image(); i.onload = () => ok(i); i.onerror = () => no(bad('bad_file_type')); i.src = url; });
+    const sc = Math.min(1, 1000 / Math.max(img.width, img.height)), c = document.createElement('canvas');
+    c.width = Math.max(1, Math.round(img.width * sc)); c.height = Math.max(1, Math.round(img.height * sc));
+    const g = c.getContext('2d'); g.fillStyle = '#fff'; g.fillRect(0, 0, c.width, c.height); g.drawImage(img, 0, 0, c.width, c.height);
+    return { name: clip(f.name, 120) || 'photo', mime: 'image/jpeg', size: f.size, data: c.toDataURL('image/jpeg', 0.72) };
+  } finally { URL.revokeObjectURL(url); }
+}
+const formFiles = (form) => (form ? form.getAll('files').filter((f) => f && f.size > 0) : []);
+async function prepFiles(form) { const fs = formFiles(form); if (fs.length > 6) throw bad('too_many_files'); const o = []; for (const f of fs) o.push(await packImage(f)); return o; }
+function addAtts(c, user, list) { return list.map((f) => { const a = { id: uid(), case_id: c.id, paramedic_uid: c.paramedic_uid || null, original_name: f.name, mime: f.mime, size: f.size, uploaded_by: user.name, created_at: nowIso(), deleted: 0 }; DB.atts.push(a); DATA[a.id] = f.data; PEND.push({ id: a.id, paramedic_uid: a.paramedic_uid, data: f.data }); return a.id; }); }
+const BLANK = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
+window.__att = (id) => {
+  if (DATA[id]) return DATA[id];
+  if (FB) FB.get('attdata', String(id)).then((d) => { if (d && d.data) { DATA[id] = d.data; document.querySelectorAll('img[data-aid="' + id + '"]').forEach((i) => { i.src = d.data; }); } }).catch(() => {});
+  return BLANK;
+};
+
+// ── statistics
+function statsFor(q, user) {
+  const arch = q.archived === '1' ? true : q.archived === '0' ? false : undefined;
+  const rows = DB.cases.filter(filt(q, user, arch));
+  const counts = { total: rows.length, today: 0, month: 0, pending: 0, received: 0, discharged: 0, admitted: 0, icu: 0, deceased: 0, in_er: 0 };
+  const today = localDay(nowIso()), month = today.slice(0, 7), byVisa = {}, byParamedic = {}, byStatus = {};
+  for (const r of rows) {
+    const d = localDay(r.created_at);
+    if (d === today) counts.today++;
+    if (d.slice(0, 7) === month) counts.month++;
+    byStatus[r.status] = (byStatus[r.status] || 0) + 1;
+    if (r.status === 'new') counts.pending++; else counts.received++;
+    if (r.status === 'received') counts.in_er++;
+    if (r.status !== 'new' && r.status !== 'received') counts[r.status]++;
+    byVisa[r.visa_type] = (byVisa[r.visa_type] || 0) + 1;
+    byParamedic[r.paramedic_name] = (byParamedic[r.paramedic_name] || 0) + 1;
+  }
+  const all = DB.cases.filter(filt({ ...q, from: undefined, to: undefined }, user, arch)).map((c) => c.created_at);
+  const base = new Date(localKey(nowIso()).slice(0, 10) + 'T00:00:00Z').getTime();
+  const daily = [], weekly = [], monthly = [], dayIdx = {};
+  for (let i = 29; i >= 0; i--) { const k = new Date(base - i * 86400000).toISOString().slice(0, 10); dayIdx[k] = daily.length; daily.push({ label: k, n: 0 }); }
+  const wk0 = base - new Date(base).getUTCDay() * 86400000;
+  for (let i = 11; i >= 0; i--) weekly.push({ label: new Date(wk0 - i * 7 * 86400000).toISOString().slice(0, 10), n: 0 });
+  const ym = new Date(base), monthKeys = [];
+  for (let i = 11; i >= 0; i--) { const d = new Date(Date.UTC(ym.getUTCFullYear(), ym.getUTCMonth() - i, 1)); monthKeys.push(d.toISOString().slice(0, 7)); monthly.push({ label: d.toISOString().slice(0, 7), n: 0 }); }
+  for (const iso of all) {
+    const d = localDay(iso); if (d in dayIdx) daily[dayIdx[d]].n++;
+    const t = new Date(d + 'T00:00:00Z').getTime(), wi = Math.floor((t - (wk0 - 11 * 7 * 86400000)) / (7 * 86400000));
+    if (wi >= 0 && wi < 12 && t <= base) weekly[wi].n++;
+    const mi = monthKeys.indexOf(d.slice(0, 7)); if (mi >= 0) monthly[mi].n++;
+  }
+  const mins = (a, b) => Math.max(0, Math.round((new Date(b) - new Date(a)) / 60000));
+  const avg = (a) => (a.length ? Math.round(a.reduce((x, y) => x + y, 0) / a.length) : null);
+  const med = (a) => { if (!a.length) return null; const s = [...a].sort((x, y) => x - y), h = s.length >> 1; return s.length % 2 ? s[h] : Math.round((s[h - 1] + s[h]) / 2); };
+  const sum = (a) => ({ n: a.length, avg: avg(a), median: med(a), max: a.length ? Math.max(...a) : null });
+  const hour = Array(24).fill(0), weekday = Array(7).fill(0), rec = [], clo = [], gp = {}, gv = {};
+  const grp = (map, key, r) => { const g = map[key] || (map[key] = { name: key, total: 0, new: 0, received: 0, discharged: 0, admitted: 0, icu: 0, deceased: 0, rec: [] }); g.total++; g[r.status]++; if (r.arrived_at) g.rec.push(mins(r.created_at, r.arrived_at)); };
+  for (const r of rows) {
+    const lk = localKey(r.created_at); hour[+lk.slice(11, 13)]++; weekday[new Date(lk).getUTCDay()]++;
+    if (r.arrived_at) rec.push(mins(r.created_at, r.arrived_at)); if (r.arrived_at && r.closed_at) clo.push(mins(r.arrived_at, r.closed_at));
+    grp(gp, r.paramedic_name, r); grp(gv, r.visa_type, r);
+  }
+  const fin = (map) => Object.values(map).map((g) => ({ ...g, avg_receipt: avg(g.rec), rec: undefined })).sort((a, b) => b.total - a.total);
+  return { counts, byVisa, byParamedic, byStatus, daily, weekly, monthly, hour, weekday, timing: { receipt: sum(rec), close: sum(clo) }, paramedics: fin(gp), visas: fin(gv) };
+}
+
+// ── routes
+const routes = [];
+const add = (m, p, roles, fn, isPub) => { const keys = []; const re = new RegExp('^' + p.replace(/:([a-z]+)/g, (_, k) => { keys.push(k); return '([^/]+)'; }) + '$'); routes.push({ m, re, keys, roles, fn, pub: isPub }); };
+const ALL = ROLES;
+const intId = (s) => { if (!/^\d{1,15}$/.test(s)) throw E(404, 'not_found'); return +s; };
+const caseRx = /^[A-Za-z0-9][A-Za-z0-9\-_\/]{0,29}$/;
+
+add('POST', '/api/login', null, async (c) => {
+  const email = clip(c.body.email, 200).toLowerCase(), password = String(c.body.password || '');
+  try { await FB.signIn(email, password); } catch (e) { const k = e && e.code; if (k === 'auth/too-many-requests') throw E(429, 'rate_limited'); throw E(401, 'invalid_credentials'); }
+  const u = await attach();
+  if (!u) { try { await FB.signOut(); } catch (_) {} throw E(401, 'account_disabled'); }
+  u.last_login = nowIso(); audit(u, 'login'); return { user: pub(u) };
+}, true);
+add('POST', '/api/logout', ALL, async (c) => { audit(c.user, 'logout'); await flushNow(); try { await FB.signOut(); } catch (_) {} detach(); });
+add('GET', '/api/me', ALL, (c) => ({ user: pub(c.user) }));
+add('GET', '/api/meta', ALL, (c) => ({ visa_types: VISA, statuses: STATUSES, closed: CLOSED, tz_offset_min: TZ, now: nowIso(), settings: c.user.role === 'admin' ? { ...DB.settings } : undefined }));
+add('GET', '/api/cases', ALL, (c) => {
+  const q = c.query; let archived = false;
+  if (q.archived === '1') { if (c.user.role !== 'admin') throw E(403, 'forbidden'); archived = true; }
+  const rows = sortCases(DB.cases.filter(filt(q, c.user, archived)), q.sort);
+  const limit = Math.min(Math.max(parseInt(q.limit, 10) || 50, 1), 200), off = Math.max(parseInt(q.offset, 10) || 0, 0);
+  if (archived) audit(c.user, 'archive_access', null, { offset: off });
+  return { items: rows.slice(off, off + limit).map(out), total: rows.length };
+});
+add('POST', '/api/cases', ['paramedic', 'admin'], async (c) => {
+  const f = c.form; if (!f) throw bad('bad_request');
+  const case_number = clip(f.get('case_number'), 30), visa_type = clip(f.get('visa_type'), 20), chief = clip(f.get('chief_complaint'), 500), notes = clip(f.get('notes'), 2000);
+  if (!caseRx.test(case_number)) throw bad('invalid_case_number');
+  if (!VISA.includes(visa_type)) throw bad('invalid_visa_type');
+  if (!chief) throw bad('complaint_required');
+  const files = await prepFiles(f);
+  if (DB.cases.some((x) => x.case_number === case_number)) throw E(409, 'duplicate_case_number');
+  const cs = { id: uid(), case_number, created_at: nowIso(), paramedic_id: c.user.id, paramedic_uid: c.user.uid, paramedic_name: c.user.name, timeline: [{ at: nowIso(), status: 'new', by: c.user.name }], visa_type, chief_complaint: chief, notes: notes || null, status: 'new', arrived_at: null, status_updated_at: null, status_updated_by: null, closed_at: null, archived: 0, archived_at: null, archived_by: null };
+  DB.cases.push(cs); const ids = addAtts(cs, c.user, files);
+  audit(c.user, 'case_create', cs, { visa_type, attachments: ids.length }); broadcast('created', cs);
+  return { case: out(cs) };
+});
+add('GET', '/api/cases/:id', ALL, (c) => {
+  const cs = getCase(intId(c.params.id)); if (!canView(c.user, cs)) throw E(404, 'not_found');
+  const attachments = DB.atts.filter((a) => a.case_id === cs.id && !a.deleted).map((a) => ({ id: a.id, original_name: a.original_name, mime: a.mime, size: a.size, created_at: a.created_at, uploaded_by: a.uploaded_by }));
+  const log = DB.audit.filter((l) => l.case_id === cs.id).sort((a, b) => a.id - b.id);
+  const timeline = (cs.timeline || []).slice();
+  const o = { case: out(cs), attachments, timeline };
+  if (c.user.role === 'admin') { o.history = log.map((l) => ({ ts: l.ts, user: l.user_name, action: l.action, details: l.details })); if (cs.archived) audit(c.user, 'archive_case_view', cs); }
+  return o;
+});
+add('PATCH', '/api/cases/:id', ['paramedic', 'admin'], (c) => {
+  const cs = getCase(intId(c.params.id)); if (!canView(c.user, cs)) throw E(404, 'not_found');
+  if (cs.archived) throw E(409, 'case_archived');
+  if (c.user.role === 'paramedic' && cs.status !== 'new') throw E(403, 'case_locked');
+  const b = c.body, upd = {};
+  if (b.visa_type !== undefined) { if (!VISA.includes(b.visa_type)) throw bad('invalid_visa_type'); upd.visa_type = b.visa_type; }
+  if (b.chief_complaint !== undefined) { const v = clip(b.chief_complaint, 500); if (!v) throw bad('complaint_required'); upd.chief_complaint = v; }
+  if (b.notes !== undefined) upd.notes = clip(b.notes, 2000) || null;
+  if (b.case_number !== undefined && c.user.role === 'admin') { const v = clip(b.case_number, 30); if (!caseRx.test(v)) throw bad('invalid_case_number'); if (v !== cs.case_number && DB.cases.some((x) => x.case_number === v)) throw E(409, 'duplicate_case_number'); upd.case_number = v; }
+  const changes = {}; for (const [k, v] of Object.entries(upd)) if ((cs[k] ?? null) !== v) changes[k] = { from: cs[k] ?? null, to: v };
+  if (!Object.keys(changes).length) return { case: out(cs) };
+  Object.entries(changes).forEach(([k, v]) => { cs[k] = v.to; }); audit(c.user, 'case_update', cs, { changes }); broadcast('updated', cs);
+  return { case: out(cs) };
+});
+add('DELETE', '/api/cases/:id', ALL, (c) => { const cs = getCase(intId(c.params.id)); audit(c.user, 'case_delete_attempt', cs || null, { blocked: true }); throw E(403, 'delete_not_allowed'); });
+add('POST', '/api/cases/:id/status', ['er', 'admin'], (c) => {
+  const cs = getCase(intId(c.params.id)); if (!canView(c.user, cs)) throw E(404, 'not_found');
+  if (cs.archived) throw E(409, 'case_archived');
+  const to = c.body.status; if (!STATUSES.includes(to) || to === 'new') throw bad('invalid_status');
+  const t = nowIso(); let arrived = cs.arrived_at;
+  if (c.body.arrived_at) { const d = new Date(c.body.arrived_at); if (isNaN(d)) throw bad('invalid_arrival_time'); if (d.getTime() > Date.now() + 300000) throw bad('arrival_in_future'); if (d.getTime() < new Date(cs.created_at).getTime() - 3600000) throw bad('arrival_before_case'); arrived = d.toISOString(); } else if (!arrived) arrived = t;
+  const from = cs.status; cs.status = to; cs.arrived_at = arrived; cs.status_updated_at = t; cs.status_updated_by = c.user.name; cs.closed_at = CLOSED.includes(to) ? (cs.closed_at || t) : null;
+  (cs.timeline = cs.timeline || []).push({ at: t, status: to, by: c.user.name });
+  audit(c.user, 'status_change', cs, { from, to }); broadcast('status', cs);
+  return { case: out(cs) };
+});
+add('POST', '/api/cases/:id/archive', ['admin'], (c) => {
+  const cs = getCase(intId(c.params.id)); if (!cs) throw E(404, 'not_found'); if (cs.archived) throw E(409, 'case_archived'); if (!CLOSED.includes(cs.status)) throw bad('only_closed_can_archive');
+  cs.archived = 1; cs.archived_at = nowIso(); cs.archived_by = c.user.name; audit(c.user, 'case_archive', cs); broadcast('archived', cs);
+});
+add('POST', '/api/cases/:id/unarchive', ['admin'], (c) => {
+  const cs = getCase(intId(c.params.id)); if (!cs || !cs.archived) throw E(404, 'not_found');
+  cs.archived = 0; cs.archived_at = null; cs.archived_by = null; audit(c.user, 'case_unarchive', cs); broadcast('updated', cs);
+});
+add('POST', '/api/archive/run', ['admin'], (c) => ({ archived: runArchive(c.user, !!(c.body && c.body.all)) }));
+add('GET', '/api/settings', ['admin'], () => ({ ...DB.settings }));
+add('PUT', '/api/settings', ['admin'], (c) => {
+  const days = parseInt(c.body.archive_after_days, 10); if (!(days >= 0 && days <= 3650)) throw bad('invalid_setting');
+  const before = { ...DB.settings }; DB.settings = { archive_after_days: days, auto_archive: !!c.body.auto_archive };
+  audit(c.user, 'settings_update', null, { from: before, to: { ...DB.settings } }); return { ...DB.settings };
+});
+add('POST', '/api/cases/:id/attachments', ['paramedic', 'admin'], async (c) => {
+  const cs = getCase(intId(c.params.id)); if (!canView(c.user, cs)) throw E(404, 'not_found');
+  if (cs.archived) throw E(409, 'case_archived'); if (c.user.role === 'paramedic' && cs.status !== 'new') throw E(403, 'case_locked');
+  const files = await prepFiles(c.form); if (!files.length) throw bad('no_file');
+  if (attCount(cs) + files.length > 6) throw bad('too_many_files');
+  const ids = addAtts(cs, c.user, files); audit(c.user, 'attachment_add', cs, { files: files.map((f) => f.name), ids }); broadcast('updated', cs);
+});
+add('DELETE', '/api/attachments/:id', ['paramedic', 'admin'], (c) => {
+  const a = DB.atts.find((x) => x.id === intId(c.params.id)); if (!a || a.deleted) throw E(404, 'not_found');
+  const cs = getCase(a.case_id); if (!canView(c.user, cs)) throw E(404, 'not_found');
+  if (cs.archived) throw E(409, 'case_archived'); if (c.user.role === 'paramedic' && cs.status !== 'new') throw E(403, 'case_locked');
+  a.deleted = 1; audit(c.user, 'attachment_delete', cs, { id: a.id, name: a.original_name }); broadcast('updated', cs);
+});
+add('GET', '/api/stats', ['admin'], (c) => statsFor(c.query, c.user));
+add('GET', '/api/report', ['admin'], (c) => {
+  const q = c.query, arch = q.archived === '1' ? true : q.archived === '0' ? false : undefined;
+  const items = sortCases(DB.cases.filter(filt(q, c.user, arch)), 'desc').slice(0, 5000).map(out);
+  audit(c.user, 'report_view', null, { rows: items.length }); return { items, stats: statsFor(q, c.user), generated_at: nowIso() };
+});
+const userRow = (u) => ({ id: u.id, email: u.email, name: u.name, role: u.role, active: !!u.active, mfa_enabled: false, mfa_required: !!u.mfa_required, must_change_pw: false, last_login: u.last_login, created_at: u.created_at });
+const genPw = () => 'Tmp' + Math.random().toString(36).slice(2, 10) + '9';
+add('GET', '/api/users', ['admin'], () => ({ items: [...DB.users].sort((a, b) => (a.role + a.name).localeCompare(b.role + b.name)).map(userRow) }));
+add('GET', '/api/users/paramedics', ['admin'], () => ({ items: DB.users.filter((u) => u.role === 'paramedic').map((u) => ({ id: u.id, name: u.name })) }));
+add('POST', '/api/users', ['admin'], async (c) => {
+  const b = c.body, name = clip(b.name, 100), email = clip(b.email, 200).toLowerCase();
+  if (!name) throw bad('name_required'); if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) throw bad('invalid_email'); if (!ROLES.includes(b.role)) throw bad('invalid_role');
+  if (DB.users.some((u) => u.email === email)) throw E(409, 'email_exists');
+  const pw = b.password ? String(b.password) : genPw();
+  if (pw.length < 8) throw bad('weak_password');
+  let nu;
+  try { nu = await FB.createUser(email, pw); }
+  catch (e) { const k = e && e.code; if (k === 'auth/email-already-in-use') throw E(409, 'email_exists'); if (k === 'auth/weak-password') throw bad('weak_password'); if (k === 'auth/invalid-email') throw bad('invalid_email'); console.error(e); throw E(500, 'server_error'); }
+  const u = { id: uid(), uid: nu, email, name, role: b.role, active: true, mfa_enabled: false, mfa_required: !!b.mfa_required, must_change_pw: false, last_login: null, created_at: nowIso() };
+  DB.users.push(u); audit(c.user, 'user_create', null, { email, role: b.role }); return { user: userRow(u), temp_password: pw };
+});
+add('PATCH', '/api/users/:id', ['admin'], (c) => {
+  const u = DB.users.find((x) => x.id === intId(c.params.id)); if (!u) throw E(404, 'not_found'); const b = c.body, ch = {};
+  if (b.name !== undefined) { const v = clip(b.name, 100); if (!v) throw bad('name_required'); if (v !== u.name) ch.name = { from: u.name, to: v }; }
+  if (b.role !== undefined && b.role !== u.role) { if (!ROLES.includes(b.role)) throw bad('invalid_role'); ch.role = { from: u.role, to: b.role }; }
+  if (b.active !== undefined && !!b.active !== !!u.active) ch.active = { from: !!u.active, to: !!b.active };
+  if (b.mfa_required !== undefined && !!b.mfa_required !== !!u.mfa_required) ch.mfa_required = { from: !!u.mfa_required, to: !!b.mfa_required };
+  if (u.id === c.user.id && (ch.active || (ch.role && b.role !== 'admin'))) throw bad('cannot_change_self');
+  if (u.role === 'admin' && u.active && ((ch.role && b.role !== 'admin') || (ch.active && !b.active)) && DB.users.filter((x) => x.role === 'admin' && x.active).length <= 1) throw bad('last_admin');
+  Object.entries(ch).forEach(([k, v]) => { u[k] = v.to; }); if (Object.keys(ch).length) audit(c.user, 'user_update', null, { user: u.email, changes: ch });
+  return { user: userRow(u) };
+});
+add('POST', '/api/users/:id/reset-password', ['admin'], async (c) => {
+  const u = DB.users.find((x) => x.id === intId(c.params.id)); if (!u) throw E(404, 'not_found');
+  try { await FB.resetEmail(u.email); } catch (e) { console.error(e); throw E(500, 'server_error'); }
+  audit(c.user, 'user_password_reset', null, { user: u.email }); return {};
+});
+add('POST', '/api/users/:id/reset-mfa', ['admin'], (c) => { const u = DB.users.find((x) => x.id === intId(c.params.id)); if (!u) throw E(404, 'not_found'); audit(c.user, 'user_mfa_reset', null, { user: u.email }); });
+add('GET', '/api/audit', ['admin'], (c) => {
+  const q = c.query; const uq = q.user ? clip(q.user, 60).toLowerCase() : '', cq = q.case ? clip(q.case, 40).toLowerCase() : '';
+  const rows = DB.audit.filter((a) => (!uq || a.user_name.toLowerCase().includes(uq)) && (!q.action || a.action === q.action) && (!cq || (a.case_number || '').toLowerCase().includes(cq)) && (!isDate(q.from) || localDay(a.ts) >= q.from) && (!isDate(q.to) || localDay(a.ts) <= q.to)).sort((a, b) => b.ts === a.ts ? b.id - a.id : b.ts < a.ts ? -1 : 1);
+  const limit = Math.min(Math.max(parseInt(q.limit, 10) || 50, 1), 200), off = Math.max(parseInt(q.offset, 10) || 0, 0);
+  return { items: rows.slice(off, off + limit), total: rows.length, actions: [...new Set(DB.audit.map((a) => a.action))].sort() };
+});
+
+add('POST', '/api/forgot', null, async (c) => { const email = clip(c.body.email, 200).toLowerCase(); if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { try { await FB.resetEmail(email); } catch (_) {} } return {}; }, true);
+
+// ── fetch interception
+const realFetch = window.fetch.bind(window);
+window.fetch = async (url, opt = {}) => {
+  if (typeof url !== 'string' || !url.startsWith('/api/')) return realFetch(url, opt);
+  await READY;
+  const u = new URL(url, 'http://x'), method = (opt.method || 'GET').toUpperCase();
+  const respond = (status, obj) => new Response(JSON.stringify(obj), { status, headers: { 'content-type': 'application/json' } });
+  try {
+    if (!FB) throw E(503, 'server_error');
+    const route = routes.find((r) => r.m === method && r.re.test(u.pathname)); if (!route) throw E(404, 'not_found');
+    const mm = route.re.exec(u.pathname), params = {}; route.keys.forEach((k, i) => { params[k] = decodeURIComponent(mm[i + 1]); });
+    const ctx = { params, query: Object.fromEntries(u.searchParams), user: cur ? DB.users.find((x) => x.id === cur) : null };
+    if (!route.pub) { if (!ctx.user || !ctx.user.active) throw E(401, 'unauthenticated'); if (route.roles && !route.roles.includes(ctx.user.role)) throw E(403, 'forbidden'); }
+    const b = opt.body; ctx.form = b instanceof FormData ? b : null; ctx.body = typeof b === 'string' && b ? JSON.parse(b) : {};
+    await new Promise((r) => setTimeout(r, 25));
+    const res = await route.fn(ctx); save();
+    return respond(200, res === undefined ? { ok: true } : res);
+  } catch (e) { if (e.status) return respond(e.status, { error: e.error }); console.error(e); return respond(500, { error: 'server_error' }); }
+};
+
+const cj = (o) => JSON.stringify(o, (k, v) => (v && typeof v === 'object' && !Array.isArray(v) ? Object.fromEntries(Object.entries(v).sort(([a], [b]) => (a < b ? -1 : 1))) : v));
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+const COLS = ['users', 'cases', 'atts', 'audit'];
+const docKey = (col, it) => (col === 'users' ? it.uid : String(it.id));
+const curUser = () => (cur ? DB.users.find((x) => x.id === cur) : null);
+function emit(type, c) {
+  if (c) return broadcast(type, c);
+  const msg = { data: JSON.stringify({ type: 'sync' }) };
+  setTimeout(() => bus.forEach((es) => es.onmessage && es.onmessage(msg)), 0);
+}
+function norm(col, data, id) { const o = JSON.parse(JSON.stringify(data)); if (col === 'users') o.uid = o.uid || id; return o; }
+function applyChanges(col, changes, initial) {
+  for (const ch of changes) {
+    const id = ch.id, key = col + '/' + id, same = (x) => docKey(col, x) === id;
+    if (ch.type === 'removed') { DB[col] = DB[col].filter((x) => !same(x)); delete shadow[key]; if (!initial) emit('sync'); continue; }
+    const obj = norm(col, ch.data, id), js = cj(obj);
+    if (shadow[key] === js) continue;
+    const i = DB[col].findIndex(same), prev = i >= 0 ? DB[col][i] : null;
+    if (i >= 0) DB[col][i] = obj; else DB[col].push(obj);
+    shadow[key] = js;
+    if (initial) continue;
+    if (col === 'cases') emit(!prev ? 'created' : prev.status !== obj.status ? 'status' : 'updated', obj); else emit('sync');
+  }
+}
+async function pool(jobs, n) {
+  let i = 0, err = null;
+  const run = async () => { while (i < jobs.length && !err) { const j = jobs[i++]; for (let t = 0; ; t++) { try { await j(); break; } catch (e) { if (t < 2 && e && (e.code === 'resource-exhausted' || e.code === 'unavailable')) { await sleep(400 + Math.random() * 600); continue; } err = e || new Error('write'); break; } } } };
+  await Promise.all(Array.from({ length: Math.min(n, jobs.length) }, run));
+  if (err) throw err;
+}
+let flushing = false, again = false;
+async function flush() {
+  if (!FB || !authUid) return;
+  if (flushing) { again = true; return; }
+  flushing = true;
+  try {
+    do {
+      again = false; const jobs = [];
+      for (const p of PEND.splice(0)) jobs.push(() => FB.set('attdata', String(p.id), { paramedic_uid: p.paramedic_uid, data: p.data }));
+      if (jobs.length) await pool(jobs, 3);
+      const rest = [];
+      for (const col of COLS) for (const it of DB[col]) { const id = docKey(col, it), key = col + '/' + id, js = cj(it); if (shadow[key] !== js) { shadow[key] = js; rest.push(() => FB.set(col, id, JSON.parse(js))); } }
+      const u = curUser(), sj = cj(DB.settings);
+      if (u && u.role === 'admin' && shadow['settings/main'] !== sj) { shadow['settings/main'] = sj; rest.push(() => FB.set('settings', 'main', JSON.parse(sj))); }
+      if (rest.length) await pool(rest, 6);
+    } while (again);
+  } catch (e) { console.error(e); window.dispatchEvent(new CustomEvent('ems-dberr', { detail: e && e.code })); await resync(); }
+  finally { flushing = false; }
+}
+async function flushNow() { await flush(); while (flushing) await sleep(30); }
+async function resync() {
+  try {
+    for (const col of Object.keys(spec)) {
+      const sp = spec[col];
+      const rows = sp.doc ? [await FB.get(col, sp.doc).then((d) => (d ? { id: sp.doc, data: d } : null))].filter(Boolean) : await FB.getDocs(col, sp.wheres, sp.opts);
+      DB[col] = rows.map((r) => norm(col, r.data, r.id));
+      Object.keys(shadow).filter((k) => k.startsWith(col + '/')).forEach((k) => delete shadow[k]);
+      DB[col].forEach((x) => { shadow[col + '/' + docKey(col, x)] = cj(x); });
+    }
+    emit('sync');
+  } catch (_) {}
+}
+function detach() {
+  subs.forEach((f) => { try { f(); } catch (_) {} }); subs = []; spec = {};
+  DB = emptyDB(); Object.keys(shadow).forEach((k) => delete shadow[k]); DATA = {}; PEND.length = 0;
+  cur = null; authUid = null;
+}
+async function attach() {
+  const au = FB.currentUid(); if (!au) return null;
+  const prof = await FB.get('users', au);
+  if (!prof || prof.active !== true || !ROLES.includes(prof.role)) return null;
+  detach(); authUid = au;
+  const first = [];
+  const listen = (col, wheres, opts) => { spec[col] = { wheres, opts }; first.push(new Promise((res) => { let f = true; subs.push(FB.listen(col, wheres, opts, (chs) => { applyChanges(col, chs, f); if (f) { f = false; res(); } }, (e) => { console.error(col, e); if (f) { f = false; res(); } })); })); };
+  const listenDoc = (col, id) => { spec[col] = { doc: id }; first.push(new Promise((res) => { let f = true; subs.push(FB.listenDoc(col, id, (d) => { applyChanges(col, [{ type: d ? 'modified' : 'removed', id, data: d }], f); if (f) { f = false; res(); } }, (e) => { console.error(col, e); if (f) { f = false; res(); } })); })); };
+  if (prof.role === 'admin') {
+    listen('users', []); listen('cases', []); listen('atts', []); listen('audit', [], { orderBy: ['ts', 'desc'], limit: 3000 });
+    first.push(new Promise((res) => { let f = true; subs.push(FB.listenDoc('settings', 'main', (d) => { if (d) { DB.settings = { archive_after_days: +d.archive_after_days || 30, auto_archive: !!d.auto_archive }; shadow['settings/main'] = cj(DB.settings); } if (f) { f = false; res(); } }, () => { if (f) { f = false; res(); } })); }));
+  } else if (prof.role === 'er') {
+    listenDoc('users', au); listen('cases', [['archived', '==', 0]]); listen('atts', []);
+  } else {
+    listenDoc('users', au); listen('cases', [['paramedic_uid', '==', au], ['archived', '==', 0]]); listen('atts', [['paramedic_uid', '==', au]]);
+  }
+  await Promise.race([Promise.all(first), sleep(20000)]);
+  const me = DB.users.find((x) => x.uid === au); if (!me) { detach(); return null; }
+  if (!me.id) { me.id = uid(); me.uid = au; delete shadow['users/' + au]; }
+  setCur(me.id);
+  if (me.role === 'admin') runArchive(null);
+  flush();
+  return me;
+}
+let firstAuth = true;
+async function init() {
+  FB = await window.__fbReady; if (!FB) return;
+  await new Promise((res) => {
+    FB.onAuth(async (au) => {
+      if (firstAuth) { firstAuth = false; try { if (au && !(await attach())) await FB.signOut(); } catch (e) { console.error(e); } res(); return; }
+      if (!au && cur) detach();
+    });
+  });
+}
+READY = init().catch((e) => { console.error(e); FB = null; });
+
+})();
+
+</script>
+<script>
+'use strict';
+(() => {
+const D = window.I18N;
+const S = { view0: '', user: null, meta: null, lang: localStorage.getItem('lang') || 'ar', es: null, refresh: null, f: {}, p: {}, paramedics: null };
+const VIS = ['Umrah', 'Tourist', 'Visit', 'Resident', 'Saudi', 'Unknown', 'Other'];
+const STS = ['new', 'received', 'discharged', 'admitted', 'icu', 'deceased'];
+const NAV = { paramedic: ['new', 'mine', 'status'], er: ['incoming', 'tracking', 'update'], admin: ['overview', 'cases', 'stats', 'reports', 'users', 'archive', 'audit', 'settings'] };
+const t = (k) => D[S.lang][k] ?? D.en[k] ?? k;
+const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const errText = (e) => D[S.lang]['err_' + e.code] || D.en['err_' + e.code] || (e.code === 'network' ? t('network') : t('err_server_error'));
+const fmtDT = (iso) => { if (!iso) return '—'; const off = (S.meta ? S.meta.tz_offset_min : 180) * 60000; return new Date(new Date(iso).getTime() + off).toISOString().slice(0, 16).replace('T', ' '); };
+const stB = (s) => `<span class="st st-${s}">${esc(t('st_' + s))}</span>`;
+const visaL = (v) => t('visa_' + v);
+function askConfirm(msg){return new Promise((res)=>{const o=document.createElement('div');o.className='ovl';o.style.zIndex=90;o.innerHTML=`<div class="modal" style="max-width:420px"><div class="modal-b"><p style="font-size:17px;font-weight:600;margin:0 0 16px">${esc(msg)}</p><div class="row"><button class="btn" data-y>${esc(t('yes'))}</button><button class="btn sec" data-n>${esc(t('cancel'))}</button></div></div></div>`;const done=(v)=>{o.remove();res(v);};$('[data-y]',o).onclick=()=>done(true);$('[data-n]',o).onclick=()=>done(false);o.addEventListener('mousedown',(e)=>{if(e.target===o)done(false);});document.body.appendChild(o);});}
+const DEMO=[['paramedic1@alhayat.local','role_paramedic'],['er1@alhayat.local','role_er'],['admin@alhayat.local','role_admin']];
+const demoLogin=()=>`<div class="demo-login"><b>${esc(t('demo_login'))}</b><div class="row" style="margin-top:8px">${DEMO.map(([e,k])=>`<button type="button" class="btn sec sm" data-act="demoLogin" data-email="${e}">${esc(t(k))}</button>`).join('')}</div><div class="hint">${esc(t('demo_hint'))}</div></div>`;
+const demoBar=()=>`<div class="demo-bar"><span>${esc(t('demo_note'))}</span><span class="sp"></span><span>${esc(t('demo_switch'))}:</span>${DEMO.map(([e,k])=>`<button class="btn sm sec" data-act="switchTo" data-email="${e}">${esc(t(k))}</button>`).join('')}</div>`;
+const debounce = (fn, ms) => { let h; return (...a) => { clearTimeout(h); h = setTimeout(() => fn(...a), ms); }; };
+
+// ───────── API / UI plumbing
+async function api(method, url, body) {
+  const opt = { method, headers: { 'X-Requested-With': 'ems' }, credentials: 'same-origin' };
+  if (body instanceof FormData) opt.body = body; else if (body !== undefined) { opt.headers['Content-Type'] = 'application/json'; opt.body = JSON.stringify(body); }
+  let r; try { r = await fetch(url, opt); } catch (_) { throw { code: 'network' }; }
+  const data = (r.headers.get('content-type') || '').includes('json') ? await r.json() : null;
+  if (!r.ok) {
+    const code = (data && data.error) || 'server_error';
+    if (r.status === 401 && S.user && url !== '/api/login') { S.user = null; stopEvents(); closeModal(); showLogin(); toast(t('err_unauthenticated'), 'err'); }
+    throw { code, status: r.status };
+  }
+  return data;
+}
+const qs = (o) => { const p = new URLSearchParams(); for (const [k, v] of Object.entries(o)) if (v !== undefined && v !== null && v !== '') p.set(k, v); return p.toString(); };
+function toast(msg, type) { const el = document.createElement('div'); el.className = 'toast ' + (type || ''); el.textContent = msg; $('#toasts').appendChild(el); setTimeout(() => el.remove(), 4200); }
+function beep() { try { const a = new (window.AudioContext || window.webkitAudioContext)(); const o = a.createOscillator(), g = a.createGain(); o.frequency.value = 880; g.gain.value = 0.08; o.connect(g); g.connect(a.destination); o.start(); setTimeout(() => { o.stop(); a.close(); }, 180); } catch (_) {} }
+let modalEl = null;
+function openModal(title, html) {
+  closeModal();
+  const o = document.createElement('div'); o.className = 'ovl';
+  o.innerHTML = `<div class="modal" role="dialog" aria-modal="true"><div class="modal-h"><h2>${title}</h2><button class="x" data-act="closeModal" aria-label="${esc(t('close'))}">×</button></div><div class="modal-b"></div></div>`;
+  o.addEventListener('mousedown', (e) => { if (e.target === o) closeModal(); });
+  $('#modalRoot').appendChild(o); modalEl = o; document.body.style.overflow = 'hidden';
+  return { el: o, body: $('.modal-b', o), title: $('.modal-h h2', o) };
+}
+function closeModal() { if (modalEl) { modalEl.remove(); modalEl = null; document.body.style.overflow = ''; } }
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+function applyLang() { document.documentElement.lang = S.lang; document.documentElement.dir = S.lang === 'ar' ? 'rtl' : 'ltr'; document.title = t('hospital') + ' – EMS'; }
+const logoImg = () => `<img src="/logo.png" alt="" hidden id="lg"><svg id="lgf" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#fff"/><path d="M26 12h12v14h14v12H38v14H26V38H12V26h14z" fill="#0b2545"/><path d="M29 15h6v14h14v6H35v14h-6V35H15v-6h14z" fill="#1d8fe1"/></svg>`;
+function wireLogo() { const im = $('#lg'); if (!im) return; im.onload = () => { im.hidden = false; const f = $('#lgf'); if (f) f.style.display = 'none'; }; im.src = LOGO_URI; }
+
+// ───────── login / setup
+function showLogin(step) {
+  applyLang();
+  $('#app').innerHTML = `<div class="login-wrap"><form class="login" id="lf" autocomplete="on">
+    <div class="logo">${logoImg()}</div><h1>${esc(t('hospital'))}</h1><p class="sub">${esc(t('hospital_sub'))}<br>${esc(t('system'))}</p>
+    <div id="s1" ${step === 'mfa' ? 'hidden' : ''}><label for="em">${esc(t('email'))}</label><input id="em" type="email" name="email" autocomplete="username" required>
+    <label for="pw">${esc(t('password'))}</label><input id="pw" type="password" name="password" autocomplete="current-password" required></div>
+    <div id="s2" ${step === 'mfa' ? '' : 'hidden'}><p>${esc(t('mfa_prompt'))}</p><label for="cd">${esc(t('code'))}</label><input id="cd" inputmode="numeric" autocomplete="one-time-code" maxlength="6" pattern="\\d{6}"></div>
+    <div class="err-msg" id="le"></div><button class="btn big" style="margin-top:12px">${esc(t('login'))}</button>
+    <div style="text-align:center;margin-top:14px"><button type="button" class="btn sec sm" data-act="lang">${esc(t('lang_toggle'))}</button> <button type="button" class="btn sec sm" data-act="forgot">${esc(t('forgot'))}</button></div></form></div>`;
+  wireLogo();
+  const f = $('#lf'); let creds = f._c || {};
+  if (step === 'mfa') $('#cd').focus(); else $('#em').focus();
+  f.onsubmit = async (e) => {
+    e.preventDefault(); $('#le').textContent = '';
+    const mfa = !$('#s2').hidden;
+    const body = mfa ? { ...showLogin._c, code: $('#cd').value.trim() } : { email: $('#em').value.trim(), password: $('#pw').value };
+    try {
+      const r = await api('POST', '/api/login', body);
+      if (r.mfa_required) { showLogin._c = body; return showLogin('mfa'); }
+      showLogin._c = null; S.user = r.user; start();
+    } catch (er) { $('#le').textContent = errText(er); }
+  };
+}
+async function showSetup() {
+  applyLang();
+  const u = S.user;
+  $('#app').innerHTML = `<div class="login-wrap"><div class="login" style="max-width:480px"><div class="logo">${logoImg()}</div><h1>${esc(t('setup_title'))}</h1><p class="sub">${esc(u.name)}</p><div id="sp"></div>
+    <div style="text-align:center;margin-top:14px" class="row"><button class="btn sec sm" data-act="lang">${esc(t('lang_toggle'))}</button><span class="sp"></span><button class="btn sec sm" data-act="logout">${esc(t('logout'))}</button></div></div></div>`;
+  wireLogo();
+  securityPanel($('#sp'), async () => { const r = await api('GET', '/api/me'); S.user = r.user; if (S.user.blocked) showSetup(); else start(); });
+}
+// change-password + MFA setup widget (used for forced setup and the Security dialog)
+function securityPanel(host, onChange) {
+  const u = S.user;
+  const pwHtml = `<h2>${esc(t('change_pw'))}</h2><form id="pf"><label>${esc(t('current_pw'))}</label><input type="password" id="p0" autocomplete="current-password" required><label>${esc(t('new_pw'))}</label><input type="password" id="p1" autocomplete="new-password" required minlength="10"><div class="err-msg" id="pe"></div><button class="btn" style="margin-top:8px">${esc(t('save'))}</button></form>`;
+  let mfaHtml = `<h2 style="margin-top:22px">${esc(t('mfa_setup'))}${u.mfa_required ? ` <span class="pill">${esc(t('mfa_required_note'))}</span>` : ''}</h2>`;
+  if (u.mfa_enabled) mfaHtml += `<p><span class="pill g">${esc(t('mfa_enabled_msg'))}</span></p>` + (u.mfa_required ? '' : `<form id="mdis"><label>${esc(t('current_pw'))}</label><input type="password" id="dp" required><label>${esc(t('code'))}</label><input id="dc" inputmode="numeric" maxlength="6" required><div class="err-msg" id="de"></div><button class="btn bad sm" style="margin-top:8px">${esc(t('mfa_disable'))}</button></form>`);
+  else mfaHtml += `<div id="mbox"><p class="hint">${esc(t('mfa_intro'))}</p><button class="btn sec" id="mst">${esc(t('mfa_start'))}</button></div>`;
+  host.innerHTML = (u.must_change_pw || host.dataset.full ? pwHtml : `<details><summary style="cursor:pointer;font-weight:700;color:var(--navy)">${esc(t('change_pw'))}</summary>${pwHtml}</details>`) + (u.blocked && u.must_change_pw ? '' : mfaHtml);
+  const pf = $('#pf', host);
+  if (pf) pf.onsubmit = async (e) => { e.preventDefault(); try { await api('POST', '/api/password', { current: $('#p0', host).value, next: $('#p1', host).value }); toast(t('pw_changed'), 'ok'); pf.reset(); onChange && onChange(); } catch (er) { $('#pe', host).textContent = errText(er); } };
+  const st = $('#mst', host);
+  if (st) st.onclick = async () => {
+    try {
+      const r = await api('POST', '/api/mfa/setup');
+      $('#mbox', host).innerHTML = `<p>${esc(t('mfa_secret'))}:</p><div class="secret">${esc(r.secret)}</div><p><a href="${esc(r.uri)}">${esc(t('mfa_uri'))}</a></p><form id="mf"><label>${esc(t('code'))}</label><input id="mc" inputmode="numeric" maxlength="6" autocomplete="one-time-code" required><div class="err-msg" id="me"></div><button class="btn" style="margin-top:8px">${esc(t('mfa_enable'))}</button></form>`;
+      $('#mf', host).onsubmit = async (e) => { e.preventDefault(); try { await api('POST', '/api/mfa/enable', { code: $('#mc', host).value.trim() }); toast(t('mfa_enabled_msg'), 'ok'); const m = await api('GET', '/api/me'); S.user = m.user; onChange ? onChange() : securityPanel(host, onChange); } catch (er) { $('#me', host).textContent = errText(er); } };
+    } catch (er) { toast(errText(er), 'err'); }
+  };
+  const md = $('#mdis', host);
+  if (md) md.onsubmit = async (e) => { e.preventDefault(); try { await api('POST', '/api/mfa/disable', { password: $('#dp', host).value, code: $('#dc', host).value.trim() }); const m = await api('GET', '/api/me'); S.user = m.user; securityPanel(host, onChange); } catch (er) { $('#de', host).textContent = errText(er); } };
+}
+
+// ───────── shell
+async function start() {
+  if (!S.user) return showLogin();
+  if (S.user.blocked) return showSetup();
+  try { S.meta = await api('GET', '/api/meta'); } catch (e) { return showLogin(); }
+  renderShell(); connectEvents(); route();
+}
+function renderShell() {
+  applyLang();
+  const u = S.user, nav = NAV[u.role];
+  $('#app').innerHTML = `<header class="topbar"><div class="topbar-in"><div class="brand">${logoImg()}<div><b>${esc(t('hospital'))}</b><small>${esc(t('hospital_sub'))} · EMS</small></div></div>
+    <div class="tools"><span class="live off" id="live"><i></i><span>${esc(t('offline'))}</span></span><div class="who">${esc(u.name)}<small>${esc(t('role_' + u.role))}</small></div>
+    <button class="btn ghost" data-act="lang">${esc(t('lang_toggle'))}</button><button class="btn ghost" data-act="logout">${esc(t('logout'))}</button></div></div></header>
+    <nav class="nav"><div class="nav-in">${nav.map((n) => `<a href="#${n}" data-nav="${n}">${esc(t('nav_' + n))}${n === 'incoming' ? '<span class="badge-n" id="inb" hidden>0</span>' : ''}</a>`).join('')}</div></nav><main id="main"></main>`;
+  wireLogo(); refreshBadge();
+}
+const VIEWS = {};
+function route() {
+  if (!S.user || S.user.blocked || !S.meta) return;
+  const nav = NAV[S.user.role]; let name = S.view0;
+  if (!nav.includes(name)) { name = nav[0]; S.view0 = name; }
+  $$('.nav a').forEach((a) => a.classList.toggle('on', a.dataset.nav === name));
+  S.view = name; S.refresh = null; window.scrollTo(0, 0);
+  Promise.resolve(VIEWS[name]($('#main'))).catch((e) => { $('#main').innerHTML = `<div class="empty">${esc(errText(e))}</div>`; });
+}
+
+
+// ───────── live updates
+function connectEvents() {
+  stopEvents();
+  const es = new EventSource('/api/events'); S.es = es;
+  const live = (on) => { const el = $('#live'); if (el) { el.classList.toggle('off', !on); $('span', el).textContent = on ? t('live') : t('offline'); } };
+  es.onopen = () => live(true); es.onerror = () => live(false);
+  es.onmessage = (ev) => {
+    let d; try { d = JSON.parse(ev.data); } catch (_) { return; }
+    if (S.user.role === 'er' && d.type === 'created') { toast(`${t('new_incoming')} #${d.case_number}`, 'ok'); beep(); }
+    refreshBadge(); liveRefresh();
+  };
+}
+function stopEvents() { if (S.es) { S.es.close(); S.es = null; } }
+const liveRefresh = debounce(() => { if (S.refresh) Promise.resolve(S.refresh()).catch(() => {}); }, 350);
+async function refreshBadge() {
+  if (!S.user || S.user.role !== 'er') return;
+  try { const r = await api('GET', '/api/cases?status=new&limit=1'); const b = $('#inb'); if (b) { b.textContent = r.total; b.hidden = !r.total; } } catch (_) {}
+}
+
+// ───────── shared list pieces
+function opts(list, labelFn, sel) { return list.map((v) => `<option value="${esc(v)}" ${v === sel ? 'selected' : ''}>${esc(labelFn(v))}</option>`).join(''); }
+async function getParamedics() { if (!S.paramedics) S.paramedics = (await api('GET', '/api/users/paramedics')).items; return S.paramedics; }
+function filtersHtml(key, fields, extra = {}) {
+  const f = S.f[key] || {};
+  const F = {
+    q: `<div><label>${esc(t('search'))}</label><input type="text" name="q" value="${esc(f.q || '')}" placeholder="${esc(t('f_search_ph'))}"></div>`,
+    case: `<div><label>${esc(t('f_case_number'))}</label><input type="text" name="case" value="${esc(f.case || '')}"></div>`,
+    status: `<div><label>${esc(t('f_status'))}</label><select name="status"><option value="">${esc(t('f_all'))}</option>${(extra.statuses || STS).map((s) => `<option value="${s}" ${f.status === s ? 'selected' : ''}>${esc(t('st_' + s))}</option>`).join('')}</select></div>`,
+    visa: `<div><label>${esc(t('f_visa'))}</label><select name="visa"><option value="">${esc(t('f_all'))}</option>${opts(VIS, visaL, f.visa)}</select></div>`,
+    from: `<div><label>${esc(t('f_from'))}</label><input type="date" name="from" value="${esc(f.from || '')}"></div>`,
+    to: `<div><label>${esc(t('f_to'))}</label><input type="date" name="to" value="${esc(f.to || '')}"></div>`,
+    paramedic: `<div><label>${esc(t('f_paramedic'))}</label><select name="paramedic"><option value="">${esc(t('f_all'))}</option>${(S.paramedics || []).map((p) => `<option value="${p.id}" ${String(f.paramedic) === String(p.id) ? 'selected' : ''}>${esc(p.name)}</option>`).join('')}</select></div>`,
+    archived: `<div><label>${esc(t('rep_include'))}</label><select name="archived"><option value="">${esc(t('rep_all'))}</option><option value="0" ${f.archived === '0' ? 'selected' : ''}>${esc(t('rep_active'))}</option><option value="1" ${f.archived === '1' ? 'selected' : ''}>${esc(t('rep_archived'))}</option></select></div>`,
+    user: `<div><label>${esc(t('au_user'))}</label><input type="text" name="user" value="${esc(f.user || '')}"></div>`,
+    action: `<div><label>${esc(t('au_action'))}</label><select name="action"><option value="">${esc(t('f_all'))}</option>${(extra.actions || []).map((a) => `<option value="${esc(a)}" ${f.action === a ? 'selected' : ''}>${esc(t('a_' + a) === 'a_' + a ? a : t('a_' + a))}</option>`).join('')}</select></div>`,
+  };
+  return `<form class="card filters" id="ff-${key}">${fields.map((x) => F[x]).join('')}<div class="btns"><button class="btn">${esc(t('apply'))}</button><button type="button" class="btn sec" data-reset="${key}">${esc(t('reset'))}</button></div></form>`;
+}
+function wireFilters(key, reload) {
+  const f = $('#ff-' + key); if (!f) return;
+  f.onsubmit = (e) => { e.preventDefault(); const o = {}; new FormData(f).forEach((v, k) => { if (v !== '') o[k] = v; }); S.f[key] = o; S.p[key] = 0; reload(); };
+  const r = $('[data-reset]', f); r.onclick = () => { S.f[key] = {}; S.p[key] = 0; $$('input,select', f).forEach((x) => { x.value = ''; }); reload(); };
+}
+function pagerHtml(key, total, off, lim) {
+  if (total <= lim) return `<div class="pager">${esc(t('total'))}: ${total}</div>`;
+  return `<div class="pager"><button class="btn sec sm" data-pg="${key}:-1" ${off <= 0 ? 'disabled' : ''}>${esc(t('prev'))}</button><span>${off + 1}–${Math.min(off + lim, total)} ${esc(t('of'))} ${total}</span><button class="btn sec sm" data-pg="${key}:1" ${off + lim >= total ? 'disabled' : ''}>${esc(t('next'))}</button></div>`;
+}
+function caseCard(c, extra = '') {
+  return `<div class="case s-${c.status}" data-open="${c.id}"><div class="case-h"><b>#${esc(c.case_number)}</b>${stB(c.status)}</div><p>${esc(c.chief_complaint)}</p>
+  <div class="meta"><span>${esc(visaL(c.visa_type))}</span><span>${esc(c.paramedic_name)}</span><span>${esc(fmtDT(c.created_at))}</span>${c.att_count ? `<span>📎 ${c.att_count}</span>` : ''}</div>${extra}</div>`;
+}
+function steps(c) {
+  const out = ['discharged', 'admitted', 'icu', 'deceased'].includes(c.status);
+  return `<div class="steps"><div class="s d">${esc(t('f_created'))}<br>${esc(fmtDT(c.created_at))}</div><div class="s ${c.status !== 'new' ? 'd' : ''}">${esc(t('st_received'))}<br>${c.arrived_at ? esc(fmtDT(c.arrived_at)) : '…'}</div><div class="s ${out ? 'd' : ''}">${out ? esc(t('st_' + c.status)) : esc(t('f_final'))}<br>${out ? esc(fmtDT(c.status_updated_at)) : '…'}</div></div>`;
+}
+function quickButtons(c) {
+  const b = (st, cls) => c.status === st ? '' : `<button class="btn sm ${cls}" data-act="qs" data-id="${c.id}" data-st="${st}">${esc(t('st_' + st))}</button>`;
+  return `<div class="row" style="margin-top:4px">${b('received', '')}${b('admitted', 'sec')}${b('icu', 'warn')}${b('discharged', 'ok')}${b('deceased', 'bad')}</div>`;
+}
+function casesTable(items, o = {}) {
+  if (!items.length) return `<div class="empty">${esc(t('none'))}</div>`;
+  return `<div class="tw"><table><thead><tr><th>${esc(t('f_case_number'))}</th><th>${esc(t('f_created'))}</th><th>${esc(t('f_paramedic'))}</th><th>${esc(t('f_visa'))}</th><th>${esc(t('f_complaint'))}</th><th>${esc(t('f_status'))}</th><th>${esc(t('f_updated'))}</th>${o.archive ? `<th>${esc(t('f_archived_at'))}</th>` : ''}<th>📎</th></tr></thead><tbody>${items.map((c) => `<tr class="click" data-open="${c.id}"><td class="nw"><b>#${esc(c.case_number)}</b></td><td class="nw">${esc(fmtDT(c.created_at))}</td><td>${esc(c.paramedic_name)}</td><td>${esc(visaL(c.visa_type))}</td><td>${esc(c.chief_complaint)}</td><td>${stB(c.status)}</td><td class="nw">${esc(fmtDT(c.status_updated_at))}${c.status_updated_by ? `<br><small>${esc(c.status_updated_by)}</small>` : ''}</td>${o.archive ? `<td class="nw">${esc(fmtDT(c.archived_at))}<br><small>${esc(c.archived_by || '')}</small></td>` : ''}<td>${c.att_count || ''}</td></tr>`).join('')}</tbody></table></div>`;
+}
+// generic cases list page
+function casesView(key, cfg) {
+  return async (main) => {
+    if (cfg.needParamedics) await getParamedics();
+    main.innerHTML = `<h1>${esc(t('nav_' + key))}</h1>${cfg.fields.length ? filtersHtml(key, cfg.fields, cfg) : ''}<div id="list"><div class="empty">${esc(t('loading'))}</div></div>`;
+    const load = async () => {
+      const list = $('#list'); if (!list) return;
+      const off = S.p[key] || 0, lim = cfg.limit || 30;
+      const d = await api('GET', '/api/cases?' + qs({ ...(cfg.params ? cfg.params() : {}), ...(S.f[key] || {}), offset: off, limit: lim, sort: cfg.sort }));
+      if (!$('#list')) return;
+      const body = cfg.mode === 'table' ? casesTable(d.items, cfg) : (d.items.length ? `<div class="cases">${d.items.map((c) => caseCard(c, cfg.extra ? cfg.extra(c) : '')).join('')}</div>` : `<div class="empty">${esc(t(cfg.emptyKey || 'none'))}</div>`);
+      list.innerHTML = body + pagerHtml(key, d.total, off, lim);
+      if (cfg.onLoad) cfg.onLoad(d);
+    };
+    wireFilters(key, load); S.refresh = load;
+    try { await load(); } catch (e) { $('#list').innerHTML = `<div class="empty">${esc(errText(e))}</div>`; }
+  };
+}
+
+// ───────── paramedic views
+VIEWS.new = (main) => {
+  main.innerHTML = `<h1>${esc(t('nav_new'))}</h1><form class="card" id="nf" style="max-width:640px">
+  <label>${esc(t('f_case_number'))} *</label><input type="text" name="case_number" required maxlength="30" pattern="[A-Za-z0-9][A-Za-z0-9_\\/\\-]{0,29}" autocomplete="off" inputmode="text">
+  <label>${esc(t('f_datetime'))} (${esc(t('f_auto'))})</label><input type="text" id="dtv" readonly>
+  <label>${esc(t('f_paramedic'))} (${esc(t('f_auto'))})</label><input type="text" readonly value="${esc(S.user.name)}">
+  <label>${esc(t('f_visa'))} *</label><select name="visa_type" required><option value="">—</option>${opts(VIS, visaL)}</select>
+  <label>${esc(t('f_complaint'))} *</label><textarea name="chief_complaint" required maxlength="500"></textarea>
+  <label>${esc(t('f_notes'))}</label><textarea name="notes" maxlength="2000"></textarea>
+  <label>${esc(t('f_doc'))}</label><input type="file" id="nfile" accept="image/*" multiple><div class="hint">${esc(t('f_doc_hint'))}</div><div class="thumbs" id="prev" style="margin-top:8px"></div>
+  <div class="err-msg" id="ne"></div><button class="btn big" id="nb" style="margin-top:14px">${esc(t('f_submit'))}</button></form>`;
+  const tick = () => { const el = $('#dtv'); if (el) el.value = fmtDT(new Date().toISOString()); }; tick();
+  const iv = setInterval(() => { if (!$('#dtv')) clearInterval(iv); else tick(); }, 20000);
+  const file = $('#nfile');
+  file.onchange = () => { $('#prev').innerHTML = [...file.files].map((f) => `<div class="th">${f.type.startsWith('image/') && !/heic/i.test(f.type) ? `<img alt="" src="${URL.createObjectURL(f)}">` : `<div class="file">${esc(f.name.slice(0, 18))}</div>`}</div>`).join(''); };
+  $('#nf').onsubmit = async (e) => {
+    e.preventDefault(); const err = $('#ne'); err.textContent = '';
+    if (file.files.length > 6) return (err.textContent = t('err_too_many_files'));
+    for (const f of file.files) if (f.size > 10 * 1024 * 1024) return (err.textContent = t('err_file_too_large'));
+    const fd = new FormData(e.target); fd.delete('files'); for (const f of file.files) fd.append('files', f, f.name);
+    const b = $('#nb'); b.disabled = true;
+    try { await api('POST', '/api/cases', fd); toast(t('case_sent'), 'ok'); S.view0 = 'mine'; route(); }
+    catch (er) { err.textContent = errText(er); b.disabled = false; }
+  };
+};
+VIEWS.mine = casesView('mine', { fields: ['q', 'status', 'from', 'to'], mode: 'cards' });
+VIEWS.status = casesView('status', { fields: [], mode: 'cards', params: () => ({ status: 'new,received,admitted,icu' }), extra: steps, emptyKey: 'no_open' });
+
+// ───────── ER views
+VIEWS.incoming = casesView('incoming', {
+  fields: [], mode: 'cards', params: () => ({ status: 'new' }), sort: 'asc', emptyKey: 'no_incoming',
+  extra: (c) => `<button class="btn ok big" data-act="qs" data-id="${c.id}" data-st="received">✔ ${esc(t('confirm_receipt'))}</button>`,
+});
+VIEWS.tracking = casesView('tracking', { fields: ['q', 'status', 'visa', 'from', 'to'], mode: 'table' });
+VIEWS.update = casesView('update', { fields: ['q'], mode: 'cards', params: () => ({ status: 'new,received,admitted,icu' }), extra: (c) => quickButtons(c), emptyKey: 'no_open' });
+
+// ───────── admin views
+VIEWS.cases = withBar(casesView('cases', { fields: ['q', 'status', 'visa', 'paramedic', 'from', 'to'], mode: 'table', needParamedics: true }), () => `<div class="row" style="margin-bottom:12px"><button class="btn sec" data-act="exportXlsx" data-kind="cases">⬇ ${esc(t('x_cases'))}</button><button class="btn sec" data-act="archiveAll">🗄 ${esc(t('arch_all'))}</button></div>`);
+VIEWS.archive = withBar(casesView('archive', { fields: ['q', 'status', 'visa', 'paramedic', 'from', 'to'], mode: 'table', archive: true, params: () => ({ archived: 1 }), needParamedics: true, statuses: ['discharged', 'admitted', 'icu', 'deceased', 'received', 'new'] }), () => `<div class="row" style="margin-bottom:12px"><button class="btn" data-act="archiveAll">🗄 ${esc(t('arch_all'))}</button><button class="btn sec" data-act="exportXlsx" data-kind="archive">⬇ ${esc(t('x_archive'))}</button></div>`);
+VIEWS.overview = async (main) => {
+  main.innerHTML = `<h1>${esc(t('nav_overview'))}</h1><div id="ov"></div>`;
+  const load = async () => {
+    const [st, cs] = await Promise.all([api('GET', '/api/stats'), api('GET', '/api/cases?limit=8')]);
+    if (!$('#ov')) return;
+    $('#ov').innerHTML = kpisHtml(st.counts) + `<h2>${esc(t('ov_recent'))}</h2>` + casesTable(cs.items);
+  };
+  S.refresh = load; await load();
+};
+function kpisHtml(k) {
+  const K = (key, val, cls, hint) => `<div class="kpi ${cls}" ${hint ? `title="${esc(hint)}"` : ''}><b>${val}</b><span>${esc(t(key))}</span></div>`;
+  return `<div class="kpis">${K('k_total', k.total, '')}${K('k_today', k.today, '')}${K('k_month', k.month, '')}${K('k_received', k.received, 'c-teal', t('k_received_hint'))}${K('k_pending', k.pending, 'c-warn', t('k_pending_hint'))}${K('k_in_er', k.in_er, 'c-teal')}${K('k_discharged', k.discharged, 'c-ok')}${K('k_admitted', k.admitted, 'c-gray')}${K('k_icu', k.icu, 'c-bad')}${K('k_deceased', k.deceased, 'c-gray')}</div>`;
+}
+function barChart(data, color, lf) {
+  const W = 700, H = 230, pl = 30, pb = 36, pt = 14, n = data.length, max = Math.max(4, ...data.map((d) => d.n));
+  const bw = (W - pl - 8) / n, ch = H - pb - pt, every = Math.ceil(n / 10);
+  let s = `<svg viewBox="0 0 ${W} ${H}" role="img">`;
+  for (let i = 0; i <= 4; i++) { const y = pt + ch - (ch * i) / 4; s += `<line x1="${pl}" x2="${W - 8}" y1="${y}" y2="${y}" stroke="#e1e8f0"/><text x="${pl - 6}" y="${y + 4}" font-size="11" text-anchor="end" fill="#5d6b7c">${Math.round((max * i) / 4)}</text>`; }
+  data.forEach((d, i) => {
+    const h = (ch * d.n) / max, x = pl + i * bw + bw * 0.15;
+    s += `<rect x="${x}" y="${pt + ch - h}" width="${bw * 0.7}" height="${h}" rx="3" fill="${color}"><title>${esc(d.label)}: ${d.n}</title></rect>`;
+    if (d.n) s += `<text x="${x + bw * 0.35}" y="${pt + ch - h - 4}" font-size="11" text-anchor="middle" fill="#16212e">${d.n}</text>`;
+    if (i % every === 0 || i === n - 1) s += `<text x="${x + bw * 0.35}" y="${H - 14}" font-size="11" text-anchor="middle" fill="#5d6b7c">${esc(lf ? lf(d.label) : d.label.slice(n === 12 && d.label.length === 7 ? 2 : 5))}</text>`;
+  });
+  return s + '</svg>';
+}
+const hbars = (obj, labelFn, color) => { const e = Object.entries(obj).sort((a, b) => b[1] - a[1]); const mx = Math.max(1, ...e.map((x) => x[1])); return e.length ? e.map(([k, v]) => `<div class="hbar"><span>${esc(labelFn(k))}</span><div class="t"><i style="width:${(v / mx) * 100}%;background:${color}"></i></div><b>${v}</b></div>`).join('') : `<div class="empty">${esc(t('none'))}</div>`; };
+
+const pct = (n, d) => (d ? (n * 100 / d).toFixed(1) + '%' : '—');
+const mins = (a, b) => Math.max(0, Math.round((new Date(b) - new Date(a)) / 60000));
+const fmtMin = (m) => (m == null ? '—' : m >= 60 ? Math.floor(m / 60) + ' ' + t('unit_hr') + ' ' + (m % 60) + ' ' + t('unit_min') : m + ' ' + t('unit_min'));
+const WD = () => D[S.lang].wd;
+function kpisPct(k) {
+  const T = k.total, K = (key, val, cls, sub) => `<div class="kpi ${cls}"><b>${val}</b><span>${esc(t(key))}</span><em>${sub}</em></div>`;
+  return `<div class="kpis">${K('k_total', k.total, '', '100%')}${K('k_today', k.today, '', pct(k.today, T))}${K('k_month', k.month, '', pct(k.month, T))}${K('k_received', k.received, 'c-teal', pct(k.received, T))}${K('k_pending', k.pending, 'c-warn', pct(k.pending, T))}${K('k_in_er', k.in_er, 'c-teal', pct(k.in_er, T))}${K('k_discharged', k.discharged, 'c-ok', pct(k.discharged, T))}${K('k_admitted', k.admitted, 'c-gray', pct(k.admitted, T))}${K('k_icu', k.icu, 'c-bad', pct(k.icu, T))}${K('k_deceased', k.deceased, 'c-gray', pct(k.deceased, T))}</div>`;
+}
+const tbl = (head, rows) => `<div class="tw"><table><thead><tr>${head.map((h, i) => `<th class="${i ? 'num' : ''}">${esc(h)}</th>`).join('')}</tr></thead><tbody>${rows.map((r) => `<tr>${r.map((c, i) => `<td class="${i ? 'num' : ''}">${c}</td>`).join('')}</tr>`).join('') || `<tr><td colspan="${head.length}">${esc(t('none'))}</td></tr>`}</tbody></table></div>`;
+const timeCard = (title, s) => `<div class="card"><h2>${esc(title)}</h2><dl class="dl"><dt>${esc(t('t_n'))}</dt><dd>${s.n}</dd><dt>${esc(t('t_avg'))}</dt><dd>${fmtMin(s.avg)}</dd><dt>${esc(t('t_median'))}</dt><dd>${fmtMin(s.median)}</dd><dt>${esc(t('t_max'))}</dt><dd>${fmtMin(s.max)}</dd></dl></div>`;
+function statsBody(st) {
+  const k = st.counts, T = k.total, R = k.received;
+  const rate = (key, n) => [esc(t(key)), n, pct(n, T), key === 'k_received' || key === 'k_pending' || key === 'k_in_er' ? '—' : pct(n, R)];
+  const rates = tbl([t('m_metric'), t('c_count'), t('s_pct_total'), t('s_pct_recv')], [rate('k_received', k.received), rate('k_pending', k.pending), rate('k_in_er', k.in_er), rate('k_discharged', k.discharged), rate('k_admitted', k.admitted), rate('k_icu', k.icu), rate('k_deceased', k.deceased)]);
+  const bar = (n, d) => `<span class="bar-in" style="width:${d ? Math.max(2, Math.round(n * 80 / d)) : 0}px"></span>`;
+  const stRows = STS.map((s) => [stB(s), st.byStatus[s] || 0, pct(st.byStatus[s] || 0, T) + bar(st.byStatus[s] || 0, T)]);
+  const gRows = (list, nm) => list.map((g) => [esc(nm(g.name)), g.total, pct(g.total, T) + bar(g.total, T), g.received + g.discharged + g.admitted + g.icu + g.deceased, g.discharged, g.admitted, g.icu, g.deceased, fmtMin(g.avg_receipt)]);
+  const gHead = [t('c_name'), t('c_count'), t('c_pct'), t('m_arrived'), t('k_discharged'), t('k_admitted'), t('k_icu'), t('k_deceased'), t('c_recv_avg')];
+  return kpisPct(k) + `<div class="mini"><div><h2>${esc(t('s_rates'))}</h2>${rates}</div><div><h2>${esc(t('tb_status'))}</h2>${tbl([t('c_name'), t('c_count'), t('c_pct')], stRows)}</div></div>`
+    + `<div class="mini">${timeCard(t('t_to_receipt'), st.timing.receipt)}${timeCard(t('t_to_close'), st.timing.close)}</div>`
+    + `<div class="card chart" style="margin-bottom:12px"><div class="tabs">${['daily', 'weekly', 'monthly', 'hour', 'weekday'].map((x) => `<button data-tab="${x}">${esc(t('ch_' + x))}</button>`).join('')}</div><div id="chart" style="direction:ltr"></div></div>`
+    + `<h2>${esc(t('tb_visa'))}</h2>${tbl(gHead, gRows(st.visas, visaL))}<h2 style="margin-top:16px">${esc(t('tb_para'))}</h2>${tbl(gHead, gRows(st.paramedics, (x) => x))}`;
+}
+VIEWS.stats = async (main) => {
+  await getParamedics();
+  main.innerHTML = `<h1>${esc(t('nav_stats'))}</h1>${filtersHtml('stats', ['from', 'to', 'status', 'visa', 'paramedic', 'archived'])}<div class="row" style="margin-bottom:12px"><button class="btn sec" data-act="exportXlsx" data-kind="stats">⬇ ${esc(t('x_excel'))}</button></div><div id="sb"></div>`;
+  let tab = 'daily';
+  const load = async () => {
+    const st = await api('GET', '/api/stats?' + qs(S.f.stats || {})); if (!$('#sb')) return;
+    const series = { daily: st.daily, weekly: st.weekly, monthly: st.monthly, hour: st.hour.map((n, i) => ({ label: String(i).padStart(2, '0'), n })), weekday: st.weekday.map((n, i) => ({ label: WD()[i], n })) };
+    $('#sb').innerHTML = statsBody(st);
+    const draw = () => { $('#chart').innerHTML = barChart(series[tab], '#1d8fe1', tab === 'hour' || tab === 'weekday' ? (l) => l : null); $$('.tabs button').forEach((b) => b.classList.toggle('on', b.dataset.tab === tab)); };
+    $$('.tabs button').forEach((b) => { b.onclick = () => { tab = b.dataset.tab; draw(); }; }); draw();
+  };
+  wireFilters('stats', load); S.refresh = load; await load();
+};
+// ---- Excel (.xlsx) writer: stored zip, no libraries
+const CRCT = (() => { const t = new Uint32Array(256); for (let n = 0; n < 256; n++) { let c = n; for (let k = 0; k < 8; k++) c = c & 1 ? 0xEDB88320 ^ (c >>> 1) : c >>> 1; t[n] = c >>> 0; } return t; })();
+const crc32 = (b) => { let c = 0xFFFFFFFF; for (let i = 0; i < b.length; i++) c = CRCT[(c ^ b[i]) & 255] ^ (c >>> 8); return (c ^ 0xFFFFFFFF) >>> 0; };
+const xe = (s) => String(s).replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g, '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+const colL = (i) => { let s = ''; i++; while (i > 0) { const m = (i - 1) % 26; s = String.fromCharCode(65 + m) + s; i = Math.floor((i - 1) / 26); } return s; };
+function sheetXml(rows, widths, rtl) {
+  let x = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><sheetViews><sheetView workbookViewId="0"' + (rtl ? ' rightToLeft="1"' : '') + '><pane ySplit="1" topLeftCell="A2" activePane="bottomLeft" state="frozen"/></sheetView></sheetViews>';
+  if (widths) x += '<cols>' + widths.map((w, i) => `<col min="${i + 1}" max="${i + 1}" width="${w}" customWidth="1"/>`).join('') + '</cols>';
+  x += '<sheetData>';
+  rows.forEach((row, r) => { x += `<row r="${r + 1}">`; row.forEach((v, c) => { const ref = colL(c) + (r + 1), hs = r === 0 ? ' s="1"' : ''; if (v === null || v === undefined || v === '') x += `<c r="${ref}"${hs}/>`; else if (typeof v === 'object' && v.pct) x += `<c r="${ref}" s="2"><v>${v.v}</v></c>`; else if (typeof v === 'number' && isFinite(v)) x += `<c r="${ref}"${hs}><v>${v}</v></c>`; else x += `<c r="${ref}"${hs} t="inlineStr"><is><t xml:space="preserve">${xe(v)}</t></is></c>`; }); x += '</row>'; });
+  return x + '</sheetData></worksheet>';
+}
+const XSTYLES = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main"><fonts count="2"><font><sz val="11"/><name val="Calibri"/></font><font><b/><sz val="11"/><color rgb="FFFFFFFF"/><name val="Calibri"/></font></fonts><fills count="3"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill><fill><patternFill patternType="solid"><fgColor rgb="FF0B2545"/></patternFill></fill></fills><borders count="1"><border><left/><right/><top/><bottom/><diagonal/></border></borders><cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs><cellXfs count="3"><xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/><xf numFmtId="0" fontId="1" fillId="2" borderId="0" xfId="0" applyFont="1" applyFill="1"/><xf numFmtId="10" fontId="0" fillId="0" borderId="0" xfId="0" applyNumberFormat="1"/></cellXfs><cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles></styleSheet>';
+function buildXlsx(sheets) {
+  const enc = new TextEncoder(), rtl = S.lang === 'ar', files = [];
+  const F = (name, data) => files.push({ name, data: enc.encode(data) });
+  F('[Content_Types].xml', '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/><Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/>' + sheets.map((_, i) => `<Override PartName="/xl/worksheets/sheet${i + 1}.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>`).join('') + '</Types>');
+  F('_rels/.rels', '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/></Relationships>');
+  F('xl/workbook.xml', '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><sheets>' + sheets.map((s, i) => `<sheet name="${xe(s.name.replace(/[\\\/?*\[\]:]/g, ' ').slice(0, 31))}" sheetId="${i + 1}" r:id="rId${i + 1}"/>`).join('') + '</sheets></workbook>');
+  F('xl/_rels/workbook.xml.rels', '<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">' + sheets.map((_, i) => `<Relationship Id="rId${i + 1}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet${i + 1}.xml"/>`).join('') + `<Relationship Id="rId${sheets.length + 1}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>`);
+  F('xl/styles.xml', XSTYLES);
+  sheets.forEach((s, i) => F(`xl/worksheets/sheet${i + 1}.xml`, sheetXml(s.rows, s.widths, rtl)));
+  const parts = [], cds = []; let off = 0;
+  const u16 = (v) => [v & 255, (v >> 8) & 255], u32 = (v) => [v & 255, (v >>> 8) & 255, (v >>> 16) & 255, (v >>> 24) & 255];
+  for (const f of files) {
+    const nm = enc.encode(f.name), crc = crc32(f.data), sz = f.data.length;
+    const lh = new Uint8Array([...u32(0x04034b50), ...u16(20), ...u16(0x0800), ...u16(0), ...u16(0), ...u16(33), ...u32(crc), ...u32(sz), ...u32(sz), ...u16(nm.length), ...u16(0)]);
+    parts.push(lh, nm, f.data);
+    cds.push(new Uint8Array([...u32(0x02014b50), ...u16(20), ...u16(20), ...u16(0x0800), ...u16(0), ...u16(0), ...u16(33), ...u32(crc), ...u32(sz), ...u32(sz), ...u16(nm.length), ...u16(0), ...u16(0), ...u16(0), ...u16(0), ...u32(0), ...u32(off)]), nm);
+    off += lh.length + nm.length + sz;
+  }
+  const cdLen = cds.reduce((a, b) => a + b.length, 0);
+  const end = new Uint8Array([...u32(0x06054b50), ...u16(0), ...u16(0), ...u16(files.length), ...u16(files.length), ...u32(cdLen), ...u32(off), ...u16(0)]);
+  return new Blob([...parts, ...cds, end], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+}
+function xlsxSheets(st, items, kind) {
+  const k = st.counts, T = k.total, R = k.received, P = (n, d) => ({ pct: true, v: d ? n / d : 0 });
+  const cases = [[t('f_case_number'), t('f_created'), t('f_paramedic'), t('f_visa'), t('f_complaint'), t('f_notes'), t('f_status'), t('f_arrival'), t('f_updated'), t('f_updated_by'), t('x_min_receipt'), t('x_min_close'), t('x_archived'), t('f_archived_at')]];
+  for (const c of items) cases.push([c.case_number, fmtDT(c.created_at), c.paramedic_name, visaL(c.visa_type), c.chief_complaint, c.notes || '', t('st_' + c.status), c.arrived_at ? fmtDT(c.arrived_at) : '', c.status_updated_at ? fmtDT(c.status_updated_at) : '', c.status_updated_by || '', c.arrived_at ? mins(c.created_at, c.arrived_at) : '', c.arrived_at && c.closed_at ? mins(c.arrived_at, c.closed_at) : '', c.archived ? t('yes') : t('no'), c.archived_at ? fmtDT(c.archived_at) : '']);
+  const sum = [[t('m_metric'), t('c_count'), t('s_pct_total'), t('s_pct_recv')]];
+  [['k_total', k.total], ['k_today', k.today], ['k_month', k.month], ['k_received', k.received], ['k_pending', k.pending], ['k_in_er', k.in_er], ['k_discharged', k.discharged], ['k_admitted', k.admitted], ['k_icu', k.icu], ['k_deceased', k.deceased]].forEach(([key, n]) => sum.push([t(key), n, P(n, T), ['k_discharged', 'k_admitted', 'k_icu', 'k_deceased'].includes(key) ? P(n, R) : '']));
+  sum.push(['', '', '', ''], [t('t_to_receipt'), '', '', ''], [t('t_avg') + ' (' + t('unit_min') + ')', st.timing.receipt.avg, '', ''], [t('t_median') + ' (' + t('unit_min') + ')', st.timing.receipt.median, '', ''], [t('t_max') + ' (' + t('unit_min') + ')', st.timing.receipt.max, '', ''], [t('t_to_close'), '', '', ''], [t('t_avg') + ' (' + t('unit_min') + ')', st.timing.close.avg, '', ''], [t('t_median') + ' (' + t('unit_min') + ')', st.timing.close.median, '', ''], [t('t_max') + ' (' + t('unit_min') + ')', st.timing.close.max, '', '']);
+  const byStatus = [[t('c_name'), t('c_count'), t('c_pct')]]; STS.forEach((s) => byStatus.push([t('st_' + s), st.byStatus[s] || 0, P(st.byStatus[s] || 0, T)]));
+  const gh = [t('c_name'), t('c_count'), t('c_pct'), t('m_arrived'), t('k_discharged'), t('k_admitted'), t('k_icu'), t('k_deceased'), t('c_recv_avg') + ' (' + t('unit_min') + ')'];
+  const grp = (list, nm) => [gh, ...list.map((g) => [nm(g.name), g.total, P(g.total, T), g.received + g.discharged + g.admitted + g.icu + g.deceased, g.discharged, g.admitted, g.icu, g.deceased, g.avg_receipt])];
+  const hr = [[t('c_name'), t('c_count'), t('c_pct')]]; st.hour.forEach((n, i) => hr.push([String(i).padStart(2, '0') + ':00', n, P(n, T)]));
+  const wd = [[t('c_name'), t('c_count'), t('c_pct')]]; st.weekday.forEach((n, i) => wd.push([WD()[i], n, P(n, T)]));
+  const dl = [[t('c_name'), t('c_count')]]; st.daily.forEach((d) => dl.push([d.label, d.n]));
+  return [{ name: t(kind === 'archive' ? 'sh_arch' : 'sh_cases'), rows: cases, widths: [16, 17, 22, 14, 40, 40, 18, 17, 17, 22, 14, 16, 10, 17] }, { name: t('st_sheet'), rows: sum, widths: [34, 12, 16, 16] }, { name: t('sh_status'), rows: byStatus, widths: [24, 12, 12] }, { name: t('sh_visa'), rows: grp(st.visas, visaL), widths: [20, 10, 10, 14, 12, 12, 12, 12, 18] }, { name: t('sh_para'), rows: grp(st.paramedics, (x) => x), widths: [26, 10, 10, 14, 12, 12, 12, 12, 18] }, { name: t('sh_hour'), rows: hr, widths: [14, 10, 10] }, { name: t('sh_wd'), rows: wd, widths: [14, 10, 10] }, { name: t('sh_daily'), rows: dl, widths: [14, 10] }];
+}
+function withBar(view, html) { return async (main) => { await view(main); const h1 = $('h1', main); if (h1) h1.insertAdjacentHTML('afterend', html()); }; }
+VIEWS.reports = async (main) => {
+  await getParamedics();
+  main.innerHTML = `<h1>${esc(t('rep_title'))}</h1>${filtersHtml('reports', ['from', 'to', 'status', 'visa', 'paramedic', 'archived'])}<div class="row" style="margin-bottom:12px"><button class="btn" data-act="exportXlsx" data-kind="report">⬇ ${esc(t('x_excel'))}</button></div><div id="rp"></div>`;
+  const load = async () => {
+    const d = await api('GET', '/api/report?' + qs(S.f.reports || {})); if (!$('#rp')) return;
+    $('#rp').innerHTML = kpisPct(d.stats.counts) + `<h2>${esc(t('nav_cases'))} (${d.items.length})</h2>` + casesTable(d.items);
+  };
+  wireFilters('reports', load); S.refresh = load; await load();
+};
+async function printReport() {
+  const f = S.f.reports || {};
+  const d = await api('GET', '/api/report?' + qs(f)); const k = d.stats.counts;
+  const filt = Object.entries(f).map(([a, b]) => `${a}: ${b}`).join(' · ') || t('f_all');
+  $('#printArea').innerHTML = `<h1>${esc(t('hospital'))} – ${esc(t('rep_title'))}</h1><p>${esc(t('rep_generated'))}: ${esc(fmtDT(d.generated_at))} · ${esc(S.user.name)}<br>${esc(filt)}</p>
+  <h2>${esc(t('rep_summary'))}</h2><table><tbody><tr>${[['k_total', k.total], ['k_today', k.today], ['k_month', k.month], ['k_received', k.received], ['k_pending', k.pending], ['k_discharged', k.discharged], ['k_admitted', k.admitted], ['k_icu', k.icu], ['k_deceased', k.deceased]].map(([a, b]) => `<th>${esc(t(a))}</th><td>${b}</td>`).join('</tr><tr>')}</tr></tbody></table>
+  <h2>${esc(t('nav_cases'))} (${d.items.length})</h2><table><thead><tr><th>${esc(t('f_case_number'))}</th><th>${esc(t('f_created'))}</th><th>${esc(t('f_paramedic'))}</th><th>${esc(t('f_visa'))}</th><th>${esc(t('f_complaint'))}</th><th>${esc(t('f_status'))}</th><th>${esc(t('f_arrival'))}</th><th>${esc(t('f_updated_by'))}</th></tr></thead><tbody>${d.items.map((c) => `<tr><td>${esc(c.case_number)}</td><td>${esc(fmtDT(c.created_at))}</td><td>${esc(c.paramedic_name)}</td><td>${esc(visaL(c.visa_type))}</td><td>${esc(c.chief_complaint)}</td><td>${esc(t('st_' + c.status))}</td><td>${esc(fmtDT(c.arrived_at))}</td><td>${esc(c.status_updated_by || '')}</td></tr>`).join('')}</tbody></table>`;
+  api('POST', '/api/report/print', { ...f, rows: d.items.length }).catch(() => {});
+  setTimeout(() => window.print(), 100);
+}
+VIEWS.users = async (main) => {
+  const load = async () => {
+    const d = await api('GET', '/api/users'); if (!$('#ul')) return;
+    $('#ul').innerHTML = `<div class="tw"><table><thead><tr><th>${esc(t('u_name'))}</th><th>${esc(t('email'))}</th><th>${esc(t('u_role'))}</th><th>${esc(t('u_active'))}</th><th>${esc(t('u_mfa'))}</th><th>${esc(t('u_last'))}</th><th></th></tr></thead><tbody>${d.items.map((u) => `<tr><td><b>${esc(u.name)}</b></td><td>${esc(u.email)}</td><td>${esc(t('role_' + u.role))}</td><td>${u.active ? `<span class="pill g">${esc(t('yes'))}</span>` : `<span class="pill r">${esc(t('no'))}</span>`}</td><td>${u.mfa_enabled ? '✔' : (u.mfa_required ? '⚠' : '—')}</td><td class="nw">${u.last_login ? esc(fmtDT(u.last_login)) : esc(t('u_never'))}</td><td><div class="row"><button class="btn sm sec" data-act="editUser" data-id="${u.id}">${esc(t('edit'))}</button><button class="btn sm sec" data-act="toggleUser" data-id="${u.id}" data-on="${u.active ? 1 : 0}">${esc(u.active ? t('u_deactivate') : t('u_activate'))}</button><button class="btn sm sec" data-act="resetPw" data-id="${u.id}">${esc(t('u_reset_pw'))}</button>${u.mfa_enabled ? `<button class="btn sm sec" data-act="resetMfa" data-id="${u.id}">${esc(t('u_reset_mfa'))}</button>` : ''}</div></td></tr>`).join('')}</tbody></table></div>`;
+    S.usersCache = d.items;
+  };
+  main.innerHTML = `<div class="row"><h1 class="sp">${esc(t('nav_users'))}</h1><button class="btn" data-act="addUser">+ ${esc(t('u_add'))}</button></div><div id="ul"></div>`;
+  S.refresh = load; S.usersReload = load; await load();
+};
+const actLabel = (a) => (D[S.lang]['a_' + a] || a);
+function auditDetails(a) {
+  const d = a.details; if (!d) return '';
+  if (a.action === 'status_change') return `${esc(t('st_' + d.from))} → <b>${esc(t('st_' + d.to))}</b>${d.arrived_at ? ' · ' + esc(t('f_arrival')) + ' ' + esc(fmtDT(d.arrived_at)) : ''}`;
+  if (d.changes) return `${d.user ? esc(d.user) + ': ' : ''}` + Object.entries(d.changes).map(([k, v]) => `${esc(k)}: “${esc(v.from ?? '')}” → “${esc(v.to ?? '')}”`).join('<br>');
+  if (d.name) return esc(d.name);
+  return esc(JSON.stringify(d).slice(0, 200));
+}
+VIEWS.audit = async (main) => {
+  let actions = [];
+  main.innerHTML = `<h1>${esc(t('nav_audit'))}</h1><div id="ah"></div><div id="al"></div>`;
+  const load = async () => {
+    const off = S.p.audit || 0, lim = 50;
+    const d = await api('GET', '/api/audit?' + qs({ ...(S.f.audit || {}), offset: off, limit: lim }));
+    if (!$('#al')) return;
+    if (!actions.length) { actions = d.actions; $('#ah').innerHTML = filtersHtml('audit', ['user', 'action', 'case', 'from', 'to'], { actions }); wireFilters('audit', load); }
+    $('#al').innerHTML = (d.items.length ? `<div class="tw"><table><thead><tr><th>${esc(t('au_when'))}</th><th>${esc(t('au_user'))}</th><th>${esc(t('au_action'))}</th><th>${esc(t('au_case'))}</th><th>${esc(t('au_details'))}</th><th>${esc(t('au_ip'))}</th></tr></thead><tbody>${d.items.map((a) => `<tr><td class="nw">${esc(fmtDT(a.ts))}</td><td>${esc(a.user_name)}</td><td>${esc(actLabel(a.action))}</td><td class="nw">${a.case_number ? `#${esc(a.case_number)}` : ''}</td><td class="det">${auditDetails(a)}</td><td class="nw"><small>${esc(a.ip || '')}</small></td></tr>`).join('')}</tbody></table></div>` : `<div class="empty">${esc(t('none'))}</div>`) + pagerHtml('audit', d.total, off, lim);
+  };
+  S.refresh = load; await load();
+};
+VIEWS.settings = async (main) => {
+  const s = await api('GET', '/api/settings');
+  main.innerHTML = `<h1>${esc(t('nav_settings'))}</h1><div class="grid g2"><form class="card" id="sf"><h2>${esc(t('s_title'))}</h2><label>${esc(t('s_days'))}</label><input type="number" name="archive_after_days" min="0" max="3650" value="${s.archive_after_days}"><label class="chk"><input type="checkbox" name="auto_archive" ${s.auto_archive ? 'checked' : ''}> ${esc(t('s_auto'))}</label><div class="row"><button class="btn">${esc(t('save'))}</button><button type="button" class="btn sec" data-act="runArchive">${esc(t('s_run'))}</button></div></form>
+  </div>`;
+  $('#sf').onsubmit = async (e) => { e.preventDefault(); const f = e.target; try { await api('PUT', '/api/settings', { archive_after_days: +f.archive_after_days.value, auto_archive: f.auto_archive.checked }); toast(t('s_saved'), 'ok'); } catch (er) { toast(errText(er), 'err'); } };
+};
+
+// ───────── case dialog
+async function openCase(id) {
+  const m = openModal('…'); m.body.innerHTML = `<div class="empty">${esc(t('loading'))}</div>`;
+  const st = { id, editing: false, m };
+  const load = async () => { try { st.d = await api('GET', '/api/cases/' + id); } catch (e) { closeModal(); toast(errText(e), 'err'); return false; } return true; };
+  const draw = () => renderCase(st, load, draw);
+  if (await load()) draw();
+}
+function renderCase(st, load, draw) {
+  const { d, m } = st, c = d.case, u = S.user;
+  const canStatus = (u.role === 'er' || u.role === 'admin') && !c.archived;
+  const canEdit = !c.archived && (u.role === 'admin' || (u.role === 'paramedic' && c.status === 'new'));
+  const reload = async () => { if (await load()) draw(); if (S.refresh) S.refresh(); refreshBadge(); };
+  m.title.innerHTML = `#${esc(c.case_number)} ${stB(c.status)}`;
+  const atts = d.attachments.map((a) => {
+    const img = a.mime.startsWith('image/') && a.mime !== 'image/heic';
+    return `<div class="th">${img ? `<img alt="${esc(a.original_name)}" data-aid="${a.id}" src="${window.__att(a.id)}">` : `<span class="file">${esc(a.original_name.slice(0, 14))}</span>`}${canEdit ? `<button class="rm" data-rm="${a.id}" title="${esc(t('remove'))}">×</button>` : ''}</div>`;
+  }).join('');
+  let h = '';
+  if (st.editing) {
+    h += `<form id="ef"><label>${esc(t('f_visa'))}</label><select name="visa_type">${opts(VIS, visaL, c.visa_type)}</select>${u.role === 'admin' ? `<label>${esc(t('f_case_number'))}</label><input type="text" name="case_number" maxlength="30" value="${esc(c.case_number)}">` : ''}<label>${esc(t('f_complaint'))}</label><textarea name="chief_complaint" maxlength="500" required>${esc(c.chief_complaint)}</textarea><label>${esc(t('f_notes'))}</label><textarea name="notes" maxlength="2000">${esc(c.notes || '')}</textarea><div class="err-msg" id="ee"></div><div class="row" style="margin-top:10px"><button class="btn">${esc(t('save'))}</button><button type="button" class="btn sec" id="ec">${esc(t('cancel'))}</button></div></form>`;
+  } else {
+    h += `<dl class="dl"><dt>${esc(t('f_complaint'))}</dt><dd>${esc(c.chief_complaint)}</dd><dt>${esc(t('f_visa'))}</dt><dd>${esc(visaL(c.visa_type))}</dd><dt>${esc(t('f_paramedic'))}</dt><dd>${esc(c.paramedic_name)}</dd><dt>${esc(t('f_created'))}</dt><dd>${esc(fmtDT(c.created_at))}</dd>${c.notes ? `<dt>${esc(t('f_notes'))}</dt><dd>${esc(c.notes).replace(/\n/g, '<br>')}</dd>` : ''}${c.arrived_at ? `<dt>${esc(t('f_arrival'))}</dt><dd>${esc(fmtDT(c.arrived_at))}</dd>` : ''}${c.status_updated_at ? `<dt>${esc(t('f_updated'))}</dt><dd>${esc(fmtDT(c.status_updated_at))} · ${esc(c.status_updated_by || '')}</dd>` : ''}${c.archived ? `<dt>${esc(t('f_archived_at'))}</dt><dd>${esc(fmtDT(c.archived_at))} · ${esc(c.archived_by || '')}</dd>` : ''}</dl>`;
+  }
+  h += `<h2 style="margin-top:18px">${esc(t('f_attachments'))}</h2><div class="thumbs">${atts || `<span class="hint">${esc(t('none'))}</span>`}</div>`;
+  if (canEdit) h += `<div style="margin-top:8px"><label class="btn sec sm" style="display:inline-flex;margin:0;cursor:pointer">+ ${esc(t('add_doc'))}<input type="file" id="addf" accept="image/*" multiple hidden></label></div>`;
+  if (canStatus) {
+    h += `<h2 style="margin-top:18px">${esc(t('f_status'))}</h2><label>${esc(t('f_arrival'))}</label><input type="datetime-local" id="arr"><div class="hint">${esc(t('f_arrival_hint'))}</div><div class="sbtn">${['received', 'admitted', 'icu', 'discharged', 'deceased'].filter((s) => s !== c.status).map((s) => `<button class="btn ${s === 'discharged' ? 'ok' : s === 'deceased' ? 'bad' : s === 'icu' ? 'warn' : ''}" data-ss="${s}">${esc(t('st_' + s))}</button>`).join('')}</div><div class="err-msg" id="se"></div>`;
+  }
+  h += `<h2 style="margin-top:18px">${esc(t('f_timeline'))}</h2><ul class="tl">${d.timeline.map((x) => `<li>${stB(x.status)} <small>${esc(fmtDT(x.at))} · ${esc(t('f_by'))} ${esc(x.by)}</small></li>`).join('')}</ul>`;
+  const act = [];
+  if (canEdit && !st.editing) act.push(`<button class="btn sec" id="eb">✎ ${esc(t('edit'))}</button>`);
+  if (u.role === 'admin' && !c.archived && ['discharged', 'deceased'].includes(c.status)) act.push(`<button class="btn sec" id="ab">🗄 ${esc(t('archive'))}</button>`);
+  if (u.role === 'admin' && c.archived) act.push(`<button class="btn sec" id="ub">↩ ${esc(t('unarchive'))}</button>`);
+  if (act.length) h += `<div class="row" style="margin-top:14px">${act.join('')}</div>`;
+  if (d.history) h += `<h2 style="margin-top:18px">${esc(t('f_history'))}</h2><div class="tw"><table><tbody>${d.history.map((x) => `<tr><td class="nw">${esc(fmtDT(x.ts))}</td><td>${esc(x.user)}</td><td>${esc(actLabel(x.action))}</td><td class="det">${auditDetails({ action: x.action, details: x.details })}</td></tr>`).join('')}</tbody></table></div>`;
+  m.body.innerHTML = h;
+  const B = m.body, fail = (id, e) => { const el = $('#' + id, B); if (el) el.textContent = errText(e); else toast(errText(e), 'err'); };
+  const eb = $('#eb', B); if (eb) eb.onclick = () => { st.editing = true; draw(); };
+  const ec = $('#ec', B); if (ec) ec.onclick = () => { st.editing = false; draw(); };
+  const ef = $('#ef', B);
+  if (ef) ef.onsubmit = async (e) => { e.preventDefault(); const f = e.target; const body = { visa_type: f.visa_type.value, chief_complaint: f.chief_complaint.value, notes: f.notes.value }; if (f.case_number) body.case_number = f.case_number.value; try { await api('PATCH', '/api/cases/' + c.id, body); toast(t('case_updated'), 'ok'); st.editing = false; reload(); } catch (er) { fail('ee', er); } };
+  $$('[data-rm]', B).forEach((b) => { b.onclick = async (e) => { e.preventDefault(); e.stopPropagation(); if (!(await askConfirm(t('confirm_delete_att')))) return; try { await api('DELETE', '/api/attachments/' + b.dataset.rm); reload(); } catch (er) { fail('ee', er); } }; });
+  const addf = $('#addf', B);
+  if (addf) addf.onchange = async () => { const fd = new FormData(); for (const f of addf.files) fd.append('files', f, f.name); try { await api('POST', `/api/cases/${c.id}/attachments`, fd); reload(); } catch (er) { toast(errText(er), 'err'); } };
+  $$('[data-ss]', B).forEach((b) => { b.onclick = async () => {
+    const s = b.dataset.ss; if (s === 'deceased' && !(await askConfirm(t('confirm_deceased')))) return;
+    const arr = $('#arr', B).value; const body = { status: s }; if (arr) body.arrived_at = new Date(arr).toISOString();
+    try { await api('POST', `/api/cases/${c.id}/status`, body); toast(t('status_updated'), 'ok'); reload(); } catch (er) { fail('se', er); }
+  }; });
+  const ab = $('#ab', B); if (ab) ab.onclick = async () => { if (!(await askConfirm(t('confirm_archive')))) return; try { await api('POST', `/api/cases/${c.id}/archive`); toast(t('archived_ok'), 'ok'); closeModal(); if (S.refresh) S.refresh(); } catch (er) { toast(errText(er), 'err'); } };
+  const ub = $('#ub', B); if (ub) ub.onclick = async () => { try { await api('POST', `/api/cases/${c.id}/unarchive`); toast(t('unarchived_ok'), 'ok'); closeModal(); if (S.refresh) S.refresh(); } catch (er) { toast(errText(er), 'err'); } };
+}
+
+// ───────── user dialogs (admin)
+function userForm(u) {
+  const m = openModal(esc(u ? t('edit') : t('u_add')));
+  m.body.innerHTML = `<form id="uf"><label>${esc(t('u_name'))}</label><input type="text" name="name" required maxlength="100" value="${esc(u ? u.name : '')}">${u ? '' : `<label>${esc(t('email'))}</label><input type="email" name="email" required>`}<label>${esc(t('u_role'))}</label><select name="role">${opts(['paramedic', 'er', 'admin'], (r) => t('role_' + r), u ? u.role : 'paramedic')}</select><label class="chk"><input type="checkbox" name="mfa_required" ${u && u.mfa_required ? 'checked' : ''}> ${esc(t('u_mfa_req'))}</label>${u ? '' : `<label>${esc(t('password'))} (${esc(t('f_auto'))})</label><input type="text" name="password" autocomplete="off" placeholder="—">`}<div class="err-msg" id="uerr"></div><button class="btn" style="margin-top:8px">${esc(t('save'))}</button></form>`;
+  $('#uf').onsubmit = async (e) => {
+    e.preventDefault(); const f = e.target; const body = { name: f.name.value, role: f.role.value, mfa_required: f.mfa_required.checked };
+    try {
+      if (u) { await api('PATCH', '/api/users/' + u.id, body); closeModal(); }
+      else { body.email = f.email.value; if (f.password.value) body.password = f.password.value; const r = await api('POST', '/api/users', body); tempPw(r.temp_password, r.user.email); }
+      S.usersReload && S.usersReload(); S.paramedics = null;
+    } catch (er) { $('#uerr').textContent = errText(er); }
+  };
+}
+function tempPw(pw, email) { const m = openModal(esc(email)); m.body.innerHTML = `<p>${esc(t('u_temp'))}</p><div class="secret">${esc(pw)}</div><button class="btn" style="margin-top:12px" data-act="closeModal">${esc(t('close'))}</button>`; }
+
+// ───────── global actions
+const ACT = {
+  exportXlsx: async (el) => {
+    const kind = el.dataset.kind, f = { ...(S.f[kind === 'report' ? 'reports' : kind] || {}) };
+    if (kind === 'archive') f.archived = '1'; else if (kind === 'cases') f.archived = '0';
+    try {
+      const dl = window.claude && window.claude.use ? await window.claude.use('downloads') : null;
+      if (!dl) return toast(t('x_unavail'), 'err');
+      el.disabled = true;
+      const d = await api('GET', '/api/report?' + qs(f));
+      await dl.save({ filename: `EMS-${kind}-${new Date().toISOString().slice(0, 10)}.xlsx`, data: buildXlsx(xlsxSheets(d.stats, d.items, kind)) });
+      toast(t('x_saved'), 'ok');
+    } catch (e) { if (e && e.code === 'declined') toast(t('x_declined')); else toast(e && e.status ? errText(e) : t('x_unavail'), 'err'); }
+    finally { el.disabled = false; }
+  },
+  archiveAll: async () => {
+    if (!(await askConfirm(t('confirm_arch_all')))) return;
+    try { const r = await api('POST', '/api/archive/run', { all: true }); toast(`${r.archived} ${t('arch_done')}`, 'ok'); if (S.refresh) S.refresh(); } catch (e) { toast(errText(e), 'err'); }
+  },
+
+  forgot: async () => { const em = ($('#em') || {}).value; if (!em || !em.trim()) { $('#le').textContent = t('forgot_need'); return; } try { await api('POST', '/api/forgot', { email: em.trim() }); toast(t('forgot_sent'), 'ok'); } catch (e) { toast(errText(e), 'err'); } },
+  closeModal: () => closeModal(),
+  lang: () => { S.lang = S.lang === 'ar' ? 'en' : 'ar'; localStorage.setItem('lang', S.lang); if (!S.user) showLogin(); else if (S.user.blocked) showSetup(); else { renderShell(); connectEvents(); route(); } },
+  logout: async () => { try { await api('POST', '/api/logout'); } catch (_) {} S.user = null; stopEvents(); showLogin(); },
+  security: () => { const m = openModal(esc(t('security'))); m.body.dataset.full = '1'; securityPanel(m.body, async () => { const r = await api('GET', '/api/me'); S.user = r.user; securityPanel(m.body, null); }); },
+  qs: async (el) => {
+    const st = el.dataset.st; if (st === 'deceased' && !(await askConfirm(t('confirm_deceased')))) return;
+    el.disabled = true;
+    try { await api('POST', `/api/cases/${el.dataset.id}/status`, { status: st }); toast(t('status_updated'), 'ok'); if (S.refresh) S.refresh(); refreshBadge(); } catch (e) { toast(errText(e), 'err'); el.disabled = false; }
+  },
+  printReport: () => printReport().catch((e) => toast(errText(e), 'err')),
+  addUser: () => userForm(null),
+  editUser: (el) => userForm((S.usersCache || []).find((x) => x.id === +el.dataset.id)),
+  toggleUser: async (el) => { try { await api('PATCH', '/api/users/' + el.dataset.id, { active: el.dataset.on !== '1' }); S.usersReload(); S.paramedics = null; } catch (e) { toast(errText(e), 'err'); } },
+  resetPw: async (el) => { try { const r = await api('POST', `/api/users/${el.dataset.id}/reset-password`); const u = (S.usersCache || []).find((x) => x.id === +el.dataset.id); toast(t('reset_sent'), 'ok'); } catch (e) { toast(errText(e), 'err'); } },
+  resetMfa: async (el) => { try { await api('POST', `/api/users/${el.dataset.id}/reset-mfa`); toast('OK', 'ok'); S.usersReload(); } catch (e) { toast(errText(e), 'err'); } },
+  runArchive: async () => { try { const r = await api('POST', '/api/archive/run'); toast(`${r.archived} ${t('s_ran')}`, 'ok'); } catch (e) { toast(errText(e), 'err'); } },
+};
+document.addEventListener('click', async (e) => {
+  const nv = e.target.closest('[data-nav]');
+  if (nv) { e.preventDefault(); S.view0 = nv.dataset.nav; route(); return; }
+  const a = e.target.closest('[data-act]');
+  if (a) { e.preventDefault(); e.stopPropagation(); if (ACT[a.dataset.act]) await ACT[a.dataset.act](a); return; }
+  const pg = e.target.closest('[data-pg]');
+  if (pg) { const [k, dir] = pg.dataset.pg.split(':'); S.p[k] = Math.max(0, (S.p[k] || 0) + (+dir) * (k === 'audit' ? 50 : 30)); if (S.refresh) S.refresh(); return; }
+  const o = e.target.closest('[data-open]');
+  if (o && !e.target.closest('a,button,input,select')) openCase(+o.dataset.open);
+});
+
+window.addEventListener('ems-dberr',()=>toast(t('err_db'),'err'));
+// ───────── boot
+(async function boot() {
+  applyLang();
+  try { const r = await api('GET', '/api/me'); S.user = r.user; } catch (_) { S.user = null; }
+  start();
+})();
+})();
+
+</script>
+</body>
+</html>

@@ -274,6 +274,9 @@ Object.assign(I18N.en,{f_pname:'Patient Name',f_pid:'Patient ID Number',pid_hint
 Object.assign(I18N.ar,{st_cathlab:'كاث لاب ادمشن',k_cathlab:'حالات الكاث لاب'});
 Object.assign(I18N.en,{st_cathlab:'Cath Lab Admission',k_cathlab:'Cath Lab Cases'});
 
+Object.assign(I18N.ar,{f_para2:'المسعف الثاني (اختياري)',para2_other:'أخرى (اكتب الاسم)',f_para2_name:'اسم المسعف الثاني',f_para2_row:'المسعف الثاني',err_second_name_required:'اكتب اسم المسعف الثاني',err_second_same:'المسعف الثاني لا يمكن أن يكون نفس المسعف'});
+Object.assign(I18N.en,{f_para2:'Second paramedic (optional)',para2_other:'Other (type the name)',f_para2_name:'Second paramedic name',f_para2_row:'Second paramedic',err_second_name_required:'Enter the second paramedic name',err_second_same:'The second paramedic cannot be the same paramedic'});
+
 </script>
 <script>
 
@@ -324,7 +327,7 @@ const CLOSED = ['discharged', 'deceased'];
 const ROLES = ['paramedic', 'er', 'admin'];
 let DB, cur = null, FB = null, authUid = null, READY = null, subs = [], spec = {}, DATA = {}, PEND = [], lastU = 0;
 const shadow = {};
-const emptyDB = () => ({ users: [], cases: [], atts: [], audit: [], settings: { archive_after_days: 30, auto_archive: true } });
+const emptyDB = () => ({ users: [], cases: [], atts: [], audit: [], roster: [], settings: { archive_after_days: 30, auto_archive: true } });
 DB = emptyDB();
 const uid = () => { let v = Math.floor((Date.now() - 1.7e12) / 10) * 100 + Math.floor(Math.random() * 100); if (v <= lastU) v = lastU + 1; lastU = v; return v; };
 const nowIso = () => new Date().toISOString();
@@ -355,6 +358,17 @@ window.EventSource = class { constructor() { bus.add(this); setTimeout(() => thi
 const getCase = (id) => DB.cases.find((c) => c.id === id);
 const attCount = (c) => DB.atts.filter((a) => a.case_id === c.id && !a.deleted).length;
 const out = (c) => ({ ...c, att_count: attCount(c) });
+const rosterNow = () => DB.users.filter((u) => u.role === 'paramedic' && u.active && u.id).map((u) => ({ id: u.id, name: u.name })).sort((a, b) => String(a.name).localeCompare(String(b.name)));
+const settingsDoc = () => ({ ...DB.settings, roster: rosterNow() });
+function resolveSecond(user, ownId, sel, other) {
+  sel = clip(sel, 20); other = clip(other, 100);
+  if (!sel) return { second_paramedic_id: null, second_paramedic_name: null, second_paramedic_other: 0 };
+  if (sel === 'other') { if (!other) throw bad('second_name_required'); return { second_paramedic_id: null, second_paramedic_name: other, second_paramedic_other: 1 }; }
+  const id = +sel; if (!Number.isFinite(id)) throw bad('bad_request');
+  if (id === ownId) throw bad('second_same');
+  const r = (user.role === 'admin' ? rosterNow() : DB.roster).find((x) => x.id === id); if (!r) throw bad('bad_request');
+  return { second_paramedic_id: r.id, second_paramedic_name: r.name, second_paramedic_other: 0 };
+}
 const normId = (v) => String(v == null ? '' : v).replace(/[\u0660-\u0669]/g, (d) => d.charCodeAt(0) - 0x660).replace(/[\u06F0-\u06F9]/g, (d) => d.charCodeAt(0) - 0x6F0).replace(/[^A-Za-z0-9\-\/_.]/g, '').toUpperCase().slice(0, 30);
 const pub = (u) => ({ id: u.id, name: u.name, email: u.email, role: u.role, mfa_enabled: false, mfa_required: false, must_change_pw: false, blocked: false });
 function canView(u, c) { if (!c) return false; if (u.role === 'admin') return true; if (c.archived) return false; if (u.role === 'er') return true; return c.paramedic_id === u.id; }
@@ -367,12 +381,12 @@ function filt(q, user, archived) {
     if (user.role === 'paramedic' && c.paramedic_id !== user.id) return false;
     if (st.length && !st.includes(c.status)) return false;
     if (q.visa && VISA.includes(q.visa) && c.visa_type !== q.visa) return false;
-    if (q.paramedic && /^\d+$/.test(q.paramedic) && c.paramedic_id !== +q.paramedic) return false;
+    if (q.paramedic && /^\d+$/.test(q.paramedic) && c.paramedic_id !== +q.paramedic && c.second_paramedic_id !== +q.paramedic) return false;
     if (cl && !c.case_number.toLowerCase().includes(cl)) return false;
     const d = localDay(c.created_at);
     if (isDate(q.from) && d < q.from) return false;
     if (isDate(q.to) && d > q.to) return false;
-    if (ql && !(c.case_number + ' ' + c.paramedic_name + ' ' + c.chief_complaint + ' ' + (c.patient_name || '') + ' ' + (c.patient_id || '')).toLowerCase().includes(ql)) return false;
+    if (ql && !(c.case_number + ' ' + c.paramedic_name + ' ' + c.chief_complaint + ' ' + (c.patient_name || '') + ' ' + (c.patient_id || '') + ' ' + (c.second_paramedic_name || '')).toLowerCase().includes(ql)) return false;
     return true;
   };
 }
@@ -422,6 +436,7 @@ function statsFor(q, user) {
     if (r.status !== 'new' && r.status !== 'received') counts[r.status]++;
     byVisa[r.visa_type] = (byVisa[r.visa_type] || 0) + 1;
     byParamedic[r.paramedic_name] = (byParamedic[r.paramedic_name] || 0) + 1;
+    if (r.second_paramedic_name && r.second_paramedic_name !== r.paramedic_name) byParamedic[r.second_paramedic_name] = (byParamedic[r.second_paramedic_name] || 0) + 1;
   }
   const all = DB.cases.filter(filt({ ...q, from: undefined, to: undefined }, user, arch)).map((c) => c.created_at);
   const base = new Date(localKey(nowIso()).slice(0, 10) + 'T00:00:00Z').getTime();
@@ -446,7 +461,7 @@ function statsFor(q, user) {
   for (const r of rows) {
     const lk = localKey(r.created_at); hour[+lk.slice(11, 13)]++; weekday[new Date(lk).getUTCDay()]++;
     if (r.arrived_at) rec.push(mins(r.created_at, r.arrived_at)); if (r.arrived_at && r.closed_at) clo.push(mins(r.arrived_at, r.closed_at));
-    grp(gp, r.paramedic_name, r); grp(gv, r.visa_type, r);
+    grp(gp, r.paramedic_name, r); if (r.second_paramedic_name && r.second_paramedic_name !== r.paramedic_name) grp(gp, r.second_paramedic_name, r); grp(gv, r.visa_type, r);
   }
   const fin = (map) => Object.values(map).map((g) => ({ ...g, avg_receipt: avg(g.rec), rec: undefined })).sort((a, b) => b.total - a.total);
   return { counts, byVisa, byParamedic, byStatus, daily, weekly, monthly, hour, weekday, timing: { receipt: sum(rec), close: sum(clo) }, paramedics: fin(gp), visas: fin(gv) };
@@ -484,9 +499,10 @@ add('POST', '/api/cases', ['paramedic', 'admin'], async (c) => {
   if (!VISA.includes(visa_type)) throw bad('invalid_visa_type');
   if (!chief) throw bad('complaint_required');
   const patient_name = clip(f.get('patient_name'), 100) || null, patient_id = normId(f.get('patient_id')) || null;
+  const sec = resolveSecond(c.user, c.user.id, f.get('second_paramedic'), f.get('second_paramedic_other'));
   const files = await prepFiles(f);
   if (DB.cases.some((x) => x.case_number === case_number)) throw E(409, 'duplicate_case_number');
-  const cs = { id: uid(), case_number, created_at: nowIso(), paramedic_id: c.user.id, paramedic_uid: c.user.uid, paramedic_name: c.user.name, timeline: [{ at: nowIso(), status: 'new', by: c.user.name }], visa_type, chief_complaint: chief, notes: notes || null, patient_name, patient_id, status: 'new', arrived_at: null, status_updated_at: null, status_updated_by: null, closed_at: null, archived: 0, archived_at: null, archived_by: null };
+  const cs = { id: uid(), case_number, created_at: nowIso(), paramedic_id: c.user.id, paramedic_uid: c.user.uid, paramedic_name: c.user.name, timeline: [{ at: nowIso(), status: 'new', by: c.user.name }], visa_type, chief_complaint: chief, notes: notes || null, patient_name, patient_id, ...sec, status: 'new', arrived_at: null, status_updated_at: null, status_updated_by: null, closed_at: null, archived: 0, archived_at: null, archived_by: null };
   DB.cases.push(cs); const ids = addAtts(cs, c.user, files);
   audit(c.user, 'case_create', cs, { visa_type, attachments: ids.length }); broadcast('created', cs);
   return { case: out(cs) };
@@ -510,6 +526,7 @@ add('PATCH', '/api/cases/:id', ['paramedic', 'admin'], (c) => {
   if (b.notes !== undefined) upd.notes = clip(b.notes, 2000) || null;
   if (b.patient_name !== undefined) upd.patient_name = clip(b.patient_name, 100) || null;
   if (b.patient_id !== undefined) upd.patient_id = normId(b.patient_id) || null;
+  if (b.second_paramedic !== undefined) Object.assign(upd, resolveSecond(c.user, cs.paramedic_id, b.second_paramedic, b.second_paramedic_other));
   if (b.case_number !== undefined && c.user.role === 'admin') { const v = clip(b.case_number, 30); if (!caseRx.test(v)) throw bad('invalid_case_number'); if (v !== cs.case_number && DB.cases.some((x) => x.case_number === v)) throw E(409, 'duplicate_case_number'); upd.case_number = v; }
   const changes = {}; for (const [k, v] of Object.entries(upd)) if ((cs[k] ?? null) !== v) changes[k] = { from: cs[k] ?? null, to: v };
   if (!Object.keys(changes).length) return { case: out(cs) };
@@ -565,6 +582,7 @@ add('GET', '/api/report', ['admin'], (c) => {
 const userRow = (u) => ({ id: u.id, email: u.email, name: u.name, role: u.role, active: !!u.active, mfa_enabled: false, mfa_required: !!u.mfa_required, must_change_pw: false, last_login: u.last_login, created_at: u.created_at });
 const genPw = () => 'Tmp' + Math.random().toString(36).slice(2, 10) + '9';
 add('GET', '/api/users', ['admin'], () => ({ items: [...DB.users].sort((a, b) => (a.role + a.name).localeCompare(b.role + b.name)).map(userRow) }));
+add('GET', '/api/roster', ALL, (c) => ({ items: c.user.role === 'admin' ? rosterNow() : DB.roster }));
 add('GET', '/api/users/paramedics', ['admin'], () => ({ items: DB.users.filter((u) => u.role === 'paramedic').map((u) => ({ id: u.id, name: u.name })) }));
 add('POST', '/api/users', ['admin'], async (c) => {
   const b = c.body, name = clip(b.name, 100), email = clip(b.email, 200).toLowerCase();
@@ -666,7 +684,7 @@ async function flush() {
       if (jobs.length) await pool(jobs, 3);
       const rest = [];
       for (const col of COLS) for (const it of DB[col]) { const id = docKey(col, it), key = col + '/' + id, js = cj(it); if (shadow[key] !== js) { shadow[key] = js; rest.push(() => FB.set(col, id, JSON.parse(js))); } }
-      const u = curUser(), sj = cj(DB.settings);
+      const u = curUser(), sj = cj(settingsDoc());
       if (u && u.role === 'admin' && shadow['settings/main'] !== sj) { shadow['settings/main'] = sj; rest.push(() => FB.set('settings', 'main', JSON.parse(sj))); }
       if (rest.length) await pool(rest, 6);
     } while (again);
@@ -699,13 +717,14 @@ async function attach() {
   const first = [];
   const listen = (col, wheres, opts) => { spec[col] = { wheres, opts }; first.push(new Promise((res) => { let f = true; subs.push(FB.listen(col, wheres, opts, (chs) => { applyChanges(col, chs, f); if (f) { f = false; res(); } }, (e) => { console.error(col, e); if (f) { f = false; res(); } })); })); };
   const listenDoc = (col, id) => { spec[col] = { doc: id }; first.push(new Promise((res) => { let f = true; subs.push(FB.listenDoc(col, id, (d) => { applyChanges(col, [{ type: d ? 'modified' : 'removed', id, data: d }], f); if (f) { f = false; res(); } }, (e) => { console.error(col, e); if (f) { f = false; res(); } })); })); };
+  const listenRoster = () => first.push(new Promise((res) => { let f = true; subs.push(FB.listenDoc('settings', 'main', (d) => { DB.roster = d && Array.isArray(d.roster) ? d.roster : []; if (f) { f = false; res(); } }, () => { if (f) { f = false; res(); } })); }));
   if (prof.role === 'admin') {
     listen('users', []); listen('cases', []); listen('atts', []); listen('audit', [], { orderBy: ['ts', 'desc'], limit: 3000 });
-    first.push(new Promise((res) => { let f = true; subs.push(FB.listenDoc('settings', 'main', (d) => { if (d) { DB.settings = { archive_after_days: +d.archive_after_days || 30, auto_archive: !!d.auto_archive }; shadow['settings/main'] = cj(DB.settings); } if (f) { f = false; res(); } }, () => { if (f) { f = false; res(); } })); }));
+    first.push(new Promise((res) => { let f = true; subs.push(FB.listenDoc('settings', 'main', (d) => { if (d) { DB.settings = { archive_after_days: +d.archive_after_days || 30, auto_archive: !!d.auto_archive }; shadow['settings/main'] = cj(settingsDoc()); } if (f) { f = false; res(); } }, () => { if (f) { f = false; res(); } })); }));
   } else if (prof.role === 'er') {
-    listenDoc('users', au); listen('cases', [['archived', '==', 0]]); listen('atts', []);
+    listenDoc('users', au); listenRoster(); listen('cases', [['archived', '==', 0]]); listen('atts', []);
   } else {
-    listenDoc('users', au); listen('cases', [['paramedic_uid', '==', au], ['archived', '==', 0]]); listen('atts', [['paramedic_uid', '==', au]]);
+    listenDoc('users', au); listenRoster(); listen('cases', [['paramedic_uid', '==', au], ['archived', '==', 0]]); listen('atts', [['paramedic_uid', '==', au]]);
   }
   await Promise.race([Promise.all(first), sleep(20000)]);
   const me = DB.users.find((x) => x.uid === au); if (!me) { detach(); return null; }
@@ -913,7 +932,7 @@ function pagerHtml(key, total, off, lim) {
 }
 function caseCard(c, extra = '') {
   return `<div class="case s-${c.status}" data-open="${c.id}"><div class="case-h"><b>#${esc(c.case_number)}</b>${stB(c.status)}</div><p>${esc(c.chief_complaint)}</p>
-  <div class="meta">${c.patient_name ? `<span>👤 ${esc(c.patient_name)}</span>` : ''}<span>${esc(visaL(c.visa_type))}</span><span>${esc(c.paramedic_name)}</span><span>${esc(fmtDT(c.created_at))}</span>${c.att_count ? `<span>📎 ${c.att_count}</span>` : ''}</div>${extra}</div>`;
+  <div class="meta">${c.patient_name ? `<span>👤 ${esc(c.patient_name)}</span>` : ''}<span>${esc(visaL(c.visa_type))}</span><span>${esc(c.paramedic_name)}${c.second_paramedic_name ? ' + ' + esc(c.second_paramedic_name) : ''}</span><span>${esc(fmtDT(c.created_at))}</span>${c.att_count ? `<span>📎 ${c.att_count}</span>` : ''}</div>${extra}</div>`;
 }
 function steps(c) {
   const out = ['discharged', 'admitted', 'icu', 'cathlab', 'deceased'].includes(c.status);
@@ -925,7 +944,7 @@ function quickButtons(c) {
 }
 function casesTable(items, o = {}) {
   if (!items.length) return `<div class="empty">${esc(t('none'))}</div>`;
-  return `<div class="tw"><table><thead><tr><th>${esc(t('f_case_number'))}</th><th>${esc(t('f_created'))}</th><th>${esc(t('f_paramedic'))}</th><th>${esc(t('f_visa'))}</th><th>${esc(t('f_pname'))}</th><th>${esc(t('f_complaint'))}</th><th>${esc(t('f_status'))}</th><th>${esc(t('f_updated'))}</th>${o.archive ? `<th>${esc(t('f_archived_at'))}</th>` : ''}<th>📎</th></tr></thead><tbody>${items.map((c) => `<tr class="click" data-open="${c.id}"><td class="nw"><b>#${esc(c.case_number)}</b></td><td class="nw">${esc(fmtDT(c.created_at))}</td><td>${esc(c.paramedic_name)}</td><td>${esc(visaL(c.visa_type))}</td><td>${esc(c.patient_name || '')}</td><td>${esc(c.chief_complaint)}</td><td>${stB(c.status)}</td><td class="nw">${esc(fmtDT(c.status_updated_at))}${c.status_updated_by ? `<br><small>${esc(c.status_updated_by)}</small>` : ''}</td>${o.archive ? `<td class="nw">${esc(fmtDT(c.archived_at))}<br><small>${esc(c.archived_by || '')}</small></td>` : ''}<td>${c.att_count || ''}</td></tr>`).join('')}</tbody></table></div>`;
+  return `<div class="tw"><table><thead><tr><th>${esc(t('f_case_number'))}</th><th>${esc(t('f_created'))}</th><th>${esc(t('f_paramedic'))}</th><th>${esc(t('f_visa'))}</th><th>${esc(t('f_pname'))}</th><th>${esc(t('f_complaint'))}</th><th>${esc(t('f_status'))}</th><th>${esc(t('f_updated'))}</th>${o.archive ? `<th>${esc(t('f_archived_at'))}</th>` : ''}<th>📎</th></tr></thead><tbody>${items.map((c) => `<tr class="click" data-open="${c.id}"><td class="nw"><b>#${esc(c.case_number)}</b></td><td class="nw">${esc(fmtDT(c.created_at))}</td><td>${esc(c.paramedic_name)}${c.second_paramedic_name ? '<br><small>+ ' + esc(c.second_paramedic_name) + '</small>' : ''}</td><td>${esc(visaL(c.visa_type))}</td><td>${esc(c.patient_name || '')}</td><td>${esc(c.chief_complaint)}</td><td>${stB(c.status)}</td><td class="nw">${esc(fmtDT(c.status_updated_at))}${c.status_updated_by ? `<br><small>${esc(c.status_updated_by)}</small>` : ''}</td>${o.archive ? `<td class="nw">${esc(fmtDT(c.archived_at))}<br><small>${esc(c.archived_by || '')}</small></td>` : ''}<td>${c.att_count || ''}</td></tr>`).join('')}</tbody></table></div>`;
 }
 // generic cases list page
 function casesView(key, cfg) {
@@ -947,11 +966,12 @@ function casesView(key, cfg) {
 }
 
 // ───────── paramedic views
-VIEWS.new = (main) => {
+VIEWS.new = async (main) => {
+  let RS = []; try { RS = (await api('GET', '/api/roster')).items.filter((r) => r.id !== S.user.id); } catch (e) { RS = []; }
   main.innerHTML = `<h1>${esc(t('nav_new'))}</h1><form class="card" id="nf" style="max-width:640px">
   <label>${esc(t('f_case_number'))} *</label><input type="text" name="case_number" required maxlength="30" pattern="[A-Za-z0-9][A-Za-z0-9_\\/\\-]{0,29}" autocomplete="off" inputmode="text">
   <label>${esc(t('f_datetime'))} (${esc(t('f_auto'))})</label><input type="text" id="dtv" readonly>
-  <label>${esc(t('f_paramedic'))} (${esc(t('f_auto'))})</label><input type="text" readonly value="${esc(S.user.name)}">
+  <label>${esc(t('f_paramedic'))} (${esc(t('f_auto'))})</label><input type="text" readonly value="${esc(S.user.name)}">${secondField(RS, null)}
   <label>${esc(t('f_visa'))} *</label><select name="visa_type" required><option value="">—</option>${opts(VIS, visaL)}</select>
   <label>${esc(t('f_complaint'))} *</label><textarea name="chief_complaint" required maxlength="500"></textarea>
   <label>${esc(t('f_notes'))}</label><textarea name="notes" maxlength="2000"></textarea>
@@ -962,7 +982,7 @@ VIEWS.new = (main) => {
   const tick = () => { const el = $('#dtv'); if (el) el.value = fmtDT(new Date().toISOString()); }; tick();
   const iv = setInterval(() => { if (!$('#dtv')) clearInterval(iv); else tick(); }, 20000);
   const vsel = $('select[name=visa_type]'), pidHint = () => { const k = { Saudi: 'pid_hint_national', Resident: 'pid_hint_iqama', Umrah: 'pid_hint_passport', Tourist: 'pid_hint_passport', Visit: 'pid_hint_passport' }[vsel.value] || 'pid_hint_any'; $('#pidh').textContent = t(k); $('#pid').placeholder = t(k); };
-  vsel.onchange = pidHint; pidHint();
+  vsel.onchange = pidHint; pidHint(); wireSecond($('#nf'));
   const file = $('#nfile');
   file.onchange = () => { $('#prev').innerHTML = [...file.files].map((f) => `<div class="th">${f.type.startsWith('image/') && !/heic/i.test(f.type) ? `<img alt="" src="${URL.createObjectURL(f)}">` : `<div class="file">${esc(f.name.slice(0, 18))}</div>`}</div>`).join(''); };
   $('#nf').onsubmit = async (e) => {
@@ -1090,8 +1110,8 @@ function buildXlsx(sheets) {
 }
 function xlsxSheets(st, items, kind) {
   const k = st.counts, T = k.total, R = k.received, P = (n, d) => ({ pct: true, v: d ? n / d : 0 });
-  const cases = [[t('f_case_number'), t('f_created'), t('f_paramedic'), t('f_visa'), t('f_complaint'), t('f_notes'), t('f_status'), t('f_arrival'), t('f_updated'), t('f_updated_by'), t('x_min_receipt'), t('x_min_close'), t('x_archived'), t('f_archived_at'), t('f_pname'), t('f_pid')]];
-  for (const c of items) cases.push([c.case_number, fmtDT(c.created_at), c.paramedic_name, visaL(c.visa_type), c.chief_complaint, c.notes || '', t('st_' + c.status), c.arrived_at ? fmtDT(c.arrived_at) : '', c.status_updated_at ? fmtDT(c.status_updated_at) : '', c.status_updated_by || '', c.arrived_at ? mins(c.created_at, c.arrived_at) : '', c.arrived_at && c.closed_at ? mins(c.arrived_at, c.closed_at) : '', c.archived ? t('yes') : t('no'), c.archived_at ? fmtDT(c.archived_at) : '', c.patient_name || '', c.patient_id || '']);
+  const cases = [[t('f_case_number'), t('f_created'), t('f_paramedic'), t('f_visa'), t('f_complaint'), t('f_notes'), t('f_status'), t('f_arrival'), t('f_updated'), t('f_updated_by'), t('x_min_receipt'), t('x_min_close'), t('x_archived'), t('f_archived_at'), t('f_pname'), t('f_pid'), t('f_para2_row')]];
+  for (const c of items) cases.push([c.case_number, fmtDT(c.created_at), c.paramedic_name, visaL(c.visa_type), c.chief_complaint, c.notes || '', t('st_' + c.status), c.arrived_at ? fmtDT(c.arrived_at) : '', c.status_updated_at ? fmtDT(c.status_updated_at) : '', c.status_updated_by || '', c.arrived_at ? mins(c.created_at, c.arrived_at) : '', c.arrived_at && c.closed_at ? mins(c.arrived_at, c.closed_at) : '', c.archived ? t('yes') : t('no'), c.archived_at ? fmtDT(c.archived_at) : '', c.patient_name || '', c.patient_id || '', c.second_paramedic_name || '']);
   const sum = [[t('m_metric'), t('c_count'), t('s_pct_total'), t('s_pct_recv')]];
   [['k_total', k.total], ['k_today', k.today], ['k_month', k.month], ['k_received', k.received], ['k_pending', k.pending], ['k_in_er', k.in_er], ['k_discharged', k.discharged], ['k_admitted', k.admitted], ['k_icu', k.icu], ['k_cathlab', k.cathlab], ['k_deceased', k.deceased]].forEach(([key, n]) => sum.push([t(key), n, P(n, T), ['k_discharged', 'k_admitted', 'k_icu', 'k_cathlab', 'k_deceased'].includes(key) ? P(n, R) : '']));
   sum.push(['', '', '', ''], [t('t_to_receipt'), '', '', ''], [t('t_avg') + ' (' + t('unit_min') + ')', st.timing.receipt.avg, '', ''], [t('t_median') + ' (' + t('unit_min') + ')', st.timing.receipt.median, '', ''], [t('t_max') + ' (' + t('unit_min') + ')', st.timing.receipt.max, '', ''], [t('t_to_close'), '', '', ''], [t('t_avg') + ' (' + t('unit_min') + ')', st.timing.close.avg, '', ''], [t('t_median') + ' (' + t('unit_min') + ')', st.timing.close.median, '', ''], [t('t_max') + ' (' + t('unit_min') + ')', st.timing.close.max, '', '']);
@@ -1101,7 +1121,7 @@ function xlsxSheets(st, items, kind) {
   const hr = [[t('c_name'), t('c_count'), t('c_pct')]]; st.hour.forEach((n, i) => hr.push([String(i).padStart(2, '0') + ':00', n, P(n, T)]));
   const wd = [[t('c_name'), t('c_count'), t('c_pct')]]; st.weekday.forEach((n, i) => wd.push([WD()[i], n, P(n, T)]));
   const dl = [[t('c_name'), t('c_count')]]; st.daily.forEach((d) => dl.push([d.label, d.n]));
-  return [{ name: t(kind === 'archive' ? 'sh_arch' : 'sh_cases'), rows: cases, widths: [16, 17, 22, 14, 40, 40, 18, 17, 17, 22, 14, 16, 10, 17, 24, 20] }, { name: t('st_sheet'), rows: sum, widths: [34, 12, 16, 16] }, { name: t('sh_status'), rows: byStatus, widths: [24, 12, 12] }, { name: t('sh_visa'), rows: grp(st.visas, visaL), widths: [20, 10, 10, 14, 12, 12, 12, 12, 12, 18] }, { name: t('sh_para'), rows: grp(st.paramedics, (x) => x), widths: [26, 10, 10, 14, 12, 12, 12, 12, 12, 18] }, { name: t('sh_hour'), rows: hr, widths: [14, 10, 10] }, { name: t('sh_wd'), rows: wd, widths: [14, 10, 10] }, { name: t('sh_daily'), rows: dl, widths: [14, 10] }];
+  return [{ name: t(kind === 'archive' ? 'sh_arch' : 'sh_cases'), rows: cases, widths: [16, 17, 22, 14, 40, 40, 18, 17, 17, 22, 14, 16, 10, 17, 24, 20, 22] }, { name: t('st_sheet'), rows: sum, widths: [34, 12, 16, 16] }, { name: t('sh_status'), rows: byStatus, widths: [24, 12, 12] }, { name: t('sh_visa'), rows: grp(st.visas, visaL), widths: [20, 10, 10, 14, 12, 12, 12, 12, 12, 18] }, { name: t('sh_para'), rows: grp(st.paramedics, (x) => x), widths: [26, 10, 10, 14, 12, 12, 12, 12, 12, 18] }, { name: t('sh_hour'), rows: hr, widths: [14, 10, 10] }, { name: t('sh_wd'), rows: wd, widths: [14, 10, 10] }, { name: t('sh_daily'), rows: dl, widths: [14, 10] }];
 }
 function withBar(view, html) { return async (main) => { await view(main); const h1 = $('h1', main); if (h1) h1.insertAdjacentHTML('afterend', html()); }; }
 VIEWS.reports = async (main) => {
@@ -1119,7 +1139,7 @@ async function printReport() {
   const filt = Object.entries(f).map(([a, b]) => `${a}: ${b}`).join(' · ') || t('f_all');
   $('#printArea').innerHTML = `<h1>${esc(t('hospital'))} – ${esc(t('rep_title'))}</h1><p>${esc(t('rep_generated'))}: ${esc(fmtDT(d.generated_at))} · ${esc(S.user.name)}<br>${esc(filt)}</p>
   <h2>${esc(t('rep_summary'))}</h2><table><tbody><tr>${[['k_total', k.total], ['k_today', k.today], ['k_month', k.month], ['k_received', k.received], ['k_pending', k.pending], ['k_discharged', k.discharged], ['k_admitted', k.admitted], ['k_icu', k.icu], ['k_cathlab', k.cathlab], ['k_deceased', k.deceased]].map(([a, b]) => `<th>${esc(t(a))}</th><td>${b}</td>`).join('</tr><tr>')}</tr></tbody></table>
-  <h2>${esc(t('nav_cases'))} (${d.items.length})</h2><table><thead><tr><th>${esc(t('f_case_number'))}</th><th>${esc(t('f_created'))}</th><th>${esc(t('f_paramedic'))}</th><th>${esc(t('f_visa'))}</th><th>${esc(t('f_pname'))}</th><th>${esc(t('f_complaint'))}</th><th>${esc(t('f_status'))}</th><th>${esc(t('f_arrival'))}</th><th>${esc(t('f_updated_by'))}</th></tr></thead><tbody>${d.items.map((c) => `<tr><td>${esc(c.case_number)}</td><td>${esc(fmtDT(c.created_at))}</td><td>${esc(c.paramedic_name)}</td><td>${esc(visaL(c.visa_type))}</td><td>${esc(c.patient_name || '')}</td><td>${esc(c.chief_complaint)}</td><td>${esc(t('st_' + c.status))}</td><td>${esc(fmtDT(c.arrived_at))}</td><td>${esc(c.status_updated_by || '')}</td></tr>`).join('')}</tbody></table>`;
+  <h2>${esc(t('nav_cases'))} (${d.items.length})</h2><table><thead><tr><th>${esc(t('f_case_number'))}</th><th>${esc(t('f_created'))}</th><th>${esc(t('f_paramedic'))}</th><th>${esc(t('f_visa'))}</th><th>${esc(t('f_pname'))}</th><th>${esc(t('f_complaint'))}</th><th>${esc(t('f_status'))}</th><th>${esc(t('f_arrival'))}</th><th>${esc(t('f_updated_by'))}</th></tr></thead><tbody>${d.items.map((c) => `<tr><td>${esc(c.case_number)}</td><td>${esc(fmtDT(c.created_at))}</td><td>${esc(c.paramedic_name)}${c.second_paramedic_name ? '<br><small>+ ' + esc(c.second_paramedic_name) + '</small>' : ''}</td><td>${esc(visaL(c.visa_type))}</td><td>${esc(c.patient_name || '')}</td><td>${esc(c.chief_complaint)}</td><td>${esc(t('st_' + c.status))}</td><td>${esc(fmtDT(c.arrived_at))}</td><td>${esc(c.status_updated_by || '')}</td></tr>`).join('')}</tbody></table>`;
   api('POST', '/api/report/print', { ...f, rows: d.items.length }).catch(() => {});
   setTimeout(() => window.print(), 100);
 }
@@ -1212,12 +1232,28 @@ function viewer(list, i0) {
   show();
 }
 
+
+// ───────── v4: second paramedic
+const secondField = (roster, cur) => {
+  cur = cur || {};
+  const sel = cur.second_paramedic_other ? 'other' : (cur.second_paramedic_id ? String(cur.second_paramedic_id) : '');
+  const list = roster.slice();
+  if (cur.second_paramedic_id && !list.some((r) => r.id === cur.second_paramedic_id)) list.push({ id: cur.second_paramedic_id, name: cur.second_paramedic_name });
+  return `<label>${esc(t('f_para2'))}</label><select name="second_paramedic" data-sp2><option value="">—</option>${list.map((r) => `<option value="${r.id}" ${String(r.id) === sel ? 'selected' : ''}>${esc(r.name)}</option>`).join('')}<option value="other" ${sel === 'other' ? 'selected' : ''}>${esc(t('para2_other'))}</option></select><div data-sp2o ${sel === 'other' ? '' : 'hidden'}><label>${esc(t('f_para2_name'))} *</label><input type="text" name="second_paramedic_other" maxlength="100" autocomplete="off" value="${esc(cur.second_paramedic_other ? cur.second_paramedic_name || '' : '')}"></div>`;
+};
+const wireSecond = (root) => {
+  const s = root.querySelector('[data-sp2]'), o = root.querySelector('[data-sp2o]'); if (!s || !o) return;
+  const f = () => { const on = s.value === 'other'; o.hidden = !on; o.querySelector('input').required = on; };
+  s.onchange = f; f();
+};
+
 // ───────── case dialog
 async function openCase(id) {
   const m = openModal('…'); m.body.innerHTML = `<div class="empty">${esc(t('loading'))}</div>`;
   const st = { id, editing: false, m };
   const load = async () => { try { st.d = await api('GET', '/api/cases/' + id); } catch (e) { closeModal(); toast(errText(e), 'err'); return false; } return true; };
   const draw = () => renderCase(st, load, draw);
+  try { st.roster = (await api('GET', '/api/roster')).items; } catch (e) { st.roster = []; }
   if (await load()) draw();
 }
 function renderCase(st, load, draw) {
@@ -1233,9 +1269,9 @@ function renderCase(st, load, draw) {
   }).join('');
   let h = '';
   if (st.editing) {
-    h += `<form id="ef"><label>${esc(t('f_visa'))}</label><select name="visa_type">${opts(VIS, visaL, c.visa_type)}</select>${u.role === 'admin' ? `<label>${esc(t('f_case_number'))}</label><input type="text" name="case_number" maxlength="30" value="${esc(c.case_number)}">` : ''}<label>${esc(t('f_complaint'))}</label><textarea name="chief_complaint" maxlength="500" required>${esc(c.chief_complaint)}</textarea><label>${esc(t('f_notes'))}</label><textarea name="notes" maxlength="2000">${esc(c.notes || '')}</textarea><label>${esc(t('f_pname'))}</label><input type="text" name="patient_name" maxlength="100" autocomplete="off" dir="auto" value="${esc(c.patient_name || '')}"><label>${esc(t('f_pid'))}</label><input type="text" name="patient_id" maxlength="30" autocomplete="off" autocapitalize="characters" autocorrect="off" spellcheck="false" dir="auto" value="${esc(c.patient_id || '')}"><div class="err-msg" id="ee"></div><div class="row" style="margin-top:10px"><button class="btn">${esc(t('save'))}</button><button type="button" class="btn sec" id="ec">${esc(t('cancel'))}</button></div></form>`;
+    h += `<form id="ef"><label>${esc(t('f_visa'))}</label><select name="visa_type">${opts(VIS, visaL, c.visa_type)}</select>${u.role === 'admin' ? `<label>${esc(t('f_case_number'))}</label><input type="text" name="case_number" maxlength="30" value="${esc(c.case_number)}">` : ''}${secondField((st.roster || []).filter((r) => r.id !== c.paramedic_id), c)}<label>${esc(t('f_complaint'))}</label><textarea name="chief_complaint" maxlength="500" required>${esc(c.chief_complaint)}</textarea><label>${esc(t('f_notes'))}</label><textarea name="notes" maxlength="2000">${esc(c.notes || '')}</textarea><label>${esc(t('f_pname'))}</label><input type="text" name="patient_name" maxlength="100" autocomplete="off" dir="auto" value="${esc(c.patient_name || '')}"><label>${esc(t('f_pid'))}</label><input type="text" name="patient_id" maxlength="30" autocomplete="off" autocapitalize="characters" autocorrect="off" spellcheck="false" dir="auto" value="${esc(c.patient_id || '')}"><div class="err-msg" id="ee"></div><div class="row" style="margin-top:10px"><button class="btn">${esc(t('save'))}</button><button type="button" class="btn sec" id="ec">${esc(t('cancel'))}</button></div></form>`;
   } else {
-    h += `<dl class="dl"><dt>${esc(t('f_complaint'))}</dt><dd>${esc(c.chief_complaint)}</dd><dt>${esc(t('f_visa'))}</dt><dd>${esc(visaL(c.visa_type))}</dd>${c.patient_name ? `<dt>${esc(t('f_pname'))}</dt><dd dir="auto">${esc(c.patient_name)}</dd>` : ''}${c.patient_id ? `<dt>${esc(t('f_pid'))}</dt><dd dir="auto">${esc(c.patient_id)}</dd>` : ''}<dt>${esc(t('f_paramedic'))}</dt><dd>${esc(c.paramedic_name)}</dd><dt>${esc(t('f_created'))}</dt><dd>${esc(fmtDT(c.created_at))}</dd>${c.notes ? `<dt>${esc(t('f_notes'))}</dt><dd>${esc(c.notes).replace(/\n/g, '<br>')}</dd>` : ''}${c.arrived_at ? `<dt>${esc(t('f_arrival'))}</dt><dd>${esc(fmtDT(c.arrived_at))}</dd>` : ''}${c.status_updated_at ? `<dt>${esc(t('f_updated'))}</dt><dd>${esc(fmtDT(c.status_updated_at))} · ${esc(c.status_updated_by || '')}</dd>` : ''}${c.archived ? `<dt>${esc(t('f_archived_at'))}</dt><dd>${esc(fmtDT(c.archived_at))} · ${esc(c.archived_by || '')}</dd>` : ''}</dl>`;
+    h += `<dl class="dl"><dt>${esc(t('f_complaint'))}</dt><dd>${esc(c.chief_complaint)}</dd><dt>${esc(t('f_visa'))}</dt><dd>${esc(visaL(c.visa_type))}</dd>${c.patient_name ? `<dt>${esc(t('f_pname'))}</dt><dd dir="auto">${esc(c.patient_name)}</dd>` : ''}${c.patient_id ? `<dt>${esc(t('f_pid'))}</dt><dd dir="auto">${esc(c.patient_id)}</dd>` : ''}<dt>${esc(t('f_paramedic'))}</dt><dd>${esc(c.paramedic_name)}</dd>${c.second_paramedic_name ? `<dt>${esc(t('f_para2_row'))}</dt><dd>${esc(c.second_paramedic_name)}</dd>` : ''}<dt>${esc(t('f_created'))}</dt><dd>${esc(fmtDT(c.created_at))}</dd>${c.notes ? `<dt>${esc(t('f_notes'))}</dt><dd>${esc(c.notes).replace(/\n/g, '<br>')}</dd>` : ''}${c.arrived_at ? `<dt>${esc(t('f_arrival'))}</dt><dd>${esc(fmtDT(c.arrived_at))}</dd>` : ''}${c.status_updated_at ? `<dt>${esc(t('f_updated'))}</dt><dd>${esc(fmtDT(c.status_updated_at))} · ${esc(c.status_updated_by || '')}</dd>` : ''}${c.archived ? `<dt>${esc(t('f_archived_at'))}</dt><dd>${esc(fmtDT(c.archived_at))} · ${esc(c.archived_by || '')}</dd>` : ''}</dl>`;
   }
   h += `<h2 style="margin-top:18px">${esc(t('f_attachments'))}</h2><div class="thumbs">${atts || `<span class="hint">${esc(t('none'))}</span>`}</div>${imgs.length ? `<div class="row" style="margin-top:10px">${imgs.map((a, k) => `<button type="button" class="btn" data-view="${k}">🖼 ${esc(t('view_img'))}${imgs.length > 1 ? ' ' + (k + 1) : ''}</button>`).join('')}</div>` : ''}`;
   if (canEdit) h += `<div style="margin-top:8px"><label class="btn sec sm" style="display:inline-flex;margin:0;cursor:pointer">+ ${esc(t('add_doc'))}<input type="file" id="addf" accept="image/*" multiple hidden></label></div>`;
@@ -1255,11 +1291,11 @@ function renderCase(st, load, draw) {
   const B = m.body, fail = (id, e) => { const el = $('#' + id, B); if (el) el.textContent = errText(e); else toast(errText(e), 'err'); };
   $$('[data-view]', B).forEach((b) => { b.onclick = () => viewer(imgs, +b.dataset.view); });
   $$('.th img[data-aid]', B).forEach((im) => { im.style.cursor = 'zoom-in'; im.onclick = () => viewer(imgs, imgs.findIndex((a) => String(a.id) === im.dataset.aid)); });
-  wireImgShare(B, c, imgs);
+  wireImgShare(B, c, imgs); wireSecond(B);
   const eb = $('#eb', B); if (eb) eb.onclick = () => { st.editing = true; draw(); };
   const ec = $('#ec', B); if (ec) ec.onclick = () => { st.editing = false; draw(); };
   const ef = $('#ef', B);
-  if (ef) ef.onsubmit = async (e) => { e.preventDefault(); const f = e.target; const body = { visa_type: f.visa_type.value, chief_complaint: f.chief_complaint.value, notes: f.notes.value, patient_name: f.patient_name.value, patient_id: f.patient_id.value }; if (f.case_number) body.case_number = f.case_number.value; try { await api('PATCH', '/api/cases/' + c.id, body); toast(t('case_updated'), 'ok'); st.editing = false; reload(); } catch (er) { fail('ee', er); } };
+  if (ef) ef.onsubmit = async (e) => { e.preventDefault(); const f = e.target; const body = { visa_type: f.visa_type.value, chief_complaint: f.chief_complaint.value, notes: f.notes.value, patient_name: f.patient_name.value, patient_id: f.patient_id.value, second_paramedic: f.second_paramedic.value, second_paramedic_other: f.second_paramedic_other.value }; if (f.case_number) body.case_number = f.case_number.value; try { await api('PATCH', '/api/cases/' + c.id, body); toast(t('case_updated'), 'ok'); st.editing = false; reload(); } catch (er) { fail('ee', er); } };
   $$('[data-rm]', B).forEach((b) => { b.onclick = async (e) => { e.preventDefault(); e.stopPropagation(); if (!(await askConfirm(t('confirm_delete_att')))) return; try { await api('DELETE', '/api/attachments/' + b.dataset.rm); reload(); } catch (er) { fail('ee', er); } }; });
   const addf = $('#addf', B);
   if (addf) addf.onchange = async () => { const fd = new FormData(); for (const f of addf.files) fd.append('files', f, f.name); try { await api('POST', `/api/cases/${c.id}/attachments`, fd); reload(); } catch (er) { toast(errText(er), 'err'); } };

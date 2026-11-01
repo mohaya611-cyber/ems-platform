@@ -171,6 +171,18 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .bar-in{display:inline-block;height:8px;border-radius:99px;background:var(--blue);vertical-align:middle;margin-inline-start:8px}
 .mini{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin-bottom:12px}
 
+.btn.wa{background:#1fa855;color:#fff;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.wa-pre{white-space:pre-wrap;word-break:break-word;background:#f3f6fa;border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:0;font:15px/1.9 inherit;font-family:inherit}
+.viewer{position:fixed;inset:0;z-index:120;background:#050c18;display:flex;flex-direction:column;direction:ltr}
+.vbar{display:flex;align-items:center;gap:8px;padding:10px 12px;padding-top:max(10px,env(safe-area-inset-top,0px));flex-wrap:wrap}
+.vbar .sp{flex:1}.vc{color:#fff;font-weight:700}
+.vb{background:#fff;color:#0b2545;border:0;border-radius:10px;min-height:44px;min-width:44px;padding:0 14px;font:700 16px system-ui,sans-serif;cursor:pointer}
+.vstage{flex:1;min-height:0;overflow:auto;display:flex;touch-action:pan-x pan-y;-webkit-overflow-scrolling:touch}
+.vstage img{margin:auto;display:block;max-width:100%;max-height:100%;object-fit:contain;cursor:zoom-in}
+.vstage img.z{max-width:none;max-height:none;cursor:zoom-out}
+.vl{position:absolute;inset:50% 0 auto;text-align:center;color:#fff;pointer-events:none}
+.vnav{display:flex;justify-content:center;gap:10px;padding:10px 12px;padding-bottom:max(10px,env(safe-area-inset-bottom,0px))}
+
 </style>
 </head>
 <body>
@@ -195,23 +207,23 @@ window.I18N = {
     nav_new: 'New Case', nav_mine: 'My Cases', nav_status: 'Case Status', nav_incoming: 'Incoming Cases', nav_tracking: 'Patient Tracking', nav_update: 'Update Status',
     nav_overview: 'Overview', nav_cases: 'All Cases', nav_stats: 'Statistics', nav_reports: 'Reports', nav_users: 'Users', nav_archive: 'Private Archive', nav_audit: 'Audit Log', nav_settings: 'Settings',
     role_paramedic: 'Paramedic', role_er: 'Hospital / ER', role_admin: 'Admin',
-    f_case_number: 'Case Number', f_datetime: 'Date & Time', f_paramedic: 'Paramedic Name', f_visa: 'Visa Type', f_complaint: 'Chief Complaint', f_notes: 'Patient Notes', f_doc: 'Visa / Document Image', f_submit: 'Submit Case', f_auto: 'automatic', f_doc_hint: 'Take a photo or choose a file (JPG, PNG, WEBP – max 10 MB each, up to 6)',
+    f_case_number: 'Case Number', f_datetime: 'Date & Time', f_paramedic: 'Paramedic Name', f_visa: 'ID Type', f_complaint: 'Chief Complaint', f_notes: 'Patient Notes', f_doc: 'Visa / Document Image', f_submit: 'Submit Case', f_auto: 'automatic', f_doc_hint: 'Take a photo or choose a file (JPG, PNG, WEBP – max 10 MB each, up to 6)',
     f_arrival: 'ER arrival time', f_arrival_hint: 'Leave empty to use the current time', f_status: 'Patient status', f_created: 'Sent at', f_updated: 'Last update', f_updated_by: 'Updated by', f_all: 'All', f_from: 'From', f_to: 'To', f_search_ph: 'Case no., paramedic, complaint…', f_attachments: 'Documents', f_history: 'Edit history', f_timeline: 'Status timeline', f_by: 'by', f_archived_at: 'Archived', f_final: 'Final status', f_closed: 'Closed',
     case_sent: 'Case submitted – the hospital can see it now', case_updated: 'Case updated', status_updated: 'Status updated', new_incoming: 'New incoming case', archived_ok: 'Case moved to the private archive', unarchived_ok: 'Case restored from the archive',
     confirm_receipt: 'Confirm receipt', confirm_deceased: 'Record this patient as deceased?', confirm_archive: 'Move this case to the private archive?', confirm_delete_att: 'Remove this document?',
     archive: 'Archive', unarchive: 'Restore', add_doc: 'Add document', remove: 'Remove', no_incoming: 'No incoming cases right now', no_open: 'No open cases',
     st_new: 'New Case', st_received: 'Received by ER', st_discharged: 'Discharged', st_admitted: 'Admitted', st_icu: 'ICU Admission', st_deceased: 'Deceased',
-    visa_Umrah: 'Umrah', visa_Tourist: 'Tourist', visa_Visit: 'Visit', visa_Resident: 'Resident', visa_Saudi: 'Saudi', visa_Unknown: 'Unknown', visa_Other: 'Other',
+    visa_Umrah: 'Umrah / Hajj', visa_Tourist: 'Tourist', visa_Visit: 'Visit', visa_Resident: 'Resident', visa_Saudi: 'Saudi', visa_Unknown: 'Unknown', visa_Other: 'Other',
     k_total: 'Total Cases', k_today: "Today's Cases", k_month: 'Monthly Cases', k_received: 'Received Cases', k_discharged: 'Discharged Cases', k_admitted: 'Admitted Cases', k_icu: 'ICU Cases', k_deceased: 'Deceased Cases', k_pending: 'Pending Cases', k_in_er: 'Currently in ER',
     k_received_hint: 'All cases received by the ER', k_pending_hint: 'Not received yet',
-    ch_daily: 'Daily (30 days)', ch_weekly: 'Weekly (12 weeks)', ch_monthly: 'Monthly (12 months)', ch_visa: 'By visa type', ch_status: 'By status', ch_paramedic: 'By paramedic', cases: 'cases',
+    ch_daily: 'Daily (30 days)', ch_weekly: 'Weekly (12 weeks)', ch_monthly: 'Monthly (12 months)', ch_visa: 'By ID type', ch_status: 'By status', ch_paramedic: 'By paramedic', cases: 'cases',
     rep_title: 'Cases report', rep_excel: 'Download Excel', rep_pdf: 'PDF / Print', rep_include: 'Include', rep_all: 'All cases', rep_active: 'Active only', rep_archived: 'Archived only', rep_generated: 'Generated', rep_summary: 'Summary', rep_hint: 'PDF opens the print dialog – choose “Save as PDF”.',
     u_name: 'Name', u_role: 'Role', u_active: 'Active', u_mfa: '2FA', u_last: 'Last login', u_add: 'Add user', u_temp: 'Temporary password (shown once – the user must change it at first login)', u_reset_pw: 'Reset password', u_reset_mfa: 'Reset 2FA', u_deactivate: 'Deactivate', u_activate: 'Activate', u_mfa_req: 'Require 2FA', u_never: 'never',
     au_when: 'When', au_user: 'User', au_action: 'Action', au_case: 'Case', au_details: 'Details', au_ip: 'IP',
     s_title: 'Retention & archive policy', s_days: 'Move closed cases (discharged / deceased) to the private archive after (days)', s_auto: 'Archive automatically', s_run: 'Run archive now', s_ran: 'cases archived', s_backup: 'Database backup', s_backup_btn: 'Download backup', s_backup_hint: 'Snapshot of all case data. Uploaded documents live in the data/uploads folder and must be backed up with it. Cases are never deleted – only archived.', s_saved: 'Settings saved',
     ov_recent: 'Latest cases',
     a_login: 'Sign in', a_logout: 'Sign out', a_login_failed: 'Failed sign-in', a_case_create: 'Case created', a_case_update: 'Case edited', a_status_change: 'Status changed', a_attachment_add: 'Document added', a_attachment_view: 'Document viewed', a_attachment_delete: 'Document removed', a_case_archive: 'Case archived', a_case_unarchive: 'Case restored', a_case_delete_attempt: 'Delete attempt (blocked)', a_archive_access: 'Archive accessed', a_archive_case_view: 'Archived case opened', a_report_export: 'Report exported', a_report_view: 'Report viewed', a_user_create: 'User created', a_user_update: 'User edited', a_user_password_reset: 'Password reset', a_user_mfa_reset: '2FA reset', a_settings_update: 'Settings changed', a_backup_download: 'Backup downloaded', a_password_change: 'Password changed', a_mfa_enabled: '2FA enabled', a_mfa_disabled: '2FA disabled',
-    err_invalid_credentials: 'Wrong email or password', err_account_locked: 'Account temporarily locked – try again in 15 minutes', err_rate_limited: 'Too many attempts, try again later', err_unauthenticated: 'Session expired – please sign in again', err_forbidden: 'You do not have permission for this', err_delete_not_allowed: 'Cases cannot be deleted – they are archived instead', err_duplicate_case_number: 'This case number already exists', err_invalid_case_number: 'Invalid case number (letters, digits, - _ / only)', err_invalid_visa_type: 'Choose a visa type', err_complaint_required: 'Chief complaint is required', err_bad_file_type: 'Unsupported file – use JPG, PNG or WEBP', err_file_too_large: 'File is larger than 10 MB', err_too_many_files: 'Maximum 6 documents per case', err_weak_password: 'Password must be at least 10 characters with letters and digits', err_wrong_password: 'Current password is wrong', err_same_password: 'Choose a different password', err_invalid_mfa: 'Wrong authentication code', err_mfa_required_by_policy: '2FA is required for this account', err_case_locked: 'The hospital already received this case – it can no longer be edited', err_case_archived: 'The case is archived', err_only_closed_can_archive: 'Only discharged / deceased cases can be archived', err_arrival_in_future: 'Arrival time is in the future', err_arrival_before_case: 'Arrival time is before the case was sent', err_email_exists: 'Email already exists', err_invalid_email: 'Invalid email', err_name_required: 'Name is required', err_cannot_change_self: 'You cannot deactivate or demote yourself', err_last_admin: 'At least one active admin is required', err_setup_required: 'Finish the account setup first', err_server_error: 'Server error – please try again', err_not_found: 'Not found', err_too_large: 'Upload is too large', err_invalid_setting: 'Invalid value', err_csrf: 'Request blocked', network: 'Network error',
+    err_invalid_credentials: 'Wrong email or password', err_account_locked: 'Account temporarily locked – try again in 15 minutes', err_rate_limited: 'Too many attempts, try again later', err_unauthenticated: 'Session expired – please sign in again', err_forbidden: 'You do not have permission for this', err_delete_not_allowed: 'Cases cannot be deleted – they are archived instead', err_duplicate_case_number: 'This case number already exists', err_invalid_case_number: 'Invalid case number (letters, digits, - _ / only)', err_invalid_visa_type: 'Choose an ID type', err_complaint_required: 'Chief complaint is required', err_bad_file_type: 'Unsupported file – use JPG, PNG or WEBP', err_file_too_large: 'File is larger than 10 MB', err_too_many_files: 'Maximum 6 documents per case', err_weak_password: 'Password must be at least 10 characters with letters and digits', err_wrong_password: 'Current password is wrong', err_same_password: 'Choose a different password', err_invalid_mfa: 'Wrong authentication code', err_mfa_required_by_policy: '2FA is required for this account', err_case_locked: 'The hospital already received this case – it can no longer be edited', err_case_archived: 'The case is archived', err_only_closed_can_archive: 'Only discharged / deceased cases can be archived', err_arrival_in_future: 'Arrival time is in the future', err_arrival_before_case: 'Arrival time is before the case was sent', err_email_exists: 'Email already exists', err_invalid_email: 'Invalid email', err_name_required: 'Name is required', err_cannot_change_self: 'You cannot deactivate or demote yourself', err_last_admin: 'At least one active admin is required', err_setup_required: 'Finish the account setup first', err_server_error: 'Server error – please try again', err_not_found: 'Not found', err_too_large: 'Upload is too large', err_invalid_setting: 'Invalid value', err_csrf: 'Request blocked', network: 'Network error',
   },
   ar: {
     hospital: 'مستشفى الحياة الوطني', hospital_sub: 'Al Hayat National Hospital', system: 'نظام متابعة وإدارة الحالات الإسعافية',
@@ -222,23 +234,23 @@ window.I18N = {
     nav_new: 'حالة جديدة', nav_mine: 'حالاتي', nav_status: 'متابعة الحالات', nav_incoming: 'الحالات الواردة', nav_tracking: 'متابعة المرضى', nav_update: 'تحديث الحالة',
     nav_overview: 'نظرة عامة', nav_cases: 'كل الحالات', nav_stats: 'الإحصائيات', nav_reports: 'التقارير', nav_users: 'المستخدمون', nav_archive: 'الأرشيف الخاص', nav_audit: 'سجل العمليات', nav_settings: 'الإعدادات',
     role_paramedic: 'مسعف', role_er: 'المستشفى / الطوارئ', role_admin: 'إدارة',
-    f_case_number: 'رقم البلاغ', f_datetime: 'التاريخ والوقت', f_paramedic: 'اسم المسعف', f_visa: 'نوع التأشيرة', f_complaint: 'الشكوى الرئيسية', f_notes: 'ملاحظات المريض', f_doc: 'صورة التأشيرة / المستند', f_submit: 'إرسال الحالة', f_auto: 'تلقائي', f_doc_hint: 'التقط صورة أو اختر ملفاً (JPG, PNG, WEBP – حتى 10 ميجا للملف، بحد أقصى 6)',
+    f_case_number: 'رقم البلاغ', f_datetime: 'التاريخ والوقت', f_paramedic: 'اسم المسعف', f_visa: 'نوع الهوية', f_complaint: 'الشكوى الرئيسية', f_notes: 'ملاحظات المريض', f_doc: 'صورة التأشيرة / المستند', f_submit: 'إرسال الحالة', f_auto: 'تلقائي', f_doc_hint: 'التقط صورة أو اختر ملفاً (JPG, PNG, WEBP – حتى 10 ميجا للملف، بحد أقصى 6)',
     f_arrival: 'وقت الوصول للطوارئ', f_arrival_hint: 'اتركه فارغاً لاستخدام الوقت الحالي', f_status: 'حالة المريض', f_created: 'وقت الإرسال', f_updated: 'آخر تحديث', f_updated_by: 'حدّثها', f_all: 'الكل', f_from: 'من', f_to: 'إلى', f_search_ph: 'رقم البلاغ، المسعف، الشكوى…', f_attachments: 'المستندات', f_history: 'سجل التعديلات', f_timeline: 'مسار الحالة', f_by: 'بواسطة', f_archived_at: 'تاريخ الأرشفة', f_final: 'الحالة النهائية', f_closed: 'وقت الإغلاق',
     case_sent: 'تم إرسال الحالة – تظهر الآن للمستشفى', case_updated: 'تم تحديث الحالة', status_updated: 'تم تحديث حالة المريض', new_incoming: 'حالة واردة جديدة', archived_ok: 'تم نقل الحالة إلى الأرشيف الخاص', unarchived_ok: 'تمت استعادة الحالة من الأرشيف',
     confirm_receipt: 'تأكيد الاستقبال', confirm_deceased: 'تسجيل المريض كوفاة؟', confirm_archive: 'نقل هذه الحالة إلى الأرشيف الخاص؟', confirm_delete_att: 'إزالة هذا المستند؟',
     archive: 'أرشفة', unarchive: 'استعادة', add_doc: 'إضافة مستند', remove: 'إزالة', no_incoming: 'لا توجد حالات واردة حالياً', no_open: 'لا توجد حالات مفتوحة',
     st_new: 'حالة جديدة', st_received: 'تم استقبال المريض', st_discharged: 'خروج المريض', st_admitted: 'تنويم', st_icu: 'دخول العناية المركزة', st_deceased: 'وفاة',
-    visa_Umrah: 'عمرة', visa_Tourist: 'سياحة', visa_Visit: 'زيارة', visa_Resident: 'مقيم', visa_Saudi: 'سعودي', visa_Unknown: 'غير معروف', visa_Other: 'أخرى',
+    visa_Umrah: 'عمرة / حج', visa_Tourist: 'سياحة', visa_Visit: 'زيارة', visa_Resident: 'مقيم', visa_Saudi: 'سعودي', visa_Unknown: 'غير معروف', visa_Other: 'أخرى',
     k_total: 'إجمالي الحالات', k_today: 'حالات اليوم', k_month: 'حالات الشهر', k_received: 'الحالات المستقبلة', k_discharged: 'حالات الخروج', k_admitted: 'حالات التنويم', k_icu: 'حالات العناية المركزة', k_deceased: 'حالات الوفاة', k_pending: 'حالات لم تُستقبل بعد', k_in_er: 'حالياً في الطوارئ',
     k_received_hint: 'كل الحالات التي استقبلها الطوارئ', k_pending_hint: 'بانتظار الاستقبال',
-    ch_daily: 'يومي (30 يوماً)', ch_weekly: 'أسبوعي (12 أسبوعاً)', ch_monthly: 'شهري (12 شهراً)', ch_visa: 'حسب نوع التأشيرة', ch_status: 'حسب الحالة', ch_paramedic: 'حسب المسعف', cases: 'حالة',
+    ch_daily: 'يومي (30 يوماً)', ch_weekly: 'أسبوعي (12 أسبوعاً)', ch_monthly: 'شهري (12 شهراً)', ch_visa: 'حسب نوع الهوية', ch_status: 'حسب الحالة', ch_paramedic: 'حسب المسعف', cases: 'حالة',
     rep_title: 'تقرير الحالات', rep_excel: 'تحميل Excel', rep_pdf: 'PDF / طباعة', rep_include: 'يشمل', rep_all: 'كل الحالات', rep_active: 'النشطة فقط', rep_archived: 'المؤرشفة فقط', rep_generated: 'تاريخ الإصدار', rep_summary: 'الملخص', rep_hint: 'زر PDF يفتح نافذة الطباعة – اختر «حفظ بصيغة PDF».',
     u_name: 'الاسم', u_role: 'الدور', u_active: 'فعّال', u_mfa: 'المصادقة الثنائية', u_last: 'آخر دخول', u_add: 'إضافة مستخدم', u_temp: 'كلمة مرور مؤقتة (تظهر مرة واحدة – يجب تغييرها عند أول دخول)', u_reset_pw: 'إعادة تعيين كلمة المرور', u_reset_mfa: 'إعادة تعيين المصادقة', u_deactivate: 'إيقاف', u_activate: 'تفعيل', u_mfa_req: 'إلزام المصادقة الثنائية', u_never: 'لم يدخل بعد',
     au_when: 'الوقت', au_user: 'المستخدم', au_action: 'العملية', au_case: 'الحالة', au_details: 'التفاصيل', au_ip: 'العنوان',
     s_title: 'سياسة الأرشفة والاحتفاظ', s_days: 'نقل الحالات المغلقة (خروج / وفاة) إلى الأرشيف الخاص بعد (أيام)', s_auto: 'الأرشفة تلقائياً', s_run: 'تشغيل الأرشفة الآن', s_ran: 'حالة تمت أرشفتها', s_backup: 'نسخة احتياطية', s_backup_btn: 'تحميل نسخة احتياطية', s_backup_hint: 'نسخة من كل بيانات الحالات. المستندات المرفوعة في مجلد data/uploads ويجب نسخها معه. لا تُحذف الحالات أبداً – بل تُؤرشف فقط.', s_saved: 'تم حفظ الإعدادات',
     ov_recent: 'أحدث الحالات',
     a_login: 'تسجيل دخول', a_logout: 'تسجيل خروج', a_login_failed: 'محاولة دخول فاشلة', a_case_create: 'إنشاء حالة', a_case_update: 'تعديل حالة', a_status_change: 'تغيير حالة المريض', a_attachment_add: 'إضافة مستند', a_attachment_view: 'عرض مستند', a_attachment_delete: 'إزالة مستند', a_case_archive: 'أرشفة حالة', a_case_unarchive: 'استعادة حالة', a_case_delete_attempt: 'محاولة حذف (تم منعها)', a_archive_access: 'دخول الأرشيف', a_archive_case_view: 'فتح حالة مؤرشفة', a_report_export: 'تصدير تقرير', a_report_view: 'عرض تقرير', a_user_create: 'إنشاء مستخدم', a_user_update: 'تعديل مستخدم', a_user_password_reset: 'إعادة تعيين كلمة مرور', a_user_mfa_reset: 'إعادة تعيين المصادقة', a_settings_update: 'تغيير الإعدادات', a_backup_download: 'تحميل نسخة احتياطية', a_password_change: 'تغيير كلمة المرور', a_mfa_enabled: 'تفعيل المصادقة', a_mfa_disabled: 'إيقاف المصادقة',
-    err_invalid_credentials: 'البريد أو كلمة المرور غير صحيحة', err_account_locked: 'الحساب مقفل مؤقتاً – حاول بعد 15 دقيقة', err_rate_limited: 'محاولات كثيرة، حاول لاحقاً', err_unauthenticated: 'انتهت الجلسة – سجّل الدخول من جديد', err_forbidden: 'ليست لديك صلاحية لهذا الإجراء', err_delete_not_allowed: 'لا يمكن حذف الحالات – تُنقل إلى الأرشيف فقط', err_duplicate_case_number: 'رقم البلاغ مسجّل مسبقاً', err_invalid_case_number: 'رقم بلاغ غير صالح (حروف وأرقام و - _ / فقط)', err_invalid_visa_type: 'اختر نوع التأشيرة', err_complaint_required: 'الشكوى الرئيسية مطلوبة', err_bad_file_type: 'ملف غير مدعوم – استخدم JPG أو PNG أو WEBP', err_file_too_large: 'حجم الملف أكبر من 10 ميجا', err_too_many_files: 'الحد الأقصى 6 مستندات للحالة', err_weak_password: 'كلمة المرور يجب أن تكون 10 خانات على الأقل وتحتوي حروفاً وأرقاماً', err_wrong_password: 'كلمة المرور الحالية غير صحيحة', err_same_password: 'اختر كلمة مرور مختلفة', err_invalid_mfa: 'رمز المصادقة غير صحيح', err_mfa_required_by_policy: 'المصادقة الثنائية مطلوبة لهذا الحساب', err_case_locked: 'استقبل المستشفى الحالة – لا يمكن تعديلها الآن', err_case_archived: 'الحالة مؤرشفة', err_only_closed_can_archive: 'يمكن أرشفة حالات الخروج / الوفاة فقط', err_arrival_in_future: 'وقت الوصول في المستقبل', err_arrival_before_case: 'وقت الوصول قبل وقت إرسال الحالة', err_email_exists: 'البريد مستخدم مسبقاً', err_invalid_email: 'بريد غير صالح', err_name_required: 'الاسم مطلوب', err_cannot_change_self: 'لا يمكنك إيقاف حسابك أو تخفيض صلاحيتك', err_last_admin: 'يجب أن يبقى مدير واحد فعّال على الأقل', err_setup_required: 'أكمل إعداد الحساب أولاً', err_server_error: 'خطأ في الخادم – حاول مرة أخرى', err_not_found: 'غير موجود', err_too_large: 'حجم الرفع كبير جداً', err_invalid_setting: 'قيمة غير صالحة', err_csrf: 'تم رفض الطلب', network: 'خطأ في الاتصال',
+    err_invalid_credentials: 'البريد أو كلمة المرور غير صحيحة', err_account_locked: 'الحساب مقفل مؤقتاً – حاول بعد 15 دقيقة', err_rate_limited: 'محاولات كثيرة، حاول لاحقاً', err_unauthenticated: 'انتهت الجلسة – سجّل الدخول من جديد', err_forbidden: 'ليست لديك صلاحية لهذا الإجراء', err_delete_not_allowed: 'لا يمكن حذف الحالات – تُنقل إلى الأرشيف فقط', err_duplicate_case_number: 'رقم البلاغ مسجّل مسبقاً', err_invalid_case_number: 'رقم بلاغ غير صالح (حروف وأرقام و - _ / فقط)', err_invalid_visa_type: 'اختر نوع الهوية', err_complaint_required: 'الشكوى الرئيسية مطلوبة', err_bad_file_type: 'ملف غير مدعوم – استخدم JPG أو PNG أو WEBP', err_file_too_large: 'حجم الملف أكبر من 10 ميجا', err_too_many_files: 'الحد الأقصى 6 مستندات للحالة', err_weak_password: 'كلمة المرور يجب أن تكون 10 خانات على الأقل وتحتوي حروفاً وأرقاماً', err_wrong_password: 'كلمة المرور الحالية غير صحيحة', err_same_password: 'اختر كلمة مرور مختلفة', err_invalid_mfa: 'رمز المصادقة غير صحيح', err_mfa_required_by_policy: 'المصادقة الثنائية مطلوبة لهذا الحساب', err_case_locked: 'استقبل المستشفى الحالة – لا يمكن تعديلها الآن', err_case_archived: 'الحالة مؤرشفة', err_only_closed_can_archive: 'يمكن أرشفة حالات الخروج / الوفاة فقط', err_arrival_in_future: 'وقت الوصول في المستقبل', err_arrival_before_case: 'وقت الوصول قبل وقت إرسال الحالة', err_email_exists: 'البريد مستخدم مسبقاً', err_invalid_email: 'بريد غير صالح', err_name_required: 'الاسم مطلوب', err_cannot_change_self: 'لا يمكنك إيقاف حسابك أو تخفيض صلاحيتك', err_last_admin: 'يجب أن يبقى مدير واحد فعّال على الأقل', err_setup_required: 'أكمل إعداد الحساب أولاً', err_server_error: 'خطأ في الخادم – حاول مرة أخرى', err_not_found: 'غير موجود', err_too_large: 'حجم الرفع كبير جداً', err_invalid_setting: 'قيمة غير صالحة', err_csrf: 'تم رفض الطلب', network: 'خطأ في الاتصال',
   },
 };
 
@@ -246,13 +258,16 @@ Object.assign(I18N.ar,{forgot:'نسيت كلمة المرور',forgot_sent:'إذ
 Object.assign(I18N.en,{forgot:'Forgot password',forgot_sent:'If the email is registered, a reset link was sent',forgot_need:'Enter your email first',u_temp:'Password (shown once – hand it to the user; they can change it with Forgot password)',reset_sent:'A password-reset link was sent to the user\'s email',err_weak_password:'Password must be at least 8 characters',err_account_disabled:'Account is inactive or not registered. Contact the platform admin',err_db:'Could not save: you do not have permission for this action, or the connection dropped',err_rate_limited:'Too many attempts, try again shortly',err_service_unavailable:'Cannot reach the service'});
 
 Object.assign(I18N.ar,{x_excel:'تصدير إلى Excel',x_archive:'تصدير الأرشيف إلى Excel',x_cases:'تصدير الحالات إلى Excel',x_saved:'تم تجهيز الملف',x_unavail:'التحميل غير متاح في هذا العرض',x_declined:'تم إلغاء الحفظ',x_min_receipt:'زمن الاستقبال (دقيقة)',x_min_close:'مدة البقاء حتى الإغلاق (دقيقة)',x_archived:'مؤرشفة',arch_all:'أرشفة كل الحالات المغلقة الآن',confirm_arch_all:'نقل كل حالات الخروج والوفاة إلى الأرشيف الخاص الآن؟',arch_done:'حالة تمت أرشفتها',
- s_pct_total:'% من الإجمالي',s_pct_recv:'% من المستقبلة',s_rates:'المعدلات',s_timing:'الأزمنة',t_to_receipt:'من الإرسال إلى الاستقبال',t_to_close:'من الاستقبال إلى الإغلاق',t_avg:'المتوسط',t_median:'الوسيط',t_max:'الأطول',t_n:'عدد الحالات',ch_hour:'حسب ساعة اليوم',ch_weekday:'حسب اليوم',tb_status:'تفصيل الحالات',tb_visa:'تفصيل أنواع التأشيرات',tb_para:'تفصيل المسعفين',c_count:'العدد',c_pct:'النسبة',c_name:'الاسم',c_recv_avg:'متوسط زمن الاستقبال',m_metric:'المؤشر',m_arrived:'وصلت للطوارئ',
+ s_pct_total:'% من الإجمالي',s_pct_recv:'% من المستقبلة',s_rates:'المعدلات',s_timing:'الأزمنة',t_to_receipt:'من الإرسال إلى الاستقبال',t_to_close:'من الاستقبال إلى الإغلاق',t_avg:'المتوسط',t_median:'الوسيط',t_max:'الأطول',t_n:'عدد الحالات',ch_hour:'حسب ساعة اليوم',ch_weekday:'حسب اليوم',tb_status:'تفصيل الحالات',tb_visa:'تفصيل أنواع الهوية',tb_para:'تفصيل المسعفين',c_count:'العدد',c_pct:'النسبة',c_name:'الاسم',c_recv_avg:'متوسط زمن الاستقبال',m_metric:'المؤشر',m_arrived:'وصلت للطوارئ',
  wd:['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'],unit_min:'د',unit_hr:'س',
- st_sheet:'ملخص',sh_cases:'الحالات',sh_arch:'الأرشيف',sh_status:'حسب الحالة',sh_visa:'حسب التأشيرة',sh_para:'حسب المسعف',sh_hour:'حسب الساعة',sh_wd:'حسب اليوم',sh_daily:'آخر 30 يوم'});
+ st_sheet:'ملخص',sh_cases:'الحالات',sh_arch:'الأرشيف',sh_status:'حسب الحالة',sh_visa:'حسب نوع الهوية',sh_para:'حسب المسعف',sh_hour:'حسب الساعة',sh_wd:'حسب اليوم',sh_daily:'آخر 30 يوم'});
 Object.assign(I18N.en,{x_excel:'Export to Excel',x_archive:'Export archive to Excel',x_cases:'Export cases to Excel',x_saved:'File ready',x_unavail:'Downloads are not available in this view',x_declined:'Save cancelled',x_min_receipt:'Time to receipt (min)',x_min_close:'Time to closure (min)',x_archived:'Archived',arch_all:'Archive all closed cases now',confirm_arch_all:'Move all discharged and deceased cases to the private archive now?',arch_done:'cases archived',
- s_pct_total:'% of total',s_pct_recv:'% of received',s_rates:'Rates',s_timing:'Timing',t_to_receipt:'Sent to received',t_to_close:'Received to closed',t_avg:'Average',t_median:'Median',t_max:'Longest',t_n:'Cases',ch_hour:'By hour of day',ch_weekday:'By weekday',tb_status:'Status breakdown',tb_visa:'Visa type breakdown',tb_para:'Paramedic breakdown',c_count:'Count',c_pct:'Share',c_name:'Name',c_recv_avg:'Avg time to receipt',m_metric:'Metric',m_arrived:'Reached the ER',
+ s_pct_total:'% of total',s_pct_recv:'% of received',s_rates:'Rates',s_timing:'Timing',t_to_receipt:'Sent to received',t_to_close:'Received to closed',t_avg:'Average',t_median:'Median',t_max:'Longest',t_n:'Cases',ch_hour:'By hour of day',ch_weekday:'By weekday',tb_status:'Status breakdown',tb_visa:'ID type breakdown',tb_para:'Paramedic breakdown',c_count:'Count',c_pct:'Share',c_name:'Name',c_recv_avg:'Avg time to receipt',m_metric:'Metric',m_arrived:'Reached the ER',
  wd:['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],unit_min:'m',unit_hr:'h',
- st_sheet:'Summary',sh_cases:'Cases',sh_arch:'Archive',sh_status:'By status',sh_visa:'By visa type',sh_para:'By paramedic',sh_hour:'By hour',sh_wd:'By weekday',sh_daily:'Last 30 days'});
+ st_sheet:'Summary',sh_cases:'Cases',sh_arch:'Archive',sh_status:'By status',sh_visa:'By ID type',sh_para:'By paramedic',sh_hour:'By hour',sh_wd:'By weekday',sh_daily:'Last 30 days'});
+
+Object.assign(I18N.ar,{f_pname:'اسم المريض',f_pid:'رقم هوية المريض',pid_hint_any:'اكتب رقم الهوية أو رقم الجواز حسب نوع الهوية',pid_hint_national:'اكتب رقم الهوية الوطنية',pid_hint_iqama:'اكتب رقم الإقامة',pid_hint_passport:'اكتب رقم جواز السفر',wa_share:'مشاركة عبر واتساب',view_img:'عرض الصورة',v_in:'تكبير',v_out:'تصغير',v_fit:'ملء الشاشة',v_prev:'السابق',v_next:'التالي',v_loading:'جاري تحميل الصورة…',wa_ready:'جاهز للإرسال إلى مجموعة العمل'});
+Object.assign(I18N.en,{f_pname:'Patient Name',f_pid:'Patient ID Number',pid_hint_any:'Enter the ID or passport number according to the ID type',pid_hint_national:'Enter the national ID number',pid_hint_iqama:'Enter the residence (Iqama) number',pid_hint_passport:'Enter the passport number',wa_share:'Share via WhatsApp',view_img:'View image',v_in:'Zoom in',v_out:'Zoom out',v_fit:'Fit',v_prev:'Previous',v_next:'Next',v_loading:'Loading image…',wa_ready:'Ready to send to the work group'});
 
 </script>
 <script>
@@ -335,6 +350,7 @@ window.EventSource = class { constructor() { bus.add(this); setTimeout(() => thi
 const getCase = (id) => DB.cases.find((c) => c.id === id);
 const attCount = (c) => DB.atts.filter((a) => a.case_id === c.id && !a.deleted).length;
 const out = (c) => ({ ...c, att_count: attCount(c) });
+const normId = (v) => String(v == null ? '' : v).replace(/[\u0660-\u0669]/g, (d) => d.charCodeAt(0) - 0x660).replace(/[\u06F0-\u06F9]/g, (d) => d.charCodeAt(0) - 0x6F0).replace(/[^A-Za-z0-9\-\/_.]/g, '').toUpperCase().slice(0, 30);
 const pub = (u) => ({ id: u.id, name: u.name, email: u.email, role: u.role, mfa_enabled: false, mfa_required: false, must_change_pw: false, blocked: false });
 function canView(u, c) { if (!c) return false; if (u.role === 'admin') return true; if (c.archived) return false; if (u.role === 'er') return true; return c.paramedic_id === u.id; }
 function filt(q, user, archived) {
@@ -351,7 +367,7 @@ function filt(q, user, archived) {
     const d = localDay(c.created_at);
     if (isDate(q.from) && d < q.from) return false;
     if (isDate(q.to) && d > q.to) return false;
-    if (ql && !(c.case_number + ' ' + c.paramedic_name + ' ' + c.chief_complaint).toLowerCase().includes(ql)) return false;
+    if (ql && !(c.case_number + ' ' + c.paramedic_name + ' ' + c.chief_complaint + ' ' + (c.patient_name || '') + ' ' + (c.patient_id || '')).toLowerCase().includes(ql)) return false;
     return true;
   };
 }
@@ -461,9 +477,10 @@ add('POST', '/api/cases', ['paramedic', 'admin'], async (c) => {
   if (!caseRx.test(case_number)) throw bad('invalid_case_number');
   if (!VISA.includes(visa_type)) throw bad('invalid_visa_type');
   if (!chief) throw bad('complaint_required');
+  const patient_name = clip(f.get('patient_name'), 100) || null, patient_id = normId(f.get('patient_id')) || null;
   const files = await prepFiles(f);
   if (DB.cases.some((x) => x.case_number === case_number)) throw E(409, 'duplicate_case_number');
-  const cs = { id: uid(), case_number, created_at: nowIso(), paramedic_id: c.user.id, paramedic_uid: c.user.uid, paramedic_name: c.user.name, timeline: [{ at: nowIso(), status: 'new', by: c.user.name }], visa_type, chief_complaint: chief, notes: notes || null, status: 'new', arrived_at: null, status_updated_at: null, status_updated_by: null, closed_at: null, archived: 0, archived_at: null, archived_by: null };
+  const cs = { id: uid(), case_number, created_at: nowIso(), paramedic_id: c.user.id, paramedic_uid: c.user.uid, paramedic_name: c.user.name, timeline: [{ at: nowIso(), status: 'new', by: c.user.name }], visa_type, chief_complaint: chief, notes: notes || null, patient_name, patient_id, status: 'new', arrived_at: null, status_updated_at: null, status_updated_by: null, closed_at: null, archived: 0, archived_at: null, archived_by: null };
   DB.cases.push(cs); const ids = addAtts(cs, c.user, files);
   audit(c.user, 'case_create', cs, { visa_type, attachments: ids.length }); broadcast('created', cs);
   return { case: out(cs) };
@@ -485,6 +502,8 @@ add('PATCH', '/api/cases/:id', ['paramedic', 'admin'], (c) => {
   if (b.visa_type !== undefined) { if (!VISA.includes(b.visa_type)) throw bad('invalid_visa_type'); upd.visa_type = b.visa_type; }
   if (b.chief_complaint !== undefined) { const v = clip(b.chief_complaint, 500); if (!v) throw bad('complaint_required'); upd.chief_complaint = v; }
   if (b.notes !== undefined) upd.notes = clip(b.notes, 2000) || null;
+  if (b.patient_name !== undefined) upd.patient_name = clip(b.patient_name, 100) || null;
+  if (b.patient_id !== undefined) upd.patient_id = normId(b.patient_id) || null;
   if (b.case_number !== undefined && c.user.role === 'admin') { const v = clip(b.case_number, 30); if (!caseRx.test(v)) throw bad('invalid_case_number'); if (v !== cs.case_number && DB.cases.some((x) => x.case_number === v)) throw E(409, 'duplicate_case_number'); upd.case_number = v; }
   const changes = {}; for (const [k, v] of Object.entries(upd)) if ((cs[k] ?? null) !== v) changes[k] = { from: cs[k] ?? null, to: v };
   if (!Object.keys(changes).length) return { case: out(cs) };
@@ -888,7 +907,7 @@ function pagerHtml(key, total, off, lim) {
 }
 function caseCard(c, extra = '') {
   return `<div class="case s-${c.status}" data-open="${c.id}"><div class="case-h"><b>#${esc(c.case_number)}</b>${stB(c.status)}</div><p>${esc(c.chief_complaint)}</p>
-  <div class="meta"><span>${esc(visaL(c.visa_type))}</span><span>${esc(c.paramedic_name)}</span><span>${esc(fmtDT(c.created_at))}</span>${c.att_count ? `<span>📎 ${c.att_count}</span>` : ''}</div>${extra}</div>`;
+  <div class="meta">${c.patient_name ? `<span>👤 ${esc(c.patient_name)}</span>` : ''}<span>${esc(visaL(c.visa_type))}</span><span>${esc(c.paramedic_name)}</span><span>${esc(fmtDT(c.created_at))}</span>${c.att_count ? `<span>📎 ${c.att_count}</span>` : ''}</div>${extra}</div>`;
 }
 function steps(c) {
   const out = ['discharged', 'admitted', 'icu', 'deceased'].includes(c.status);
@@ -900,7 +919,7 @@ function quickButtons(c) {
 }
 function casesTable(items, o = {}) {
   if (!items.length) return `<div class="empty">${esc(t('none'))}</div>`;
-  return `<div class="tw"><table><thead><tr><th>${esc(t('f_case_number'))}</th><th>${esc(t('f_created'))}</th><th>${esc(t('f_paramedic'))}</th><th>${esc(t('f_visa'))}</th><th>${esc(t('f_complaint'))}</th><th>${esc(t('f_status'))}</th><th>${esc(t('f_updated'))}</th>${o.archive ? `<th>${esc(t('f_archived_at'))}</th>` : ''}<th>📎</th></tr></thead><tbody>${items.map((c) => `<tr class="click" data-open="${c.id}"><td class="nw"><b>#${esc(c.case_number)}</b></td><td class="nw">${esc(fmtDT(c.created_at))}</td><td>${esc(c.paramedic_name)}</td><td>${esc(visaL(c.visa_type))}</td><td>${esc(c.chief_complaint)}</td><td>${stB(c.status)}</td><td class="nw">${esc(fmtDT(c.status_updated_at))}${c.status_updated_by ? `<br><small>${esc(c.status_updated_by)}</small>` : ''}</td>${o.archive ? `<td class="nw">${esc(fmtDT(c.archived_at))}<br><small>${esc(c.archived_by || '')}</small></td>` : ''}<td>${c.att_count || ''}</td></tr>`).join('')}</tbody></table></div>`;
+  return `<div class="tw"><table><thead><tr><th>${esc(t('f_case_number'))}</th><th>${esc(t('f_created'))}</th><th>${esc(t('f_paramedic'))}</th><th>${esc(t('f_visa'))}</th><th>${esc(t('f_pname'))}</th><th>${esc(t('f_complaint'))}</th><th>${esc(t('f_status'))}</th><th>${esc(t('f_updated'))}</th>${o.archive ? `<th>${esc(t('f_archived_at'))}</th>` : ''}<th>📎</th></tr></thead><tbody>${items.map((c) => `<tr class="click" data-open="${c.id}"><td class="nw"><b>#${esc(c.case_number)}</b></td><td class="nw">${esc(fmtDT(c.created_at))}</td><td>${esc(c.paramedic_name)}</td><td>${esc(visaL(c.visa_type))}</td><td>${esc(c.patient_name || '')}</td><td>${esc(c.chief_complaint)}</td><td>${stB(c.status)}</td><td class="nw">${esc(fmtDT(c.status_updated_at))}${c.status_updated_by ? `<br><small>${esc(c.status_updated_by)}</small>` : ''}</td>${o.archive ? `<td class="nw">${esc(fmtDT(c.archived_at))}<br><small>${esc(c.archived_by || '')}</small></td>` : ''}<td>${c.att_count || ''}</td></tr>`).join('')}</tbody></table></div>`;
 }
 // generic cases list page
 function casesView(key, cfg) {
@@ -930,10 +949,14 @@ VIEWS.new = (main) => {
   <label>${esc(t('f_visa'))} *</label><select name="visa_type" required><option value="">—</option>${opts(VIS, visaL)}</select>
   <label>${esc(t('f_complaint'))} *</label><textarea name="chief_complaint" required maxlength="500"></textarea>
   <label>${esc(t('f_notes'))}</label><textarea name="notes" maxlength="2000"></textarea>
+  <label>${esc(t('f_pname'))}</label><input type="text" name="patient_name" maxlength="100" autocomplete="off" autocapitalize="words" dir="auto">
+  <label>${esc(t('f_pid'))}</label><input type="text" name="patient_id" id="pid" maxlength="30" autocomplete="off" autocapitalize="characters" autocorrect="off" spellcheck="false" dir="auto"><div class="hint" id="pidh"></div>
   <label>${esc(t('f_doc'))}</label><input type="file" id="nfile" accept="image/*" multiple><div class="hint">${esc(t('f_doc_hint'))}</div><div class="thumbs" id="prev" style="margin-top:8px"></div>
   <div class="err-msg" id="ne"></div><button class="btn big" id="nb" style="margin-top:14px">${esc(t('f_submit'))}</button></form>`;
   const tick = () => { const el = $('#dtv'); if (el) el.value = fmtDT(new Date().toISOString()); }; tick();
   const iv = setInterval(() => { if (!$('#dtv')) clearInterval(iv); else tick(); }, 20000);
+  const vsel = $('select[name=visa_type]'), pidHint = () => { const k = { Saudi: 'pid_hint_national', Resident: 'pid_hint_iqama', Umrah: 'pid_hint_passport', Tourist: 'pid_hint_passport', Visit: 'pid_hint_passport' }[vsel.value] || 'pid_hint_any'; $('#pidh').textContent = t(k); $('#pid').placeholder = t(k); };
+  vsel.onchange = pidHint; pidHint();
   const file = $('#nfile');
   file.onchange = () => { $('#prev').innerHTML = [...file.files].map((f) => `<div class="th">${f.type.startsWith('image/') && !/heic/i.test(f.type) ? `<img alt="" src="${URL.createObjectURL(f)}">` : `<div class="file">${esc(f.name.slice(0, 18))}</div>`}</div>`).join(''); };
   $('#nf').onsubmit = async (e) => {
@@ -942,7 +965,7 @@ VIEWS.new = (main) => {
     for (const f of file.files) if (f.size > 10 * 1024 * 1024) return (err.textContent = t('err_file_too_large'));
     const fd = new FormData(e.target); fd.delete('files'); for (const f of file.files) fd.append('files', f, f.name);
     const b = $('#nb'); b.disabled = true;
-    try { await api('POST', '/api/cases', fd); toast(t('case_sent'), 'ok'); S.view0 = 'mine'; route(); }
+    try { const rr = await api('POST', '/api/cases', fd); toast(t('case_sent'), 'ok'); S.view0 = 'mine'; route(); if (rr && rr.case) shareDialog(rr.case); }
     catch (er) { err.textContent = errText(er); b.disabled = false; }
   };
 };
@@ -1061,8 +1084,8 @@ function buildXlsx(sheets) {
 }
 function xlsxSheets(st, items, kind) {
   const k = st.counts, T = k.total, R = k.received, P = (n, d) => ({ pct: true, v: d ? n / d : 0 });
-  const cases = [[t('f_case_number'), t('f_created'), t('f_paramedic'), t('f_visa'), t('f_complaint'), t('f_notes'), t('f_status'), t('f_arrival'), t('f_updated'), t('f_updated_by'), t('x_min_receipt'), t('x_min_close'), t('x_archived'), t('f_archived_at')]];
-  for (const c of items) cases.push([c.case_number, fmtDT(c.created_at), c.paramedic_name, visaL(c.visa_type), c.chief_complaint, c.notes || '', t('st_' + c.status), c.arrived_at ? fmtDT(c.arrived_at) : '', c.status_updated_at ? fmtDT(c.status_updated_at) : '', c.status_updated_by || '', c.arrived_at ? mins(c.created_at, c.arrived_at) : '', c.arrived_at && c.closed_at ? mins(c.arrived_at, c.closed_at) : '', c.archived ? t('yes') : t('no'), c.archived_at ? fmtDT(c.archived_at) : '']);
+  const cases = [[t('f_case_number'), t('f_created'), t('f_paramedic'), t('f_visa'), t('f_complaint'), t('f_notes'), t('f_status'), t('f_arrival'), t('f_updated'), t('f_updated_by'), t('x_min_receipt'), t('x_min_close'), t('x_archived'), t('f_archived_at'), t('f_pname'), t('f_pid')]];
+  for (const c of items) cases.push([c.case_number, fmtDT(c.created_at), c.paramedic_name, visaL(c.visa_type), c.chief_complaint, c.notes || '', t('st_' + c.status), c.arrived_at ? fmtDT(c.arrived_at) : '', c.status_updated_at ? fmtDT(c.status_updated_at) : '', c.status_updated_by || '', c.arrived_at ? mins(c.created_at, c.arrived_at) : '', c.arrived_at && c.closed_at ? mins(c.arrived_at, c.closed_at) : '', c.archived ? t('yes') : t('no'), c.archived_at ? fmtDT(c.archived_at) : '', c.patient_name || '', c.patient_id || '']);
   const sum = [[t('m_metric'), t('c_count'), t('s_pct_total'), t('s_pct_recv')]];
   [['k_total', k.total], ['k_today', k.today], ['k_month', k.month], ['k_received', k.received], ['k_pending', k.pending], ['k_in_er', k.in_er], ['k_discharged', k.discharged], ['k_admitted', k.admitted], ['k_icu', k.icu], ['k_deceased', k.deceased]].forEach(([key, n]) => sum.push([t(key), n, P(n, T), ['k_discharged', 'k_admitted', 'k_icu', 'k_deceased'].includes(key) ? P(n, R) : '']));
   sum.push(['', '', '', ''], [t('t_to_receipt'), '', '', ''], [t('t_avg') + ' (' + t('unit_min') + ')', st.timing.receipt.avg, '', ''], [t('t_median') + ' (' + t('unit_min') + ')', st.timing.receipt.median, '', ''], [t('t_max') + ' (' + t('unit_min') + ')', st.timing.receipt.max, '', ''], [t('t_to_close'), '', '', ''], [t('t_avg') + ' (' + t('unit_min') + ')', st.timing.close.avg, '', ''], [t('t_median') + ' (' + t('unit_min') + ')', st.timing.close.median, '', ''], [t('t_max') + ' (' + t('unit_min') + ')', st.timing.close.max, '', '']);
@@ -1072,7 +1095,7 @@ function xlsxSheets(st, items, kind) {
   const hr = [[t('c_name'), t('c_count'), t('c_pct')]]; st.hour.forEach((n, i) => hr.push([String(i).padStart(2, '0') + ':00', n, P(n, T)]));
   const wd = [[t('c_name'), t('c_count'), t('c_pct')]]; st.weekday.forEach((n, i) => wd.push([WD()[i], n, P(n, T)]));
   const dl = [[t('c_name'), t('c_count')]]; st.daily.forEach((d) => dl.push([d.label, d.n]));
-  return [{ name: t(kind === 'archive' ? 'sh_arch' : 'sh_cases'), rows: cases, widths: [16, 17, 22, 14, 40, 40, 18, 17, 17, 22, 14, 16, 10, 17] }, { name: t('st_sheet'), rows: sum, widths: [34, 12, 16, 16] }, { name: t('sh_status'), rows: byStatus, widths: [24, 12, 12] }, { name: t('sh_visa'), rows: grp(st.visas, visaL), widths: [20, 10, 10, 14, 12, 12, 12, 12, 18] }, { name: t('sh_para'), rows: grp(st.paramedics, (x) => x), widths: [26, 10, 10, 14, 12, 12, 12, 12, 18] }, { name: t('sh_hour'), rows: hr, widths: [14, 10, 10] }, { name: t('sh_wd'), rows: wd, widths: [14, 10, 10] }, { name: t('sh_daily'), rows: dl, widths: [14, 10] }];
+  return [{ name: t(kind === 'archive' ? 'sh_arch' : 'sh_cases'), rows: cases, widths: [16, 17, 22, 14, 40, 40, 18, 17, 17, 22, 14, 16, 10, 17, 24, 20] }, { name: t('st_sheet'), rows: sum, widths: [34, 12, 16, 16] }, { name: t('sh_status'), rows: byStatus, widths: [24, 12, 12] }, { name: t('sh_visa'), rows: grp(st.visas, visaL), widths: [20, 10, 10, 14, 12, 12, 12, 12, 18] }, { name: t('sh_para'), rows: grp(st.paramedics, (x) => x), widths: [26, 10, 10, 14, 12, 12, 12, 12, 18] }, { name: t('sh_hour'), rows: hr, widths: [14, 10, 10] }, { name: t('sh_wd'), rows: wd, widths: [14, 10, 10] }, { name: t('sh_daily'), rows: dl, widths: [14, 10] }];
 }
 function withBar(view, html) { return async (main) => { await view(main); const h1 = $('h1', main); if (h1) h1.insertAdjacentHTML('afterend', html()); }; }
 VIEWS.reports = async (main) => {
@@ -1090,7 +1113,7 @@ async function printReport() {
   const filt = Object.entries(f).map(([a, b]) => `${a}: ${b}`).join(' · ') || t('f_all');
   $('#printArea').innerHTML = `<h1>${esc(t('hospital'))} – ${esc(t('rep_title'))}</h1><p>${esc(t('rep_generated'))}: ${esc(fmtDT(d.generated_at))} · ${esc(S.user.name)}<br>${esc(filt)}</p>
   <h2>${esc(t('rep_summary'))}</h2><table><tbody><tr>${[['k_total', k.total], ['k_today', k.today], ['k_month', k.month], ['k_received', k.received], ['k_pending', k.pending], ['k_discharged', k.discharged], ['k_admitted', k.admitted], ['k_icu', k.icu], ['k_deceased', k.deceased]].map(([a, b]) => `<th>${esc(t(a))}</th><td>${b}</td>`).join('</tr><tr>')}</tr></tbody></table>
-  <h2>${esc(t('nav_cases'))} (${d.items.length})</h2><table><thead><tr><th>${esc(t('f_case_number'))}</th><th>${esc(t('f_created'))}</th><th>${esc(t('f_paramedic'))}</th><th>${esc(t('f_visa'))}</th><th>${esc(t('f_complaint'))}</th><th>${esc(t('f_status'))}</th><th>${esc(t('f_arrival'))}</th><th>${esc(t('f_updated_by'))}</th></tr></thead><tbody>${d.items.map((c) => `<tr><td>${esc(c.case_number)}</td><td>${esc(fmtDT(c.created_at))}</td><td>${esc(c.paramedic_name)}</td><td>${esc(visaL(c.visa_type))}</td><td>${esc(c.chief_complaint)}</td><td>${esc(t('st_' + c.status))}</td><td>${esc(fmtDT(c.arrived_at))}</td><td>${esc(c.status_updated_by || '')}</td></tr>`).join('')}</tbody></table>`;
+  <h2>${esc(t('nav_cases'))} (${d.items.length})</h2><table><thead><tr><th>${esc(t('f_case_number'))}</th><th>${esc(t('f_created'))}</th><th>${esc(t('f_paramedic'))}</th><th>${esc(t('f_visa'))}</th><th>${esc(t('f_pname'))}</th><th>${esc(t('f_complaint'))}</th><th>${esc(t('f_status'))}</th><th>${esc(t('f_arrival'))}</th><th>${esc(t('f_updated_by'))}</th></tr></thead><tbody>${d.items.map((c) => `<tr><td>${esc(c.case_number)}</td><td>${esc(fmtDT(c.created_at))}</td><td>${esc(c.paramedic_name)}</td><td>${esc(visaL(c.visa_type))}</td><td>${esc(c.patient_name || '')}</td><td>${esc(c.chief_complaint)}</td><td>${esc(t('st_' + c.status))}</td><td>${esc(fmtDT(c.arrived_at))}</td><td>${esc(c.status_updated_by || '')}</td></tr>`).join('')}</tbody></table>`;
   api('POST', '/api/report/print', { ...f, rows: d.items.length }).catch(() => {});
   setTimeout(() => window.print(), 100);
 }
@@ -1130,6 +1153,43 @@ VIEWS.settings = async (main) => {
   $('#sf').onsubmit = async (e) => { e.preventDefault(); const f = e.target; try { await api('PUT', '/api/settings', { archive_after_days: +f.archive_after_days.value, auto_archive: f.auto_archive.checked }); toast(t('s_saved'), 'ok'); } catch (er) { toast(errText(er), 'err'); } };
 };
 
+
+// ───────── v2: WhatsApp share + image viewer
+function waText(c) {
+  const v = (x) => (x !== undefined && x !== null && String(x).trim() ? String(x).trim() : '—');
+  return ['🚑 بلاغ إسعاف', 'رقم البلاغ: ' + v(c.case_number), 'اسم المريض: ' + v(c.patient_name), 'رقم الهوية / الجواز: ' + v(c.patient_id), 'نوع الهوية: ' + v(I18N.ar['visa_' + c.visa_type] || c.visa_type), 'الشكوى الرئيسية: ' + v(c.chief_complaint)].join('\n');
+}
+const waBtn = (c, cls) => `<a class="${cls || 'btn wa'}" href="https://wa.me/?text=${encodeURIComponent(waText(c))}" target="_blank" rel="noopener">💬 ${esc(t('wa_share'))}</a>`;
+function shareDialog(c) {
+  const m = openModal(esc(t('case_sent')) + ' #' + esc(c.case_number));
+  m.body.innerHTML = `<div class="hint" style="margin-bottom:8px">${esc(t('wa_ready'))}</div><pre class="wa-pre">${esc(waText(c))}</pre><div class="row" style="margin-top:14px">${waBtn(c, 'btn big wa')}<button class="btn sec" data-act="closeModal">${esc(t('close'))}</button></div>`;
+}
+function viewer(list, i0) {
+  if (!list || !list.length) return;
+  let i = i0 >= 0 && i0 < list.length ? i0 : 0, z = 0;
+  const o = document.createElement('div'); o.className = 'viewer';
+  o.innerHTML = `<div class="vbar"><button class="vb" data-v="close">✕ ${esc(t('close'))}</button><span class="vc"></span><span class="sp"></span><button class="vb" data-v="out" aria-label="${esc(t('v_out'))}">−</button><button class="vb" data-v="in" aria-label="${esc(t('v_in'))}">＋</button><button class="vb" data-v="fit">${esc(t('v_fit'))}</button></div><div class="vstage"><img alt=""><div class="vl">${esc(t('v_loading'))}</div></div><div class="vnav" ${list.length > 1 ? '' : 'hidden'}><button class="vb" data-v="prev">${esc(t('v_prev'))}</button><button class="vb" data-v="next">${esc(t('v_next'))}</button></div>`;
+  document.body.appendChild(o);
+  const im = o.querySelector('img'), vl = o.querySelector('.vl'), vc = o.querySelector('.vc'), stage = o.querySelector('.vstage');
+  const setZ = (n) => { z = Math.max(0, Math.min(5, n)); if (!z) { im.classList.remove('z'); im.style.width = ''; } else { im.classList.add('z'); im.style.width = (100 * Math.pow(1.6, z)).toFixed(0) + '%'; } };
+  const show = () => { const a = list[i]; setZ(0); vl.hidden = false; im.dataset.aid = a.id; im.src = window.__att(a.id); vc.textContent = list.length > 1 ? (i + 1) + ' / ' + list.length : ''; if (im.complete && im.naturalWidth > 1) vl.hidden = true; };
+  im.onload = () => { vl.hidden = im.naturalWidth > 1; };
+  const close = () => { document.removeEventListener('keydown', key, true); o.remove(); };
+  const key = (e) => { if (e.key === 'Escape') { e.stopPropagation(); close(); } };
+  document.addEventListener('keydown', key, true);
+  o.addEventListener('click', (e) => {
+    const b = e.target.closest('[data-v]'); if (!b) return; const a = b.dataset.v;
+    if (a === 'close') close(); else if (a === 'in') setZ((z || 0) + 1); else if (a === 'out') setZ(z - 1); else if (a === 'fit') setZ(0);
+    else if (a === 'prev') { i = (i + list.length - 1) % list.length; show(); } else if (a === 'next') { i = (i + 1) % list.length; show(); }
+  });
+  im.onclick = () => setZ(z ? 0 : 2);
+  let d0 = 0, z0 = 0; const dist = (t2) => Math.hypot(t2[0].clientX - t2[1].clientX, t2[0].clientY - t2[1].clientY);
+  stage.addEventListener('touchstart', (e) => { if (e.touches.length === 2) { d0 = dist(e.touches); z0 = z; } }, { passive: true });
+  stage.addEventListener('touchmove', (e) => { if (e.touches.length === 2 && d0) { e.preventDefault(); setZ(Math.round(z0 + Math.log(dist(e.touches) / d0) / Math.log(1.6))); } }, { passive: false });
+  stage.addEventListener('touchend', () => { d0 = 0; });
+  show();
+}
+
 // ───────── case dialog
 async function openCase(id) {
   const m = openModal('…'); m.body.innerHTML = `<div class="empty">${esc(t('loading'))}</div>`;
@@ -1144,17 +1204,18 @@ function renderCase(st, load, draw) {
   const canEdit = !c.archived && (u.role === 'admin' || (u.role === 'paramedic' && c.status === 'new'));
   const reload = async () => { if (await load()) draw(); if (S.refresh) S.refresh(); refreshBadge(); };
   m.title.innerHTML = `#${esc(c.case_number)} ${stB(c.status)}`;
+  const imgs = d.attachments.filter((a) => a.mime.startsWith('image/') && a.mime !== 'image/heic');
   const atts = d.attachments.map((a) => {
     const img = a.mime.startsWith('image/') && a.mime !== 'image/heic';
     return `<div class="th">${img ? `<img alt="${esc(a.original_name)}" data-aid="${a.id}" src="${window.__att(a.id)}">` : `<span class="file">${esc(a.original_name.slice(0, 14))}</span>`}${canEdit ? `<button class="rm" data-rm="${a.id}" title="${esc(t('remove'))}">×</button>` : ''}</div>`;
   }).join('');
   let h = '';
   if (st.editing) {
-    h += `<form id="ef"><label>${esc(t('f_visa'))}</label><select name="visa_type">${opts(VIS, visaL, c.visa_type)}</select>${u.role === 'admin' ? `<label>${esc(t('f_case_number'))}</label><input type="text" name="case_number" maxlength="30" value="${esc(c.case_number)}">` : ''}<label>${esc(t('f_complaint'))}</label><textarea name="chief_complaint" maxlength="500" required>${esc(c.chief_complaint)}</textarea><label>${esc(t('f_notes'))}</label><textarea name="notes" maxlength="2000">${esc(c.notes || '')}</textarea><div class="err-msg" id="ee"></div><div class="row" style="margin-top:10px"><button class="btn">${esc(t('save'))}</button><button type="button" class="btn sec" id="ec">${esc(t('cancel'))}</button></div></form>`;
+    h += `<form id="ef"><label>${esc(t('f_visa'))}</label><select name="visa_type">${opts(VIS, visaL, c.visa_type)}</select>${u.role === 'admin' ? `<label>${esc(t('f_case_number'))}</label><input type="text" name="case_number" maxlength="30" value="${esc(c.case_number)}">` : ''}<label>${esc(t('f_complaint'))}</label><textarea name="chief_complaint" maxlength="500" required>${esc(c.chief_complaint)}</textarea><label>${esc(t('f_notes'))}</label><textarea name="notes" maxlength="2000">${esc(c.notes || '')}</textarea><label>${esc(t('f_pname'))}</label><input type="text" name="patient_name" maxlength="100" autocomplete="off" dir="auto" value="${esc(c.patient_name || '')}"><label>${esc(t('f_pid'))}</label><input type="text" name="patient_id" maxlength="30" autocomplete="off" autocapitalize="characters" autocorrect="off" spellcheck="false" dir="auto" value="${esc(c.patient_id || '')}"><div class="err-msg" id="ee"></div><div class="row" style="margin-top:10px"><button class="btn">${esc(t('save'))}</button><button type="button" class="btn sec" id="ec">${esc(t('cancel'))}</button></div></form>`;
   } else {
-    h += `<dl class="dl"><dt>${esc(t('f_complaint'))}</dt><dd>${esc(c.chief_complaint)}</dd><dt>${esc(t('f_visa'))}</dt><dd>${esc(visaL(c.visa_type))}</dd><dt>${esc(t('f_paramedic'))}</dt><dd>${esc(c.paramedic_name)}</dd><dt>${esc(t('f_created'))}</dt><dd>${esc(fmtDT(c.created_at))}</dd>${c.notes ? `<dt>${esc(t('f_notes'))}</dt><dd>${esc(c.notes).replace(/\n/g, '<br>')}</dd>` : ''}${c.arrived_at ? `<dt>${esc(t('f_arrival'))}</dt><dd>${esc(fmtDT(c.arrived_at))}</dd>` : ''}${c.status_updated_at ? `<dt>${esc(t('f_updated'))}</dt><dd>${esc(fmtDT(c.status_updated_at))} · ${esc(c.status_updated_by || '')}</dd>` : ''}${c.archived ? `<dt>${esc(t('f_archived_at'))}</dt><dd>${esc(fmtDT(c.archived_at))} · ${esc(c.archived_by || '')}</dd>` : ''}</dl>`;
+    h += `<dl class="dl"><dt>${esc(t('f_complaint'))}</dt><dd>${esc(c.chief_complaint)}</dd><dt>${esc(t('f_visa'))}</dt><dd>${esc(visaL(c.visa_type))}</dd>${c.patient_name ? `<dt>${esc(t('f_pname'))}</dt><dd dir="auto">${esc(c.patient_name)}</dd>` : ''}${c.patient_id ? `<dt>${esc(t('f_pid'))}</dt><dd dir="auto">${esc(c.patient_id)}</dd>` : ''}<dt>${esc(t('f_paramedic'))}</dt><dd>${esc(c.paramedic_name)}</dd><dt>${esc(t('f_created'))}</dt><dd>${esc(fmtDT(c.created_at))}</dd>${c.notes ? `<dt>${esc(t('f_notes'))}</dt><dd>${esc(c.notes).replace(/\n/g, '<br>')}</dd>` : ''}${c.arrived_at ? `<dt>${esc(t('f_arrival'))}</dt><dd>${esc(fmtDT(c.arrived_at))}</dd>` : ''}${c.status_updated_at ? `<dt>${esc(t('f_updated'))}</dt><dd>${esc(fmtDT(c.status_updated_at))} · ${esc(c.status_updated_by || '')}</dd>` : ''}${c.archived ? `<dt>${esc(t('f_archived_at'))}</dt><dd>${esc(fmtDT(c.archived_at))} · ${esc(c.archived_by || '')}</dd>` : ''}</dl>`;
   }
-  h += `<h2 style="margin-top:18px">${esc(t('f_attachments'))}</h2><div class="thumbs">${atts || `<span class="hint">${esc(t('none'))}</span>`}</div>`;
+  h += `<h2 style="margin-top:18px">${esc(t('f_attachments'))}</h2><div class="thumbs">${atts || `<span class="hint">${esc(t('none'))}</span>`}</div>${imgs.length ? `<div class="row" style="margin-top:10px">${imgs.map((a, k) => `<button type="button" class="btn" data-view="${k}">🖼 ${esc(t('view_img'))}${imgs.length > 1 ? ' ' + (k + 1) : ''}</button>`).join('')}</div>` : ''}`;
   if (canEdit) h += `<div style="margin-top:8px"><label class="btn sec sm" style="display:inline-flex;margin:0;cursor:pointer">+ ${esc(t('add_doc'))}<input type="file" id="addf" accept="image/*" multiple hidden></label></div>`;
   if (canStatus) {
     h += `<h2 style="margin-top:18px">${esc(t('f_status'))}</h2><label>${esc(t('f_arrival'))}</label><input type="datetime-local" id="arr"><div class="hint">${esc(t('f_arrival_hint'))}</div><div class="sbtn">${['received', 'admitted', 'icu', 'discharged', 'deceased'].filter((s) => s !== c.status).map((s) => `<button class="btn ${s === 'discharged' ? 'ok' : s === 'deceased' ? 'bad' : s === 'icu' ? 'warn' : ''}" data-ss="${s}">${esc(t('st_' + s))}</button>`).join('')}</div><div class="err-msg" id="se"></div>`;
@@ -1164,14 +1225,17 @@ function renderCase(st, load, draw) {
   if (canEdit && !st.editing) act.push(`<button class="btn sec" id="eb">✎ ${esc(t('edit'))}</button>`);
   if (u.role === 'admin' && !c.archived && ['discharged', 'deceased'].includes(c.status)) act.push(`<button class="btn sec" id="ab">🗄 ${esc(t('archive'))}</button>`);
   if (u.role === 'admin' && c.archived) act.push(`<button class="btn sec" id="ub">↩ ${esc(t('unarchive'))}</button>`);
+  act.unshift(waBtn(c));
   if (act.length) h += `<div class="row" style="margin-top:14px">${act.join('')}</div>`;
   if (d.history) h += `<h2 style="margin-top:18px">${esc(t('f_history'))}</h2><div class="tw"><table><tbody>${d.history.map((x) => `<tr><td class="nw">${esc(fmtDT(x.ts))}</td><td>${esc(x.user)}</td><td>${esc(actLabel(x.action))}</td><td class="det">${auditDetails({ action: x.action, details: x.details })}</td></tr>`).join('')}</tbody></table></div>`;
   m.body.innerHTML = h;
   const B = m.body, fail = (id, e) => { const el = $('#' + id, B); if (el) el.textContent = errText(e); else toast(errText(e), 'err'); };
+  $$('[data-view]', B).forEach((b) => { b.onclick = () => viewer(imgs, +b.dataset.view); });
+  $$('.th img[data-aid]', B).forEach((im) => { im.style.cursor = 'zoom-in'; im.onclick = () => viewer(imgs, imgs.findIndex((a) => String(a.id) === im.dataset.aid)); });
   const eb = $('#eb', B); if (eb) eb.onclick = () => { st.editing = true; draw(); };
   const ec = $('#ec', B); if (ec) ec.onclick = () => { st.editing = false; draw(); };
   const ef = $('#ef', B);
-  if (ef) ef.onsubmit = async (e) => { e.preventDefault(); const f = e.target; const body = { visa_type: f.visa_type.value, chief_complaint: f.chief_complaint.value, notes: f.notes.value }; if (f.case_number) body.case_number = f.case_number.value; try { await api('PATCH', '/api/cases/' + c.id, body); toast(t('case_updated'), 'ok'); st.editing = false; reload(); } catch (er) { fail('ee', er); } };
+  if (ef) ef.onsubmit = async (e) => { e.preventDefault(); const f = e.target; const body = { visa_type: f.visa_type.value, chief_complaint: f.chief_complaint.value, notes: f.notes.value, patient_name: f.patient_name.value, patient_id: f.patient_id.value }; if (f.case_number) body.case_number = f.case_number.value; try { await api('PATCH', '/api/cases/' + c.id, body); toast(t('case_updated'), 'ok'); st.editing = false; reload(); } catch (er) { fail('ee', er); } };
   $$('[data-rm]', B).forEach((b) => { b.onclick = async (e) => { e.preventDefault(); e.stopPropagation(); if (!(await askConfirm(t('confirm_delete_att')))) return; try { await api('DELETE', '/api/attachments/' + b.dataset.rm); reload(); } catch (er) { fail('ee', er); } }; });
   const addf = $('#addf', B);
   if (addf) addf.onchange = async () => { const fd = new FormData(); for (const f of addf.files) fd.append('files', f, f.name); try { await api('POST', `/api/cases/${c.id}/attachments`, fd); reload(); } catch (er) { toast(errText(er), 'err'); } };

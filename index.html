@@ -720,7 +720,7 @@ async function attach() {
   const listenRoster = () => first.push(new Promise((res) => { let f = true; subs.push(FB.listenDoc('settings', 'main', (d) => { DB.roster = d && Array.isArray(d.roster) ? d.roster : []; if (f) { f = false; res(); } }, () => { if (f) { f = false; res(); } })); }));
   if (prof.role === 'admin') {
     listen('users', []); listen('cases', []); listen('atts', []); listen('audit', [], { orderBy: ['ts', 'desc'], limit: 3000 });
-    first.push(new Promise((res) => { let f = true; subs.push(FB.listenDoc('settings', 'main', (d) => { if (d) { DB.settings = { archive_after_days: +d.archive_after_days || 30, auto_archive: !!d.auto_archive }; shadow['settings/main'] = cj(settingsDoc()); } if (f) { f = false; res(); } }, () => { if (f) { f = false; res(); } })); }));
+    first.push(new Promise((res) => { let f = true; subs.push(FB.listenDoc('settings', 'main', (d) => { if (d) { DB.settings = { archive_after_days: +d.archive_after_days || 30, auto_archive: !!d.auto_archive }; shadow['settings/main'] = cj({ ...DB.settings, roster: Array.isArray(d.roster) ? d.roster : [] }); } if (f) { f = false; res(); } }, () => { if (f) { f = false; res(); } })); }));
   } else if (prof.role === 'er') {
     listenDoc('users', au); listenRoster(); listen('cases', [['archived', '==', 0]]); listen('atts', []);
   } else {

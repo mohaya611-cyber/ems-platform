@@ -183,6 +183,8 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .vl{position:absolute;inset:50% 0 auto;text-align:center;color:#fff;pointer-events:none}
 .vnav{display:flex;justify-content:center;gap:10px;padding:10px 12px;padding-bottom:max(10px,env(safe-area-inset-bottom,0px))}
 
+.st-cathlab{background:#ffe1ee;color:#9b1f55}.case.s-cathlab{border-color:#d6457f}
+
 </style>
 </head>
 <body>
@@ -212,9 +214,9 @@ window.I18N = {
     case_sent: 'Case submitted – the hospital can see it now', case_updated: 'Case updated', status_updated: 'Status updated', new_incoming: 'New incoming case', archived_ok: 'Case moved to the private archive', unarchived_ok: 'Case restored from the archive',
     confirm_receipt: 'Confirm receipt', confirm_deceased: 'Record this patient as deceased?', confirm_archive: 'Move this case to the private archive?', confirm_delete_att: 'Remove this document?',
     archive: 'Archive', unarchive: 'Restore', add_doc: 'Add document', remove: 'Remove', no_incoming: 'No incoming cases right now', no_open: 'No open cases',
-    st_new: 'New Case', st_received: 'Received by ER', st_discharged: 'Discharged', st_admitted: 'Admitted', st_icu: 'ICU Admission', st_deceased: 'Deceased',
+    st_new: 'New Case', st_received: 'Received by ER', st_discharged: 'Discharged', st_admitted: 'Ward Admission', st_icu: 'ICU Admission', st_deceased: 'Deceased',
     visa_Umrah: 'Umrah / Hajj', visa_Tourist: 'Tourist', visa_Visit: 'Visit', visa_Resident: 'Resident', visa_Saudi: 'Saudi', visa_Unknown: 'Unknown', visa_Other: 'Other',
-    k_total: 'Total Cases', k_today: "Today's Cases", k_month: 'Monthly Cases', k_received: 'Received Cases', k_discharged: 'Discharged Cases', k_admitted: 'Admitted Cases', k_icu: 'ICU Cases', k_deceased: 'Deceased Cases', k_pending: 'Pending Cases', k_in_er: 'Currently in ER',
+    k_total: 'Total Cases', k_today: "Today's Cases", k_month: 'Monthly Cases', k_received: 'Received Cases', k_discharged: 'Discharged Cases', k_admitted: 'Ward Cases', k_icu: 'ICU Cases', k_deceased: 'Deceased Cases', k_pending: 'Pending Cases', k_in_er: 'Currently in ER',
     k_received_hint: 'All cases received by the ER', k_pending_hint: 'Not received yet',
     ch_daily: 'Daily (30 days)', ch_weekly: 'Weekly (12 weeks)', ch_monthly: 'Monthly (12 months)', ch_visa: 'By ID type', ch_status: 'By status', ch_paramedic: 'By paramedic', cases: 'cases',
     rep_title: 'Cases report', rep_excel: 'Download Excel', rep_pdf: 'PDF / Print', rep_include: 'Include', rep_all: 'All cases', rep_active: 'Active only', rep_archived: 'Archived only', rep_generated: 'Generated', rep_summary: 'Summary', rep_hint: 'PDF opens the print dialog – choose “Save as PDF”.',
@@ -239,9 +241,9 @@ window.I18N = {
     case_sent: 'تم إرسال الحالة – تظهر الآن للمستشفى', case_updated: 'تم تحديث الحالة', status_updated: 'تم تحديث حالة المريض', new_incoming: 'حالة واردة جديدة', archived_ok: 'تم نقل الحالة إلى الأرشيف الخاص', unarchived_ok: 'تمت استعادة الحالة من الأرشيف',
     confirm_receipt: 'تأكيد الاستقبال', confirm_deceased: 'تسجيل المريض كوفاة؟', confirm_archive: 'نقل هذه الحالة إلى الأرشيف الخاص؟', confirm_delete_att: 'إزالة هذا المستند؟',
     archive: 'أرشفة', unarchive: 'استعادة', add_doc: 'إضافة مستند', remove: 'إزالة', no_incoming: 'لا توجد حالات واردة حالياً', no_open: 'لا توجد حالات مفتوحة',
-    st_new: 'حالة جديدة', st_received: 'تم استقبال المريض', st_discharged: 'خروج المريض', st_admitted: 'تنويم', st_icu: 'دخول العناية المركزة', st_deceased: 'وفاة',
+    st_new: 'حالة جديدة', st_received: 'تم استقبال المريض', st_discharged: 'خروج المريض', st_admitted: 'ورد ادمشن', st_icu: 'آي سي يو ادمشن', st_deceased: 'وفاة',
     visa_Umrah: 'عمرة / حج', visa_Tourist: 'سياحة', visa_Visit: 'زيارة', visa_Resident: 'مقيم', visa_Saudi: 'سعودي', visa_Unknown: 'غير معروف', visa_Other: 'أخرى',
-    k_total: 'إجمالي الحالات', k_today: 'حالات اليوم', k_month: 'حالات الشهر', k_received: 'الحالات المستقبلة', k_discharged: 'حالات الخروج', k_admitted: 'حالات التنويم', k_icu: 'حالات العناية المركزة', k_deceased: 'حالات الوفاة', k_pending: 'حالات لم تُستقبل بعد', k_in_er: 'حالياً في الطوارئ',
+    k_total: 'إجمالي الحالات', k_today: 'حالات اليوم', k_month: 'حالات الشهر', k_received: 'الحالات المستقبلة', k_discharged: 'حالات الخروج', k_admitted: 'حالات الورد', k_icu: 'حالات العناية المركزة', k_deceased: 'حالات الوفاة', k_pending: 'حالات لم تُستقبل بعد', k_in_er: 'حالياً في الطوارئ',
     k_received_hint: 'كل الحالات التي استقبلها الطوارئ', k_pending_hint: 'بانتظار الاستقبال',
     ch_daily: 'يومي (30 يوماً)', ch_weekly: 'أسبوعي (12 أسبوعاً)', ch_monthly: 'شهري (12 شهراً)', ch_visa: 'حسب نوع الهوية', ch_status: 'حسب الحالة', ch_paramedic: 'حسب المسعف', cases: 'حالة',
     rep_title: 'تقرير الحالات', rep_excel: 'تحميل Excel', rep_pdf: 'PDF / طباعة', rep_include: 'يشمل', rep_all: 'كل الحالات', rep_active: 'النشطة فقط', rep_archived: 'المؤرشفة فقط', rep_generated: 'تاريخ الإصدار', rep_summary: 'الملخص', rep_hint: 'زر PDF يفتح نافذة الطباعة – اختر «حفظ بصيغة PDF».',
@@ -266,8 +268,11 @@ Object.assign(I18N.en,{x_excel:'Export to Excel',x_archive:'Export archive to Ex
  wd:['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],unit_min:'m',unit_hr:'h',
  st_sheet:'Summary',sh_cases:'Cases',sh_arch:'Archive',sh_status:'By status',sh_visa:'By ID type',sh_para:'By paramedic',sh_hour:'By hour',sh_wd:'By weekday',sh_daily:'Last 30 days'});
 
-Object.assign(I18N.ar,{f_pname:'اسم المريض',f_pid:'رقم هوية المريض',pid_hint_any:'اكتب رقم الهوية أو رقم الجواز حسب نوع الهوية',pid_hint_national:'اكتب رقم الهوية الوطنية',pid_hint_iqama:'اكتب رقم الإقامة',pid_hint_passport:'اكتب رقم جواز السفر',wa_share:'مشاركة عبر واتساب',view_img:'عرض الصورة',v_in:'تكبير',v_out:'تصغير',v_fit:'ملء الشاشة',v_prev:'السابق',v_next:'التالي',v_loading:'جاري تحميل الصورة…',wa_ready:'جاهز للإرسال إلى مجموعة العمل'});
-Object.assign(I18N.en,{f_pname:'Patient Name',f_pid:'Patient ID Number',pid_hint_any:'Enter the ID or passport number according to the ID type',pid_hint_national:'Enter the national ID number',pid_hint_iqama:'Enter the residence (Iqama) number',pid_hint_passport:'Enter the passport number',wa_share:'Share via WhatsApp',view_img:'View image',v_in:'Zoom in',v_out:'Zoom out',v_fit:'Fit',v_prev:'Previous',v_next:'Next',v_loading:'Loading image…',wa_ready:'Ready to send to the work group'});
+Object.assign(I18N.ar,{f_pname:'اسم المريض',f_pid:'رقم هوية المريض',pid_hint_any:'اكتب رقم الهوية أو رقم الجواز حسب نوع الهوية',pid_hint_national:'اكتب رقم الهوية الوطنية',pid_hint_iqama:'اكتب رقم الإقامة',pid_hint_passport:'اكتب رقم جواز السفر',wa_share:'مشاركة عبر واتساب',view_img:'عرض الصورة',v_in:'تكبير',v_out:'تصغير',v_fit:'ملء الشاشة',v_prev:'السابق',v_next:'التالي',v_loading:'جاري تحميل الصورة…',wa_ready:'جاهز للإرسال إلى مجموعة العمل',wa_share_img:'مشاركة مع الصورة',share_fail:'تعذّرت المشاركة، جرّب زر واتساب'});
+Object.assign(I18N.en,{f_pname:'Patient Name',f_pid:'Patient ID Number',pid_hint_any:'Enter the ID or passport number according to the ID type',pid_hint_national:'Enter the national ID number',pid_hint_iqama:'Enter the residence (Iqama) number',pid_hint_passport:'Enter the passport number',wa_share:'Share via WhatsApp',view_img:'View image',v_in:'Zoom in',v_out:'Zoom out',v_fit:'Fit',v_prev:'Previous',v_next:'Next',v_loading:'Loading image…',wa_ready:'Ready to send to the work group',wa_share_img:'Share with image',share_fail:'Sharing failed, try the WhatsApp button'});
+
+Object.assign(I18N.ar,{st_cathlab:'كاث لاب ادمشن',k_cathlab:'حالات الكاث لاب'});
+Object.assign(I18N.en,{st_cathlab:'Cath Lab Admission',k_cathlab:'Cath Lab Cases'});
 
 </script>
 <script>
@@ -314,7 +319,7 @@ try {
 (() => {
 const KEY = 'ems-demo-v2', SES = 'ems-demo-user', TZ = 180, PW = 'Demo#Pass12345';
 const VISA = ['Umrah', 'Tourist', 'Visit', 'Resident', 'Saudi', 'Unknown', 'Other'];
-const STATUSES = ['new', 'received', 'discharged', 'admitted', 'icu', 'deceased'];
+const STATUSES = ['new', 'received', 'discharged', 'admitted', 'icu', 'cathlab', 'deceased'];
 const CLOSED = ['discharged', 'deceased'];
 const ROLES = ['paramedic', 'er', 'admin'];
 let DB, cur = null, FB = null, authUid = null, READY = null, subs = [], spec = {}, DATA = {}, PEND = [], lastU = 0;
@@ -354,7 +359,7 @@ const normId = (v) => String(v == null ? '' : v).replace(/[\u0660-\u0669]/g, (d)
 const pub = (u) => ({ id: u.id, name: u.name, email: u.email, role: u.role, mfa_enabled: false, mfa_required: false, must_change_pw: false, blocked: false });
 function canView(u, c) { if (!c) return false; if (u.role === 'admin') return true; if (c.archived) return false; if (u.role === 'er') return true; return c.paramedic_id === u.id; }
 function filt(q, user, archived) {
-  const st = q.status ? String(q.status).split(',').flatMap((s) => (s === 'open' ? ['received', 'admitted', 'icu'] : STATUSES.includes(s) ? [s] : [])) : [];
+  const st = q.status ? String(q.status).split(',').flatMap((s) => (s === 'open' ? ['received', 'admitted', 'icu', 'cathlab'] : STATUSES.includes(s) ? [s] : [])) : [];
   const ql = q.q ? clip(q.q, 60).toLowerCase() : '', cl = q.case ? clip(q.case, 40).toLowerCase() : '';
   return (c) => {
     if (archived === true && !c.archived) return false;
@@ -393,6 +398,7 @@ async function packImage(f) {
 const formFiles = (form) => (form ? form.getAll('files').filter((f) => f && f.size > 0) : []);
 async function prepFiles(form) { const fs = formFiles(form); if (fs.length > 6) throw bad('too_many_files'); const o = []; for (const f of fs) o.push(await packImage(f)); return o; }
 function addAtts(c, user, list) { return list.map((f) => { const a = { id: uid(), case_id: c.id, paramedic_uid: c.paramedic_uid || null, original_name: f.name, mime: f.mime, size: f.size, uploaded_by: user.name, created_at: nowIso(), deleted: 0 }; DB.atts.push(a); DATA[a.id] = f.data; PEND.push({ id: a.id, paramedic_uid: a.paramedic_uid, data: f.data }); return a.id; }); }
+window.__attP = async (id) => { if (DATA[id]) return DATA[id]; if (!FB) return null; try { const d = await FB.get('attdata', String(id)); if (d && d.data) { DATA[id] = d.data; return d.data; } } catch (e) {} return null; };
 const BLANK = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
 window.__att = (id) => {
   if (DATA[id]) return DATA[id];
@@ -404,7 +410,7 @@ window.__att = (id) => {
 function statsFor(q, user) {
   const arch = q.archived === '1' ? true : q.archived === '0' ? false : undefined;
   const rows = DB.cases.filter(filt(q, user, arch));
-  const counts = { total: rows.length, today: 0, month: 0, pending: 0, received: 0, discharged: 0, admitted: 0, icu: 0, deceased: 0, in_er: 0 };
+  const counts = { total: rows.length, today: 0, month: 0, pending: 0, received: 0, discharged: 0, admitted: 0, icu: 0, cathlab: 0, deceased: 0, in_er: 0 };
   const today = localDay(nowIso()), month = today.slice(0, 7), byVisa = {}, byParamedic = {}, byStatus = {};
   for (const r of rows) {
     const d = localDay(r.created_at);
@@ -436,7 +442,7 @@ function statsFor(q, user) {
   const med = (a) => { if (!a.length) return null; const s = [...a].sort((x, y) => x - y), h = s.length >> 1; return s.length % 2 ? s[h] : Math.round((s[h - 1] + s[h]) / 2); };
   const sum = (a) => ({ n: a.length, avg: avg(a), median: med(a), max: a.length ? Math.max(...a) : null });
   const hour = Array(24).fill(0), weekday = Array(7).fill(0), rec = [], clo = [], gp = {}, gv = {};
-  const grp = (map, key, r) => { const g = map[key] || (map[key] = { name: key, total: 0, new: 0, received: 0, discharged: 0, admitted: 0, icu: 0, deceased: 0, rec: [] }); g.total++; g[r.status]++; if (r.arrived_at) g.rec.push(mins(r.created_at, r.arrived_at)); };
+  const grp = (map, key, r) => { const g = map[key] || (map[key] = { name: key, total: 0, new: 0, received: 0, discharged: 0, admitted: 0, icu: 0, cathlab: 0, deceased: 0, rec: [] }); g.total++; g[r.status]++; if (r.arrived_at) g.rec.push(mins(r.created_at, r.arrived_at)); };
   for (const r of rows) {
     const lk = localKey(r.created_at); hour[+lk.slice(11, 13)]++; weekday[new Date(lk).getUTCDay()]++;
     if (r.arrived_at) rec.push(mins(r.created_at, r.arrived_at)); if (r.arrived_at && r.closed_at) clo.push(mins(r.arrived_at, r.closed_at));
@@ -730,7 +736,7 @@ READY = init().catch((e) => { console.error(e); FB = null; });
 const D = window.I18N;
 const S = { view0: '', user: null, meta: null, lang: localStorage.getItem('lang') || 'ar', es: null, refresh: null, f: {}, p: {}, paramedics: null };
 const VIS = ['Umrah', 'Tourist', 'Visit', 'Resident', 'Saudi', 'Unknown', 'Other'];
-const STS = ['new', 'received', 'discharged', 'admitted', 'icu', 'deceased'];
+const STS = ['new', 'received', 'discharged', 'admitted', 'icu', 'cathlab', 'deceased'];
 const NAV = { paramedic: ['new', 'mine', 'status'], er: ['incoming', 'tracking', 'update'], admin: ['overview', 'cases', 'stats', 'reports', 'users', 'archive', 'audit', 'settings'] };
 const t = (k) => D[S.lang][k] ?? D.en[k] ?? k;
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -910,12 +916,12 @@ function caseCard(c, extra = '') {
   <div class="meta">${c.patient_name ? `<span>👤 ${esc(c.patient_name)}</span>` : ''}<span>${esc(visaL(c.visa_type))}</span><span>${esc(c.paramedic_name)}</span><span>${esc(fmtDT(c.created_at))}</span>${c.att_count ? `<span>📎 ${c.att_count}</span>` : ''}</div>${extra}</div>`;
 }
 function steps(c) {
-  const out = ['discharged', 'admitted', 'icu', 'deceased'].includes(c.status);
+  const out = ['discharged', 'admitted', 'icu', 'cathlab', 'deceased'].includes(c.status);
   return `<div class="steps"><div class="s d">${esc(t('f_created'))}<br>${esc(fmtDT(c.created_at))}</div><div class="s ${c.status !== 'new' ? 'd' : ''}">${esc(t('st_received'))}<br>${c.arrived_at ? esc(fmtDT(c.arrived_at)) : '…'}</div><div class="s ${out ? 'd' : ''}">${out ? esc(t('st_' + c.status)) : esc(t('f_final'))}<br>${out ? esc(fmtDT(c.status_updated_at)) : '…'}</div></div>`;
 }
 function quickButtons(c) {
   const b = (st, cls) => c.status === st ? '' : `<button class="btn sm ${cls}" data-act="qs" data-id="${c.id}" data-st="${st}">${esc(t('st_' + st))}</button>`;
-  return `<div class="row" style="margin-top:4px">${b('received', '')}${b('admitted', 'sec')}${b('icu', 'warn')}${b('discharged', 'ok')}${b('deceased', 'bad')}</div>`;
+  return `<div class="row" style="margin-top:4px">${b('received', '')}${b('admitted', 'sec')}${b('icu', 'warn')}${b('cathlab', 'sec')}${b('discharged', 'ok')}${b('deceased', 'bad')}</div>`;
 }
 function casesTable(items, o = {}) {
   if (!items.length) return `<div class="empty">${esc(t('none'))}</div>`;
@@ -970,7 +976,7 @@ VIEWS.new = (main) => {
   };
 };
 VIEWS.mine = casesView('mine', { fields: ['q', 'status', 'from', 'to'], mode: 'cards' });
-VIEWS.status = casesView('status', { fields: [], mode: 'cards', params: () => ({ status: 'new,received,admitted,icu' }), extra: steps, emptyKey: 'no_open' });
+VIEWS.status = casesView('status', { fields: [], mode: 'cards', params: () => ({ status: 'new,received,admitted,icu,cathlab' }), extra: steps, emptyKey: 'no_open' });
 
 // ───────── ER views
 VIEWS.incoming = casesView('incoming', {
@@ -978,11 +984,11 @@ VIEWS.incoming = casesView('incoming', {
   extra: (c) => `<button class="btn ok big" data-act="qs" data-id="${c.id}" data-st="received">✔ ${esc(t('confirm_receipt'))}</button>`,
 });
 VIEWS.tracking = casesView('tracking', { fields: ['q', 'status', 'visa', 'from', 'to'], mode: 'table' });
-VIEWS.update = casesView('update', { fields: ['q'], mode: 'cards', params: () => ({ status: 'new,received,admitted,icu' }), extra: (c) => quickButtons(c), emptyKey: 'no_open' });
+VIEWS.update = casesView('update', { fields: ['q'], mode: 'cards', params: () => ({ status: 'new,received,admitted,icu,cathlab' }), extra: (c) => quickButtons(c), emptyKey: 'no_open' });
 
 // ───────── admin views
 VIEWS.cases = withBar(casesView('cases', { fields: ['q', 'status', 'visa', 'paramedic', 'from', 'to'], mode: 'table', needParamedics: true }), () => `<div class="row" style="margin-bottom:12px"><button class="btn sec" data-act="exportXlsx" data-kind="cases">⬇ ${esc(t('x_cases'))}</button><button class="btn sec" data-act="archiveAll">🗄 ${esc(t('arch_all'))}</button></div>`);
-VIEWS.archive = withBar(casesView('archive', { fields: ['q', 'status', 'visa', 'paramedic', 'from', 'to'], mode: 'table', archive: true, params: () => ({ archived: 1 }), needParamedics: true, statuses: ['discharged', 'admitted', 'icu', 'deceased', 'received', 'new'] }), () => `<div class="row" style="margin-bottom:12px"><button class="btn" data-act="archiveAll">🗄 ${esc(t('arch_all'))}</button><button class="btn sec" data-act="exportXlsx" data-kind="archive">⬇ ${esc(t('x_archive'))}</button></div>`);
+VIEWS.archive = withBar(casesView('archive', { fields: ['q', 'status', 'visa', 'paramedic', 'from', 'to'], mode: 'table', archive: true, params: () => ({ archived: 1 }), needParamedics: true, statuses: ['discharged', 'admitted', 'icu', 'cathlab', 'deceased', 'received', 'new'] }), () => `<div class="row" style="margin-bottom:12px"><button class="btn" data-act="archiveAll">🗄 ${esc(t('arch_all'))}</button><button class="btn sec" data-act="exportXlsx" data-kind="archive">⬇ ${esc(t('x_archive'))}</button></div>`);
 VIEWS.overview = async (main) => {
   main.innerHTML = `<h1>${esc(t('nav_overview'))}</h1><div id="ov"></div>`;
   const load = async () => {
@@ -994,7 +1000,7 @@ VIEWS.overview = async (main) => {
 };
 function kpisHtml(k) {
   const K = (key, val, cls, hint) => `<div class="kpi ${cls}" ${hint ? `title="${esc(hint)}"` : ''}><b>${val}</b><span>${esc(t(key))}</span></div>`;
-  return `<div class="kpis">${K('k_total', k.total, '')}${K('k_today', k.today, '')}${K('k_month', k.month, '')}${K('k_received', k.received, 'c-teal', t('k_received_hint'))}${K('k_pending', k.pending, 'c-warn', t('k_pending_hint'))}${K('k_in_er', k.in_er, 'c-teal')}${K('k_discharged', k.discharged, 'c-ok')}${K('k_admitted', k.admitted, 'c-gray')}${K('k_icu', k.icu, 'c-bad')}${K('k_deceased', k.deceased, 'c-gray')}</div>`;
+  return `<div class="kpis">${K('k_total', k.total, '')}${K('k_today', k.today, '')}${K('k_month', k.month, '')}${K('k_received', k.received, 'c-teal', t('k_received_hint'))}${K('k_pending', k.pending, 'c-warn', t('k_pending_hint'))}${K('k_in_er', k.in_er, 'c-teal')}${K('k_discharged', k.discharged, 'c-ok')}${K('k_admitted', k.admitted, 'c-gray')}${K('k_icu', k.icu, 'c-bad')}${K('k_cathlab', k.cathlab, 'c-bad')}${K('k_deceased', k.deceased, 'c-gray')}</div>`;
 }
 function barChart(data, color, lf) {
   const W = 700, H = 230, pl = 30, pb = 36, pt = 14, n = data.length, max = Math.max(4, ...data.map((d) => d.n));
@@ -1017,18 +1023,18 @@ const fmtMin = (m) => (m == null ? '—' : m >= 60 ? Math.floor(m / 60) + ' ' + 
 const WD = () => D[S.lang].wd;
 function kpisPct(k) {
   const T = k.total, K = (key, val, cls, sub) => `<div class="kpi ${cls}"><b>${val}</b><span>${esc(t(key))}</span><em>${sub}</em></div>`;
-  return `<div class="kpis">${K('k_total', k.total, '', '100%')}${K('k_today', k.today, '', pct(k.today, T))}${K('k_month', k.month, '', pct(k.month, T))}${K('k_received', k.received, 'c-teal', pct(k.received, T))}${K('k_pending', k.pending, 'c-warn', pct(k.pending, T))}${K('k_in_er', k.in_er, 'c-teal', pct(k.in_er, T))}${K('k_discharged', k.discharged, 'c-ok', pct(k.discharged, T))}${K('k_admitted', k.admitted, 'c-gray', pct(k.admitted, T))}${K('k_icu', k.icu, 'c-bad', pct(k.icu, T))}${K('k_deceased', k.deceased, 'c-gray', pct(k.deceased, T))}</div>`;
+  return `<div class="kpis">${K('k_total', k.total, '', '100%')}${K('k_today', k.today, '', pct(k.today, T))}${K('k_month', k.month, '', pct(k.month, T))}${K('k_received', k.received, 'c-teal', pct(k.received, T))}${K('k_pending', k.pending, 'c-warn', pct(k.pending, T))}${K('k_in_er', k.in_er, 'c-teal', pct(k.in_er, T))}${K('k_discharged', k.discharged, 'c-ok', pct(k.discharged, T))}${K('k_admitted', k.admitted, 'c-gray', pct(k.admitted, T))}${K('k_icu', k.icu, 'c-bad', pct(k.icu, T))}${K('k_cathlab', k.cathlab, 'c-bad', pct(k.cathlab, T))}${K('k_deceased', k.deceased, 'c-gray', pct(k.deceased, T))}</div>`;
 }
 const tbl = (head, rows) => `<div class="tw"><table><thead><tr>${head.map((h, i) => `<th class="${i ? 'num' : ''}">${esc(h)}</th>`).join('')}</tr></thead><tbody>${rows.map((r) => `<tr>${r.map((c, i) => `<td class="${i ? 'num' : ''}">${c}</td>`).join('')}</tr>`).join('') || `<tr><td colspan="${head.length}">${esc(t('none'))}</td></tr>`}</tbody></table></div>`;
 const timeCard = (title, s) => `<div class="card"><h2>${esc(title)}</h2><dl class="dl"><dt>${esc(t('t_n'))}</dt><dd>${s.n}</dd><dt>${esc(t('t_avg'))}</dt><dd>${fmtMin(s.avg)}</dd><dt>${esc(t('t_median'))}</dt><dd>${fmtMin(s.median)}</dd><dt>${esc(t('t_max'))}</dt><dd>${fmtMin(s.max)}</dd></dl></div>`;
 function statsBody(st) {
   const k = st.counts, T = k.total, R = k.received;
   const rate = (key, n) => [esc(t(key)), n, pct(n, T), key === 'k_received' || key === 'k_pending' || key === 'k_in_er' ? '—' : pct(n, R)];
-  const rates = tbl([t('m_metric'), t('c_count'), t('s_pct_total'), t('s_pct_recv')], [rate('k_received', k.received), rate('k_pending', k.pending), rate('k_in_er', k.in_er), rate('k_discharged', k.discharged), rate('k_admitted', k.admitted), rate('k_icu', k.icu), rate('k_deceased', k.deceased)]);
+  const rates = tbl([t('m_metric'), t('c_count'), t('s_pct_total'), t('s_pct_recv')], [rate('k_received', k.received), rate('k_pending', k.pending), rate('k_in_er', k.in_er), rate('k_discharged', k.discharged), rate('k_admitted', k.admitted), rate('k_icu', k.icu), rate('k_cathlab', k.cathlab), rate('k_deceased', k.deceased)]);
   const bar = (n, d) => `<span class="bar-in" style="width:${d ? Math.max(2, Math.round(n * 80 / d)) : 0}px"></span>`;
   const stRows = STS.map((s) => [stB(s), st.byStatus[s] || 0, pct(st.byStatus[s] || 0, T) + bar(st.byStatus[s] || 0, T)]);
-  const gRows = (list, nm) => list.map((g) => [esc(nm(g.name)), g.total, pct(g.total, T) + bar(g.total, T), g.received + g.discharged + g.admitted + g.icu + g.deceased, g.discharged, g.admitted, g.icu, g.deceased, fmtMin(g.avg_receipt)]);
-  const gHead = [t('c_name'), t('c_count'), t('c_pct'), t('m_arrived'), t('k_discharged'), t('k_admitted'), t('k_icu'), t('k_deceased'), t('c_recv_avg')];
+  const gRows = (list, nm) => list.map((g) => [esc(nm(g.name)), g.total, pct(g.total, T) + bar(g.total, T), g.received + g.discharged + g.admitted + g.icu + g.cathlab + g.deceased, g.discharged, g.admitted, g.icu, g.cathlab, g.deceased, fmtMin(g.avg_receipt)]);
+  const gHead = [t('c_name'), t('c_count'), t('c_pct'), t('m_arrived'), t('k_discharged'), t('k_admitted'), t('k_icu'), t('k_cathlab'), t('k_deceased'), t('c_recv_avg')];
   return kpisPct(k) + `<div class="mini"><div><h2>${esc(t('s_rates'))}</h2>${rates}</div><div><h2>${esc(t('tb_status'))}</h2>${tbl([t('c_name'), t('c_count'), t('c_pct')], stRows)}</div></div>`
     + `<div class="mini">${timeCard(t('t_to_receipt'), st.timing.receipt)}${timeCard(t('t_to_close'), st.timing.close)}</div>`
     + `<div class="card chart" style="margin-bottom:12px"><div class="tabs">${['daily', 'weekly', 'monthly', 'hour', 'weekday'].map((x) => `<button data-tab="${x}">${esc(t('ch_' + x))}</button>`).join('')}</div><div id="chart" style="direction:ltr"></div></div>`
@@ -1087,15 +1093,15 @@ function xlsxSheets(st, items, kind) {
   const cases = [[t('f_case_number'), t('f_created'), t('f_paramedic'), t('f_visa'), t('f_complaint'), t('f_notes'), t('f_status'), t('f_arrival'), t('f_updated'), t('f_updated_by'), t('x_min_receipt'), t('x_min_close'), t('x_archived'), t('f_archived_at'), t('f_pname'), t('f_pid')]];
   for (const c of items) cases.push([c.case_number, fmtDT(c.created_at), c.paramedic_name, visaL(c.visa_type), c.chief_complaint, c.notes || '', t('st_' + c.status), c.arrived_at ? fmtDT(c.arrived_at) : '', c.status_updated_at ? fmtDT(c.status_updated_at) : '', c.status_updated_by || '', c.arrived_at ? mins(c.created_at, c.arrived_at) : '', c.arrived_at && c.closed_at ? mins(c.arrived_at, c.closed_at) : '', c.archived ? t('yes') : t('no'), c.archived_at ? fmtDT(c.archived_at) : '', c.patient_name || '', c.patient_id || '']);
   const sum = [[t('m_metric'), t('c_count'), t('s_pct_total'), t('s_pct_recv')]];
-  [['k_total', k.total], ['k_today', k.today], ['k_month', k.month], ['k_received', k.received], ['k_pending', k.pending], ['k_in_er', k.in_er], ['k_discharged', k.discharged], ['k_admitted', k.admitted], ['k_icu', k.icu], ['k_deceased', k.deceased]].forEach(([key, n]) => sum.push([t(key), n, P(n, T), ['k_discharged', 'k_admitted', 'k_icu', 'k_deceased'].includes(key) ? P(n, R) : '']));
+  [['k_total', k.total], ['k_today', k.today], ['k_month', k.month], ['k_received', k.received], ['k_pending', k.pending], ['k_in_er', k.in_er], ['k_discharged', k.discharged], ['k_admitted', k.admitted], ['k_icu', k.icu], ['k_cathlab', k.cathlab], ['k_deceased', k.deceased]].forEach(([key, n]) => sum.push([t(key), n, P(n, T), ['k_discharged', 'k_admitted', 'k_icu', 'k_cathlab', 'k_deceased'].includes(key) ? P(n, R) : '']));
   sum.push(['', '', '', ''], [t('t_to_receipt'), '', '', ''], [t('t_avg') + ' (' + t('unit_min') + ')', st.timing.receipt.avg, '', ''], [t('t_median') + ' (' + t('unit_min') + ')', st.timing.receipt.median, '', ''], [t('t_max') + ' (' + t('unit_min') + ')', st.timing.receipt.max, '', ''], [t('t_to_close'), '', '', ''], [t('t_avg') + ' (' + t('unit_min') + ')', st.timing.close.avg, '', ''], [t('t_median') + ' (' + t('unit_min') + ')', st.timing.close.median, '', ''], [t('t_max') + ' (' + t('unit_min') + ')', st.timing.close.max, '', '']);
   const byStatus = [[t('c_name'), t('c_count'), t('c_pct')]]; STS.forEach((s) => byStatus.push([t('st_' + s), st.byStatus[s] || 0, P(st.byStatus[s] || 0, T)]));
-  const gh = [t('c_name'), t('c_count'), t('c_pct'), t('m_arrived'), t('k_discharged'), t('k_admitted'), t('k_icu'), t('k_deceased'), t('c_recv_avg') + ' (' + t('unit_min') + ')'];
-  const grp = (list, nm) => [gh, ...list.map((g) => [nm(g.name), g.total, P(g.total, T), g.received + g.discharged + g.admitted + g.icu + g.deceased, g.discharged, g.admitted, g.icu, g.deceased, g.avg_receipt])];
+  const gh = [t('c_name'), t('c_count'), t('c_pct'), t('m_arrived'), t('k_discharged'), t('k_admitted'), t('k_icu'), t('k_cathlab'), t('k_deceased'), t('c_recv_avg') + ' (' + t('unit_min') + ')'];
+  const grp = (list, nm) => [gh, ...list.map((g) => [nm(g.name), g.total, P(g.total, T), g.received + g.discharged + g.admitted + g.icu + g.cathlab + g.deceased, g.discharged, g.admitted, g.icu, g.cathlab, g.deceased, g.avg_receipt])];
   const hr = [[t('c_name'), t('c_count'), t('c_pct')]]; st.hour.forEach((n, i) => hr.push([String(i).padStart(2, '0') + ':00', n, P(n, T)]));
   const wd = [[t('c_name'), t('c_count'), t('c_pct')]]; st.weekday.forEach((n, i) => wd.push([WD()[i], n, P(n, T)]));
   const dl = [[t('c_name'), t('c_count')]]; st.daily.forEach((d) => dl.push([d.label, d.n]));
-  return [{ name: t(kind === 'archive' ? 'sh_arch' : 'sh_cases'), rows: cases, widths: [16, 17, 22, 14, 40, 40, 18, 17, 17, 22, 14, 16, 10, 17, 24, 20] }, { name: t('st_sheet'), rows: sum, widths: [34, 12, 16, 16] }, { name: t('sh_status'), rows: byStatus, widths: [24, 12, 12] }, { name: t('sh_visa'), rows: grp(st.visas, visaL), widths: [20, 10, 10, 14, 12, 12, 12, 12, 18] }, { name: t('sh_para'), rows: grp(st.paramedics, (x) => x), widths: [26, 10, 10, 14, 12, 12, 12, 12, 18] }, { name: t('sh_hour'), rows: hr, widths: [14, 10, 10] }, { name: t('sh_wd'), rows: wd, widths: [14, 10, 10] }, { name: t('sh_daily'), rows: dl, widths: [14, 10] }];
+  return [{ name: t(kind === 'archive' ? 'sh_arch' : 'sh_cases'), rows: cases, widths: [16, 17, 22, 14, 40, 40, 18, 17, 17, 22, 14, 16, 10, 17, 24, 20] }, { name: t('st_sheet'), rows: sum, widths: [34, 12, 16, 16] }, { name: t('sh_status'), rows: byStatus, widths: [24, 12, 12] }, { name: t('sh_visa'), rows: grp(st.visas, visaL), widths: [20, 10, 10, 14, 12, 12, 12, 12, 12, 18] }, { name: t('sh_para'), rows: grp(st.paramedics, (x) => x), widths: [26, 10, 10, 14, 12, 12, 12, 12, 12, 18] }, { name: t('sh_hour'), rows: hr, widths: [14, 10, 10] }, { name: t('sh_wd'), rows: wd, widths: [14, 10, 10] }, { name: t('sh_daily'), rows: dl, widths: [14, 10] }];
 }
 function withBar(view, html) { return async (main) => { await view(main); const h1 = $('h1', main); if (h1) h1.insertAdjacentHTML('afterend', html()); }; }
 VIEWS.reports = async (main) => {
@@ -1112,7 +1118,7 @@ async function printReport() {
   const d = await api('GET', '/api/report?' + qs(f)); const k = d.stats.counts;
   const filt = Object.entries(f).map(([a, b]) => `${a}: ${b}`).join(' · ') || t('f_all');
   $('#printArea').innerHTML = `<h1>${esc(t('hospital'))} – ${esc(t('rep_title'))}</h1><p>${esc(t('rep_generated'))}: ${esc(fmtDT(d.generated_at))} · ${esc(S.user.name)}<br>${esc(filt)}</p>
-  <h2>${esc(t('rep_summary'))}</h2><table><tbody><tr>${[['k_total', k.total], ['k_today', k.today], ['k_month', k.month], ['k_received', k.received], ['k_pending', k.pending], ['k_discharged', k.discharged], ['k_admitted', k.admitted], ['k_icu', k.icu], ['k_deceased', k.deceased]].map(([a, b]) => `<th>${esc(t(a))}</th><td>${b}</td>`).join('</tr><tr>')}</tr></tbody></table>
+  <h2>${esc(t('rep_summary'))}</h2><table><tbody><tr>${[['k_total', k.total], ['k_today', k.today], ['k_month', k.month], ['k_received', k.received], ['k_pending', k.pending], ['k_discharged', k.discharged], ['k_admitted', k.admitted], ['k_icu', k.icu], ['k_cathlab', k.cathlab], ['k_deceased', k.deceased]].map(([a, b]) => `<th>${esc(t(a))}</th><td>${b}</td>`).join('</tr><tr>')}</tr></tbody></table>
   <h2>${esc(t('nav_cases'))} (${d.items.length})</h2><table><thead><tr><th>${esc(t('f_case_number'))}</th><th>${esc(t('f_created'))}</th><th>${esc(t('f_paramedic'))}</th><th>${esc(t('f_visa'))}</th><th>${esc(t('f_pname'))}</th><th>${esc(t('f_complaint'))}</th><th>${esc(t('f_status'))}</th><th>${esc(t('f_arrival'))}</th><th>${esc(t('f_updated_by'))}</th></tr></thead><tbody>${d.items.map((c) => `<tr><td>${esc(c.case_number)}</td><td>${esc(fmtDT(c.created_at))}</td><td>${esc(c.paramedic_name)}</td><td>${esc(visaL(c.visa_type))}</td><td>${esc(c.patient_name || '')}</td><td>${esc(c.chief_complaint)}</td><td>${esc(t('st_' + c.status))}</td><td>${esc(fmtDT(c.arrived_at))}</td><td>${esc(c.status_updated_by || '')}</td></tr>`).join('')}</tbody></table>`;
   api('POST', '/api/report/print', { ...f, rows: d.items.length }).catch(() => {});
   setTimeout(() => window.print(), 100);
@@ -1160,9 +1166,25 @@ function waText(c) {
   return ['🚑 بلاغ إسعاف', 'رقم البلاغ: ' + v(c.case_number), 'اسم المريض: ' + v(c.patient_name), 'رقم الهوية / الجواز: ' + v(c.patient_id), 'نوع الهوية: ' + v(I18N.ar['visa_' + c.visa_type] || c.visa_type), 'الشكوى الرئيسية: ' + v(c.chief_complaint)].join('\n');
 }
 const waBtn = (c, cls) => `<a class="${cls || 'btn wa'}" href="https://wa.me/?text=${encodeURIComponent(waText(c))}" target="_blank" rel="noopener">💬 ${esc(t('wa_share'))}</a>`;
+const imgShareBtn = () => `<button type="button" class="btn wa" data-shimg hidden>🖼 ${esc(t('wa_share_img'))}</button>`;
+async function shareFiles(c, imgs) {
+  const out = []; let k = 0;
+  for (const a of imgs) { const du = await window.__attP(a.id); if (!du) continue; const bl = await (await fetch(du)).blob(); out.push(new File([bl], `${c.case_number}-${++k}.jpg`, { type: bl.type || 'image/jpeg' })); }
+  return out;
+}
+function wireImgShare(root, c, imgs) {
+  const b = root.querySelector('[data-shimg]'); if (!b || !imgs.length) return;
+  if (!(navigator.share && navigator.canShare)) return;
+  shareFiles(c, imgs).then((files) => {
+    if (!files.length || !navigator.canShare({ files })) return;
+    b.hidden = false;
+    b.onclick = () => { navigator.share({ files, text: waText(c), title: '#' + c.case_number }).catch((e) => { if (!e || e.name !== 'AbortError') toast(t('share_fail'), 'err'); }); };
+  }).catch(() => {});
+}
 function shareDialog(c) {
   const m = openModal(esc(t('case_sent')) + ' #' + esc(c.case_number));
-  m.body.innerHTML = `<div class="hint" style="margin-bottom:8px">${esc(t('wa_ready'))}</div><pre class="wa-pre">${esc(waText(c))}</pre><div class="row" style="margin-top:14px">${waBtn(c, 'btn big wa')}<button class="btn sec" data-act="closeModal">${esc(t('close'))}</button></div>`;
+  m.body.innerHTML = `<div class="hint" style="margin-bottom:8px">${esc(t('wa_ready'))}</div><pre class="wa-pre">${esc(waText(c))}</pre><div class="row" style="margin-top:14px">${waBtn(c, 'btn big wa')}${imgShareBtn()}<button class="btn sec" data-act="closeModal">${esc(t('close'))}</button></div>`;
+  if (c.att_count) api('GET', '/api/cases/' + c.id).then((d) => wireImgShare(m.body, c, d.attachments.filter((a) => a.mime.startsWith('image/') && a.mime !== 'image/heic'))).catch(() => {});
 }
 function viewer(list, i0) {
   if (!list || !list.length) return;
@@ -1218,13 +1240,14 @@ function renderCase(st, load, draw) {
   h += `<h2 style="margin-top:18px">${esc(t('f_attachments'))}</h2><div class="thumbs">${atts || `<span class="hint">${esc(t('none'))}</span>`}</div>${imgs.length ? `<div class="row" style="margin-top:10px">${imgs.map((a, k) => `<button type="button" class="btn" data-view="${k}">🖼 ${esc(t('view_img'))}${imgs.length > 1 ? ' ' + (k + 1) : ''}</button>`).join('')}</div>` : ''}`;
   if (canEdit) h += `<div style="margin-top:8px"><label class="btn sec sm" style="display:inline-flex;margin:0;cursor:pointer">+ ${esc(t('add_doc'))}<input type="file" id="addf" accept="image/*" multiple hidden></label></div>`;
   if (canStatus) {
-    h += `<h2 style="margin-top:18px">${esc(t('f_status'))}</h2><label>${esc(t('f_arrival'))}</label><input type="datetime-local" id="arr"><div class="hint">${esc(t('f_arrival_hint'))}</div><div class="sbtn">${['received', 'admitted', 'icu', 'discharged', 'deceased'].filter((s) => s !== c.status).map((s) => `<button class="btn ${s === 'discharged' ? 'ok' : s === 'deceased' ? 'bad' : s === 'icu' ? 'warn' : ''}" data-ss="${s}">${esc(t('st_' + s))}</button>`).join('')}</div><div class="err-msg" id="se"></div>`;
+    h += `<h2 style="margin-top:18px">${esc(t('f_status'))}</h2><label>${esc(t('f_arrival'))}</label><input type="datetime-local" id="arr"><div class="hint">${esc(t('f_arrival_hint'))}</div><div class="sbtn">${['received', 'admitted', 'icu', 'cathlab', 'discharged', 'deceased'].filter((s) => s !== c.status).map((s) => `<button class="btn ${s === 'discharged' ? 'ok' : s === 'deceased' ? 'bad' : s === 'icu' ? 'warn' : s === 'cathlab' ? 'sec' : ''}" data-ss="${s}">${esc(t('st_' + s))}</button>`).join('')}</div><div class="err-msg" id="se"></div>`;
   }
   h += `<h2 style="margin-top:18px">${esc(t('f_timeline'))}</h2><ul class="tl">${d.timeline.map((x) => `<li>${stB(x.status)} <small>${esc(fmtDT(x.at))} · ${esc(t('f_by'))} ${esc(x.by)}</small></li>`).join('')}</ul>`;
   const act = [];
   if (canEdit && !st.editing) act.push(`<button class="btn sec" id="eb">✎ ${esc(t('edit'))}</button>`);
   if (u.role === 'admin' && !c.archived && ['discharged', 'deceased'].includes(c.status)) act.push(`<button class="btn sec" id="ab">🗄 ${esc(t('archive'))}</button>`);
   if (u.role === 'admin' && c.archived) act.push(`<button class="btn sec" id="ub">↩ ${esc(t('unarchive'))}</button>`);
+  if (imgs.length) act.unshift(imgShareBtn());
   act.unshift(waBtn(c));
   if (act.length) h += `<div class="row" style="margin-top:14px">${act.join('')}</div>`;
   if (d.history) h += `<h2 style="margin-top:18px">${esc(t('f_history'))}</h2><div class="tw"><table><tbody>${d.history.map((x) => `<tr><td class="nw">${esc(fmtDT(x.ts))}</td><td>${esc(x.user)}</td><td>${esc(actLabel(x.action))}</td><td class="det">${auditDetails({ action: x.action, details: x.details })}</td></tr>`).join('')}</tbody></table></div>`;
@@ -1232,6 +1255,7 @@ function renderCase(st, load, draw) {
   const B = m.body, fail = (id, e) => { const el = $('#' + id, B); if (el) el.textContent = errText(e); else toast(errText(e), 'err'); };
   $$('[data-view]', B).forEach((b) => { b.onclick = () => viewer(imgs, +b.dataset.view); });
   $$('.th img[data-aid]', B).forEach((im) => { im.style.cursor = 'zoom-in'; im.onclick = () => viewer(imgs, imgs.findIndex((a) => String(a.id) === im.dataset.aid)); });
+  wireImgShare(B, c, imgs);
   const eb = $('#eb', B); if (eb) eb.onclick = () => { st.editing = true; draw(); };
   const ec = $('#ec', B); if (ec) ec.onclick = () => { st.editing = false; draw(); };
   const ef = $('#ef', B);

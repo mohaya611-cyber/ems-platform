@@ -187,6 +187,8 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 
 .st-picu{background:#efe0f7;color:#6c2a8f}.case.s-picu{border-color:#8e44ad}
 
+.tw td:first-child,.tw th:first-child{min-width:118px}
+
 </style>
 </head>
 <body>
@@ -310,6 +312,21 @@ Object.assign(I18N.ar,{nav_census:'الإحصائية'});Object.assign(I18N.en,{
 Object.assign(I18N.ar,{f_source:'مصدر الحالة',src_other:'أخرى',src_none:'بدون مصدر',src_haram:'الحرم (فرقة D و E)',k_reports:'عدد البلاغات',add_patient:'إضافة مريض',add_patient_title:'إضافة مريض لنفس البلاغ',group_title:'مرضى هذا البلاغ',err_duplicate_patient:'هذا المريض مسجل مسبقاً في نفس البلاغ',err_source_admin_only:'تعديل مصدر الحالة للإدارة فقط',tb_source:'حسب مصدر الحالة',chk_title:'مراجعة دقة البيانات',chk_ok_sum:'مجموع الجهات يطابق الإجمالي',chk_bad_sum:'مجموع الجهات لا يطابق الإجمالي',chk_nosrc:'حالات بدون مصدر',chk_badsrc:'حالات بمصدر غير معروف',chk_dupnum:'أرقام بلاغات مكررة',chk_duppat:'مريض مكرر داخل بلاغ',chk_none:'لا توجد مشكلات',chk_loading:'جاري المراجعة…',f_report_no:'رقم البلاغ الأساسي',patients_word:'مريض',patient_saved:'تمت إضافة المريض',src_hint_admin:'تصحيح المصدر للإدارة فقط ويُسجَّل في السجل'});
 Object.assign(I18N.en,{f_source:'Case Source',src_other:'Other',src_none:'No source',src_haram:'RC Haram',src_quba:'RC Quba',k_reports:'Reports',add_patient:'Add Patient',add_patient_title:'Add a patient to the same report',group_title:'Patients in this report',err_duplicate_patient:'This patient is already registered in the same report',err_source_admin_only:'Only administration can change the case source',tb_source:'By Case Source',chk_title:'Data accuracy check',chk_ok_sum:'Source totals match the overall total',chk_bad_sum:'Source totals do not match the overall total',chk_nosrc:'Cases without a source',chk_badsrc:'Cases with an unknown source',chk_dupnum:'Duplicate report numbers',chk_duppat:'Duplicate patient inside a report',chk_none:'No issues found',chk_loading:'Checking…',f_report_no:'Base Report No.',patients_word:'patients',patient_saved:'Patient added',src_hint_admin:'Source can be corrected by administration only and is logged'});
 
+Object.assign(I18N.ar,{f_source:'مصدر الحالة',src_haram_d:'فرقة الحرم D',src_haram_e:'فرقة الحرم E',src_quba_1:'فرقة قباء الأولى',src_quba_2:'فرقة قباء الثانية',src_clinic:'عيادة الحرم',src_carts:'عربات الساحات',src_other:'مصادر أخرى',src_haram:'الحرم (قديم)',src_quba:'قباء (قديم)',src_none:'بدون مصدر',
+grp_haram:'الحرم – RC Haram (D + E)',grp_quba:'قباء – RC Quba',grp_clinic:'عيادة الحرم – Haram Clinic',grp_carts:'عربات الساحات – Courtyard Golf Carts',grp_other:'مصادر أخرى – Other Sources',grp_none:'بدون تحديد',
+f_transport:'الفرقة الناقلة',f_receiving:'الفرقة المستلمة',f_handover:'وقت التسليم',f_takeover:'وقت الاستلام',hint_handover:'اختياري: وقت تسليم المريض من العربة ووقت استلام الفرقة له',f_chain:'تسلسل الحالة',
+add_patient:'إضافة مريض آخر',tb_source:'حسب مصدر الحالة – By Case Source',tb_srcg:'إحصائيات الجهات حسب المصدر',tb_trans:'حسب الفرقة الناقلة – By Transporting Team',tb_transg:'إحصائيات الجهات حسب الفرقة الناقلة',tb_cross:'الحالات المنقولة ومصدرها (دون ازدواج)',x_total_tr:'إجمالي المنقولين',x_from_carts:'منها من عربات الساحات',x_from_other:'من مصادر أخرى',chk_handed:'حالات محولة بين الفرق',tb_click:'اضغط على أي سطر لعرض حالاته',
+chk_sum_src:'مجموع الحالات حسب المصدر = الإجمالي',chk_sum_tr:'مجموع الحالات حسب الفرقة الناقلة = الإجمالي',chk_legacy:'حالات قديمة مصدرها (الحرم/قباء) بدون تحديد الفرقة — تحتاج مراجعة',chk_notr:'حالات بدون فرقة ناقلة — تحتاج مراجعة',chk_cartsbad:'حالات عربات ساحات بدون فرقة ناقلة',chk_review:'عرض الحالات التي تحتاج مراجعة',
+err_transport_required:'اختر الفرقة الناقلة',err_invalid_transport:'الفرقة الناقلة غير صحيحة',err_invalid_time:'وقت غير صحيح',err_handover_order:'وقت الاستلام قبل وقت التسليم',wa_r:'رقم البلاغ الأساسي: ',
+sh_src:'حسب المصدر',sh_srcg:'الجهات - المصدر',sh_tr:'الفرق الناقلة',sh_trg:'الجهات - النقل',sh_cross:'المنقولون ومصدرهم'});
+Object.assign(I18N.en,{f_source:'Case Source',src_haram_d:'Haram Team D',src_haram_e:'Haram Team E',src_quba_1:'Quba Team 1',src_quba_2:'Quba Team 2',src_clinic:'Haram Clinic',src_carts:'Courtyard Golf Carts',src_other:'Other Sources',src_haram:'RC Haram (old)',src_quba:'RC Quba (old)',src_none:'No source',
+grp_haram:'RC Haram (D + E)',grp_quba:'RC Quba',grp_clinic:'Haram Clinic',grp_carts:'Courtyard Golf Carts',grp_other:'Other Sources',grp_none:'Unspecified',
+f_transport:'Transporting Team',f_receiving:'Receiving Team',f_handover:'Handover time',f_takeover:'Takeover time',hint_handover:'Optional: when the patient was handed over from the cart and when the team took over',f_chain:'Case chain',
+add_patient:'Add Another Patient',tb_source:'By Case Source',tb_srcg:'Entity statistics by source',tb_trans:'By Transporting Team',tb_transg:'Entity statistics by transporting team',tb_cross:'Transported cases and their source (no double counting)',x_total_tr:'Total transported',x_from_carts:'of which from Golf Carts',x_from_other:'from other sources',chk_handed:'Cases handed between teams',tb_click:'Tap any row to see its cases',
+chk_sum_src:'Cases by source = overall total',chk_sum_tr:'Cases by transporting team = overall total',chk_legacy:'Old cases with source Haram/Quba and no team specified — need review',chk_notr:'Cases without a transporting team — need review',chk_cartsbad:'Golf-cart cases without a transporting team',chk_review:'Show cases that need review',
+err_transport_required:'Choose the transporting team',err_invalid_transport:'Invalid transporting team',err_invalid_time:'Invalid time',err_handover_order:'Takeover time is before handover time',wa_r:'Base report no.: ',
+sh_src:'By Source',sh_srcg:'Entities - Source',sh_tr:'Transporting Teams',sh_trg:'Entities - Transport',sh_cross:'Transported by Source'});
+
 </script>
 <script>
 
@@ -354,7 +371,31 @@ try {
 // In-browser stand-in for the server (demo only): same API, fictional data kept in this browser.
 (() => {
 const KEY = 'ems-demo-v2', SES = 'ems-demo-user', TZ = 180, PW = 'Demo#Pass12345';
-const SRC = ['haram', 'quba', 'clinic', 'other'];
+const SRC = ['haram_d', 'haram_e', 'quba_1', 'quba_2', 'clinic', 'carts', 'other', 'haram', 'quba'];
+const SRC_NEW = ['haram_d', 'haram_e', 'quba_1', 'quba_2', 'clinic', 'carts', 'other'];
+const TR = ['haram_d', 'haram_e', 'quba_1', 'quba_2', 'clinic', 'other'];
+const gOf = (v) => ({ haram_d: 'haram', haram_e: 'haram', haram: 'haram', quba_1: 'quba', quba_2: 'quba', quba: 'quba', clinic: 'clinic', carts: 'carts', other: 'other' })[v] || null;
+function isHanded(r) {
+  const s = r.source, t = r.transport_team; if (!s || !t) return false;
+  if (s === 'carts') return true;
+  if (s === 'haram' || s === 'quba') return gOf(s) !== gOf(t);
+  return s !== t;
+}
+function teamFields(b, source) {
+  const o = {};
+  let tt = clip(b.transport_team, 12) || null;
+  if (!tt && TR.includes(source)) tt = source;
+  if (!tt) throw bad('transport_required');
+  if (!TR.includes(tt)) throw bad('invalid_transport');
+  o.transport_team = tt;
+  if (source === 'carts') {
+    const rt = clip(b.receiving_team, 12) || tt; if (!TR.includes(rt)) throw bad('invalid_transport'); o.receiving_team = rt;
+    for (const k of ['handover_at', 'takeover_at']) { const v = clip(b[k], 40); if (v) { const d = new Date(v); if (isNaN(d)) throw bad('invalid_time'); o[k] = d.toISOString(); } else o[k] = null; }
+    if (o.handover_at && o.takeover_at && new Date(o.takeover_at) < new Date(o.handover_at)) throw bad('handover_order');
+  } else { o.receiving_team = null; o.handover_at = null; o.takeover_at = null; }
+  return o;
+}
+
 const VISA = ['Umrah', 'Tourist', 'Visit', 'Resident', 'Saudi', 'Unknown', 'Other'];
 const STATUSES = ['new', 'received', 'discharged', 'admitted', 'icu', 'picu', 'cathlab', 'deceased'];
 const CLOSED = ['discharged', 'deceased'];
@@ -418,7 +459,11 @@ function filt(q, user, archived) {
     if (st.length && !st.includes(c.status)) return false;
     if (q.visa && VISA.includes(q.visa) && c.visa_type !== q.visa) return false;
     if (q.paramedic && /^\d+$/.test(q.paramedic) && c.paramedic_id !== +q.paramedic && c.second_paramedic_id !== +q.paramedic) return false;
-    if (q.source && SRC.includes(q.source) && c.source !== q.source) return false;
+    if (q.source === 'none') { if (c.source) return false; } else if (q.source && SRC.includes(q.source) && c.source !== q.source) return false;
+    if (q.transport === 'none') { if (c.transport_team) return false; } else if (q.transport && TR.includes(q.transport) && c.transport_team !== q.transport) return false;
+    if (q.sgroup && (q.sgroup === 'none' ? gOf(c.source) : gOf(c.source) !== q.sgroup)) return false;
+    if (q.tgroup && (q.tgroup === 'none' ? gOf(c.transport_team) : gOf(c.transport_team) !== q.tgroup)) return false;
+    if (q.handed === '1' && !isHanded(c)) return false;
     if (cl && !c.case_number.toLowerCase().includes(cl)) return false;
     const d = localDay(c.created_at);
     if (isDate(q.from) && d < q.from) return false;
@@ -461,7 +506,7 @@ window.__att = (id) => {
 function statsFor(q, user) {
   const arch = q.archived === '1' ? true : q.archived === '0' ? false : undefined;
   const rows = DB.cases.filter(filt(q, user, arch));
-  const counts = { total: rows.length, today: 0, month: 0, pending: 0, received: 0, discharged: 0, admitted: 0, icu: 0, picu: 0, cathlab: 0, deceased: 0, in_er: 0, reports: 0 };
+  const counts = { total: rows.length, today: 0, month: 0, pending: 0, received: 0, discharged: 0, admitted: 0, icu: 0, picu: 0, cathlab: 0, deceased: 0, in_er: 0, reports: 0, handed: 0 };
   const rset = new Set(), today = localDay(nowIso()), month = today.slice(0, 7), byVisa = {}, byParamedic = {}, byStatus = {};
   for (const r of rows) {
     rset.add(r.report_no || r.case_number);
@@ -494,16 +539,17 @@ function statsFor(q, user) {
   const avg = (a) => (a.length ? Math.round(a.reduce((x, y) => x + y, 0) / a.length) : null);
   const med = (a) => { if (!a.length) return null; const s = [...a].sort((x, y) => x - y), h = s.length >> 1; return s.length % 2 ? s[h] : Math.round((s[h - 1] + s[h]) / 2); };
   const sum = (a) => ({ n: a.length, avg: avg(a), median: med(a), max: a.length ? Math.max(...a) : null });
-  const hour = Array(24).fill(0), weekday = Array(7).fill(0), rec = [], clo = [], gp = {}, gv = {}, gs = {};
+  const hour = Array(24).fill(0), weekday = Array(7).fill(0), rec = [], clo = [], gp = {}, gv = {}, gs = {}, gsg = {}, gt = {}, gtg = {}, cross = {};
   const grp = (map, key, r) => { const g = map[key] || (map[key] = { name: key, total: 0, new: 0, received: 0, discharged: 0, admitted: 0, icu: 0, picu: 0, cathlab: 0, deceased: 0, rec: [] }); g.total++; g[r.status]++; if (r.arrived_at) g.rec.push(mins(r.created_at, r.arrived_at)); };
   for (const r of rows) {
     const lk = localKey(r.created_at); hour[+lk.slice(11, 13)]++; weekday[new Date(lk).getUTCDay()]++;
     if (r.arrived_at) rec.push(mins(r.created_at, r.arrived_at)); if (r.arrived_at && r.closed_at) clo.push(mins(r.arrived_at, r.closed_at));
-    grp(gp, r.paramedic_name, r); if (r.second_paramedic_name && r.second_paramedic_name !== r.paramedic_name) grp(gp, r.second_paramedic_name, r); grp(gv, r.visa_type, r); grp(gs, r.source || 'none', r);
+    grp(gp, r.paramedic_name, r); if (r.second_paramedic_name && r.second_paramedic_name !== r.paramedic_name) grp(gp, r.second_paramedic_name, r); grp(gv, r.visa_type, r); grp(gs, r.source || 'none', r); grp(gsg, gOf(r.source) || 'none', r); grp(gt, r.transport_team || 'none', r); grp(gtg, gOf(r.transport_team) || 'none', r);
+    { const tg = gOf(r.transport_team) || 'none', cx = cross[tg] || (cross[tg] = { name: tg, total: 0, carts: 0, other: 0 }); cx.total++; if (r.source === 'carts') cx.carts++; else cx.other++; if (isHanded(r)) counts.handed++; }
   }
   const fin = (map) => Object.values(map).map((g) => ({ ...g, avg_receipt: avg(g.rec), rec: undefined })).sort((a, b) => b.total - a.total);
   counts.reports = rset.size;
-  return { counts, sources: fin(gs), byVisa, byParamedic, byStatus, daily, weekly, monthly, hour, weekday, timing: { receipt: sum(rec), close: sum(clo) }, paramedics: fin(gp), visas: fin(gv) };
+  return { counts, sources: fin(gs), sourcesG: fin(gsg), transport: fin(gt), transportG: fin(gtg), cross: Object.values(cross), byVisa, byParamedic, byStatus, daily, weekly, monthly, hour, weekday, timing: { receipt: sum(rec), close: sum(clo) }, paramedics: fin(gp), visas: fin(gv) };
 }
 
 // ── routes
@@ -537,12 +583,13 @@ add('POST', '/api/cases', ['paramedic', 'admin'], async (c) => {
   if (!caseRx.test(case_number)) throw bad('invalid_case_number');
   if (!VISA.includes(visa_type)) throw bad('invalid_visa_type');
   if (!chief) throw bad('complaint_required');
-  const source = clip(f.get('source'), 10); if (!source) throw bad('source_required'); if (!SRC.includes(source)) throw bad('invalid_source');
+  const source = clip(f.get('source'), 10); if (!source) throw bad('source_required'); if (!SRC_NEW.includes(source)) throw bad('invalid_source');
+  const tf = teamFields({ transport_team: f.get('transport_team'), receiving_team: f.get('receiving_team'), handover_at: f.get('handover_at'), takeover_at: f.get('takeover_at') }, source);
   const patient_name = clip(f.get('patient_name'), 100) || null, patient_id = normId(f.get('patient_id')) || null;
   const sec = resolveSecond(c.user, c.user.id, f.get('second_paramedic'), f.get('second_paramedic_other'));
   const files = await prepFiles(f);
   if (DB.cases.some((x) => x.case_number === case_number)) throw E(409, 'duplicate_case_number');
-  const cs = { id: uid(), case_number, created_at: nowIso(), paramedic_id: c.user.id, paramedic_uid: c.user.uid, paramedic_name: c.user.name, timeline: [{ at: nowIso(), status: 'new', by: c.user.name }], visa_type, chief_complaint: chief, notes: notes || null, patient_name, patient_id, source, report_no: case_number, patient_seq: 1, ...sec, status: 'new', arrived_at: null, status_updated_at: null, status_updated_by: null, closed_at: null, archived: 0, archived_at: null, archived_by: null };
+  const cs = { id: uid(), case_number, created_at: nowIso(), paramedic_id: c.user.id, paramedic_uid: c.user.uid, paramedic_name: c.user.name, timeline: [{ at: nowIso(), status: 'new', by: c.user.name }], visa_type, chief_complaint: chief, notes: notes || null, patient_name, patient_id, source, ...tf, report_no: case_number, patient_seq: 1, ...sec, status: 'new', arrived_at: null, status_updated_at: null, status_updated_by: null, closed_at: null, archived: 0, archived_at: null, archived_by: null };
   DB.cases.push(cs); const ids = addAtts(cs, c.user, files);
   audit(c.user, 'case_create', cs, { visa_type, attachments: ids.length }); broadcast('created', cs);
   return { case: out(cs) };
@@ -552,8 +599,9 @@ add('POST', '/api/cases/:id/patients', ['paramedic', 'admin'], (c) => {
   const par = getCase(intId(c.params.id)); if (!canView(c.user, par) || par.archived) throw E(404, 'not_found');
   const b = c.body || {};
   const visa_type = clip(b.visa_type, 20) || par.visa_type; if (!VISA.includes(visa_type)) throw bad('invalid_visa_type');
-  const source = clip(b.source, 10) || par.source; if (!source) throw bad('source_required'); if (!SRC.includes(source)) throw bad('invalid_source');
+  const source = clip(b.source, 10) || par.source; if (!source) throw bad('source_required'); if (!SRC_NEW.includes(source)) throw bad('invalid_source');
   const chief = clip(b.chief_complaint, 500); if (!chief) throw bad('complaint_required');
+  const tf = teamFields(b, source);
   const patient_name = clip(b.patient_name, 100) || null, patient_id = normId(b.patient_id) || null, notes = clip(b.notes, 2000) || null;
   const base = par.report_no || par.case_number, grp = DB.cases.filter((x) => (x.report_no || x.case_number) === base);
   if (patient_id && grp.some((x) => x.patient_id === patient_id)) throw E(409, 'duplicate_patient');
@@ -564,7 +612,7 @@ add('POST', '/api/cases/:id/patients', ['paramedic', 'admin'], (c) => {
     own = { paramedic_id: c.user.id, paramedic_uid: c.user.uid, paramedic_name: c.user.name };
     sec = { second_paramedic_id: par.paramedic_id, second_uid: par.paramedic_uid || null, second_paramedic_name: par.paramedic_name, second_paramedic_other: 0 };
   }
-  const cs = { id: uid(), case_number: base + '-' + seq, report_no: base, patient_seq: seq, created_at: nowIso(), ...own, timeline: [{ at: nowIso(), status: 'new', by: c.user.name }], visa_type, chief_complaint: chief, notes, patient_name, patient_id, source, ...sec, status: 'new', arrived_at: null, status_updated_at: null, status_updated_by: null, closed_at: null, archived: 0, archived_at: null, archived_by: null };
+  const cs = { id: uid(), case_number: base + '-' + seq, report_no: base, patient_seq: seq, created_at: nowIso(), ...own, timeline: [{ at: nowIso(), status: 'new', by: c.user.name }], visa_type, chief_complaint: chief, notes, patient_name, patient_id, source, ...tf, ...sec, status: 'new', arrived_at: null, status_updated_at: null, status_updated_by: null, closed_at: null, archived: 0, archived_at: null, archived_by: null };
   DB.cases.push(cs); audit(c.user, 'case_create', cs, { visa_type, source, report_no: base, patient_seq: seq }); broadcast('created', cs);
   return { case: out(cs) };
 });
@@ -588,7 +636,8 @@ add('PATCH', '/api/cases/:id', ['paramedic', 'admin'], (c) => {
   if (b.chief_complaint !== undefined) { const v = clip(b.chief_complaint, 500); if (!v) throw bad('complaint_required'); upd.chief_complaint = v; }
   if (b.notes !== undefined) upd.notes = clip(b.notes, 2000) || null;
   if (b.patient_name !== undefined) upd.patient_name = clip(b.patient_name, 100) || null;
-  if (b.source !== undefined && b.source !== '' && b.source !== cs.source) { if (!SRC.includes(b.source)) throw bad('invalid_source'); if (c.user.role !== 'admin' && cs.source) throw E(403, 'source_admin_only'); upd.source = b.source; }
+  if (b.source !== undefined && b.source !== '' && b.source !== cs.source) { if (!SRC_NEW.includes(b.source)) throw bad('invalid_source'); if (c.user.role !== 'admin' && cs.source) throw E(403, 'source_admin_only'); upd.source = b.source; }
+  if (b.transport_team !== undefined && b.transport_team !== '') Object.assign(upd, teamFields({ transport_team: b.transport_team, receiving_team: b.receiving_team !== undefined ? b.receiving_team : cs.receiving_team, handover_at: b.handover_at !== undefined ? b.handover_at : cs.handover_at, takeover_at: b.takeover_at !== undefined ? b.takeover_at : cs.takeover_at }, upd.source || cs.source));
   if (b.patient_id !== undefined) upd.patient_id = normId(b.patient_id) || null;
   if (b.second_paramedic !== undefined) Object.assign(upd, resolveSecond(c.user, cs.paramedic_id, b.second_paramedic, b.second_paramedic_other));
   if (b.case_number !== undefined && c.user.role === 'admin') { const v = clip(b.case_number, 30); if (!caseRx.test(v)) throw bad('invalid_case_number'); if (v !== cs.case_number && DB.cases.some((x) => x.case_number === v)) throw E(409, 'duplicate_case_number'); upd.case_number = v; if (!(cs.patient_seq > 1) && DB.cases.filter((x) => (x.report_no || x.case_number) === (cs.report_no || cs.case_number)).length === 1) upd.report_no = v; }
@@ -823,22 +872,106 @@ READY = init().catch((e) => { console.error(e); FB = null; });
 (() => {
 const D = window.I18N;
 const S = { view0: '', user: null, meta: null, lang: localStorage.getItem('lang') || 'ar', es: null, refresh: null, f: {}, p: {}, paramedics: null };
-const SRCS = ['haram', 'quba', 'clinic', 'other'];
+
+const SRCS = ['haram_d', 'haram_e', 'quba_1', 'quba_2', 'clinic', 'carts', 'other'];
+const SRCS_ALL = [...SRCS, 'haram', 'quba'];
+const TRS = ['haram_d', 'haram_e', 'quba_1', 'quba_2', 'clinic', 'other'];
+const GRPS = ['haram', 'quba', 'clinic', 'carts', 'other'];
+const gOf = (v) => ({ haram_d: 'haram', haram_e: 'haram', haram: 'haram', quba_1: 'quba', quba_2: 'quba', quba: 'quba', clinic: 'clinic', carts: 'carts', other: 'other' })[v] || null;
+const trL = (v) => (v ? t('src_' + v) : '—');
+const grpL = (g) => t('grp_' + g);
+const srcOpts = (cur) => opts(cur && !SRCS.includes(cur) ? [...SRCS, cur] : SRCS, srcL, cur);
+const lti = (iso) => { const d = new Date(iso); d.setMinutes(d.getMinutes() - d.getTimezoneOffset()); return d.toISOString().slice(0, 16); };
+const teamHtml = (c, req) => `<label>${esc(t('f_transport'))}${req ? ' *' : ''}</label><select name="transport_team" ${req ? 'required' : ''}><option value="">—</option>${opts(TRS, trL, c.transport_team)}</select>
+<div class="cart-box" ${c.source === 'carts' ? '' : 'hidden'}><label>${esc(t('f_receiving'))}</label><select name="receiving_team"><option value="">—</option>${opts(TRS, trL, c.receiving_team)}</select>
+<label>${esc(t('f_handover'))}</label><input type="datetime-local" name="handover_at" value="${c.handover_at ? lti(c.handover_at) : ''}">
+<label>${esc(t('f_takeover'))}</label><input type="datetime-local" name="takeover_at" value="${c.takeover_at ? lti(c.takeover_at) : ''}"><div class="hint">${esc(t('hint_handover'))}</div></div>`;
+function wireTeams(root) {
+  const s = root.querySelector('select[name=source]'), tt = root.querySelector('select[name=transport_team]'), box = root.querySelector('.cart-box'), rt = root.querySelector('select[name=receiving_team]');
+  if (!tt || !box) return;
+  let touched = !!tt.value, rtouched = !!(rt && rt.value);
+  const sync = () => { if (s) box.hidden = s.value !== 'carts'; if (!touched && s && TRS.includes(s.value)) tt.value = s.value; if (rt && !rtouched) rt.value = tt.value; };
+  tt.addEventListener('change', () => { touched = true; sync(); });
+  if (rt) rt.addEventListener('change', () => { rtouched = true; });
+  if (s) s.addEventListener('change', sync); sync();
+}
+const ZERO = (name) => ({ name, total: 0, received: 0, discharged: 0, admitted: 0, icu: 0, picu: 0, cathlab: 0, deceased: 0, avg_receipt: null });
+const lk = (key, val, inner) => `<a class="lk" style="color:#0b5cab;font-weight:700;text-decoration:underline;cursor:pointer" data-sf="${key}:${esc(val)}">${inner}</a>`;
+function statsSrc(st, gHead, gRows) {
+  const k = st.counts;
+  const build = (list, order, extra, key, nm) => {
+    const by = {}; (list || []).forEach((g) => { by[g.name] = g; });
+    const names = [...order, ...extra.filter((x) => by[x])];
+    const rows = gRows(names.map((n) => by[n] || ZERO(n)), nm); rows.forEach((r, i) => { r[0] = lk(key, names[i], r[0]); });
+    return tbl(gHead, rows);
+  };
+  const nmS = (x) => (x === 'none' ? t('src_none') : srcL(x)), nmG = (x) => (x === 'none' ? t('grp_none') : grpL(x));
+  const cross = {}; (st.cross || []).forEach((x) => { cross[x.name] = x; });
+  const crossNames = ['haram', 'quba', 'clinic', 'other', ...(cross.none ? ['none'] : [])];
+  const cr = crossNames.map((n) => { const x = cross[n] || { total: 0, carts: 0, other: 0 }; return [lk('tgroup', n, esc(nmG(n))), x.total, x.carts, x.other]; });
+  return `<div class="card" style="margin-top:16px"><dl class="dl"><dt>${esc(t('k_reports'))}</dt><dd>${k.reports}</dd><dt>${esc(t('k_total'))}</dt><dd>${k.total}</dd><dt>${esc(t('chk_handed'))}</dt><dd>${lk('handed', '1', k.handed || 0)}</dd></dl><div class="hint">${esc(t('tb_click'))}</div></div>
+  <h2 style="margin-top:16px">${esc(t('tb_source'))}</h2>${build(st.sources, SRCS, ['haram', 'quba', 'none'], 'source', nmS)}
+  <h2 style="margin-top:16px">${esc(t('tb_srcg'))}</h2>${build(st.sourcesG, GRPS, ['none'], 'sgroup', nmG)}
+  <h2 style="margin-top:16px">${esc(t('tb_trans'))}</h2>${build(st.transport, TRS, ['none'], 'transport', nmS)}
+  <h2 style="margin-top:16px">${esc(t('tb_transg'))}</h2>${build(st.transportG, ['haram', 'quba', 'clinic', 'other'], ['none'], 'tgroup', nmG)}
+  <h2 style="margin-top:16px">${esc(t('tb_cross'))}</h2>${tbl([t('c_name'), t('x_total_tr'), t('x_from_carts'), t('x_from_other')], cr)}`;
+}
+async function showFilterCases(spec, title) {
+  const i = spec.indexOf(':'), key = spec.slice(0, i), val = spec.slice(i + 1);
+  const m = openModal('…'); m.body.innerHTML = `<div class="empty">${esc(t('loading'))}</div>`;
+  try {
+    const d = await api('GET', '/api/report?' + qs({ ...(S.f.stats || {}), [key]: val }));
+    m.title.innerHTML = esc(title) + ' (' + d.items.length + ')';
+    m.body.innerHTML = casesMini(d.items);
+  } catch (e) { closeModal(); toast(errText(e), 'err'); }
+}
+const casesMini = (items) => items.length ? `<div class="tw"><table><thead><tr><th>${esc(t('f_case_number'))}</th><th>${esc(t('f_pname'))}</th><th>${esc(t('f_source'))}</th><th>${esc(t('f_transport'))}</th><th>${esc(t('f_status'))}</th></tr></thead><tbody>${items.map((c) => `<tr data-open="${c.id}" style="cursor:pointer"><td class="nw"><b>#${esc(cnum(c))}</b></td><td dir="auto">${esc(c.patient_name || '—')}${c.patient_id ? '<br><small>' + esc(c.patient_id) + '</small>' : ''}</td><td>${esc(srcL(c.source))}</td><td>${esc(trL(c.transport_team))}</td><td>${stB(c.status)}</td></tr>`).join('')}</tbody></table></div>` : `<div class="empty">${esc(t('none'))}</div>`;
+document.addEventListener('click', (e) => { const a = e.target.closest('[data-sf]'); if (!a) return; e.preventDefault(); showFilterCases(a.dataset.sf, a.textContent); });
+async function dataCheck2() {
+  const box = $('#dchk'); if (!box) return;
+  box.innerHTML = `<h2 style="margin-top:0">${esc(t('chk_title'))}</h2><div class="hint">${esc(t('chk_loading'))}</div>`;
+  try {
+    const d = await api('GET', '/api/report?' + qs(S.f.stats || {})); if (!$('#dchk')) return;
+    const items = d.items, total = items.length, rows = []; const ok = (b, txt) => rows.push(`<li>${b ? '✅' : '⚠️'} ${txt}</li>`);
+    const list = (a) => a.slice(0, 12).map((c) => '#' + esc(cnum(c))).join('، ') + (a.length > 12 ? ' …' : '');
+    const noS = items.filter((c) => !c.source), badS = items.filter((c) => c.source && !SRCS_ALL.includes(c.source)), okS = total - noS.length - badS.length;
+    ok(!noS.length && !badS.length, `${esc(t('chk_sum_src'))}: ${okS} + ${noS.length + badS.length} / <b>${total}</b>`);
+    if (noS.length) rows.push(`<li>⚠️ ${esc(t('chk_nosrc'))} (${noS.length}): ${list(noS)}</li>`);
+    if (badS.length) rows.push(`<li>⚠️ ${esc(t('chk_badsrc'))} (${badS.length}): ${list(badS)}</li>`);
+    const noT = items.filter((c) => !c.transport_team), badT = items.filter((c) => c.transport_team && !TRS.includes(c.transport_team));
+    ok(!noT.length && !badT.length, `${esc(t('chk_sum_tr'))}: ${total - noT.length - badT.length} + ${noT.length + badT.length} / <b>${total}</b>`);
+    const leg = items.filter((c) => c.source === 'haram' || c.source === 'quba');
+    if (leg.length) rows.push(`<li>⚠️ ${esc(t('chk_legacy'))} (${leg.length}): ${list(leg)}</li>`);
+    if (noT.length) rows.push(`<li>⚠️ ${esc(t('chk_notr'))} (${noT.length}): ${list(noT)}</li>`);
+    const cb = items.filter((c) => c.source === 'carts' && !c.transport_team); if (cb.length) rows.push(`<li>⚠️ ${esc(t('chk_cartsbad'))} (${cb.length}): ${list(cb)}</li>`);
+    const seen = {}, dups = []; items.forEach((c) => { if (seen[c.case_number]) dups.push(c); seen[c.case_number] = 1; });
+    if (dups.length) rows.push(`<li>⚠️ ${esc(t('chk_dupnum'))} (${dups.length}): ${list(dups)}</li>`);
+    const gp = {}, dp = []; items.forEach((c) => { if (!c.patient_id) return; const k = (c.report_no || c.case_number) + '|' + c.patient_id; if (gp[k]) dp.push(c); gp[k] = 1; });
+    if (dp.length) rows.push(`<li>⚠️ ${esc(t('chk_duppat'))} (${dp.length}): ${list(dp)}</li>`);
+    const review = items.filter((c) => !c.source || !c.transport_team || c.source === 'haram' || c.source === 'quba');
+    if (rows.every((r) => r.includes('✅'))) rows.push(`<li>✅ ${esc(t('chk_none'))}</li>`);
+    box.innerHTML = `<h2 style="margin-top:0">${esc(t('chk_title'))}</h2><ul style="margin:0;padding-inline-start:20px;line-height:1.9">${rows.join('')}</ul>${review.length ? `<div style="margin-top:10px"><button class="btn sec sm" id="chkRev">${esc(t('chk_review'))} (${review.length})</button></div>` : ''}`;
+    const rb = $('#chkRev', box); if (rb) rb.onclick = () => { const m = openModal(esc(t('chk_review')) + ' (' + review.length + ')'); m.body.innerHTML = casesMini(review); };
+  } catch (e) { box.innerHTML = ''; }
+}
+
 
 const cnum = (c) => c.case_number + (c.group_n > 1 && !(c.patient_seq > 1) ? '-1' : '');
 function addPatientDialog(c) {
   const m = openModal(esc(t('add_patient_title')) + ' #' + esc(c.report_no || c.case_number));
   m.body.innerHTML = `<form id="apf"><label>${esc(t('f_visa'))} *</label><select name="visa_type" required>${opts(VIS, visaL, c.visa_type)}</select>
-  <label>${esc(t('f_source'))} *</label><select name="source" required><option value="">—</option>${opts(SRCS, srcL, c.source)}</select>
+  <label>${esc(t('f_source'))} *</label><select name="source" required><option value="">—</option>${opts(SRCS, srcL, SRCS.includes(c.source) ? c.source : '')}</select>
+  ${teamHtml({ source: SRCS.includes(c.source) ? c.source : '', transport_team: c.transport_team, receiving_team: c.receiving_team }, true)}
   <label>${esc(t('f_pname'))}</label><input type="text" name="patient_name" maxlength="100" autocomplete="off" dir="auto">
   <label>${esc(t('f_pid'))}</label><input type="text" name="patient_id" maxlength="30" autocomplete="off" autocapitalize="characters" autocorrect="off" spellcheck="false" dir="auto">
   <label>${esc(t('f_complaint'))} *</label><textarea name="chief_complaint" maxlength="500" required>${esc(c.chief_complaint || '')}</textarea>
   <label>${esc(t('f_notes'))}</label><textarea name="notes" maxlength="2000"></textarea>
   <div class="err-msg" id="ape"></div><div class="row" style="margin-top:12px"><button class="btn big" type="submit">${esc(t('add_patient'))}</button><button type="button" class="btn sec" data-act="closeModal">${esc(t('close'))}</button></div></form>`;
+  wireTeams(m.body);
   $('#apf', m.body).onsubmit = async (e) => {
     e.preventDefault(); const f = e.target, b = f.querySelector('button[type=submit]'); b.disabled = true;
     try {
-      const rr = await api('POST', '/api/cases/' + c.id + '/patients', { visa_type: f.visa_type.value, source: f.source.value, patient_name: f.patient_name.value, patient_id: f.patient_id.value, chief_complaint: f.chief_complaint.value, notes: f.notes.value });
+      const rr = await api('POST', '/api/cases/' + c.id + '/patients', { visa_type: f.visa_type.value, source: f.source.value, transport_team: f.transport_team.value, receiving_team: f.receiving_team.value, handover_at: f.handover_at.value, takeover_at: f.takeover_at.value, patient_name: f.patient_name.value, patient_id: f.patient_id.value, chief_complaint: f.chief_complaint.value, notes: f.notes.value });
       toast(t('patient_saved'), 'ok'); if (S.refresh) S.refresh(); refreshBadge(); shareDialog(rr.case);
     } catch (er) { $('#ape', m.body).textContent = errText(er); b.disabled = false; }
   };
@@ -1024,7 +1157,8 @@ function filtersHtml(key, fields, extra = {}) {
     case: `<div><label>${esc(t('f_case_number'))}</label><input type="text" name="case" value="${esc(f.case || '')}"></div>`,
     status: `<div><label>${esc(t('f_status'))}</label><select name="status"><option value="">${esc(t('f_all'))}</option>${(extra.statuses || STS).map((s) => `<option value="${s}" ${f.status === s ? 'selected' : ''}>${esc(t('st_' + s))}</option>`).join('')}</select></div>`,
     visa: `<div><label>${esc(t('f_visa'))}</label><select name="visa"><option value="">${esc(t('f_all'))}</option>${opts(VIS, visaL, f.visa)}</select></div>`,
-    source: `<div><label>${esc(t('f_source'))}</label><select name="source"><option value="">${esc(t('f_all'))}</option>${opts(SRCS, srcL, f.source)}</select></div>`,
+    source: `<div><label>${esc(t('f_source'))}</label><select name="source"><option value="">${esc(t('f_all'))}</option>${opts(SRCS_ALL, srcL, f.source)}</select></div>`,
+    transport: `<div><label>${esc(t('f_transport'))}</label><select name="transport"><option value="">${esc(t('f_all'))}</option>${opts(TRS, trL, f.transport)}</select></div>`,
     from: `<div><label>${esc(t('f_from'))}</label><input type="date" name="from" value="${esc(f.from || '')}"></div>`,
     to: `<div><label>${esc(t('f_to'))}</label><input type="date" name="to" value="${esc(f.to || '')}"></div>`,
     paramedic: `<div><label>${esc(t('f_paramedic'))}</label><select name="paramedic"><option value="">${esc(t('f_all'))}</option>${(S.paramedics || []).map((p) => `<option value="${p.id}" ${String(f.paramedic) === String(p.id) ? 'selected' : ''}>${esc(p.name)}</option>`).join('')}</select></div>`,
@@ -1045,7 +1179,7 @@ function pagerHtml(key, total, off, lim) {
 }
 function caseCard(c, extra = '') {
   return `<div class="case s-${c.status}" data-open="${c.id}"><div class="case-h"><b>#${esc(cnum(c))}</b>${stB(c.status)}</div><p>${esc(c.chief_complaint)}</p>
-  <div class="meta">${c.patient_name ? `<span>👤 ${esc(c.patient_name)}</span>` : ''}<span>${esc(visaL(c.visa_type))}</span>${c.source ? `<span>📍 ${esc(srcL(c.source))}</span>` : ''}<span>${esc(c.paramedic_name)}${c.second_paramedic_name ? ' + ' + esc(c.second_paramedic_name) : ''}</span><span>${esc(fmtDT(c.created_at))}</span>${c.att_count ? `<span>📎 ${c.att_count}</span>` : ''}</div>${extra}</div>`;
+  <div class="meta">${c.patient_name ? `<span>👤 ${esc(c.patient_name)}</span>` : ''}<span>${esc(visaL(c.visa_type))}</span>${c.source ? `<span>📍 ${esc(srcL(c.source))}</span>` : ''}${c.transport_team ? `<span>🚑 ${esc(trL(c.transport_team))}</span>` : ''}<span>${esc(c.paramedic_name)}${c.second_paramedic_name ? ' + ' + esc(c.second_paramedic_name) : ''}</span><span>${esc(fmtDT(c.created_at))}</span>${c.att_count ? `<span>📎 ${c.att_count}</span>` : ''}</div>${extra}</div>`;
 }
 function steps(c) {
   const out = ['discharged', 'admitted', 'icu', 'picu', 'cathlab', 'deceased'].includes(c.status);
@@ -1087,6 +1221,7 @@ VIEWS.new = async (main) => {
   <label>${esc(t('f_paramedic'))} (${esc(t('f_auto'))})</label><input type="text" readonly value="${esc(S.user.name)}">${secondField(RS, null)}
   <label>${esc(t('f_visa'))} *</label><select name="visa_type" required><option value="">—</option>${opts(VIS, visaL)}</select>
   <label>${esc(t('f_source'))} *</label><select name="source" required><option value="">—</option>${opts(SRCS, srcL)}</select>
+  ${teamHtml({}, true)}
   <label>${esc(t('f_complaint'))} *</label><textarea name="chief_complaint" required maxlength="500"></textarea>
   <label>${esc(t('f_notes'))}</label><textarea name="notes" maxlength="2000"></textarea>
   <label>${esc(t('f_pname'))}</label><input type="text" name="patient_name" maxlength="100" autocomplete="off" autocapitalize="words" dir="auto">
@@ -1096,7 +1231,7 @@ VIEWS.new = async (main) => {
   const tick = () => { const el = $('#dtv'); if (el) el.value = fmtDT(new Date().toISOString()); }; tick();
   const iv = setInterval(() => { if (!$('#dtv')) clearInterval(iv); else tick(); }, 20000);
   const vsel = $('select[name=visa_type]'), pidHint = () => { const k = { Saudi: 'pid_hint_national', Resident: 'pid_hint_iqama', Umrah: 'pid_hint_passport', Tourist: 'pid_hint_passport', Visit: 'pid_hint_passport' }[vsel.value] || 'pid_hint_any'; $('#pidh').textContent = t(k); $('#pid').placeholder = t(k); };
-  vsel.onchange = pidHint; pidHint(); wireSecond($('#nf'));
+  vsel.onchange = pidHint; pidHint(); wireSecond($('#nf')); wireTeams($('#nf'));
   const file = $('#nfile');
   file.onchange = () => { $('#prev').innerHTML = [...file.files].map((f) => `<div class="th">${f.type.startsWith('image/') && !/heic/i.test(f.type) ? `<img alt="" src="${URL.createObjectURL(f)}">` : `<div class="file">${esc(f.name.slice(0, 18))}</div>`}</div>`).join(''); };
   $('#nf').onsubmit = async (e) => {
@@ -1121,8 +1256,8 @@ VIEWS.tracking = casesView('tracking', { fields: ['q', 'status', 'visa', 'from',
 VIEWS.update = casesView('update', { fields: ['q'], mode: 'cards', params: () => ({ status: 'new,received,admitted,icu,picu,cathlab' }), extra: (c) => quickButtons(c), emptyKey: 'no_open' });
 
 // ───────── admin views
-VIEWS.cases = withBar(casesView('cases', { fields: ['q', 'status', 'visa', 'source', 'paramedic', 'from', 'to'], mode: 'table', needParamedics: true }), () => `<div class="row" style="margin-bottom:12px"><button class="btn sec" data-act="exportXlsx" data-kind="cases">⬇ ${esc(t('x_cases'))}</button><button class="btn sec" data-act="archiveAll">🗄 ${esc(t('arch_all'))}</button></div>`);
-VIEWS.archive = withBar(casesView('archive', { fields: ['q', 'status', 'visa', 'source', 'paramedic', 'from', 'to'], mode: 'table', archive: true, params: () => ({ archived: 1 }), needParamedics: true, statuses: ['discharged', 'admitted', 'icu', 'picu', 'cathlab', 'deceased', 'received', 'new'] }), () => `<div class="row" style="margin-bottom:12px"><button class="btn" data-act="archiveAll">🗄 ${esc(t('arch_all'))}</button><button class="btn sec" data-act="exportXlsx" data-kind="archive">⬇ ${esc(t('x_archive'))}</button></div>`);
+VIEWS.cases = withBar(casesView('cases', { fields: ['q', 'status', 'visa', 'source', 'transport', 'paramedic', 'from', 'to'], mode: 'table', needParamedics: true }), () => `<div class="row" style="margin-bottom:12px"><button class="btn sec" data-act="exportXlsx" data-kind="cases">⬇ ${esc(t('x_cases'))}</button><button class="btn sec" data-act="archiveAll">🗄 ${esc(t('arch_all'))}</button></div>`);
+VIEWS.archive = withBar(casesView('archive', { fields: ['q', 'status', 'visa', 'source', 'transport', 'paramedic', 'from', 'to'], mode: 'table', archive: true, params: () => ({ archived: 1 }), needParamedics: true, statuses: ['discharged', 'admitted', 'icu', 'picu', 'cathlab', 'deceased', 'received', 'new'] }), () => `<div class="row" style="margin-bottom:12px"><button class="btn" data-act="archiveAll">🗄 ${esc(t('arch_all'))}</button><button class="btn sec" data-act="exportXlsx" data-kind="archive">⬇ ${esc(t('x_archive'))}</button></div>`);
 VIEWS.overview = async (main) => {
   main.innerHTML = `<h1>${esc(t('nav_overview'))}</h1><div id="ov"></div>`;
   const load = async () => {
@@ -1172,16 +1307,16 @@ function statsBody(st) {
   return kpisPct(k) + `<div class="mini"><div><h2>${esc(t('s_rates'))}</h2>${rates}</div><div><h2>${esc(t('tb_status'))}</h2>${tbl([t('c_name'), t('c_count'), t('c_pct')], stRows)}</div></div>`
     + `<div class="mini">${timeCard(t('t_to_receipt'), st.timing.receipt)}${timeCard(t('t_to_close'), st.timing.close)}</div>`
     + `<div class="card chart" style="margin-bottom:12px"><div class="tabs">${['daily', 'weekly', 'monthly', 'hour', 'weekday'].map((x) => `<button data-tab="${x}">${esc(t('ch_' + x))}</button>`).join('')}</div><div id="chart" style="direction:ltr"></div></div>`
-    + `<h2>${esc(t('tb_visa'))}</h2>${tbl(gHead, gRows(st.visas, visaL))}<h2 style="margin-top:16px">${esc(t('tb_source'))}</h2>${tbl(gHead, gRows(st.sources || [], (x) => (x === 'none' ? t('src_none') : srcL(x))))}<div class="card" id="dchk" style="margin-top:16px"></div><h2 style="margin-top:16px">${esc(t('tb_para'))}</h2>${tbl(gHead, gRows(st.paramedics, (x) => x))}`;
+    + `<h2>${esc(t('tb_visa'))}</h2>${tbl(gHead, gRows(st.visas, visaL))}${statsSrc(st, gHead, gRows)}<div class="card" id="dchk" style="margin-top:16px"></div><h2 style="margin-top:16px">${esc(t('tb_para'))}</h2>${tbl(gHead, gRows(st.paramedics, (x) => x))}`;
 }
 VIEWS.stats = async (main) => {
   await getParamedics();
-  main.innerHTML = `<h1>${esc(t('nav_stats'))}</h1>${filtersHtml('stats', ['from', 'to', 'status', 'visa', 'source', 'paramedic', 'archived'])}<div class="row" style="margin-bottom:12px"><button class="btn sec" data-act="exportXlsx" data-kind="stats">⬇ ${esc(t('x_excel'))}</button></div><div id="sb"></div>`;
+  main.innerHTML = `<h1>${esc(t('nav_stats'))}</h1>${filtersHtml('stats', ['from', 'to', 'status', 'visa', 'source', 'transport', 'paramedic', 'archived'])}<div class="row" style="margin-bottom:12px"><button class="btn sec" data-act="exportXlsx" data-kind="stats">⬇ ${esc(t('x_excel'))}</button></div><div id="sb"></div>`;
   let tab = 'daily';
   const load = async () => {
     const st = await api('GET', '/api/stats?' + qs(S.f.stats || {})); if (!$('#sb')) return;
     const series = { daily: st.daily, weekly: st.weekly, monthly: st.monthly, hour: st.hour.map((n, i) => ({ label: String(i).padStart(2, '0'), n })), weekday: st.weekday.map((n, i) => ({ label: WD()[i], n })) };
-    $('#sb').innerHTML = statsBody(st); dataCheck();
+    $('#sb').innerHTML = statsBody(st); dataCheck2();
     const draw = () => { $('#chart').innerHTML = barChart(series[tab], '#1d8fe1', tab === 'hour' || tab === 'weekday' ? (l) => l : null); $$('.tabs button').forEach((b) => b.classList.toggle('on', b.dataset.tab === tab)); };
     $$('.tabs button').forEach((b) => { b.onclick = () => { tab = b.dataset.tab; draw(); }; }); draw();
   };
@@ -1224,8 +1359,8 @@ function buildXlsx(sheets) {
 }
 function xlsxSheets(st, items, kind) {
   const k = st.counts, T = k.total, R = k.received, P = (n, d) => ({ pct: true, v: d ? n / d : 0 });
-  const cases = [[t('f_case_number'), t('f_created'), t('f_paramedic'), t('f_visa'), t('f_complaint'), t('f_notes'), t('f_status'), t('f_arrival'), t('f_updated'), t('f_updated_by'), t('x_min_receipt'), t('x_min_close'), t('x_archived'), t('f_archived_at'), t('f_pname'), t('f_pid'), t('f_para2_row'), t('f_source'), t('f_report_no')]];
-  for (const c of items) cases.push([c.case_number, fmtDT(c.created_at), c.paramedic_name, visaL(c.visa_type), c.chief_complaint, c.notes || '', t('st_' + c.status), c.arrived_at ? fmtDT(c.arrived_at) : '', c.status_updated_at ? fmtDT(c.status_updated_at) : '', c.status_updated_by || '', c.arrived_at ? mins(c.created_at, c.arrived_at) : '', c.arrived_at && c.closed_at ? mins(c.arrived_at, c.closed_at) : '', c.archived ? t('yes') : t('no'), c.archived_at ? fmtDT(c.archived_at) : '', c.patient_name || '', c.patient_id || '', c.second_paramedic_name || '', c.source ? srcL(c.source) : '', c.report_no || c.case_number]);
+  const cases = [[t('f_case_number'), t('f_created'), t('f_paramedic'), t('f_visa'), t('f_complaint'), t('f_notes'), t('f_status'), t('f_arrival'), t('f_updated'), t('f_updated_by'), t('x_min_receipt'), t('x_min_close'), t('x_archived'), t('f_archived_at'), t('f_pname'), t('f_pid'), t('f_para2_row'), t('f_source'), t('f_report_no'), t('f_transport'), t('f_receiving'), t('f_handover'), t('f_takeover')]];
+  for (const c of items) cases.push([c.case_number, fmtDT(c.created_at), c.paramedic_name, visaL(c.visa_type), c.chief_complaint, c.notes || '', t('st_' + c.status), c.arrived_at ? fmtDT(c.arrived_at) : '', c.status_updated_at ? fmtDT(c.status_updated_at) : '', c.status_updated_by || '', c.arrived_at ? mins(c.created_at, c.arrived_at) : '', c.arrived_at && c.closed_at ? mins(c.arrived_at, c.closed_at) : '', c.archived ? t('yes') : t('no'), c.archived_at ? fmtDT(c.archived_at) : '', c.patient_name || '', c.patient_id || '', c.second_paramedic_name || '', c.source ? srcL(c.source) : '', c.report_no || c.case_number, c.transport_team ? trL(c.transport_team) : '', c.receiving_team ? trL(c.receiving_team) : '', c.handover_at ? fmtDT(c.handover_at) : '', c.takeover_at ? fmtDT(c.takeover_at) : '']);
   const sum = [[t('m_metric'), t('c_count'), t('s_pct_total'), t('s_pct_recv')]];
   [['k_total', k.total], ['k_today', k.today], ['k_month', k.month], ['k_received', k.received], ['k_pending', k.pending], ['k_in_er', k.in_er], ['k_discharged', k.discharged], ['k_admitted', k.admitted], ['k_icu', k.icu], ['k_picu', k.picu], ['k_cathlab', k.cathlab], ['k_deceased', k.deceased]].forEach(([key, n]) => sum.push([t(key), n, P(n, T), ['k_discharged', 'k_admitted', 'k_icu', 'k_picu', 'k_cathlab', 'k_deceased'].includes(key) ? P(n, R) : '']));
   sum.push(['', '', '', ''], [t('t_to_receipt'), '', '', ''], [t('t_avg') + ' (' + t('unit_min') + ')', st.timing.receipt.avg, '', ''], [t('t_median') + ' (' + t('unit_min') + ')', st.timing.receipt.median, '', ''], [t('t_max') + ' (' + t('unit_min') + ')', st.timing.receipt.max, '', ''], [t('t_to_close'), '', '', ''], [t('t_avg') + ' (' + t('unit_min') + ')', st.timing.close.avg, '', ''], [t('t_median') + ' (' + t('unit_min') + ')', st.timing.close.median, '', ''], [t('t_max') + ' (' + t('unit_min') + ')', st.timing.close.max, '', '']);
@@ -1235,12 +1370,12 @@ function xlsxSheets(st, items, kind) {
   const hr = [[t('c_name'), t('c_count'), t('c_pct')]]; st.hour.forEach((n, i) => hr.push([String(i).padStart(2, '0') + ':00', n, P(n, T)]));
   const wd = [[t('c_name'), t('c_count'), t('c_pct')]]; st.weekday.forEach((n, i) => wd.push([WD()[i], n, P(n, T)]));
   const dl = [[t('c_name'), t('c_count')]]; st.daily.forEach((d) => dl.push([d.label, d.n]));
-  return [{ name: t(kind === 'archive' ? 'sh_arch' : 'sh_cases'), rows: cases, widths: [16, 17, 22, 14, 40, 40, 18, 17, 17, 22, 14, 16, 10, 17, 24, 20, 22, 20, 16] }, { name: t('st_sheet'), rows: sum, widths: [34, 12, 16, 16] }, { name: t('sh_status'), rows: byStatus, widths: [24, 12, 12] }, { name: t('sh_visa'), rows: grp(st.visas, visaL), widths: [20, 10, 10, 14, 12, 12, 12, 12, 12, 12, 18] }, { name: t('sh_para'), rows: grp(st.paramedics, (x) => x), widths: [26, 10, 10, 14, 12, 12, 12, 12, 12, 12, 18] }, { name: t('sh_hour'), rows: hr, widths: [14, 10, 10] }, { name: t('sh_wd'), rows: wd, widths: [14, 10, 10] }, { name: t('sh_daily'), rows: dl, widths: [14, 10] }];
+  return [{ name: t(kind === 'archive' ? 'sh_arch' : 'sh_cases'), rows: cases, widths: [16, 17, 22, 14, 40, 40, 18, 17, 17, 22, 14, 16, 10, 17, 24, 20, 22, 20, 16, 18, 18, 18, 18] }, { name: t('st_sheet'), rows: sum, widths: [34, 12, 16, 16] }, { name: t('sh_status'), rows: byStatus, widths: [24, 12, 12] }, { name: t('sh_visa'), rows: grp(st.visas, visaL), widths: [20, 10, 10, 14, 12, 12, 12, 12, 12, 12, 18] }, { name: t('sh_para'), rows: grp(st.paramedics, (x) => x), widths: [26, 10, 10, 14, 12, 12, 12, 12, 12, 12, 18] }, { name: t('sh_hour'), rows: hr, widths: [14, 10, 10] }, { name: t('sh_wd'), rows: wd, widths: [14, 10, 10] }, { name: t('sh_daily'), rows: dl, widths: [14, 10] }, { name: t('sh_src'), rows: grp(st.sources || [], (x) => (x === 'none' ? t('src_none') : srcL(x))), widths: [26, 10, 10, 14, 12, 12, 12, 12, 12, 12, 18] }, { name: t('sh_srcg'), rows: grp(st.sourcesG || [], (x) => (x === 'none' ? t('grp_none') : grpL(x))), widths: [30, 10, 10, 14, 12, 12, 12, 12, 12, 12, 18] }, { name: t('sh_tr'), rows: grp(st.transport || [], (x) => (x === 'none' ? t('src_none') : srcL(x))), widths: [26, 10, 10, 14, 12, 12, 12, 12, 12, 12, 18] }, { name: t('sh_trg'), rows: grp(st.transportG || [], (x) => (x === 'none' ? t('grp_none') : grpL(x))), widths: [30, 10, 10, 14, 12, 12, 12, 12, 12, 12, 18] }, { name: t('sh_cross'), rows: [[t('c_name'), t('x_total_tr'), t('x_from_carts'), t('x_from_other')], ...(st.cross || []).map((x) => [x.name === 'none' ? t('grp_none') : grpL(x.name), x.total, x.carts, x.other])], widths: [30, 16, 22, 18] }];
 }
 function withBar(view, html) { return async (main) => { await view(main); const h1 = $('h1', main); if (h1) h1.insertAdjacentHTML('afterend', html()); }; }
 VIEWS.reports = async (main) => {
   await getParamedics();
-  main.innerHTML = `<h1>${esc(t('rep_title'))}</h1>${filtersHtml('reports', ['from', 'to', 'status', 'visa', 'source', 'paramedic', 'archived'])}<div class="row" style="margin-bottom:12px"><button class="btn" data-act="exportXlsx" data-kind="report">⬇ ${esc(t('x_excel'))}</button></div><div id="rp"></div>`;
+  main.innerHTML = `<h1>${esc(t('rep_title'))}</h1>${filtersHtml('reports', ['from', 'to', 'status', 'visa', 'source', 'transport', 'paramedic', 'archived'])}<div class="row" style="margin-bottom:12px"><button class="btn" data-act="exportXlsx" data-kind="report">⬇ ${esc(t('x_excel'))}</button></div><div id="rp"></div>`;
   const load = async () => {
     const d = await api('GET', '/api/report?' + qs(S.f.reports || {})); if (!$('#rp')) return;
     $('#rp').innerHTML = kpisPct(d.stats.counts) + `<h2>${esc(t('nav_cases'))} (${d.items.length})</h2>` + casesTable(d.items);
@@ -1298,7 +1433,7 @@ VIEWS.settings = async (main) => {
 function waText(c) {
   const v = (x) => (x !== undefined && x !== null && String(x).trim() ? String(x).trim() : '—');
   const lg = S.lang === 'en' ? 'en' : 'ar';
-  return [t('wa_h'), t('wa_n') + v(c.case_number), t('wa_p') + v(c.patient_name), t('wa_i') + v(c.patient_id), t('wa_k') + v(I18N[lg]['visa_' + c.visa_type] || c.visa_type), t('wa_c') + v(c.chief_complaint)].join('\n');
+  return [t('wa_h'), t('wa_n') + v(cnum(c)), ...((c.group_n > 1 || c.patient_seq > 1) ? [t('wa_r') + v(c.report_no || c.case_number)] : []), t('wa_p') + v(c.patient_name), t('wa_i') + v(c.patient_id), t('wa_k') + v(I18N[lg]['visa_' + c.visa_type] || c.visa_type), t('wa_c') + v(c.chief_complaint)].join('\n');
 }
 const waBtn = (c, cls) => `<a class="${cls || 'btn wa'}" href="https://wa.me/?text=${encodeURIComponent(waText(c))}" target="_blank" rel="noopener">💬 ${esc(t('wa_share'))}</a>`;
 const imgShareBtn = () => `<button type="button" class="btn wa" data-shimg hidden>🖼 ${esc(t('wa_share_img'))}</button>`;
@@ -1385,9 +1520,9 @@ function renderCase(st, load, draw) {
   }).join('');
   let h = '';
   if (st.editing) {
-    h += `<form id="ef"><label>${esc(t('f_visa'))}</label><select name="visa_type">${opts(VIS, visaL, c.visa_type)}</select>${(u.role === 'admin' || !c.source) ? `<label>${esc(t('f_source'))}</label><select name="source"><option value="">—</option>${opts(SRCS, srcL, c.source)}</select>${u.role === 'admin' ? `<div class="hint">${esc(t('src_hint_admin'))}</div>` : ''}` : ''}${u.role === 'admin' ? `<label>${esc(t('f_case_number'))}</label><input type="text" name="case_number" maxlength="30" value="${esc(c.case_number)}">` : ''}${secondField((st.roster || []).filter((r) => r.id !== c.paramedic_id), c)}<label>${esc(t('f_complaint'))}</label><textarea name="chief_complaint" maxlength="500" required>${esc(c.chief_complaint)}</textarea><label>${esc(t('f_notes'))}</label><textarea name="notes" maxlength="2000">${esc(c.notes || '')}</textarea><label>${esc(t('f_pname'))}</label><input type="text" name="patient_name" maxlength="100" autocomplete="off" dir="auto" value="${esc(c.patient_name || '')}"><label>${esc(t('f_pid'))}</label><input type="text" name="patient_id" maxlength="30" autocomplete="off" autocapitalize="characters" autocorrect="off" spellcheck="false" dir="auto" value="${esc(c.patient_id || '')}"><div class="err-msg" id="ee"></div><div class="row" style="margin-top:10px"><button class="btn">${esc(t('save'))}</button><button type="button" class="btn sec" id="ec">${esc(t('cancel'))}</button></div></form>`;
+    h += `<form id="ef"><label>${esc(t('f_visa'))}</label><select name="visa_type">${opts(VIS, visaL, c.visa_type)}</select>${(u.role === 'admin' || !c.source) ? `<label>${esc(t('f_source'))}</label><select name="source"><option value="">—</option>${srcOpts(c.source)}</select>${u.role === 'admin' ? `<div class="hint">${esc(t('src_hint_admin'))}</div>` : ''}` : ''}${teamHtml(c, false)}${u.role === 'admin' ? `<label>${esc(t('f_case_number'))}</label><input type="text" name="case_number" maxlength="30" value="${esc(c.case_number)}">` : ''}${secondField((st.roster || []).filter((r) => r.id !== c.paramedic_id), c)}<label>${esc(t('f_complaint'))}</label><textarea name="chief_complaint" maxlength="500" required>${esc(c.chief_complaint)}</textarea><label>${esc(t('f_notes'))}</label><textarea name="notes" maxlength="2000">${esc(c.notes || '')}</textarea><label>${esc(t('f_pname'))}</label><input type="text" name="patient_name" maxlength="100" autocomplete="off" dir="auto" value="${esc(c.patient_name || '')}"><label>${esc(t('f_pid'))}</label><input type="text" name="patient_id" maxlength="30" autocomplete="off" autocapitalize="characters" autocorrect="off" spellcheck="false" dir="auto" value="${esc(c.patient_id || '')}"><div class="err-msg" id="ee"></div><div class="row" style="margin-top:10px"><button class="btn">${esc(t('save'))}</button><button type="button" class="btn sec" id="ec">${esc(t('cancel'))}</button></div></form>`;
   } else {
-    h += `<dl class="dl"><dt>${esc(t('f_complaint'))}</dt><dd>${esc(c.chief_complaint)}</dd><dt>${esc(t('f_visa'))}</dt><dd>${esc(visaL(c.visa_type))}</dd>${c.source ? `<dt>${esc(t('f_source'))}</dt><dd>${esc(srcL(c.source))}</dd>` : ''}${c.patient_name ? `<dt>${esc(t('f_pname'))}</dt><dd dir="auto">${esc(c.patient_name)}</dd>` : ''}${c.patient_id ? `<dt>${esc(t('f_pid'))}</dt><dd dir="auto">${esc(c.patient_id)}</dd>` : ''}<dt>${esc(t('f_paramedic'))}</dt><dd>${esc(c.paramedic_name)}</dd>${c.second_paramedic_name ? `<dt>${esc(t('f_para2_row'))}</dt><dd>${esc(c.second_paramedic_name)}</dd>` : ''}<dt>${esc(t('f_created'))}</dt><dd>${esc(fmtDT(c.created_at))}</dd>${c.notes ? `<dt>${esc(t('f_notes'))}</dt><dd>${esc(c.notes).replace(/\n/g, '<br>')}</dd>` : ''}${c.arrived_at ? `<dt>${esc(t('f_arrival'))}</dt><dd>${esc(fmtDT(c.arrived_at))}</dd>` : ''}${c.status_updated_at ? `<dt>${esc(t('f_updated'))}</dt><dd>${esc(fmtDT(c.status_updated_at))} · ${esc(c.status_updated_by || '')}</dd>` : ''}${c.archived ? `<dt>${esc(t('f_archived_at'))}</dt><dd>${esc(fmtDT(c.archived_at))} · ${esc(c.archived_by || '')}</dd>` : ''}</dl>`;
+    h += `<dl class="dl"><dt>${esc(t('f_complaint'))}</dt><dd>${esc(c.chief_complaint)}</dd><dt>${esc(t('f_visa'))}</dt><dd>${esc(visaL(c.visa_type))}</dd>${c.source ? `<dt>${esc(t('f_source'))}</dt><dd>${esc(srcL(c.source))}</dd>` : ''}${c.transport_team ? `<dt>${esc(t('f_transport'))}</dt><dd>${esc(trL(c.transport_team))}</dd>` : ''}${c.source === 'carts' ? `<dt>${esc(t('f_chain'))}</dt><dd>${esc(srcL('carts'))} ← ${esc(trL(c.receiving_team || c.transport_team))}${c.handover_at ? ' (' + esc(t('f_handover')) + ' ' + esc(fmtDT(c.handover_at)) + ')' : ''}${c.takeover_at ? ' (' + esc(t('f_takeover')) + ' ' + esc(fmtDT(c.takeover_at)) + ')' : ''} ← ${esc(trL(c.transport_team))}</dd>` : ''}${c.patient_name ? `<dt>${esc(t('f_pname'))}</dt><dd dir="auto">${esc(c.patient_name)}</dd>` : ''}${c.patient_id ? `<dt>${esc(t('f_pid'))}</dt><dd dir="auto">${esc(c.patient_id)}</dd>` : ''}<dt>${esc(t('f_paramedic'))}</dt><dd>${esc(c.paramedic_name)}</dd>${c.second_paramedic_name ? `<dt>${esc(t('f_para2_row'))}</dt><dd>${esc(c.second_paramedic_name)}</dd>` : ''}<dt>${esc(t('f_created'))}</dt><dd>${esc(fmtDT(c.created_at))}</dd>${c.notes ? `<dt>${esc(t('f_notes'))}</dt><dd>${esc(c.notes).replace(/\n/g, '<br>')}</dd>` : ''}${c.arrived_at ? `<dt>${esc(t('f_arrival'))}</dt><dd>${esc(fmtDT(c.arrived_at))}</dd>` : ''}${c.status_updated_at ? `<dt>${esc(t('f_updated'))}</dt><dd>${esc(fmtDT(c.status_updated_at))} · ${esc(c.status_updated_by || '')}</dd>` : ''}${c.archived ? `<dt>${esc(t('f_archived_at'))}</dt><dd>${esc(fmtDT(c.archived_at))} · ${esc(c.archived_by || '')}</dd>` : ''}</dl>`;
   }
   if (d.group && d.group.length > 1) h += `<h2 style="margin-top:18px">${esc(t('group_title'))} (${d.group.length})</h2>${d.group.map((g) => `<div class="case s-${g.status}" data-open="${g.id}" style="padding:8px 12px;margin-top:6px"><b>#${esc(g.case_number + (g.patient_seq > 1 ? '' : '-1'))}</b> ${stB(g.status)} <small>${esc(g.patient_name || '')} · ${esc(srcL(g.source))}</small></div>`).join('')}`;
   h += `<h2 style="margin-top:18px">${esc(t('f_attachments'))}</h2><div class="thumbs">${atts || `<span class="hint">${esc(t('none'))}</span>`}</div>${imgs.length ? `<div class="row" style="margin-top:10px">${imgs.map((a, k) => `<button type="button" class="btn" data-view="${k}">🖼 ${esc(t('view_img'))}${imgs.length > 1 ? ' ' + (k + 1) : ''}</button>`).join('')}</div>` : ''}`;
@@ -1409,12 +1544,12 @@ function renderCase(st, load, draw) {
   const B = m.body, fail = (id, e) => { const el = $('#' + id, B); if (el) el.textContent = errText(e); else toast(errText(e), 'err'); };
   $$('[data-view]', B).forEach((b) => { b.onclick = () => viewer(imgs, +b.dataset.view); });
   $$('.th img[data-aid]', B).forEach((im) => { im.style.cursor = 'zoom-in'; im.onclick = () => viewer(imgs, imgs.findIndex((a) => String(a.id) === im.dataset.aid)); });
-  wireImgShare(B, c, imgs); wireSecond(B);
+  wireImgShare(B, c, imgs); wireSecond(B); wireTeams(B);
   const apb = $('#apb', B); if (apb) apb.onclick = () => addPatientDialog(c);
   const eb = $('#eb', B); if (eb) eb.onclick = () => { st.editing = true; draw(); };
   const ec = $('#ec', B); if (ec) ec.onclick = () => { st.editing = false; draw(); };
   const ef = $('#ef', B);
-  if (ef) ef.onsubmit = async (e) => { e.preventDefault(); const f = e.target; const body = { visa_type: f.visa_type.value, source: f.source ? f.source.value : '', chief_complaint: f.chief_complaint.value, notes: f.notes.value, patient_name: f.patient_name.value, patient_id: f.patient_id.value, second_paramedic: f.second_paramedic.value, second_paramedic_other: f.second_paramedic_other.value }; if (f.case_number) body.case_number = f.case_number.value; try { await api('PATCH', '/api/cases/' + c.id, body); toast(t('case_updated'), 'ok'); st.editing = false; reload(); } catch (er) { fail('ee', er); } };
+  if (ef) ef.onsubmit = async (e) => { e.preventDefault(); const f = e.target; const body = { visa_type: f.visa_type.value, source: f.source ? f.source.value : '', transport_team: f.transport_team.value, receiving_team: f.receiving_team.value, handover_at: f.handover_at.value, takeover_at: f.takeover_at.value, chief_complaint: f.chief_complaint.value, notes: f.notes.value, patient_name: f.patient_name.value, patient_id: f.patient_id.value, second_paramedic: f.second_paramedic.value, second_paramedic_other: f.second_paramedic_other.value }; if (f.case_number) body.case_number = f.case_number.value; try { await api('PATCH', '/api/cases/' + c.id, body); toast(t('case_updated'), 'ok'); st.editing = false; reload(); } catch (er) { fail('ee', er); } };
   $$('[data-rm]', B).forEach((b) => { b.onclick = async (e) => { e.preventDefault(); e.stopPropagation(); if (!(await askConfirm(t('confirm_delete_att')))) return; try { await api('DELETE', '/api/attachments/' + b.dataset.rm); reload(); } catch (er) { fail('ee', er); } }; });
   const addf = $('#addf', B);
   if (addf) addf.onchange = async () => { const fd = new FormData(); for (const f of addf.files) fd.append('files', f, f.name); try { await api('POST', `/api/cases/${c.id}/attachments`, fd); reload(); } catch (er) { toast(errText(er), 'err'); } };
@@ -1513,12 +1648,14 @@ const CEN = (() => {
   const L = (x) => `<span class="cn-n">${x}</span>`;
   const f1 = (x) => (Math.round(x * 10) / 10).toFixed(1);
 
+  const eff = (c) => { const g = gOf(c.transport_team) || gOf(c.source); return g === 'carts' ? 'other' : g; };
   function calc(items) {
-    const rs = new Set(), r = { total: 0, src: { haram: 0, quba: 0, clinic: 0, other: 0 }, nosrc: 0, icu: 0, picu: 0, ward: 0, cath: 0, adm: 0, asrc: {} };
+    const rs = new Set(), r = { carts: 0, total: 0, src: { haram: 0, quba: 0, clinic: 0, other: 0 }, nosrc: 0, icu: 0, picu: 0, ward: 0, cath: 0, adm: 0, asrc: {} };
     [...SK, 'other'].forEach((k) => { r.asrc[k] = { icu: 0, picu: 0, ward: 0, cath: 0, n: 0 }; });
     for (const c of items) {
       r.total++; rs.add(c.report_no || c.case_number);
-      const k = c.source, KK = SK.includes(k) || k === 'other';
+      const k = eff(c), KK = SK.includes(k) || k === 'other';
+      if (c.source === 'carts') r.carts++;
       if (KK) r.src[k]++; else r.nosrc++;
       const m = { icu: 'icu', picu: 'picu', admitted: 'ward', cathlab: 'cath' }[c.status];
       if (m) { r[m]++; r.adm++; if (KK) { r.asrc[k][m]++; r.asrc[k].n++; } }
@@ -1626,7 +1763,7 @@ const CEN = (() => {
       const n = c.src[k], a = c.asrc[k].n, w = c.total ? n * 100 / c.total : 0;
       h += `<div class="cn-sc" style="border-color:${COL[k]}"><div class="cn-sn"><i style="background:${COL[k]}"></i>${sn[k]}</div><div class="cn-sv" style="color:${COL[k]}">${L(n)}</div><div class="cn-bar"><span style="width:${w.toFixed(1)}%;background:${COL[k]}"></span></div><div class="cn-st">${L(pc(n))} · ${a ? T.admW + ' ' + L(a) : T.noadm}</div></div>`;
     }
-    h += `</div>${c.nosrc ? `<div class="cn-note">* ${L(c.nosrc)} ${T.nosrc}</div>` : ''}</div>`;
+    h += `</div>${c.carts ? `<div class="cn-note">${ar ? 'منها' : 'Of which'} ${L(c.carts)} ${ar ? 'حالة مصدرها عربات الساحات (محسوبة ضمن الفرقة الناقلة، دون ازدواج)' : 'case(s) originated from Courtyard Golf Carts (counted once, under the transporting team)'}</div>` : ''}${c.nosrc ? `<div class="cn-note">* ${L(c.nosrc)} ${T.nosrc}</div>` : ''}</div>`;
     // outcomes + admissions by source
     const notAdm = c.total - c.adm;
     const vals = [c.icu, c.picu, c.ward, c.cath, notAdm], cols = ['#b3121f', '#8e44ad', '#4a90d9', '#d6457f', '#c9d1dd'];

@@ -7,6 +7,14 @@
 <meta name="apple-mobile-web-app-title" content="Al Hayat EMS">
 <meta name="robots" content="noindex, nofollow">
 <title>Al Hayat EMS</title>
+<script>
+window.__BUILD='1793811079';
+(function(){var B=window.__BUILD,busy=false;
+function idle(){var a=document.activeElement;return !(a&&/^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName))&&!document.querySelector('.ovl');}
+async function chk(){if(busy||!idle())return;busy=true;try{var r=await fetch(location.pathname+'?_='+Date.now(),{cache:'no-store'});var t=await r.text();var m=t.match(/window\.__BUILD='([^']+)'/);
+if(m&&m[1]!==B){var k='ems_upd';var done='';try{done=sessionStorage.getItem(k)||''}catch(e){}if(done!==m[1]){try{sessionStorage.setItem(k,m[1])}catch(e){}location.replace(location.pathname+'?v='+m[1]);}}}catch(e){}busy=false;}
+setTimeout(chk,4000);document.addEventListener('visibilitychange',function(){if(!document.hidden)chk();});setInterval(chk,300000);})();
+</script>
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <style>

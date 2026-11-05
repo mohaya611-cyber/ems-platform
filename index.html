@@ -8,7 +8,7 @@
 <meta name="robots" content="noindex, nofollow">
 <title>Al Hayat EMS</title>
 <script>
-window.__BUILD='1793815836';
+window.__BUILD='1793839124';
 (function(){var B=window.__BUILD,busy=false;
 function idle(){var a=document.activeElement;return !(a&&/^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName))&&!document.querySelector('.ovl');}
 async function chk(){if(busy||!idle())return;busy=true;try{var r=await fetch(location.pathname+'?_='+Date.now(),{cache:'no-store'});var t=await r.text();var m=t.match(/window\.__BUILD='([^']+)'/);
@@ -378,6 +378,9 @@ chk_sum_src:'Cases by source = overall total',chk_sum_tr:'Cases by transporting 
 err_transport_required:'Choose the transporting team',err_invalid_transport:'Invalid transporting team',err_invalid_time:'Invalid time',err_handover_order:'Takeover time is before handover time',wa_r:'Base report no.: ',
 sh_src:'By Source',sh_srcg:'Entities - Source',sh_tr:'Transporting Teams',sh_trg:'Entities - Transport',sh_cross:'Transported by Source'});
 
+Object.assign(I18N.ar,{nav_annual:'الإحصائيات السنوية',nav_histarch:'الأرشيف الإحصائي',nav_ofac:'بلاغ لمنشأة أخرى',nav_ofacadm:'بلاغات منشآت أخرى'});
+Object.assign(I18N.en,{nav_annual:'Annual Stats',nav_histarch:'Stats Archive',nav_ofac:'Other Facility',nav_ofacadm:'Other Facilities'});
+
 </script>
 <script>
 
@@ -454,7 +457,7 @@ const ROLES = ['paramedic', 'er', 'admin', 'golf'];
 const GST = ['golf', 'golf_handed', 'golf_recv', 'golf_done'], GDEST = ['ambulance', 'clinic', 'other'];
 let DB, cur = null, FB = null, authUid = null, READY = null, subs = [], spec = {}, DATA = {}, PEND = [], lastU = 0;
 const shadow = {}, MEM = {};
-const emptyDB = () => ({ users: [], cases: [], atts: [], audit: [], roster: [], settings: { archive_after_days: 30, auto_archive: true } });
+const emptyDB = () => ({ users: [], cases: [], atts: [], audit: [], roster: [], settings: { archive_after_days: 30, auto_archive: true }, hist: { records: [], names: [], log: [] } });
 DB = emptyDB();
 const uid = () => { let v = Math.floor((Date.now() - 1.7e12) / 10) * 100 + Math.floor(Math.random() * 100); if (v <= lastU) v = lastU + 1; lastU = v; return v; };
 const nowIso = () => new Date().toISOString();
@@ -505,7 +508,7 @@ function filt(q, user, archived) {
   const st = q.status ? String(q.status).split(',').flatMap((s) => (s === 'open' ? ['received', 'admitted', 'icu', 'picu', 'cathlab'] : STATUSES.includes(s) ? [s] : [])) : [];
   const ql = q.q ? clip(q.q, 60).toLowerCase() : '', cl = q.case ? clip(q.case, 40).toLowerCase() : '';
   return (c) => {
-    if (GST.includes(c.status)) return false;
+    if (GST.includes(c.status) || c.ofac) return false;
     if (archived === true && !c.archived) return false;
     if (archived === false && c.archived) return false;
     if (user.role === 'paramedic' && c.paramedic_id !== user.id && c.second_paramedic_id !== user.id) return false;
@@ -742,6 +745,116 @@ add('DELETE', '/api/attachments/:id', ['paramedic', 'admin'], (c) => {
   a.deleted = 1; audit(c.user, 'attachment_delete', cs, { id: a.id, name: a.original_name }); broadcast('updated', cs);
 });
 add('GET', '/api/stats', ['admin'], (c) => statsFor(c.query, c.user));
+// ===================== historical statistics archive (stored in settings/hist, admin only) =====================
+let HIST_OK = false;
+const histEmpty = () => ({ records: [], names: [], log: [] });
+const histNorm = (s) => String(s || '').replace(/[ـ‎‏]/g, '').replace(/\s+/g, ' ').trim().toLowerCase();
+const histInt = (v, name, max) => { if (v === '' || v == null) return 0; const n = Number(v); if (!Number.isInteger(n) || n < 0 || n > (max || 1000000)) throw bad(name + '_invalid'); return n; };
+function histName(label) {
+  const raw = clip(String(label == null ? '' : label).replace(/\s+/g, ' '), 80); if (!raw) throw bad('name_required');
+  const k = histNorm(raw), ex = DB.hist.names.find((x) => histNorm(x.name) === k);
+  if (ex) return { id: ex.id, created: false, name: ex.name };
+  const n = { id: 'n' + uid(), name: raw, created_at: nowIso() }; DB.hist.names.push(n);
+  return { id: n.id, created: true, name: raw };
+}
+function histLog(u, action, ref, detail) {
+  DB.hist.log.unshift({ at: nowIso(), by: u.name, action, ref: ref || null, detail: detail || null });
+  if (DB.hist.log.length > 400) DB.hist.log.length = 400;
+}
+function histParse(b, u) {
+  const n0 = DB.hist.names.length;
+  try { return histParse0(b, u); } catch (e) { DB.hist.names.length = n0; throw e; }
+}
+function histParse0(b, u) {
+  const year = histInt(b.year, 'year', 2100), month = histInt(b.month, 'month', 12);
+  if (year < 2000 || month < 1) throw bad('period_invalid');
+  const ent = histName(b.entity), total = histInt(b.total, 'total'), icu = histInt(b.icu, 'icu'), ward = histInt(b.ward, 'ward');
+  const adm = (b.adm === '' || b.adm == null) ? icu + ward : histInt(b.adm, 'adm');
+  if (adm > total) throw bad('adm_exceeds_total');
+  const bd = new Map();
+  for (const x of Array.isArray(b.breakdown) ? b.breakdown.slice(0, 60) : []) {
+    if (!x || !String(x.name || '').trim()) continue;
+    const k = x.k === 'team' ? 'team' : 'source', nm = histName(x.name), n = histInt(x.n, 'count'), key = k + '|' + nm.id;
+    bd.set(key, { nid: nm.id, k, n: (bd.get(key) ? bd.get(key).n : 0) + n });
+  }
+  const breakdown = [...bd.values()];
+  for (const k of ['source', 'team']) if (breakdown.filter((x) => x.k === k).reduce((s, x) => s + x.n, 0) > total) throw bad('breakdown_exceeds_total');
+  return { year, month, nid: ent.id, total, adm, icu, ward, breakdown, note: clip(b.note, 300) || null, created: ent.created };
+}
+const histRecOut = (r) => r;
+const histView = () => ({ records: DB.hist.records, names: DB.hist.names, log: DB.hist.log.slice(0, 300) });
+add('GET', '/api/hist', ['admin'], () => histView());
+add('POST', '/api/hist', ['admin'], (c) => {
+  const p = histParse(c.body, c.user), t0 = nowIso();
+  const r = { id: 'h' + uid(), year: p.year, month: p.month, nid: p.nid, total: p.total, adm: p.adm, icu: p.icu, ward: p.ward, breakdown: p.breakdown, note: p.note, file: null, voided: 0, created_at: t0, created_by: c.user.name, updated_at: t0, src: c.body.src === 'import2026' ? 'import2026' : null };
+  DB.hist.records.push(r); histLog(c.user, 'create', r.id, { year: r.year, month: r.month, total: r.total });
+  audit(c.user, 'hist_create', null, { year: r.year, month: r.month, total: r.total });
+  return { record: r, dup_month: DB.hist.records.some((x) => x !== r && !x.voided && x.year === r.year && x.month === r.month && x.nid === r.nid) };
+});
+add('PUT', '/api/hist/:id', ['admin'], (c) => {
+  const r = DB.hist.records.find((x) => x.id === c.params.id); if (!r) throw E(404, 'not_found');
+  const p = histParse(c.body, c.user), before = { year: r.year, month: r.month, nid: r.nid, total: r.total, adm: r.adm, icu: r.icu, ward: r.ward, breakdown: r.breakdown, note: r.note };
+  Object.assign(r, { year: p.year, month: p.month, nid: p.nid, total: p.total, adm: p.adm, icu: p.icu, ward: p.ward, breakdown: p.breakdown, note: p.note, updated_at: nowIso() });
+  histLog(c.user, 'edit', r.id, { before, after: { year: r.year, month: r.month, nid: r.nid, total: r.total, adm: r.adm, icu: r.icu, ward: r.ward, breakdown: r.breakdown, note: r.note } });
+  audit(c.user, 'hist_edit', null, { id: r.id }); return { record: r };
+});
+add('POST', '/api/hist/:id/void', ['admin'], (c) => {
+  const r = DB.hist.records.find((x) => x.id === c.params.id); if (!r) throw E(404, 'not_found');
+  r.voided = c.body && c.body.restore ? 0 : 1; r.updated_at = nowIso();
+  histLog(c.user, r.voided ? 'void' : 'restore', r.id, { year: r.year, month: r.month, total: r.total }); audit(c.user, 'hist_' + (r.voided ? 'void' : 'restore'), null, { id: r.id }); return { record: r };
+});
+add('PUT', '/api/hist/:id/file', ['admin'], async (c) => {
+  const r = DB.hist.records.find((x) => x.id === c.params.id); if (!r) throw E(404, 'not_found');
+  const b = c.body || {}, mime = clip(b.mime, 60), data = String(b.data || '');
+  if (!/^(application\/pdf|image\/(jpeg|png|webp))$/.test(mime)) throw bad('file_type_invalid');
+  if (!data || data.length > 820000) throw bad('file_too_large');
+  const fid = r.file && r.file.fid && !r.file.shared ? r.file.fid : 'f' + uid();
+  if (!FB) throw E(503, 'offline'); await FB.set('settings', 'histf_' + fid, { name: clip(b.name, 120) || 'report', mime, data });
+  r.file = { fid, name: clip(b.name, 120) || 'report', mime, size: Math.round(data.length * 0.75) }; r.updated_at = nowIso();
+  histLog(c.user, 'file', r.id, { name: r.file.name }); return { record: r };
+});
+add('GET', '/api/hist/:id/file', ['admin'], async (c) => {
+  const r = DB.hist.records.find((x) => x.id === c.params.id); if (!r || !r.file) throw E(404, 'not_found');
+  const d = FB ? await FB.get('settings', 'histf_' + r.file.fid) : null; if (!d) throw E(404, 'not_found');
+  return { name: d.name, mime: d.mime, data: d.data };
+});
+add('POST', '/api/hist/names/rename', ['admin'], (c) => {
+  const n = DB.hist.names.find((x) => x.id === c.body.id); if (!n) throw E(404, 'not_found');
+  const nm = clip(String(c.body.name || '').replace(/\s+/g, ' '), 80); if (!nm) throw bad('name_required');
+  const o = DB.hist.names.find((x) => x !== n && histNorm(x.name) === histNorm(nm)); if (o) throw E(409, 'name_exists');
+  const from = n.name; n.name = nm; histLog(c.user, 'rename', n.id, { from, to: nm }); audit(c.user, 'hist_rename', null, { from, to: nm }); return { ok: true };
+});
+add('POST', '/api/hist/names/merge', ['admin'], (c) => {
+  const a = DB.hist.names.find((x) => x.id === c.body.from), b = DB.hist.names.find((x) => x.id === c.body.to);
+  if (!a || !b || a === b) throw bad('merge_invalid');
+  for (const r of DB.hist.records) {
+    if (r.nid === a.id) r.nid = b.id;
+    const m = new Map(); for (const x of r.breakdown) { const nid = x.nid === a.id ? b.id : x.nid, k = x.k + '|' + nid; m.set(k, { nid, k: x.k, n: (m.get(k) ? m.get(k).n : 0) + x.n }); }
+    r.breakdown = [...m.values()];
+  }
+  DB.hist.names = DB.hist.names.filter((x) => x !== a); histLog(c.user, 'merge', b.id, { from: a.name, to: b.name }); audit(c.user, 'hist_merge', null, { from: a.name, to: b.name }); return { ok: true };
+});
+
+// ===================== reports to other facilities (statistics only) =====================
+const ofOut = (x) => ({ id: x.id, case_number: x.case_number, created_at: x.created_at, paramedic_name: x.paramedic_name });
+add('POST', '/api/ofac', ['paramedic', 'admin'], async (c) => {
+  const case_number = clip(c.body.case_number, 30);
+  if (!caseRx.test(case_number)) throw bad('invalid_case_number');
+  if (DB.cases.some((x) => x.case_number === case_number)) throw E(409, 'duplicate_case_number');
+  await lockNum(case_number);
+  const u = c.user, t0 = nowIso();
+  const cs = { id: uid(), case_number, locked: 1, ofac: 1, created_at: t0, paramedic_id: u.id, paramedic_uid: u.uid, paramedic_name: u.name, second_paramedic_id: null, second_uid: null, second_paramedic_name: null, second_paramedic_other: 0,
+    visa_type: null, chief_complaint: '', notes: null, patient_name: null, patient_id: null, source: null, transport_team: null, receiving_team: null, handover_at: null, takeover_at: null, report_no: case_number, patient_seq: 1,
+    timeline: [{ at: t0, status: 'new', by: u.name }], status: 'new', arrived_at: null, status_updated_at: null, status_updated_by: null, closed_at: null, archived: 0, archived_at: null, archived_by: null };
+  DB.cases.push(cs); audit(u, 'ofac_create', cs, {});
+  return { case: ofOut(cs) };
+});
+add('GET', '/api/ofac', ['paramedic', 'admin'], (c) => ({ items: DB.cases.filter((x) => x.ofac && !x.archived && (c.user.role === 'admin' || x.paramedic_id === c.user.id)).sort((a, b) => b.created_at.localeCompare(a.created_at)).slice(0, 3000).map(ofOut) }));
+add('POST', '/api/ofac/:id/cancel', ['admin'], (c) => {
+  const cs = getCase(intId(c.params.id)); if (!cs || !cs.ofac || cs.archived) throw E(404, 'not_found');
+  cs.archived = 1; cs.archived_at = nowIso(); cs.archived_by = c.user.name; audit(c.user, 'ofac_cancel', cs, {}); return { ok: true };
+});
+
 add('GET', '/api/report', ['admin', 'er'], (c) => {
   const q = c.query, arch = q.archived === '1' ? true : q.archived === '0' ? false : undefined;
   const items = sortCases(DB.cases.filter(filt(q, c.user, arch)), 'desc').slice(0, 5000).map(out);
@@ -932,7 +1045,7 @@ function applyChanges(col, changes, initial, mem) {
     if (i >= 0) DB[col][i] = obj; else DB[col].push(obj);
     shadow[key] = js;
     if (initial) continue;
-    if (col === 'cases') emit(!prev || (GST.includes(prev.status) && obj.status === 'new') ? 'created' : prev.status !== obj.status ? 'status' : 'updated', obj); else emit('sync');
+    if (col === 'cases' && obj.ofac) emit('sync'); else if (col === 'cases') emit(!prev || (GST.includes(prev.status) && obj.status === 'new') ? 'created' : prev.status !== obj.status ? 'status' : 'updated', obj); else emit('sync');
   }
 }
 async function pool(jobs, n) {
@@ -955,6 +1068,7 @@ async function flush() {
       for (const col of COLS) for (const it of DB[col]) { const id = docKey(col, it), key = col + '/' + id, js = cj(it); if (shadow[key] !== js) { shadow[key] = js; rest.push(() => FB.set(col, id, JSON.parse(js))); } }
       const u = curUser(), sj = cj(settingsDoc());
       if (u && u.role === 'admin' && shadow['settings/main'] !== sj) { shadow['settings/main'] = sj; rest.push(() => FB.set('settings', 'main', JSON.parse(sj))); }
+      if (u && u.role === 'admin' && HIST_OK) { const hj = cj(DB.hist); if (shadow['settings/hist'] !== hj) { shadow['settings/hist'] = hj; rest.push(() => FB.set('settings', 'hist', JSON.parse(hj))); } }
       if (rest.length) await pool(rest, 6);
     } while (again);
   } catch (e) { console.error(e); window.dispatchEvent(new CustomEvent('ems-dberr', { detail: e && e.code })); await resync(); }
@@ -987,7 +1101,10 @@ async function attach() {
   const listen = (col, wheres, opts) => { (spec[col] = Array.isArray(spec[col]) ? spec[col] : []).push({ wheres, opts }); const mem = new Set(); (MEM[col] = MEM[col] || []).push(mem); first.push(new Promise((res) => { let f = true; subs.push(FB.listen(col, wheres, opts, (chs) => { applyChanges(col, chs, f, mem); if (f) { f = false; res(); } }, (e) => { console.error(col, e); if (f) { f = false; res(); } })); })); };
   const listenDoc = (col, id) => { spec[col] = { doc: id }; first.push(new Promise((res) => { let f = true; subs.push(FB.listenDoc(col, id, (d) => { applyChanges(col, [{ type: d ? 'modified' : 'removed', id, data: d }], f); if (f) { f = false; res(); } }, (e) => { console.error(col, e); if (f) { f = false; res(); } })); })); };
   const listenRoster = () => first.push(new Promise((res) => { let f = true; subs.push(FB.listenDoc('settings', 'main', (d) => { DB.roster = d && Array.isArray(d.roster) ? d.roster : []; if (f) { f = false; res(); } }, () => { if (f) { f = false; res(); } })); }));
+  HIST_OK = false;
+  const listenHist = () => first.push(new Promise((res) => { let f = true; subs.push(FB.listenDoc('settings', 'hist', (d) => { const nd = d ? { records: Array.isArray(d.records) ? d.records : [], names: Array.isArray(d.names) ? d.names : [], log: Array.isArray(d.log) ? d.log : [] } : { records: [], names: [], log: [] }; if (f || shadow['settings/hist'] === cj(DB.hist)) { DB.hist = nd; shadow['settings/hist'] = cj(nd); } HIST_OK = true; if (f) { f = false; res(); } }, (e) => { console.error('hist', e); if (f) { f = false; res(); } })); }));
   if (prof.role === 'admin') {
+    listenHist();
     listen('users', []); listen('cases', []); listen('atts', []); listen('audit', [], { orderBy: ['ts', 'desc'], limit: 3000 });
     first.push(new Promise((res) => { let f = true; subs.push(FB.listenDoc('settings', 'main', (d) => { if (d) { DB.settings = { archive_after_days: +d.archive_after_days || 30, auto_archive: !!d.auto_archive }; shadow['settings/main'] = cj({ ...DB.settings, roster: Array.isArray(d.roster) ? d.roster : [] }); } if (f) { f = false; res(); } }, () => { if (f) { f = false; res(); } })); }));
   } else if (prof.role === 'er') {
@@ -1160,7 +1277,7 @@ async function dataCheck() {
 const srcL = (v) => v ? t('src_' + v) : '—';
 const VIS = ['Umrah', 'Tourist', 'Visit', 'Resident', 'Saudi', 'Unknown', 'Other'];
 const STS = ['new', 'received', 'discharged', 'admitted', 'icu', 'picu', 'cathlab', 'deceased'];
-const NAV = { paramedic: ['new', 'golfin', 'mine', 'status'], er: ['incoming', 'tracking', 'update', 'census'], admin: ['overview', 'cases', 'stats', 'golf', 'reports', 'users', 'archive', 'audit', 'settings'], golf: ['golfnew', 'golfmine'] };
+const NAV = { paramedic: ['new', 'ofac', 'golfin', 'mine', 'status'], er: ['incoming', 'tracking', 'update', 'census'], admin: ['overview', 'cases', 'stats', 'annual', 'histarch', 'ofacadm', 'golf', 'reports', 'users', 'archive', 'audit', 'settings'], golf: ['golfnew', 'golfmine'] };
 const t = (k) => D[S.lang][k] ?? D.en[k] ?? k;
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const $ = (s, r = document) => r.querySelector(s);
@@ -2137,7 +2254,7 @@ const CEN = (() => {
   }
   function showPreview(blob, name, imgs, kind, key) {
     const ar = S.lang === 'ar';
-    const m = openModal(esc(ar ? (kind === 'day' ? 'الإحصائية اليومية' : 'الإحصائية الشهرية') : (kind === 'day' ? 'Daily census' : 'Monthly census')) + ' ' + esc(key));
+    const m = openModal((kind === 'custom' ? esc(key) : esc(ar ? (kind === 'day' ? 'الإحصائية اليومية' : 'الإحصائية الشهرية') : (kind === 'day' ? 'Daily census' : 'Monthly census')) + ' ' + esc(key)));
     const file = new File([blob], name, { type: 'application/pdf' });
     const canShare = !!(navigator.canShare && navigator.canShare({ files: [file] }));
     m.body.innerHTML = `<div class="row" style="margin-bottom:12px"><button class="btn big" id="cnDl">⬇ ${ar ? 'تحميل PDF' : 'Download PDF'}</button>${canShare ? `<button class="btn big wa" id="cnSh">${ar ? 'مشاركة' : 'Share'}</button>` : ''}<button class="btn sec" data-act="closeModal">${esc(t('close'))}</button></div>${imgs.map((u) => `<img src="${u}" alt="" style="width:100%;border:1px solid var(--line);border-radius:10px;margin-bottom:12px;display:block">`).join('')}`;
@@ -2153,7 +2270,27 @@ const CEN = (() => {
 <div class="row" style="align-items:flex-end;margin-bottom:10px"><div><label>${ar ? 'اليوم' : 'Day'}</label><input type="date" id="cnD" value="${todayStr()}"></div><button class="btn" id="cnDb">${ar ? 'إنشاء الإحصائية اليومية' : 'Create daily census'}</button></div>
 ${dailyOnly ? '' : `<div class="row" style="align-items:flex-end"><div><label>${ar ? 'الشهر' : 'Month'}</label><input type="month" id="cnM" value="${todayStr().slice(0, 7)}"></div><button class="btn sec" id="cnMb">${ar ? 'إنشاء الإحصائية الشهرية' : 'Create monthly census'}</button></div>`}</div>`;
   }
-  return { card, generate, calc, build, pageHtml };
+  async function exportPages(htmlFn, name, title) {
+    const ar = S.lang === 'ar', host = document.createElement('div');
+    try {
+      toast(ar ? 'جاري إنشاء التقرير…' : 'Creating report…');
+      await loadH2C();
+      if (!document.getElementById('cn-css')) { const st = document.createElement('style'); st.id = 'cn-css'; st.textContent = css; document.head.appendChild(st); }
+      host.style.cssText = 'position:fixed;left:-12000px;top:0;width:810px;pointer-events:none'; document.body.appendChild(host);
+      const pages = [], imgs = [];
+      for (const lang of ['ar', 'en']) {
+        host.innerHTML = htmlFn(lang); const el = host.firstChild;
+        await Promise.all([...el.querySelectorAll('img')].map((i) => (i.complete ? 1 : new Promise((r) => { i.onload = i.onerror = r; }))));
+        if (document.fonts && document.fonts.ready) await document.fonts.ready;
+        const cv = await window.html2canvas(el, { scale: 2, backgroundColor: '#eef2f8', logging: false, useCORS: true, width: 810, windowWidth: 810, scrollX: 0, scrollY: 0 });
+        const u = cv.toDataURL('image/jpeg', 0.92); pages.push({ jpg: b64bytes(u), w: cv.width, h: cv.height }); imgs.push(u);
+      }
+      const blob = makePdf(pages); window.__lastCensus = { blob, name, imgs };
+      showPreview(blob, name, imgs, 'custom', title);
+    } catch (e) { toast(ar ? 'تعذّر إنشاء التقرير' : 'Could not create the report', 'err'); console.error(e); }
+    finally { host.remove(); }
+  }
+  return { card, generate, calc, build, pageHtml, exportPages, LOGO };
 })();
 VIEWS.census = async (main) => {
   main.innerHTML = `<h1>${esc(t('nav_census'))}</h1>` + CEN.card(true);
@@ -2171,6 +2308,365 @@ VIEWS.census = async (main) => {
     g('#cnMb').onclick = () => { const v = g('#cnM').value; if (v) CEN.generate('month', v, g('#cnMb')); };
   };
 }
+
+// ===================== historical archive + annual dashboard (admin) + other-facility reports (paramedic) =====================
+const HA = (() => {
+  const LIVE_ENT = 'مشروع HNH';
+  const TXT = {
+    ar: { t_arch: 'الأرشيف الإحصائي التاريخي', t_ann: 'الإحصائيات السنوية', t_ofac: 'بلاغ لمنشأة أخرى',
+      add: 'إضافة إحصائية', year: 'السنة', month: 'الشهر', ent: 'الجهة / المصدر', entH: 'مثال: الهلال الأحمر، مشروع HNH، فرقة الحرم D', total: 'إجمالي الحالات المنقولة', adm: 'حالات التنويم', icu: 'عناية مركزة (ICU)', ward: 'أجنحة (Ward)', admH: 'اتركه فارغًا ليُحسب = ICU + Ward',
+      bd: 'التوزيع حسب المصدر / الفرقة (اختياري)', src: 'مصدر', team: 'فرقة', name: 'الاسم', n: 'العدد', addRow: '+ إضافة سطر', note: 'ملاحظة', file: 'إرفاق التقرير الشهري الأصلي (PDF أو صورة)', save: 'حفظ', cancel: 'إلغاء',
+      exist: '✓ اسم موجود — سيُربط به', fresh: '＋ اسم جديد', warnAdm: '⚠ ICU + Ward أكبر من التنويم', rate: 'نسبة التنويم', reg: 'التسجيلات', names: 'الأسماء الموحّدة', asEnt: 'كجهة', asBd: 'كمصدر/فرقة', regs: 'تسجيل',
+      edit: 'تعديل', void: 'إلغاء التسجيل', restore: 'استرجاع', hist: 'السجل', voided: 'ملغى', rename: 'تعديل الاسم', merge: 'دمج مع اسم آخر', mergeAsk: 'اختر الاسم الذي سيُدمج فيه', log: 'سجل التعديلات', none: 'لا توجد بيانات',
+      imp: 'استيراد التقرير الشهري 2026 (يناير–أكتوبر)', impAsk: 'سيتم إنشاء 19 تسجيلًا (الهلال الأحمر + مشروع HNH) من التقرير الشهري. متابعة؟', saved: 'تم الحفظ', dupMonth: 'يوجد تسجيل سابق لنفس الجهة والشهر — سيُجمع معه',
+      by: 'بواسطة', details: 'تفاصيل', view: 'عرض الملف', allY: 'كل السنوات', kind: 'النوع',
+      kTot: 'إجمالي الحالات', kAdm: 'حالات التنويم', kIcu: 'عناية مركزة', kWard: 'أجنحة', kOf: 'بلاغات لمنشأة أخرى', mon: 'الإجمالي لكل شهر', cmp: 'المقارنة مع', none2: 'بدون', from: 'من شهر', to: 'إلى شهر', fEnt: 'الجهة', fSrc: 'المصدر', fTeam: 'الفرقة', all: 'الكل',
+      pol: 'عند تداخل الأرشيف مع الإلكتروني', polH: 'اعتماد الأرشيف', polL: 'اعتماد الإلكتروني', polM: 'الأكبر', overlap: 'تنبيه تداخل: بيانات أرشيفية وإلكترونية لنفس الشهر — لم تُجمع معًا:', live: 'إلكتروني', archive: 'أرشيف',
+      bySrc: 'التوزيع حسب المصدر', byTeam: 'التوزيع حسب الفرقة', byEnt: 'حسب الجهة', yoy: 'مقارنة السنوات', pdf: 'تصدير PDF', xls: 'تصدير Excel', diff: 'الفرق', monthT: 'الشهر', ofNote: 'بلاغات النقل لمنشآت أخرى (إحصائية فقط، غير مضافة لحالات المستشفى)', noAdmF: 'التنويم غير متاح عند التصفية حسب المصدر/الفرقة',
+      sumNote: 'الإجمالي الكلي = مجموع الجهات المعروضة', title: 'التقرير الإحصائي السنوي', gen: 'تاريخ الإصدار', loading: 'جاري التحميل…', mCols: ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو', 'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر'],
+      oTitle: 'بلاغ لمنشأة أخرى', oHelp: 'للحالات التي نقلها الهلال الأحمر ولم تُنقل إلى مستشفى الحياة. يُسجَّل رقم البلاغ فقط ويُحتسب كإحصائية.', oNum: 'رقم البلاغ', oSend: 'تسجيل البلاغ', oDone: 'تم تسجيل البلاغ', oMine: 'بلاغاتي لمنشآت أخرى', oAt: 'وقت التسجيل', oBy: 'المسعف', oCancel: 'إلغاء البلاغ', oAll: 'بلاغات لمنشآت أخرى' },
+    en: { t_arch: 'Historical Statistics Archive', t_ann: 'Annual Statistics', t_ofac: 'Other-Facility Report',
+      add: 'Add statistics', year: 'Year', month: 'Month', ent: 'Entity / Source', entH: 'e.g. Saudi Red Crescent, HNH Project, Haram Team D', total: 'Total transfers', adm: 'Admissions', icu: 'ICU', ward: 'Ward', admH: 'Leave empty to use ICU + Ward',
+      bd: 'Breakdown by source / team (optional)', src: 'Source', team: 'Team', name: 'Name', n: 'Count', addRow: '+ Add row', note: 'Note', file: 'Attach original monthly report (PDF or image)', save: 'Save', cancel: 'Cancel',
+      exist: '✓ Existing name — will be linked', fresh: '＋ New name', warnAdm: '⚠ ICU + Ward exceeds admissions', rate: 'Admission rate', reg: 'Registrations', names: 'Unified names', asEnt: 'as entity', asBd: 'as source/team', regs: 'entries',
+      edit: 'Edit', void: 'Void', restore: 'Restore', hist: 'History', voided: 'voided', rename: 'Rename', merge: 'Merge into another name', mergeAsk: 'Choose the name to merge into', log: 'Change log', none: 'No data',
+      imp: 'Import 2026 monthly report (Jan–Oct)', impAsk: 'This creates 19 entries (Saudi Red Crescent + HNH Project) from the monthly report. Continue?', saved: 'Saved', dupMonth: 'An entry for this entity and month already exists — they will be summed',
+      by: 'By', details: 'Details', view: 'View file', allY: 'All years', kind: 'Type',
+      kTot: 'Total cases', kAdm: 'Admissions', kIcu: 'ICU', kWard: 'Ward', kOf: 'Other-facility reports', mon: 'Monthly totals', cmp: 'Compare with', none2: 'None', from: 'From month', to: 'To month', fEnt: 'Entity', fSrc: 'Source', fTeam: 'Team', all: 'All',
+      pol: 'When archive and electronic data overlap', polH: 'Use archive', polL: 'Use electronic', polM: 'Use larger', overlap: 'Overlap notice: archive and electronic data exist for the same month — not added together:', live: 'Electronic', archive: 'Archive',
+      bySrc: 'By source', byTeam: 'By team', byEnt: 'By entity', yoy: 'Year comparison', pdf: 'Export PDF', xls: 'Export Excel', diff: 'Diff', monthT: 'Month', ofNote: 'Transfers to other facilities (statistics only, not added to hospital cases)', noAdmF: 'Admissions are not available when filtering by source/team',
+      sumNote: 'Grand total = sum of the entities shown', title: 'Annual Statistics Report', gen: 'Generated', loading: 'Loading…', mCols: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+      oTitle: 'Report to another facility', oHelp: 'For cases transported by the Red Crescent that were not taken to Al Hayat Hospital. Only the report number is recorded; it is counted as a statistic.', oNum: 'Report number', oSend: 'Record report', oDone: 'Report recorded', oMine: 'My other-facility reports', oAt: 'Recorded at', oBy: 'Paramedic', oCancel: 'Cancel report', oAll: 'Other-facility reports' }
+  };
+  const T = (k) => (TXT[S.lang] || TXT.ar)[k];
+  const TL = (l, k) => TXT[l][k];
+  const norm = (s) => String(s || '').replace(/[ـ‎‏]/g, '').replace(/\s+/g, ' ').trim().toLowerCase();
+  const ERR = { ar: { name_required: 'الاسم مطلوب', period_invalid: 'الشهر أو السنة غير صحيحة', total_invalid: 'الأعداد غير صحيحة', adm_invalid: 'الأعداد غير صحيحة', icu_invalid: 'الأعداد غير صحيحة', ward_invalid: 'الأعداد غير صحيحة', count_invalid: 'الأعداد غير صحيحة', adm_exceeds_total: 'التنويم أكبر من الإجمالي', breakdown_exceeds_total: 'مجموع التوزيع أكبر من الإجمالي', file_type_invalid: 'نوع الملف غير مدعوم', file_too_large: 'الملف كبير جدًا (الحد 600KB)', name_exists: 'الاسم موجود مسبقًا — استخدم الدمج', merge_invalid: 'الدمج غير صحيح', invalid_case_number: 'رقم البلاغ غير صحيح', duplicate_case_number: 'رقم البلاغ مسجل مسبقًا' },
+    en: { name_required: 'Name is required', period_invalid: 'Invalid month or year', total_invalid: 'Invalid numbers', adm_invalid: 'Invalid numbers', icu_invalid: 'Invalid numbers', ward_invalid: 'Invalid numbers', count_invalid: 'Invalid numbers', adm_exceeds_total: 'Admissions exceed total', breakdown_exceeds_total: 'Breakdown exceeds total', file_type_invalid: 'File type not supported', file_too_large: 'File too large (600KB max)', name_exists: 'Name already exists — use merge', merge_invalid: 'Invalid merge', invalid_case_number: 'Invalid report number', duplicate_case_number: 'Report number already registered' } };
+  const eT = (e) => { const c = e && (e.code || e.error); return (ERR[S.lang] || ERR.ar)[c] || errText(e); };
+  const pad = (n) => String(n).padStart(2, '0');
+  const lm = (iso) => new Date(new Date(iso).getTime() + (S.meta ? S.meta.tz_offset_min : 180) * 60000).toISOString().slice(0, 7);
+  const nowY = () => new Date(Date.now() + (S.meta ? S.meta.tz_offset_min : 180) * 60000).getUTCFullYear();
+  const pct = (a, b) => (b ? Math.round(a * 1000 / b) / 10 : 0);
+  const nameOf = (H, id) => { const n = H.names.find((x) => x.id === id); return n ? n.name : '?'; };
+  const srcAr = (k) => (I18N.ar['src_' + k] || k);
+  const fileToData = (f) => new Promise((res, rej) => {
+    const rd = new FileReader(); rd.onerror = () => rej(new Error('read'));
+    rd.onload = () => {
+      const u = String(rd.result);
+      if (f.type === 'application/pdf') { const b = u.split(',')[1]; return b.length > 800000 ? rej({ code: 'file_too_large' }) : res({ mime: f.type, data: b, name: f.name }); }
+      if (!/^image\/(jpeg|png|webp)$/.test(f.type)) return rej({ code: 'file_type_invalid' });
+      const im = new Image(); im.onerror = () => rej({ code: 'file_type_invalid' });
+      im.onload = () => { let w = im.width, h = im.height, sc = Math.min(1, 1600 / Math.max(w, h)), q = 0.85, out = '';
+        for (let i = 0; i < 6; i++) { const cv = document.createElement('canvas'); cv.width = Math.round(w * sc); cv.height = Math.round(h * sc); const cx = cv.getContext('2d'); cx.fillStyle = '#fff'; cx.fillRect(0, 0, cv.width, cv.height); cx.drawImage(im, 0, 0, cv.width, cv.height); out = cv.toDataURL('image/jpeg', q).split(',')[1]; if (out.length <= 780000) break; sc *= 0.8; q -= 0.08; }
+        out.length > 800000 ? rej({ code: 'file_too_large' }) : res({ mime: 'image/jpeg', data: out, name: f.name.replace(/\.[^.]+$/, '') + '.jpg' }); };
+      im.src = u;
+    };
+    rd.readAsDataURL(f);
+  });
+
+  // ---------- live data ----------
+  const liveCache = {};
+  async function liveYear(y) {
+    const k = y + '|' + (S.liveStamp || 0);
+    if (liveCache[k]) return liveCache[k];
+    const d = await api('GET', '/api/report?' + qs({ from: y + '-01-01', to: y + '-12-31' }));
+    const M = Array.from({ length: 12 }, () => ({ total: 0, adm: 0, icu: 0, ward: 0, src: {}, team: {} }));
+    for (const c of d.items) {
+      const m = lm(c.created_at); if (+m.slice(0, 4) !== y) continue; const o = M[+m.slice(5, 7) - 1];
+      o.total++; if (['icu', 'picu', 'admitted', 'cathlab'].includes(c.status)) { o.adm++; if (c.status === 'icu' || c.status === 'picu') o.icu++; else if (c.status === 'admitted') o.ward++; }
+      if (c.source) { const nm = srcAr(c.source); o.src[nm] = (o.src[nm] || 0) + 1; }
+      if (c.transport_team) { const nm = srcAr(c.transport_team); o.team[nm] = (o.team[nm] || 0) + 1; }
+    }
+    return (liveCache[k] = { M });
+  }
+
+  // ---------- model ----------
+  function build(H, live, o) {
+    // returns months[12] for year o.year
+    const rows = H.records.filter((r) => !r.voided && r.year === o.year);
+    const liveEntNid = (H.names.find((n) => norm(n.name) === norm(LIVE_ENT)) || {}).id || '__live';
+    const months = [];
+    for (let m = 1; m <= 12; m++) {
+      const mo = { m, total: 0, adm: 0, icu: 0, ward: 0, ents: {}, src: {}, team: {}, overlap: null, flagAdm: false };
+      const byEnt = {};
+      for (const r of rows.filter((x) => x.month === m)) {
+        const e = byEnt[r.nid] = byEnt[r.nid] || { total: 0, adm: 0, icu: 0, ward: 0, src: {}, team: {}, from: 'hist' };
+        e.total += r.total; e.adm += r.adm; e.icu += r.icu; e.ward += r.ward;
+        for (const b of r.breakdown) { const nm = nameOf(H, b.nid), tg = b.k === 'team' ? e.team : e.src; tg[nm] = (tg[nm] || 0) + b.n; }
+        if (r.icu + r.ward > r.adm) mo.flagAdm = true;
+      }
+      const L = live.M[m - 1];
+      if (L.total > 0) {
+        const mk = () => ({ total: L.total, adm: L.adm, icu: L.icu, ward: L.ward, src: { ...L.src }, team: { ...L.team }, from: 'live' });
+        const h = byEnt[liveEntNid];
+        if (!h) byEnt[liveEntNid] = mk();
+        else { mo.overlap = { hist: h.total, live: L.total }; if (o.policy === 'live' || (o.policy === 'max' && L.total > h.total)) byEnt[liveEntNid] = mk(); }
+      }
+      for (const [nid, e] of Object.entries(byEnt)) {
+        const en = nid === '__live' ? LIVE_ENT : nameOf(H, nid);
+        if (o.ent && en !== o.ent) continue;
+        mo.ents[en] = e; mo.total += e.total; mo.adm += e.adm; mo.icu += e.icu; mo.ward += e.ward;
+        for (const [k, v] of Object.entries(e.src)) mo.src[k] = (mo.src[k] || 0) + v;
+        for (const [k, v] of Object.entries(e.team)) mo.team[k] = (mo.team[k] || 0) + v;
+      }
+      if (o.src || o.team) { const v = o.src ? (mo.src[o.src] || 0) : (mo.team[o.team] || 0); mo.total = v; mo.adm = mo.icu = mo.ward = 0; }
+      months.push(mo);
+    }
+    return months;
+  }
+  const inRange = (months, o) => months.filter((x) => x.m >= o.from && x.m <= o.to);
+  const sum = (ms, k) => ms.reduce((s, x) => s + x[k], 0);
+  const agg = (ms, k) => { const r = {}; ms.forEach((x) => Object.entries(x[k]).forEach(([a, b]) => { r[a] = (r[a] || 0) + b; })); return Object.entries(r).sort((a, b) => b[1] - a[1]); };
+  const entAgg = (ms) => { const r = {}; ms.forEach((x) => Object.entries(x.ents).forEach(([a, e]) => { const z = r[a] = r[a] || { total: 0, adm: 0, icu: 0, ward: 0 }; z.total += e.total; z.adm += e.adm; z.icu += e.icu; z.ward += e.ward; })); return Object.entries(r).sort((a, b) => b[1].total - a[1].total); };
+  const PAL = ['#0b5cab', '#d9232e', '#1e9e5a', '#8e44ad', '#e08a00', '#0aa6b8', '#7a8699', '#d6457f'];
+
+  // ---------- charts (inline SVG) ----------
+  function barChart(cur, cmp, o) {
+    const W = 720, Hh = 250, pl = 40, pb = 28, pt = 14, n = 12, bw = (W - pl - 10) / n;
+    const mx = Math.max(10, ...cur.map((x) => x.total), ...(cmp ? cmp.map((x) => x.total) : [0])), sy = (v) => pt + (Hh - pt - pb) * (1 - v / mx);
+    let s = `<svg viewBox="0 0 ${W} ${Hh}" style="width:100%;height:auto;direction:ltr" role="img">`;
+    for (let i = 0; i <= 4; i++) { const v = Math.round(mx * i / 4), y = sy(v); s += `<line x1="${pl}" x2="${W - 6}" y1="${y}" y2="${y}" stroke="#e1e6ee"/><text x="${pl - 6}" y="${y + 4}" font-size="11" text-anchor="end" fill="#7a8699">${v}</text>`; }
+    cur.forEach((x, i) => {
+      const bx = pl + i * bw + bw * 0.14, w = bw * 0.72, y = sy(x.total), ya = sy(x.adm), inr = x.m >= o.from && x.m <= o.to;
+      s += `<g class="hb" data-m="${x.m}" style="cursor:pointer;opacity:${inr ? 1 : 0.35}"><title>${esc(TXT[S.lang].mCols[i])}: ${x.total} | ${esc(T('adm'))}: ${x.adm}</title><rect x="${bx}" y="${y}" width="${w}" height="${Math.max(0, Hh - pb - y)}" rx="3" fill="#0b5cab"/>${x.adm ? `<rect x="${bx}" y="${ya}" width="${w}" height="${Math.max(0, Hh - pb - ya)}" rx="3" fill="#d9232e"/>` : ''}<rect x="${pl + i * bw}" y="${pt}" width="${bw}" height="${Hh - pt - pb}" fill="transparent"/>${x.total ? `<text x="${bx + w / 2}" y="${y - 4}" font-size="11" text-anchor="middle" fill="#14233c" font-weight="700">${x.total}</text>` : ''}</g>`;
+      s += `<text x="${bx + w / 2}" y="${Hh - 10}" font-size="11" text-anchor="middle" fill="#55627a">${esc(TXT[S.lang].mCols[i])}</text>`;
+    });
+    if (cmp) { const pts = cmp.map((x, i) => `${pl + i * bw + bw / 2},${sy(x.total)}`).join(' '); s += `<polyline points="${pts}" fill="none" stroke="#e08a00" stroke-width="2.5" stroke-dasharray="5 3"/>` + cmp.map((x, i) => `<circle cx="${pl + i * bw + bw / 2}" cy="${sy(x.total)}" r="3.5" fill="#e08a00"><title>${o.cmp}: ${x.total}</title></circle>`).join(''); }
+    return s + '</svg>';
+  }
+  function hbars(list, total, kind) {
+    if (!list.length) return `<div class="empty">${esc(T('none'))}</div>`;
+    const mx = Math.max(1, ...list.map((x) => x[1]));
+    return list.map(([nm, v], i) => `<div class="hrow" data-k="${kind}" data-n="${esc(nm)}" style="cursor:pointer;margin:7px 0" title="${esc(nm)}: ${v}"><div style="display:flex;justify-content:space-between;font-size:13px"><span>${esc(nm)}</span><b dir="ltr">${v} · ${pct(v, total)}%</b></div><div style="background:#e8edf5;border-radius:6px;height:10px;overflow:hidden"><div style="width:${v / mx * 100}%;height:100%;background:${PAL[i % PAL.length]}"></div></div></div>`).join('');
+  }
+
+  // ---------- history form ----------
+  function recForm(m, H, rec, onDone) {
+    const ar = S.lang === 'ar', cy = nowY(), r = rec || { year: cy, month: new Date().getUTCMonth() + 1, nid: '', total: '', adm: '', icu: '', ward: '', breakdown: [], note: '' };
+    const yrs = []; for (let y = cy + 1; y >= 2015; y--) yrs.push(y);
+    const bdRow = (b) => `<div class="row hb-row" style="gap:6px;margin-bottom:6px;align-items:center"><select class="bk" style="max-width:90px"><option value="source" ${b && b.k === 'source' ? 'selected' : ''}>${esc(T('src'))}</option><option value="team" ${b && b.k === 'team' ? 'selected' : ''}>${esc(T('team'))}</option></select><input class="bn" list="hl-names" placeholder="${esc(T('name'))}" value="${esc(b ? nameOf(H, b.nid) : '')}" style="flex:2;min-width:0"><input class="bc" type="number" min="0" inputmode="numeric" placeholder="${esc(T('n'))}" value="${b ? b.n : ''}" style="width:80px"><span class="tag" style="font-size:11px;min-width:70px"></span><button type="button" class="btn sec bx" style="padding:4px 9px">✕</button></div>`;
+    m.body.innerHTML = `<datalist id="hl-names">${H.names.map((n) => `<option value="${esc(n.name)}">`).join('')}</datalist>
+<form id="hf"><div class="row" style="gap:10px"><div style="flex:1"><label>${esc(T('year'))}</label><select name="year">${yrs.map((y) => `<option ${y === r.year ? 'selected' : ''}>${y}</option>`).join('')}</select></div><div style="flex:1"><label>${esc(T('month'))}</label><select name="month">${TXT[S.lang].mCols.map((x, i) => `<option value="${i + 1}" ${i + 1 === r.month ? 'selected' : ''}>${esc(x)}</option>`).join('')}</select></div></div>
+<label>${esc(T('ent'))} *</label><input name="entity" list="hl-names" required maxlength="80" value="${esc(r.nid ? nameOf(H, r.nid) : '')}" placeholder="${esc(T('entH'))}" autocomplete="off"><div class="tag" id="entTag" style="font-size:12px;margin-top:3px"></div>
+<div class="row" style="gap:10px"><div style="flex:1"><label>${esc(T('total'))} *</label><input name="total" type="number" min="0" inputmode="numeric" required value="${r.total}"></div><div style="flex:1"><label>${esc(T('adm'))}</label><input name="adm" type="number" min="0" inputmode="numeric" value="${rec ? r.adm : ''}"></div></div>
+<div class="row" style="gap:10px"><div style="flex:1"><label>${esc(T('icu'))}</label><input name="icu" type="number" min="0" inputmode="numeric" value="${r.icu}"></div><div style="flex:1"><label>${esc(T('ward'))}</label><input name="ward" type="number" min="0" inputmode="numeric" value="${r.ward}"></div></div>
+<div style="font-size:12px;color:#7a8699;margin-top:3px">${esc(T('admH'))}</div><div id="hw" style="color:#b3121f;font-size:12px"></div>
+<h3 style="margin:14px 0 6px">${esc(T('bd'))}</h3><div id="bds">${(r.breakdown || []).map(bdRow).join('')}</div><button type="button" class="btn sec" id="bda">${esc(T('addRow'))}</button>
+<label>${esc(T('note'))}</label><input name="note" maxlength="300" value="${esc(r.note || '')}">
+${rec ? '' : `<label>${esc(T('file'))}</label><input type="file" name="file" accept="application/pdf,image/*">`}
+<div class="err-msg" id="he"></div><div class="row" style="margin-top:12px"><button class="btn big" id="hs">${esc(T('save'))}</button><button type="button" class="btn sec big" id="hc">${esc(T('cancel'))}</button></div></form>`;
+    const f = $('#hf', m.body), exists = (v) => H.names.some((n) => norm(n.name) === norm(v));
+    const tag = (el, v) => { el.textContent = v.trim() ? (exists(v) ? T('exist') : T('fresh')) : ''; el.style.color = exists(v) ? '#1e9e5a' : '#0b5cab'; };
+    const wire = (row) => { const inp = $('.bn', row), tg = $('.tag', row); inp.oninput = () => tag(tg, inp.value); tag(tg, inp.value); $('.bx', row).onclick = () => row.remove(); };
+    $$('.hb-row', m.body).forEach(wire);
+    $('#bda', m.body).onclick = () => { $('#bds', m.body).insertAdjacentHTML('beforeend', bdRow(null)); wire($('#bds', m.body).lastElementChild); };
+    f.entity.oninput = () => tag($('#entTag', m.body), f.entity.value); tag($('#entTag', m.body), f.entity.value);
+    const chk = () => { $('#hw', m.body).textContent = (+f.icu.value || 0) + (+f.ward.value || 0) > (f.adm.value === '' ? Infinity : +f.adm.value) ? T('warnAdm') : ''; };
+    ['icu', 'ward', 'adm'].forEach((k) => { f[k].oninput = chk; }); chk();
+    $('#hc', m.body).onclick = () => closeModal();
+    f.onsubmit = async (e) => {
+      e.preventDefault(); const b = $('#hs', m.body); $('#he', m.body).textContent = ''; b.disabled = true;
+      try {
+        const body = { year: +f.year.value, month: +f.month.value, entity: f.entity.value, total: f.total.value, adm: f.adm.value, icu: f.icu.value, ward: f.ward.value, note: f.note.value,
+          breakdown: $$('.hb-row', m.body).map((row) => ({ k: $('.bk', row).value, name: $('.bn', row).value, n: $('.bc', row).value })).filter((x) => x.name.trim()) };
+        let id, dup = false;
+        if (rec) { await api('PUT', '/api/hist/' + rec.id, body); id = rec.id; } else { const rs = await api('POST', '/api/hist', body); id = rs.record.id; dup = rs.dup_month; }
+        const fl = f.file && f.file.files[0];
+        if (fl) { const d = await fileToData(fl); await api('PUT', '/api/hist/' + id + '/file', d); }
+        closeModal(); toast(T('saved') + (dup ? ' — ' + T('dupMonth') : ''), 'ok'); onDone();
+      } catch (er) { $('#he', m.body).textContent = eT(er); b.disabled = false; }
+    };
+  }
+
+  const SEED = { 'الهلال الأحمر': [[404, 122, 105, 17], [154, 90, 73, 27], [628, 156, 115, 41], [392, 88, 45, 11], [395, 74, 54, 20], [290, 97, 68, 29], [208, 57, 38, 19], [214, 54, 35, 19], [267, 80, 53, 27], [253, 52, 39, 13]],
+    'مشروع HNH': [null, [41, 15, 9, 6], [301, 74, 43, 31], [95, 17, 13, 4], [136, 43, 30, 14], [134, 51, 32, 14], [152, 57, 39, 14], [153, 56, 47, 9], [154, 58, 38, 19], [302, 122, 84, 38]] };
+
+  // ---------- archive view ----------
+  async function viewArch(main) {
+    main.innerHTML = `<h1>🗂 ${esc(T('t_arch'))}</h1><div id="ha"><div class="empty">${esc(T('loading'))}</div></div>`;
+    const draw = async () => {
+      let H; try { H = await api('GET', '/api/hist'); } catch (e) { $('#ha').innerHTML = `<div class="empty">${esc(eT(e))}</div>`; return; }
+      const ar = S.lang === 'ar', cy = nowY(); let fy = S.histY || 'all';
+      const hasSeed = H.records.some((r) => r.src === 'import2026');
+      const recs = H.records.filter((r) => fy === 'all' || r.year === +fy).sort((a, b) => (b.year * 100 + b.month) - (a.year * 100 + a.month) || b.created_at.localeCompare(a.created_at));
+      const yrs = [...new Set(H.records.map((r) => r.year))].sort((a, b) => b - a);
+      const bdTxt = (r) => r.breakdown.map((b) => `${nameOf(H, b.nid)} ${b.n}`).join('، ');
+      const nameStats = H.names.map((n) => { const as = H.records.filter((r) => !r.voided && r.nid === n.id), bd = H.records.filter((r) => !r.voided).flatMap((r) => r.breakdown.filter((b) => b.nid === n.id).map((b) => ({ r, b })));
+        return { n, e: sum2(as, 'total'), ec: as.length, b: bd.reduce((s, x) => s + x.b.n, 0), bc: bd.length }; });
+      function sum2(a, k) { return a.reduce((s, x) => s + x[k], 0); }
+      $('#ha').innerHTML = `<div class="row" style="gap:8px;margin-bottom:12px"><button class="btn big" id="hadd">＋ ${esc(T('add'))}</button>${hasSeed ? '' : `<button class="btn sec" id="himp">⬇ ${esc(T('imp'))}</button>`}</div>
+<div class="card"><div class="row" style="justify-content:space-between;align-items:center"><h2 style="margin:0">${esc(T('reg'))}</h2><select id="hfy"><option value="all">${esc(T('allY'))}</option>${yrs.map((y) => `<option ${String(y) === String(fy) ? 'selected' : ''}>${y}</option>`).join('')}</select></div>
+${recs.length ? `<div class="tw"><table><thead><tr><th>${esc(T('year'))}/${esc(T('month'))}</th><th>${esc(T('ent'))}</th><th>${esc(T('total'))}</th><th>${esc(T('adm'))}</th><th>ICU</th><th>Ward</th><th>${esc(T('rate'))}</th><th>${esc(T('bd'))}</th><th></th></tr></thead><tbody>${recs.map((r) => `<tr style="${r.voided ? 'opacity:.45;text-decoration:line-through' : ''}"><td dir="ltr">${r.year}-${pad(r.month)}</td><td>${esc(nameOf(H, r.nid))}${r.voided ? ` <i>(${esc(T('voided'))})</i>` : ''}${r.note ? `<div style="font-size:11px;color:#7a8699">${esc(r.note)}</div>` : ''}<div style="font-size:11px;color:#7a8699">${esc(r.created_by)} · ${esc(fmtDT(r.created_at))}</div></td><td><b>${r.total}</b></td><td>${r.adm}</td><td>${r.icu}</td><td>${r.ward}${r.icu + r.ward > r.adm ? ' <span title="' + esc(T('warnAdm')) + '">⚠</span>' : ''}</td><td dir="ltr">${pct(r.adm, r.total)}%</td><td style="font-size:12px">${esc(bdTxt(r))}</td><td style="white-space:nowrap">${r.file ? `<button class="btn sec hv" data-id="${r.id}" style="padding:3px 8px">📎</button>` : ''}<button class="btn sec he" data-id="${r.id}" style="padding:3px 8px">✎</button><button class="btn sec hh" data-id="${r.id}" style="padding:3px 8px">🕘</button><button class="btn sec hx" data-id="${r.id}" data-v="${r.voided ? 1 : 0}" style="padding:3px 8px">${r.voided ? '↺' : '🗑'}</button></td></tr>`).join('')}</tbody></table></div>` : `<div class="empty">${esc(T('none'))}</div>`}</div>
+<div class="card"><h2 style="margin-top:0">${esc(T('names'))}</h2>${nameStats.length ? `<div class="tw"><table><thead><tr><th>${esc(T('name'))}</th><th>${esc(T('asEnt'))}</th><th>${esc(T('asBd'))}</th><th></th></tr></thead><tbody>${nameStats.map((x) => `<tr><td><a href="#" class="hn" data-id="${x.n.id}">${esc(x.n.name)}</a></td><td dir="ltr"><b>${x.e}</b> <small>(${x.ec} ${esc(T('regs'))})</small></td><td dir="ltr"><b>${x.b}</b> <small>(${x.bc})</small></td><td style="white-space:nowrap"><button class="btn sec hrn" data-id="${x.n.id}" style="padding:3px 8px">✎ ${esc(T('rename'))}</button> <button class="btn sec hmg" data-id="${x.n.id}" style="padding:3px 8px">⇄ ${esc(T('merge'))}</button></td></tr>`).join('')}</tbody></table></div>` : `<div class="empty">${esc(T('none'))}</div>`}</div>
+<details class="card"><summary><b>${esc(T('log'))}</b> (${H.log.length})</summary>${H.log.map((l) => `<div style="font-size:12px;border-bottom:1px solid #eef1f6;padding:5px 0"><b>${esc(l.action)}</b> · ${esc(l.by)} · ${esc(fmtDT(l.at))} <span style="color:#7a8699">${esc(JSON.stringify(l.detail || {}).slice(0, 200))}</span></div>`).join('')}</details>`;
+      $('#hadd').onclick = () => { const m = openModal(esc(T('add'))); recForm(m, H, null, draw); };
+      const imp = $('#himp'); if (imp) imp.onclick = async () => {
+        if (!confirm(T('impAsk'))) return; imp.disabled = true;
+        try { for (const [ent, arr] of Object.entries(SEED)) for (let i = 0; i < arr.length; i++) { const v = arr[i]; if (!v) continue; await api('POST', '/api/hist', { year: 2026, month: i + 1, entity: ent, total: v[0], adm: v[1], icu: v[2], ward: v[3], note: 'HNH Monthly Report 2026', src: 'import2026' }); } toast(T('saved'), 'ok'); } catch (e) { toast(eT(e), 'err'); }
+        draw();
+      };
+      $('#hfy').onchange = (e) => { S.histY = e.target.value; draw(); };
+      $$('.he').forEach((b) => { b.onclick = () => { const r = H.records.find((x) => x.id === b.dataset.id); const m = openModal(esc(T('edit'))); recForm(m, H, r, draw); }; });
+      $$('.hx').forEach((b) => { b.onclick = async () => { try { await api('POST', '/api/hist/' + b.dataset.id + '/void', { restore: b.dataset.v === '1' }); draw(); } catch (e) { toast(eT(e), 'err'); } }; });
+      $$('.hv').forEach((b) => { b.onclick = async () => { try { const d = await api('GET', '/api/hist/' + b.dataset.id + '/file'); const bin = atob(d.data), u8 = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) u8[i] = bin.charCodeAt(i); const blob = new Blob([u8], { type: d.mime }); const m = openModal(esc(d.name)); const url = URL.createObjectURL(blob); m.body.innerHTML = d.mime.startsWith('image/') ? `<img src="${url}" style="max-width:100%">` : `<a class="btn big" href="${url}" download="${esc(d.name)}">⬇ ${esc(d.name)}</a>`; } catch (e) { toast(eT(e), 'err'); } }; });
+      $$('.hh').forEach((b) => { b.onclick = () => { const m = openModal(esc(T('hist'))); const ls = H.log.filter((l) => l.ref === b.dataset.id); m.body.innerHTML = ls.length ? ls.map((l) => `<div style="border-bottom:1px solid #eef1f6;padding:6px 0;font-size:13px"><b>${esc(l.action)}</b> · ${esc(l.by)} · ${esc(fmtDT(l.at))}<pre style="white-space:pre-wrap;font-size:11px;margin:4px 0;direction:ltr;text-align:left">${esc(JSON.stringify(l.detail || {}, null, 1))}</pre></div>`).join('') : `<div class="empty">${esc(T('none'))}</div>`; }; });
+      $$('.hn').forEach((a) => { a.onclick = (e) => { e.preventDefault(); const n = H.names.find((x) => x.id === a.dataset.id), m = openModal(esc(n.name)); const L = [];
+        H.records.forEach((r) => { if (r.nid === n.id) L.push([r, T('asEnt'), r.total]); r.breakdown.forEach((b) => { if (b.nid === n.id) L.push([r, T('asBd') + ' (' + nameOf(H, r.nid) + ')', b.n]); }); });
+        L.sort((a, b) => (b[0].year * 100 + b[0].month) - (a[0].year * 100 + a[0].month));
+        m.body.innerHTML = `<div class="tw"><table><thead><tr><th>${esc(T('monthT'))}</th><th>${esc(T('kind'))}</th><th>${esc(T('n'))}</th><th>${esc(T('by'))}</th></tr></thead><tbody>${L.map(([r, k, n2]) => `<tr style="${r.voided ? 'opacity:.45' : ''}"><td dir="ltr">${r.year}-${pad(r.month)}</td><td>${esc(k)}</td><td><b>${n2}</b></td><td style="font-size:12px">${esc(r.created_by)} · ${esc(fmtDT(r.created_at))}</td></tr>`).join('')}</tbody></table></div>`; }; });
+      $$('.hrn').forEach((b) => { b.onclick = async () => { const n = H.names.find((x) => x.id === b.dataset.id), v = prompt(T('rename'), n.name); if (v == null || !v.trim() || v.trim() === n.name) return; try { await api('POST', '/api/hist/names/rename', { id: n.id, name: v }); draw(); } catch (e) { toast(eT(e), 'err'); } }; });
+      $$('.hmg').forEach((b) => { b.onclick = () => { const n = H.names.find((x) => x.id === b.dataset.id), m = openModal(esc(T('merge')) + ': ' + esc(n.name)); m.body.innerHTML = `<label>${esc(T('mergeAsk'))}</label><select id="mgt">${H.names.filter((x) => x.id !== n.id).map((x) => `<option value="${x.id}">${esc(x.name)}</option>`).join('')}</select><div class="row" style="margin-top:12px"><button class="btn big" id="mgb">${esc(T('save'))}</button></div>`; $('#mgb', m.body).onclick = async () => { try { await api('POST', '/api/hist/names/merge', { from: n.id, to: $('#mgt', m.body).value }); closeModal(); draw(); } catch (e) { toast(eT(e), 'err'); } }; }; });
+    };
+    draw();
+  }
+
+  async function ofList(host, admin, preset) {
+    try {
+      const r = preset ? { items: preset } : await api('GET', '/api/ofac');
+      host.innerHTML = `<h2 style="margin-top:0">${esc(admin ? T('oAll') : T('oMine'))} (${r.items.length})</h2>` + (r.items.length ? `<div class="tw"><table><thead><tr><th>${esc(T('oNum'))}</th><th>${esc(T('oAt'))}</th>${admin ? `<th>${esc(T('oBy'))}</th><th></th>` : ''}</tr></thead><tbody>${r.items.map((x) => `<tr><td><b dir="ltr">${esc(x.case_number)}</b></td><td>${esc(fmtDT(x.created_at))}</td>${admin ? `<td>${esc(x.paramedic_name || '')}</td><td><button class="btn sec ofc" data-id="${x.id}" style="padding:3px 8px">🗑 ${esc(T('oCancel'))}</button></td>` : ''}</tr>`).join('')}</tbody></table></div>` : `<div class="empty">${esc(T('none'))}</div>`);
+      $$('.ofc', host).forEach((b) => { b.onclick = async () => { if (!confirm(T('oCancel') + '؟')) return; try { await api('POST', '/api/ofac/' + b.dataset.id + '/cancel', {}); preset ? route() : ofList(host, admin); } catch (e) { toast(eT(e), 'err'); } }; });
+    } catch (e) { host.innerHTML = `<div class="empty">${esc(eT(e))}</div>`; }
+  }
+
+  // ---------- paramedic: other-facility report ----------
+  async function viewOfac(main) {
+    main.innerHTML = `<h1>🏥 ${esc(T('oTitle'))}</h1><form class="card" id="of" style="max-width:640px"><p style="margin-top:0;color:#55627a">${esc(T('oHelp'))}</p><label>${esc(T('oNum'))} *</label><input type="text" name="case_number" required maxlength="30" pattern="[A-Za-z0-9][A-Za-z0-9_\\/\\-]{0,29}" autocomplete="off"><div class="err-msg" id="oe"></div><button class="btn big" id="ob" style="margin-top:14px">${esc(T('oSend'))}</button></form><div class="card" id="ol"></div>`;
+    const f = $('#of');
+    f.onsubmit = async (e) => { e.preventDefault(); $('#oe').textContent = ''; const b = $('#ob'); b.disabled = true; try { await api('POST', '/api/ofac', { case_number: f.case_number.value.trim() }); toast(T('oDone'), 'ok'); f.reset(); ofList($('#ol'), false); } catch (er) { $('#oe').textContent = eT(er); } b.disabled = false; };
+    ofList($('#ol'), false);
+  }
+
+  // ---------- admin: other-facility reports (own page, independent from the normal statistics) ----------
+  async function viewOfacAdm(main) {
+    main.innerHTML = `<h1>🏥 ${esc(T('oAll'))}</h1><div id="oa"><div class="empty">${esc(T('loading'))}</div></div>`;
+    const draw = async () => {
+      let r; try { r = await api('GET', '/api/ofac?all=1'); } catch (e) { $('#oa').innerHTML = `<div class="empty">${esc(eT(e))}</div>`; return; }
+      const cy = nowY(), yrs = [...new Set([cy, ...r.items.map((x) => +lm(x.created_at).slice(0, 4))])].sort((a, b) => b - a), y = st.oy && yrs.includes(st.oy) ? st.oy : cy;
+      const rows = r.items.filter((x) => +lm(x.created_at).slice(0, 4) === y), mo = TXT[S.lang].mCols, byM = Array(12).fill(0), byP = {};
+      rows.forEach((x) => { byM[+lm(x.created_at).slice(5, 7) - 1]++; const p = x.paramedic_name || '—'; byP[p] = (byP[p] || 0) + 1; });
+      const mx = Math.max(1, ...byM);
+      $('#oa').innerHTML = `<div class="card"><div class="row" style="justify-content:space-between;align-items:center"><div style="font-size:34px;font-weight:800;color:#e08a00" dir="ltr">${rows.length}</div><select id="oy">${yrs.map((v) => `<option ${v === y ? 'selected' : ''}>${v}</option>`).join('')}</select></div><div style="font-size:12px;color:#7a8699">${esc(T('ofNote'))}</div>
+<div style="margin-top:10px">${byM.map((n, i) => `<div style="display:flex;align-items:center;gap:8px;font-size:13px;margin:4px 0"><span style="width:62px">${esc(mo[i])}</span><div style="flex:1;background:#e8edf5;border-radius:6px;height:10px"><div style="width:${n / mx * 100}%;height:100%;background:#e08a00;border-radius:6px"></div></div><b dir="ltr" style="width:34px;text-align:end">${n}</b></div>`).join('')}</div></div>
+<div class="card"><h2 style="margin-top:0">${esc(T('oBy'))}</h2>${Object.entries(byP).sort((a, b) => b[1] - a[1]).map(([n, v]) => `<div style="display:flex;justify-content:space-between;font-size:14px;padding:5px 0;border-bottom:1px solid #eef1f6"><span>${esc(n)}</span><b dir="ltr">${v}</b></div>`).join('') || `<div class="empty">${esc(T('none'))}</div>`}</div>
+<div class="card" id="ol"></div><button class="btn sec" id="oxl">📊 ${esc(T('xls'))}</button>`;
+      $('#oy').onchange = (e) => { st.oy = +e.target.value; draw(); };
+      ofList($('#ol'), true, rows);
+      $('#oxl').onclick = async () => { try { const dl = window.claude && window.claude.use ? await window.claude.use('downloads') : null; if (!dl) return toast(t('x_unavail'), 'err'); const P1 = [[T('monthT'), T('n')]]; byM.forEach((n, i) => P1.push([mo[i] + ' ' + y, n])); P1.push(['Σ', rows.length]); const P2 = [[T('oNum'), T('oAt'), T('oBy')]]; rows.forEach((x) => P2.push([x.case_number, fmtDT(x.created_at), x.paramedic_name || ''])); await dl.save({ filename: `EMS-other-facility-${y}.xlsx`, data: buildXlsx([{ name: T('mon').slice(0, 28), rows: P1, widths: [18, 12] }, { name: T('oAll').slice(0, 28), rows: P2, widths: [18, 18, 24] }]) }); toast(t('x_saved'), 'ok'); } catch (e) { if (e && e.code === 'declined') toast(t('x_declined')); else toast(t('x_unavail'), 'err'); } };
+    };
+    draw();
+  }
+
+  // ---------- annual view ----------
+  const st = { year: null, cmp: 'prev', from: 1, to: 12, policy: 'hist', ent: '', src: '', team: '', sel: 0 };
+  async function loadModel() {
+    const cy = nowY(); if (!st.year) st.year = cy;
+    const H = await api('GET', '/api/hist');
+    const o = { year: st.year, policy: st.policy, ent: st.ent, src: st.src, team: st.team, from: st.from, to: st.to };
+    const cmpY = st.cmp === 'none' ? null : st.cmp === 'prev' ? st.year - 1 : +st.cmp;
+    const [lv, lc] = await Promise.all([liveYear(st.year), cmpY ? liveYear(cmpY) : null]);
+    const cur = build(H, lv, o), cmp = cmpY ? build(H, lc, { ...o, year: cmpY }) : null;
+    return { H, o, cur, cmp, cmpY, lv };
+  }
+  function snapshot(D) {
+    const ms = inRange(D.cur, D.o), cm = D.cmp ? inRange(D.cmp, D.o) : null;
+    const tot = sum(ms, 'total'), adm = sum(ms, 'adm'), icu = sum(ms, 'icu'), ward = sum(ms, 'ward');
+    return { ms, cm, tot, adm, icu, ward, rate: pct(adm, tot), ctot: cm ? sum(cm, 'total') : null, cadm: cm ? sum(cm, 'adm') : null, ents: entAgg(ms), srcs: agg(ms, 'src'), teams: agg(ms, 'team') };
+  }
+  async function viewAnnual(main) {
+    main.innerHTML = `<h1>📊 ${esc(T('t_ann'))}</h1><div id="an"><div class="empty">${esc(T('loading'))}</div></div>`;
+    const draw = async () => {
+      let D; try { D = await loadModel(); } catch (e) { $('#an').innerHTML = `<div class="empty">${esc(eT(e))}</div>`; return; }
+      window.__annual = D;
+      const sn = snapshot(D), cy = nowY(), yrSet = new Set([cy, st.year, ...D.H.records.map((r) => r.year)]), yrs = [...yrSet].sort((a, b) => b - a);
+      const allEnts = [...new Set([...D.H.records.map((r) => nameOf(D.H, r.nid)), LIVE_ENT])];
+      const allSrc = [...new Set(D.cur.flatMap((x) => Object.keys(x.src)))], allTeam = [...new Set(D.cur.flatMap((x) => Object.keys(x.team)))];
+      const mo = TXT[S.lang].mCols, opt = (arr, v, f) => arr.map((x) => `<option value="${esc(x)}" ${String(x) === String(v) ? 'selected' : ''}>${esc(f ? f(x) : x)}</option>`).join('');
+      const filtered = !!(st.src || st.team);
+      const ovl = D.cur.filter((x) => x.overlap);
+      const kc = (v, l, c, sub) => `<div class="cn-kc" style="border-color:${c};background:#fff;border-radius:12px;border-top:4px solid ${c};padding:12px 6px;text-align:center;box-shadow:0 1px 6px rgba(20,35,60,.07)"><b style="display:block;font-size:30px;color:${c}" dir="ltr">${v}</b><strong style="font-size:13px">${esc(l)}</strong>${sub ? `<div style="font-size:11px;color:#7a8699" dir="ltr">${sub}</div>` : ''}</div>`;
+      const dlt = (a, b) => b == null ? '' : `${a - b >= 0 ? '+' : ''}${a - b} (${b ? (a - b >= 0 ? '+' : '') + pct(a - b, b) + '%' : '—'})`;
+      $('#an').innerHTML = `<div class="card"><div class="row" style="gap:8px;flex-wrap:wrap;align-items:flex-end">
+<div><label>${esc(T('year'))}</label><select id="fy">${opt(yrs, st.year)}</select></div>
+<div><label>${esc(T('cmp'))}</label><select id="fc"><option value="prev" ${st.cmp === 'prev' ? 'selected' : ''}>${st.year - 1}</option><option value="none" ${st.cmp === 'none' ? 'selected' : ''}>${esc(T('none2'))}</option>${yrs.filter((y) => y !== st.year && y !== st.year - 1).map((y) => `<option value="${y}" ${String(st.cmp) === String(y) ? 'selected' : ''}>${y}</option>`).join('')}</select></div>
+<div><label>${esc(T('from'))}</label><select id="ff">${mo.map((x, i) => `<option value="${i + 1}" ${st.from === i + 1 ? 'selected' : ''}>${esc(x)}</option>`).join('')}</select></div>
+<div><label>${esc(T('to'))}</label><select id="ft">${mo.map((x, i) => `<option value="${i + 1}" ${st.to === i + 1 ? 'selected' : ''}>${esc(x)}</option>`).join('')}</select></div>
+<div><label>${esc(T('fEnt'))}</label><select id="fe"><option value="">${esc(T('all'))}</option>${opt(allEnts, st.ent)}</select></div>
+<div><label>${esc(T('fSrc'))}</label><select id="fs"><option value="">${esc(T('all'))}</option>${opt(allSrc, st.src)}</select></div>
+<div><label>${esc(T('fTeam'))}</label><select id="fm"><option value="">${esc(T('all'))}</option>${opt(allTeam, st.team)}</select></div>
+<div><label>${esc(T('pol'))}</label><select id="fp"><option value="hist" ${st.policy === 'hist' ? 'selected' : ''}>${esc(T('polH'))}</option><option value="live" ${st.policy === 'live' ? 'selected' : ''}>${esc(T('polL'))}</option><option value="max" ${st.policy === 'max' ? 'selected' : ''}>${esc(T('polM'))}</option></select></div></div>
+<div class="row" style="gap:8px;margin-top:10px"><button class="btn" id="apdf">📄 ${esc(T('pdf'))}</button><button class="btn sec" id="axls">📊 ${esc(T('xls'))}</button></div></div>
+${ovl.length ? `<div class="card" style="border-inline-start:4px solid #e08a00;font-size:13px">${esc(T('overlap'))} ${ovl.map((x) => `${esc(mo[x.m - 1])} (${esc(T('archive'))} ${x.overlap.hist} / ${esc(T('live'))} ${x.overlap.live})`).join('، ')}</div>` : ''}
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin:12px 0">${kc(sn.tot, T('kTot'), '#0b5cab', sn.ctot != null ? dlt(sn.tot, sn.ctot) : '')}${filtered ? '' : kc(sn.adm, T('kAdm'), '#d9232e', sn.rate + '%')}${filtered ? '' : kc(sn.icu, T('kIcu'), '#8e44ad')}${filtered ? '' : kc(sn.ward, T('kWard'), '#4a90d9')}</div>
+${filtered ? `<div style="font-size:12px;color:#7a8699;margin-bottom:8px">${esc(T('noAdmF'))}</div>` : ''}
+<div class="card"><h2 style="margin-top:0">${esc(T('mon'))}</h2><div style="font-size:12px;display:flex;gap:14px;margin-bottom:4px"><span><i style="display:inline-block;width:10px;height:10px;background:#0b5cab"></i> ${esc(T('kTot'))}</span><span><i style="display:inline-block;width:10px;height:10px;background:#d9232e"></i> ${esc(T('kAdm'))}</span>${D.cmpY ? `<span><i style="display:inline-block;width:10px;height:3px;background:#e08a00"></i> ${D.cmpY}</span>` : ''}</div>${barChart(D.cur, D.cmp, { ...D.o, cmp: D.cmpY })}<div id="hdet"></div></div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:12px"><div class="card"><h2 style="margin-top:0">${esc(T('byEnt'))}</h2>${hbars(sn.ents.map(([a, e]) => [a, e.total]), sn.tot, 'ent')}<div style="font-size:11px;color:#7a8699;margin-top:6px">${esc(T('sumNote'))}</div></div><div class="card"><h2 style="margin-top:0">${esc(T('bySrc'))}</h2>${hbars(sn.srcs, sn.tot, 'src')}</div><div class="card"><h2 style="margin-top:0">${esc(T('byTeam'))}</h2>${hbars(sn.teams, sn.tot, 'team')}</div></div>
+<div class="card"><h2 style="margin-top:0">${esc(T('monthT'))}</h2><div class="tw"><table><thead><tr><th>${esc(T('monthT'))}</th><th>${esc(T('kTot'))}</th>${filtered ? '' : `<th>${esc(T('kAdm'))}</th><th>${esc(T('rate'))}</th><th>ICU</th><th>Ward</th>`}${D.cmpY ? `<th>${D.cmpY}</th><th>${esc(T('diff'))}</th>` : ''}</tr></thead><tbody>${D.cur.map((x, i) => `<tr class="hmr" data-m="${x.m}" style="cursor:pointer;${x.m < st.from || x.m > st.to ? 'opacity:.4' : ''}"><td>${esc(mo[i])}${x.overlap ? ' ⚠' : ''}${x.flagAdm ? ' <span title="' + esc(T('warnAdm')) + '">⚠</span>' : ''}</td><td><b>${x.total}</b></td>${filtered ? '' : `<td>${x.adm}</td><td dir="ltr">${pct(x.adm, x.total)}%</td><td>${x.icu}</td><td>${x.ward}</td>`}${D.cmpY ? `<td>${D.cmp[i].total}</td><td dir="ltr" style="font-size:12px">${dlt(x.total, D.cmp[i].total)}</td>` : ''}</tr>`).join('')}<tr style="font-weight:800;background:#f3f6fb"><td>Σ</td><td>${sn.tot}</td>${filtered ? '' : `<td>${sn.adm}</td><td dir="ltr">${sn.rate}%</td><td>${sn.icu}</td><td>${sn.ward}</td>`}${D.cmpY ? `<td>${sn.ctot}</td><td dir="ltr" style="font-size:12px">${dlt(sn.tot, sn.ctot)}</td>` : ''}</tr></tbody></table></div></div>
+<div class="card" id="yoy"></div>`;
+      // interactions
+      const set = (k, v) => { st[k] = v; draw(); };
+      $('#fy').onchange = (e) => { st.year = +e.target.value; draw(); };
+      $('#fc').onchange = (e) => set('cmp', e.target.value);
+      $('#ff').onchange = (e) => { st.from = +e.target.value; if (st.to < st.from) st.to = st.from; draw(); };
+      $('#ft').onchange = (e) => { st.to = +e.target.value; if (st.from > st.to) st.from = st.to; draw(); };
+      $('#fe').onchange = (e) => set('ent', e.target.value);
+      $('#fs').onchange = (e) => { st.src = e.target.value; if (st.src) st.team = ''; draw(); };
+      $('#fm').onchange = (e) => { st.team = e.target.value; if (st.team) st.src = ''; draw(); };
+      $('#fp').onchange = (e) => set('policy', e.target.value);
+      const det = (m) => { const x = D.cur[m - 1], h = $('#hdet'); if (!h) return; h.innerHTML = `<div style="margin-top:10px;border-top:1px solid #e1e6ee;padding-top:8px"><b>${esc(mo[m - 1])} ${st.year}</b>${Object.entries(x.ents).map(([n, e]) => `<div style="font-size:13px;margin:4px 0">• ${esc(n)}: <b dir="ltr">${e.total}</b> (${esc(T('kAdm'))} ${e.adm} · ICU ${e.icu} · Ward ${e.ward}) <i style="color:#7a8699">${esc(e.from === 'live' ? T('live') : T('archive'))}</i></div>`).join('') || `<div class="empty">${esc(T('none'))}</div>`}${x.overlap ? `<div style="font-size:12px;color:#b36b00">⚠ ${esc(T('archive'))} ${x.overlap.hist} / ${esc(T('live'))} ${x.overlap.live}</div>` : ''}</div>`; };
+      $$('.hb, .hmr').forEach((g) => { g.onclick = () => det(+g.dataset.m); });
+      $$('.hrow').forEach((r) => { r.onclick = () => { const k = r.dataset.k, n = r.dataset.n; if (k === 'ent') st.ent = st.ent === n ? '' : n; else if (k === 'src') { st.src = st.src === n ? '' : n; st.team = ''; } else { st.team = st.team === n ? '' : n; st.src = ''; } draw(); }; });
+      $('#apdf').onclick = () => exportPdf(D, $('#apdf'));
+      $('#axls').onclick = () => exportXls(D);
+      // year comparison across all years
+      (async () => {
+        const ys = [...yrSet].filter((y) => y >= 2015).sort((a, b) => a - b), rows = [];
+        for (const y of ys) { const lv = y === D.o.year ? D.lv : await liveYear(y); const ms = build(D.H, lv, { ...D.o, year: y, from: 1, to: 12 }), t0 = sum(ms, 'total'); if (t0) rows.push([y, t0, sum(ms, 'adm'), sum(ms, 'icu'), sum(ms, 'ward')]); }
+        const h = $('#yoy'); if (!h) return;
+        h.innerHTML = `<h2 style="margin-top:0">${esc(T('yoy'))}</h2><div class="tw"><table><thead><tr><th>${esc(T('year'))}</th><th>${esc(T('kTot'))}</th><th>${esc(T('kAdm'))}</th><th>${esc(T('rate'))}</th><th>ICU</th><th>Ward</th></tr></thead><tbody>${rows.map((r) => `<tr><td><b>${r[0]}</b></td><td>${r[1]}</td><td>${r[2]}</td><td dir="ltr">${pct(r[2], r[1])}%</td><td>${r[3]}</td><td>${r[4]}</td></tr>`).join('') || `<tr><td colspan="6">${esc(T('none'))}</td></tr>`}</tbody></table></div>`;
+        D.yoy = rows;
+      })();
+    };
+    S.refresh = null; draw();
+  }
+
+  // ---------- exports ----------
+  async function exportXls(D) {
+    const sn = snapshot(D), mo = TXT[S.lang].mCols, P = (n, d) => ({ pct: true, v: d ? n / d : 0 });
+    const m1 = [[T('monthT'), T('kTot'), T('kAdm'), T('rate'), 'ICU', 'Ward']];
+    D.cur.forEach((x, i) => { if (x.m >= D.o.from && x.m <= D.o.to) m1.push([mo[i] + ' ' + D.o.year, x.total, x.adm, P(x.adm, x.total), x.icu, x.ward]); });
+    m1.push(['Σ', sn.tot, sn.adm, P(sn.adm, sn.tot), sn.icu, sn.ward]);
+    const m2 = [[T('monthT'), T('fEnt'), T('kTot'), T('kAdm'), 'ICU', 'Ward', T('kind')]];
+    D.cur.forEach((x, i) => { if (x.m >= D.o.from && x.m <= D.o.to) Object.entries(x.ents).forEach(([n, e]) => m2.push([mo[i] + ' ' + D.o.year, n, e.total, e.adm, e.icu, e.ward, e.from === 'live' ? T('live') : T('archive')])); });
+    const m3 = [[T('name'), T('kind'), T('n'), T('monthT')]];
+    D.cur.forEach((x, i) => { if (x.m >= D.o.from && x.m <= D.o.to) { Object.entries(x.src).forEach(([n, v]) => m3.push([n, T('src'), v, mo[i]])); Object.entries(x.team).forEach(([n, v]) => m3.push([n, T('team'), v, mo[i]])); } });
+    const m4 = [[T('year'), T('kTot'), T('kAdm'), T('rate'), 'ICU', 'Ward']]; (D.yoy || []).forEach((r) => m4.push([r[0], r[1], r[2], P(r[2], r[1]), r[3], r[4]]));
+    const m5 = [[T('year'), T('month'), T('ent'), T('kTot'), T('kAdm'), 'ICU', 'Ward', T('note'), T('by'), 'date', T('voided')]]; D.H.records.forEach((r) => m5.push([r.year, r.month, nameOf(D.H, r.nid), r.total, r.adm, r.icu, r.ward, r.note || '', r.created_by, fmtDT(r.created_at), r.voided ? 1 : 0]));
+    try { const dl = window.claude && window.claude.use ? await window.claude.use('downloads') : null; if (!dl) return toast(t('x_unavail'), 'err');
+      await dl.save({ filename: `EMS-annual-${D.o.year}.xlsx`, data: buildXlsx([{ name: T('mon').slice(0, 28), rows: m1, widths: [18, 12, 12, 12, 10, 10] }, { name: T('byEnt').slice(0, 28), rows: m2, widths: [18, 26, 12, 12, 10, 10, 12] }, { name: (T('bySrc') + '-' + T('team')).slice(0, 28), rows: m3, widths: [28, 12, 10, 14] }, { name: T('yoy').slice(0, 28), rows: m4, widths: [10, 12, 12, 12, 10, 10] }, { name: T('reg').slice(0, 28), rows: m5, widths: [8, 8, 26, 10, 10, 8, 8, 28, 18, 18, 8] }]) }); toast(t('x_saved'), 'ok'); }
+    catch (e) { if (e && e.code === 'declined') toast(t('x_declined')); else toast(t('x_unavail'), 'err'); }
+  }
+  function pageHtml(lang, D) {
+    const X = (k) => TL(lang, k), rtl = lang === 'ar', sn = snapshot(D), mo = TXT[lang].mCols, fil = !!(D.o.src || D.o.team);
+    const W = 720, Hh = 190, pl = 34, pb = 22, pt = 12, bw = (W - pl) / 12, mx = Math.max(10, ...D.cur.map((x) => x.total)), sy = (v) => pt + (Hh - pt - pb) * (1 - v / mx);
+    let svg = `<svg viewBox="0 0 ${W} ${Hh}" width="${W}" height="${Hh}" style="direction:ltr">`;
+    for (let i = 0; i <= 4; i++) { const v = Math.round(mx * i / 4), y = sy(v); svg += `<line x1="${pl}" x2="${W}" y1="${y}" y2="${y}" stroke="#e1e6ee"/><text x="${pl - 5}" y="${y + 4}" font-size="10" text-anchor="end" fill="#7a8699">${v}</text>`; }
+    D.cur.forEach((x, i) => { const bx = pl + i * bw + bw * 0.15, w = bw * 0.7, y = sy(x.total), ya = sy(x.adm); svg += `<rect x="${bx}" y="${y}" width="${w}" height="${Math.max(0, Hh - pb - y)}" fill="#0b5cab" rx="3"/>${x.adm ? `<rect x="${bx}" y="${ya}" width="${w}" height="${Math.max(0, Hh - pb - ya)}" fill="#d9232e" rx="3"/>` : ''}${x.total ? `<text x="${bx + w / 2}" y="${y - 3}" font-size="10" text-anchor="middle" font-weight="700" fill="#14233c">${x.total}</text>` : ''}<text x="${bx + w / 2}" y="${Hh - 7}" font-size="10" text-anchor="middle" fill="#55627a">${mo[i]}</text>`; });
+    svg += '</svg>';
+    const kc = (v, l, c) => `<div class="cn-kc" style="border-color:${c}"><b style="color:${c}">${v}</b><strong>${l}</strong></div>`;
+    const list = (arr, tot) => arr.length ? arr.slice(0, 12).map(([n, v]) => `<div style="display:flex;justify-content:space-between;font-size:14px;padding:5px 0;border-bottom:1px solid #eef1f6"><span>${esc(n)}</span><b dir="ltr">${v} · ${pct(v, tot)}%</b></div>`).join('') : `<div style="color:#7a8699;font-size:13px">${X('none')}</div>`;
+    const flt = [D.o.ent && X('fEnt') + ': ' + D.o.ent, D.o.src && X('fSrc') + ': ' + D.o.src, D.o.team && X('fTeam') + ': ' + D.o.team].filter(Boolean).join(' | ');
+    return `<div class="cn" dir="${rtl ? 'rtl' : 'ltr'}" style="text-align:${rtl ? 'right' : 'left'}"><div class="cn-h"><img class="cn-logo" src="${CEN.LOGO}"><div class="cn-hb"><div><div class="cn-ttl">${X('title')}</div><div class="cn-sub">${D.o.year} · ${mo[D.o.from - 1]} – ${mo[D.o.to - 1]}${flt ? ' · ' + esc(flt) : ''}</div></div><div class="cn-pill"><small>${X('gen')}</small><b dir="ltr" style="font-size:20px">${new Date().toISOString().slice(0, 10)}</b></div></div></div>
+<div class="cn-pad"><div class="cn-k">${kc(sn.tot, X('kTot'), '#0b5cab')}${fil ? '' : kc(sn.adm + ' · ' + sn.rate + '%', X('kAdm'), '#d9232e')}${fil ? '' : kc(sn.icu, X('kIcu'), '#8e44ad')}${fil ? '' : kc(sn.ward, X('kWard'), '#4a90d9')}</div>
+<div class="cn-card"><div class="cn-t"><i></i>${X('mon')}</div>${svg}</div>
+<div class="cn-card"><div class="cn-t"><i></i>${X('monthT')}</div><table style="width:100%;border-collapse:collapse;font-size:13px;text-align:center"><tr style="background:#0b2a55;color:#fff"><th style="padding:6px">${X('monthT')}</th><th>${X('kTot')}</th>${fil ? '' : `<th>${X('kAdm')}</th><th>${X('rate')}</th><th>ICU</th><th>Ward</th>`}</tr>${D.cur.filter((x) => x.m >= D.o.from && x.m <= D.o.to).map((x) => `<tr style="border-bottom:1px solid #eef1f6"><td style="padding:5px">${mo[x.m - 1]}</td><td><b>${x.total}</b></td>${fil ? '' : `<td>${x.adm}</td><td dir="ltr">${pct(x.adm, x.total)}%</td><td>${x.icu}</td><td>${x.ward}</td>`}</tr>`).join('')}<tr style="font-weight:800;background:#f3f6fb"><td style="padding:6px">Σ</td><td>${sn.tot}</td>${fil ? '' : `<td>${sn.adm}</td><td dir="ltr">${sn.rate}%</td><td>${sn.icu}</td><td>${sn.ward}</td>`}</tr></table></div>
+<div class="cn-card"><div class="cn-t"><i></i>${X('byEnt')}</div>${list(sn.ents.map(([a, e]) => [a, e.total]), sn.tot)}</div>
+<div class="cn-s3" style="margin-top:18px;grid-template-columns:1fr 1fr"><div class="cn-card" style="margin:0"><div class="cn-t"><i></i>${X('bySrc')}</div>${list(sn.srcs, sn.tot)}</div><div class="cn-card" style="margin:0"><div class="cn-t"><i></i>${X('byTeam')}</div>${list(sn.teams, sn.tot)}</div></div></div></div>`;
+  }
+  async function exportPdf(D, btn) { const msg = btn.textContent; btn.disabled = true; try { await CEN.exportPages((l) => pageHtml(l, D), `EMS-Annual-${D.o.year}.pdf`, TL(S.lang, 'title') + ' ' + D.o.year); } finally { btn.disabled = false; btn.textContent = msg; } }
+  return { viewArch, viewAnnual, viewOfac, viewOfacAdm };
+})();
+VIEWS.histarch = HA.viewArch; VIEWS.annual = HA.viewAnnual; VIEWS.ofac = HA.viewOfac; VIEWS.ofacadm = HA.viewOfacAdm;
 
   applyLang();
   try { const r = await api('GET', '/api/me'); S.user = r.user; } catch (_) { S.user = null; }

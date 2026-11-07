@@ -8,7 +8,7 @@
 <meta name="robots" content="noindex, nofollow">
 <title>Al Hayat EMS</title>
 <script>
-window.__BUILD='1793839124';
+window.__BUILD='1794075168';
 (function(){var B=window.__BUILD,busy=false;
 function idle(){var a=document.activeElement;return !(a&&/^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName))&&!document.querySelector('.ovl');}
 async function chk(){if(busy||!idle())return;busy=true;try{var r=await fetch(location.pathname+'?_='+Date.now(),{cache:'no-store'});var t=await r.text();var m=t.match(/window\.__BUILD='([^']+)'/);
@@ -247,7 +247,7 @@ window.claude=window.claude||{use:async function(n){return n==='downloads'?{save
 // Arabic / English dictionary
 window.I18N = {
   en: {
-    hospital: 'Al Hayat National Hospital', hospital_sub: 'مستشفى الحياة الوطني', system: 'EMS Patient Tracking & Management System',
+    hospital: 'Al Hayat Hospital - Al Madinah Al Munawwarah', hospital_sub: 'مستشفى الحياة - المدينة المنورة', system: 'EMS Patient Tracking & Management System',
     login: 'Sign in', email: 'Email', password: 'Password', code: 'Authentication code (6 digits)', logout: 'Sign out', continue: 'Continue',
     mfa_prompt: 'Enter the 6-digit code from your authenticator app.',
     lang_toggle: 'العربية', live: 'Live', offline: 'Reconnecting…', security: 'Security', cancel: 'Cancel', save: 'Save', close: 'Close', back: 'Back', search: 'Search', reset: 'Reset', loading: 'Loading…', none: 'No records', yes: 'Yes', no: 'No', actions: 'Actions', details: 'Details', open: 'Open', total: 'Total', prev: 'Previous', next: 'Next', of: 'of', create: 'Create', edit: 'Edit', delete: 'Delete', download: 'Download', apply: 'Apply',
@@ -274,7 +274,7 @@ window.I18N = {
     err_invalid_credentials: 'Wrong email or password', err_account_locked: 'Account temporarily locked – try again in 15 minutes', err_rate_limited: 'Too many attempts, try again later', err_unauthenticated: 'Session expired – please sign in again', err_forbidden: 'You do not have permission for this', err_delete_not_allowed: 'Cases cannot be deleted – they are archived instead', err_duplicate_case_number: 'This case number already exists', err_invalid_case_number: 'Invalid case number (letters, digits, - _ / only)', err_invalid_visa_type: 'Choose an ID type', err_complaint_required: 'Chief complaint is required', err_bad_file_type: 'Unsupported file – use JPG, PNG or WEBP', err_file_too_large: 'File is larger than 10 MB', err_too_many_files: 'Maximum 6 documents per case', err_weak_password: 'Password must be at least 10 characters with letters and digits', err_wrong_password: 'Current password is wrong', err_same_password: 'Choose a different password', err_invalid_mfa: 'Wrong authentication code', err_mfa_required_by_policy: '2FA is required for this account', err_case_locked: 'The hospital already received this case – it can no longer be edited', err_case_archived: 'The case is archived', err_only_closed_can_archive: 'Only discharged / deceased cases can be archived', err_arrival_in_future: 'Arrival time is in the future', err_arrival_before_case: 'Arrival time is before the case was sent', err_email_exists: 'Email already exists', err_invalid_email: 'Invalid email', err_name_required: 'Name is required', err_cannot_change_self: 'You cannot deactivate or demote yourself', err_last_admin: 'At least one active admin is required', err_setup_required: 'Finish the account setup first', err_server_error: 'Server error – please try again', err_not_found: 'Not found', err_too_large: 'Upload is too large', err_invalid_setting: 'Invalid value', err_csrf: 'Request blocked', network: 'Network error',
   },
   ar: {
-    hospital: 'مستشفى الحياة الوطني', hospital_sub: 'Al Hayat National Hospital', system: 'نظام متابعة وإدارة الحالات الإسعافية',
+    hospital: 'مستشفى الحياة - المدينة المنورة', hospital_sub: 'Al Hayat Hospital - Al Madinah Al Munawwarah', system: 'نظام متابعة وإدارة الحالات الإسعافية',
     login: 'تسجيل الدخول', email: 'البريد الإلكتروني', password: 'كلمة المرور', code: 'رمز المصادقة (6 أرقام)', logout: 'تسجيل الخروج', continue: 'متابعة',
     mfa_prompt: 'أدخل الرمز المكوّن من 6 أرقام من تطبيق المصادقة.',
     lang_toggle: 'English', live: 'مباشر', offline: 'إعادة الاتصال…', security: 'الأمان', cancel: 'إلغاء', save: 'حفظ', close: 'إغلاق', back: 'رجوع', search: 'بحث', reset: 'مسح', loading: 'جارٍ التحميل…', none: 'لا توجد سجلات', yes: 'نعم', no: 'لا', actions: 'إجراءات', details: 'التفاصيل', open: 'فتح', total: 'الإجمالي', prev: 'السابق', next: 'التالي', of: 'من', create: 'إنشاء', edit: 'تعديل', delete: 'حذف', download: 'تحميل', apply: 'تطبيق',
@@ -380,6 +380,12 @@ sh_src:'By Source',sh_srcg:'Entities - Source',sh_tr:'Transporting Teams',sh_trg
 
 Object.assign(I18N.ar,{nav_annual:'الإحصائيات السنوية',nav_histarch:'الأرشيف الإحصائي',nav_ofac:'بلاغ لمنشأة أخرى',nav_ofacadm:'بلاغات منشآت أخرى'});
 Object.assign(I18N.en,{nav_annual:'Annual Stats',nav_histarch:'Stats Archive',nav_ofac:'Other Facility',nav_ofacadm:'Other Facilities'});
+
+Object.assign(I18N.ar,{nav_saudit:'تدقيق الإحصائيات',f_incident:'وقت البلاغ',f_entered:'وقت الإدخال',f_incident_hint:'تُحتسب الإحصائية في تاريخ البلاغ وليس وقت الإدخال. إذا أُدخلت الحالة بعد منتصف الليل لبلاغ سابق، عدّل التاريخ والوقت.',f_incident_other:'ستُحتسب بتاريخ',k_adm_total:'إجمالي التنويم (Admission)',err_save_failed:'لم يتم حفظ البلاغ. تحقق من الاتصال ثم اضغط إرسال مرة أخرى (لم يُسجَّل شيء).',err_incident_future:'وقت البلاغ في المستقبل',err_incident_too_old:'وقت البلاغ أقدم من 72 ساعة، تواصل مع الإدارة',err_invalid_incident_time:'وقت البلاغ غير صحيح'});
+Object.assign(I18N.en,{nav_saudit:'Statistics Audit',f_incident:'Incident time',f_entered:'Entry time',f_incident_hint:'Statistics are counted on the incident date, not the entry time. If a case is entered after midnight for an earlier incident, adjust the date and time.',f_incident_other:'will be counted on',k_adm_total:'Total Admissions',err_save_failed:'The report was NOT saved. Check the connection and press Send again (nothing was recorded).',err_incident_future:'Incident time is in the future',err_incident_too_old:'Incident time is older than 72 hours, contact the admin',err_invalid_incident_time:'Invalid incident time'});
+
+Object.assign(I18N.ar,{nav_links:'تتبع البلاغات المرتبطة',err_link_target_not_found:'البلاغ المحدد غير موجود أو لا تملك صلاحية ربطه',err_already_linked:'البلاغان مرتبطان بالفعل أو متطابقان',err_not_linked:'هذا البلاغ غير مرتبط'});
+Object.assign(I18N.en,{nav_links:'Linked Reports',err_link_target_not_found:'The selected report was not found or you may not link it',err_already_linked:'These reports are already linked or identical',err_not_linked:'This report is not linked'});
 
 </script>
 <script>
@@ -489,7 +495,7 @@ const getCase = (id) => DB.cases.find((c) => c.id === id);
 const attCount = (c) => DB.atts.filter((a) => a.case_id === c.id && !a.deleted).length;
 let _gc = null, _gl = -1;
 const groupN = (c) => { if (!_gc || _gl !== DB.cases.length) { _gc = {}; DB.cases.forEach((x) => { const k = x.report_no || x.case_number; _gc[k] = (_gc[k] || 0) + 1; }); _gl = DB.cases.length; } return _gc[c.report_no || c.case_number] || 1; };
-const out = (c) => ({ ...c, att_count: attCount(c), group_n: groupN(c) });
+const out = (c) => ({ ...c, entered_at: c.created_at, created_at: c.incident_at || c.created_at, att_count: attCount(c), group_n: groupN(c) });
 const rosterNow = () => DB.users.filter((u) => u.role === 'paramedic' && u.active && u.id).map((u) => ({ id: u.id, uid: u.uid, name: u.name })).sort((a, b) => String(a.name).localeCompare(String(b.name)));
 const settingsDoc = () => ({ ...DB.settings, roster: rosterNow() });
 function resolveSecond(user, ownId, sel, other) {
@@ -507,8 +513,10 @@ function canView(u, c) { if (!c) return false; if (u.role === 'admin') return tr
 function filt(q, user, archived) {
   const st = q.status ? String(q.status).split(',').flatMap((s) => (s === 'open' ? ['received', 'admitted', 'icu', 'picu', 'cathlab'] : STATUSES.includes(s) ? [s] : [])) : [];
   const ql = q.q ? clip(q.q, 60).toLowerCase() : '', cl = q.case ? clip(q.case, 40).toLowerCase() : '';
+  const SEC = q.keep_sec ? null : lkSecondary();
   return (c) => {
     if (GST.includes(c.status) || c.ofac) return false;
+    if (SEC && SEC.has(c.id)) return false;
     if (archived === true && !c.archived) return false;
     if (archived === false && c.archived) return false;
     if (user.role === 'paramedic' && c.paramedic_id !== user.id && c.second_paramedic_id !== user.id) return false;
@@ -521,14 +529,14 @@ function filt(q, user, archived) {
     if (q.tgroup && (q.tgroup === 'none' ? gOf(c.transport_team) : gOf(c.transport_team) !== q.tgroup)) return false;
     if (q.handed === '1' && !isHanded(c)) return false;
     if (cl && !c.case_number.toLowerCase().includes(cl)) return false;
-    const d = localDay(c.created_at);
+    const d = localDay(c.incident_at || c.created_at);
     if (isDate(q.from) && d < q.from) return false;
     if (isDate(q.to) && d > q.to) return false;
     if (ql && !(c.case_number + ' ' + c.paramedic_name + ' ' + c.chief_complaint + ' ' + (c.patient_name || '') + ' ' + (c.patient_id || '') + ' ' + (c.second_paramedic_name || '')).toLowerCase().includes(ql)) return false;
     return true;
   };
 }
-const sortCases = (a, dir) => a.sort((x, y) => (x.created_at === y.created_at ? x.id - y.id : x.created_at < y.created_at ? -1 : 1) * (dir === 'asc' ? 1 : -1));
+const sortCases = (a, dir) => a.sort((x, y) => { const p = x.incident_at || x.created_at, q = y.incident_at || y.created_at; return (p === q ? x.id - y.id : p < q ? -1 : 1) * (dir === 'asc' ? 1 : -1); });
 function runArchive(user, all) {
   const cutoff = new Date(Date.now() - (all ? 0 : DB.settings.archive_after_days * 86400000)).toISOString();
   const rows = DB.cases.filter((c) => !c.archived && c.closed_at && c.closed_at <= cutoff);
@@ -566,7 +574,7 @@ function statsFor(q, user) {
   const rset = new Set(), today = localDay(nowIso()), month = today.slice(0, 7), byVisa = {}, byParamedic = {}, byStatus = {};
   for (const r of rows) {
     rset.add(r.report_no || r.case_number);
-    const d = localDay(r.created_at);
+    const d = localDay(r.incident_at || r.created_at);
     if (d === today) counts.today++;
     if (d.slice(0, 7) === month) counts.month++;
     byStatus[r.status] = (byStatus[r.status] || 0) + 1;
@@ -577,7 +585,7 @@ function statsFor(q, user) {
     byParamedic[r.paramedic_name] = (byParamedic[r.paramedic_name] || 0) + 1;
     if (r.second_paramedic_name && r.second_paramedic_name !== r.paramedic_name) byParamedic[r.second_paramedic_name] = (byParamedic[r.second_paramedic_name] || 0) + 1;
   }
-  const all = DB.cases.filter(filt({ ...q, from: undefined, to: undefined }, user, arch)).map((c) => c.created_at);
+  const all = DB.cases.filter(filt({ ...q, from: undefined, to: undefined }, user, arch)).map((c) => c.incident_at || c.created_at);
   const base = new Date(localKey(nowIso()).slice(0, 10) + 'T00:00:00Z').getTime();
   const daily = [], weekly = [], monthly = [], dayIdx = {};
   for (let i = 29; i >= 0; i--) { const k = new Date(base - i * 86400000).toISOString().slice(0, 10); dayIdx[k] = daily.length; daily.push({ label: k, n: 0 }); }
@@ -596,15 +604,15 @@ function statsFor(q, user) {
   const med = (a) => { if (!a.length) return null; const s = [...a].sort((x, y) => x - y), h = s.length >> 1; return s.length % 2 ? s[h] : Math.round((s[h - 1] + s[h]) / 2); };
   const sum = (a) => ({ n: a.length, avg: avg(a), median: med(a), max: a.length ? Math.max(...a) : null });
   const hour = Array(24).fill(0), weekday = Array(7).fill(0), rec = [], clo = [], gp = {}, gv = {}, gs = {}, gsg = {}, gt = {}, gtg = {}, cross = {};
-  const grp = (map, key, r) => { const g = map[key] || (map[key] = { name: key, total: 0, new: 0, received: 0, discharged: 0, admitted: 0, icu: 0, picu: 0, cathlab: 0, deceased: 0, rec: [] }); g.total++; g[r.status]++; if (r.arrived_at) g.rec.push(mins(r.created_at, r.arrived_at)); };
+  const grp = (map, key, r) => { const g = map[key] || (map[key] = { name: key, total: 0, new: 0, received: 0, discharged: 0, admitted: 0, icu: 0, picu: 0, cathlab: 0, deceased: 0, rec: [] }); g.total++; g[r.status]++; if (r.arrived_at) g.rec.push(mins(r.incident_at || r.created_at, r.arrived_at)); };
   for (const r of rows) {
-    const lk = localKey(r.created_at); hour[+lk.slice(11, 13)]++; weekday[new Date(lk).getUTCDay()]++;
-    if (r.arrived_at) rec.push(mins(r.created_at, r.arrived_at)); if (r.arrived_at && r.closed_at) clo.push(mins(r.arrived_at, r.closed_at));
+    const lk = localKey(r.incident_at || r.created_at); hour[+lk.slice(11, 13)]++; weekday[new Date(lk).getUTCDay()]++;
+    if (r.arrived_at) rec.push(mins(r.incident_at || r.created_at, r.arrived_at)); if (r.arrived_at && r.closed_at) clo.push(mins(r.arrived_at, r.closed_at));
     grp(gp, r.paramedic_name, r); if (r.second_paramedic_name && r.second_paramedic_name !== r.paramedic_name) grp(gp, r.second_paramedic_name, r); grp(gv, r.visa_type, r); grp(gs, r.source || 'none', r); grp(gsg, gOf(r.source) || 'none', r); grp(gt, r.transport_team || 'none', r); grp(gtg, gOf(r.transport_team) || 'none', r);
     { const tg = gOf(r.transport_team) || 'none', cx = cross[tg] || (cross[tg] = { name: tg, total: 0, carts: 0, other: 0 }); cx.total++; if (r.source === 'carts') cx.carts++; else cx.other++; if (isHanded(r)) counts.handed++; }
   }
-  const fin = (map) => Object.values(map).map((g) => ({ ...g, avg_receipt: avg(g.rec), rec: undefined })).sort((a, b) => b.total - a.total);
-  counts.reports = rset.size;
+  const fin = (map) => Object.values(map).map((g) => ({ ...g, avg_receipt: avg(g.rec), adm: g.admitted + g.icu + g.picu + g.cathlab, rec: undefined })).sort((a, b) => b.total - a.total);
+  counts.reports = rset.size; counts.adm = counts.admitted + counts.icu + counts.picu + counts.cathlab; counts.ward = counts.admitted; counts.not_adm = counts.total - counts.adm; counts.nosrc = rows.filter((r) => !r.source).length;
   return { counts, sources: fin(gs), sourcesG: fin(gsg), transport: fin(gt), transportG: fin(gtg), cross: Object.values(cross), byVisa, byParamedic, byStatus, daily, weekly, monthly, hour, weekday, timing: { receipt: sum(rec), close: sum(clo) }, paramedics: fin(gp), visas: fin(gv) };
 }
 
@@ -628,7 +636,7 @@ add('GET', '/api/meta', ALL, (c) => ({ visa_types: VISA, statuses: STATUSES, clo
 add('GET', '/api/cases', ALL, (c) => {
   const q = c.query; let archived = false;
   if (q.archived === '1') { if (c.user.role !== 'admin') throw E(403, 'forbidden'); archived = true; }
-  const rows = sortCases(DB.cases.filter(filt(q, c.user, archived)), q.sort);
+  const rows = sortCases(DB.cases.filter(filt({ ...q, keep_sec: 1 }, c.user, archived)), q.sort);
   const limit = Math.min(Math.max(parseInt(q.limit, 10) || 50, 1), 200), off = Math.max(parseInt(q.offset, 10) || 0, 0);
   if (archived) audit(c.user, 'archive_access', null, { offset: off });
   return { items: rows.slice(off, off + limit).map(out), total: rows.length };
@@ -647,13 +655,13 @@ add('POST', '/api/cases', ['paramedic', 'admin'], async (c) => {
   const files = await prepFiles(f);
   if (DB.cases.some((x) => x.case_number === case_number)) throw E(409, DB.cases.some((x) => x.case_number === case_number && GST.includes(x.status)) ? 'golf_case_exists' : 'duplicate_case_number');
   await lockNum(case_number);
-  const cs = { id: uid(), case_number, locked: 1, created_at: nowIso(), paramedic_id: c.user.id, paramedic_uid: c.user.uid, paramedic_name: c.user.name, timeline: [{ at: nowIso(), status: 'new', by: c.user.name }], visa_type, chief_complaint: chief, notes: notes || null, patient_name, patient_id, source, ...tf, report_no: case_number, patient_seq: 1, ...sec, status: 'new', arrived_at: null, status_updated_at: null, status_updated_by: null, closed_at: null, archived: 0, archived_at: null, archived_by: null };
+  const cs = { id: uid(), case_number, locked: 1, created_at: nowIso(), incident_at: parseIncident(f.get('incident_at'), c.user, nowIso()), ...lkFields(c, f), paramedic_id: c.user.id, paramedic_uid: c.user.uid, paramedic_name: c.user.name, timeline: [{ at: nowIso(), status: 'new', by: c.user.name }], visa_type, chief_complaint: chief, notes: notes || null, patient_name, patient_id, source, ...tf, report_no: case_number, patient_seq: 1, ...sec, status: 'new', arrived_at: null, status_updated_at: null, status_updated_by: null, closed_at: null, archived: 0, archived_at: null, archived_by: null };
   DB.cases.push(cs); const ids = addAtts(cs, c.user, files);
-  audit(c.user, 'case_create', cs, { visa_type, attachments: ids.length }); broadcast('created', cs);
+  audit(c.user, 'case_create', cs, { visa_type, attachments: ids.length }); await commitCase(cs, true); broadcast('created', cs);
   return { case: out(cs) };
 });
 
-add('POST', '/api/cases/:id/patients', ['paramedic', 'admin'], (c) => {
+add('POST', '/api/cases/:id/patients', ['paramedic', 'admin'], async (c) => {
   const par = getCase(intId(c.params.id)); if (!canView(c.user, par) || par.archived) throw E(404, 'not_found');
   const b = c.body || {};
   const visa_type = clip(b.visa_type, 20) || par.visa_type; if (!VISA.includes(visa_type)) throw bad('invalid_visa_type');
@@ -670,8 +678,8 @@ add('POST', '/api/cases/:id/patients', ['paramedic', 'admin'], (c) => {
     own = { paramedic_id: c.user.id, paramedic_uid: c.user.uid, paramedic_name: c.user.name };
     sec = { second_paramedic_id: par.paramedic_id, second_uid: par.paramedic_uid || null, second_paramedic_name: par.paramedic_name, second_paramedic_other: 0 };
   }
-  const cs = { id: uid(), case_number: base + '-' + seq, report_no: base, patient_seq: seq, created_at: nowIso(), ...own, timeline: [{ at: nowIso(), status: 'new', by: c.user.name }], visa_type, chief_complaint: chief, notes, patient_name, patient_id, source, ...tf, ...sec, status: 'new', arrived_at: null, status_updated_at: null, status_updated_by: null, closed_at: null, archived: 0, archived_at: null, archived_by: null };
-  DB.cases.push(cs); audit(c.user, 'case_create', cs, { visa_type, source, report_no: base, patient_seq: seq }); broadcast('created', cs);
+  const cs = { id: uid(), case_number: base + '-' + seq, report_no: base, patient_seq: seq, master_id: newMaster(), created_at: nowIso(), incident_at: par.incident_at || par.created_at, ...own, timeline: [{ at: nowIso(), status: 'new', by: c.user.name }], visa_type, chief_complaint: chief, notes, patient_name, patient_id, source, ...tf, ...sec, status: 'new', arrived_at: null, status_updated_at: null, status_updated_by: null, closed_at: null, archived: 0, archived_at: null, archived_by: null };
+  DB.cases.push(cs); audit(c.user, 'case_create', cs, { visa_type, source, report_no: base, patient_seq: seq }); await commitCase(cs, true); broadcast('created', cs);
   return { case: out(cs) };
 });
 add('GET', '/api/cases/:id', ALL, (c) => {
@@ -681,7 +689,7 @@ add('GET', '/api/cases/:id', ALL, (c) => {
   const timeline = (cs.timeline || []).slice();
   const base = cs.report_no || cs.case_number;
   const group = DB.cases.filter((x) => (x.report_no || x.case_number) === base && canView(c.user, x)).sort((a, b) => (a.patient_seq || 1) - (b.patient_seq || 1)).map((x) => ({ id: x.id, case_number: x.case_number, patient_seq: x.patient_seq || 1, patient_name: x.patient_name || null, status: x.status, source: x.source || null }));
-  const o = { case: out(cs), attachments, timeline, group };
+  const o = { case: out(cs), attachments, timeline, group, links: lkMini(c.user, cs) };
   if (c.user.role === 'admin') { o.history = log.map((l) => ({ ts: l.ts, user: l.user_name, action: l.action, details: l.details })); if (cs.archived) audit(c.user, 'archive_case_view', cs); }
   return o;
 });
@@ -697,9 +705,10 @@ add('PATCH', '/api/cases/:id', ['paramedic', 'admin'], (c) => {
   if (b.source !== undefined && b.source !== '' && b.source !== cs.source) { if (!SRC_NEW.includes(b.source)) throw bad('invalid_source'); if (c.user.role !== 'admin' && cs.source) throw E(403, 'source_admin_only'); upd.source = b.source; }
   if (b.transport_team !== undefined && b.transport_team !== '') Object.assign(upd, teamFields({ transport_team: b.transport_team, receiving_team: b.receiving_team !== undefined ? b.receiving_team : cs.receiving_team, handover_at: b.handover_at !== undefined ? b.handover_at : cs.handover_at, takeover_at: b.takeover_at !== undefined ? b.takeover_at : cs.takeover_at }, upd.source || cs.source));
   if (b.patient_id !== undefined) upd.patient_id = normId(b.patient_id) || null;
+  if (b.incident_at !== undefined && b.incident_at !== '') { const iv = parseIncident(b.incident_at, c.user, null); if (iv && Math.abs(new Date(iv) - new Date(cs.incident_at || cs.created_at)) > 60000) upd.incident_at = iv; }
   if (b.second_paramedic !== undefined) Object.assign(upd, resolveSecond(c.user, cs.paramedic_id, b.second_paramedic, b.second_paramedic_other));
   if (b.case_number !== undefined && c.user.role === 'admin') { const v = clip(b.case_number, 30); if (!caseRx.test(v)) throw bad('invalid_case_number'); if (v !== cs.case_number && DB.cases.some((x) => x.case_number === v)) throw E(409, 'duplicate_case_number'); upd.case_number = v; if (!(cs.patient_seq > 1) && DB.cases.filter((x) => (x.report_no || x.case_number) === (cs.report_no || cs.case_number)).length === 1) upd.report_no = v; }
-  const changes = {}; for (const [k, v] of Object.entries(upd)) if ((cs[k] ?? null) !== v) changes[k] = { from: cs[k] ?? null, to: v };
+  const changes = {}; for (const [k, v] of Object.entries(upd)) if ((cs[k] ?? null) !== v) changes[k] = { from: k === 'incident_at' ? (cs.incident_at || cs.created_at) : (cs[k] ?? null), to: v };
   if (!Object.keys(changes).length) return { case: out(cs) };
   Object.entries(changes).forEach(([k, v]) => { cs[k] = v.to; }); if (changes.second_uid) DB.atts.filter((a) => a.case_id === cs.id).forEach((a) => { a.second_uid = cs.second_uid || null; }); audit(c.user, 'case_update', cs, { changes }); broadcast('updated', cs);
   return { case: out(cs) };
@@ -710,7 +719,7 @@ add('POST', '/api/cases/:id/status', ['er', 'admin'], (c) => {
   if (cs.archived) throw E(409, 'case_archived');
   const to = c.body.status; if (!STATUSES.includes(to) || to === 'new') throw bad('invalid_status');
   const t = nowIso(); let arrived = cs.arrived_at;
-  if (c.body.arrived_at) { const d = new Date(c.body.arrived_at); if (isNaN(d)) throw bad('invalid_arrival_time'); if (d.getTime() > Date.now() + 300000) throw bad('arrival_in_future'); if (d.getTime() < new Date(cs.created_at).getTime() - 3600000) throw bad('arrival_before_case'); arrived = d.toISOString(); } else if (!arrived) arrived = t;
+  if (c.body.arrived_at) { const d = new Date(c.body.arrived_at); if (isNaN(d)) throw bad('invalid_arrival_time'); if (d.getTime() > Date.now() + 300000) throw bad('arrival_in_future'); if (d.getTime() < new Date(cs.incident_at || cs.created_at).getTime() - 3600000) throw bad('arrival_before_case'); arrived = d.toISOString(); } else if (!arrived) arrived = t;
   const from = cs.status; cs.status = to; cs.arrived_at = arrived; cs.status_updated_at = t; cs.status_updated_by = c.user.name; cs.closed_at = CLOSED.includes(to) ? (cs.closed_at || t) : null;
   (cs.timeline = cs.timeline || []).push({ at: t, status: to, by: c.user.name });
   audit(c.user, 'status_change', cs, { from, to }); broadcast('status', cs);
@@ -855,6 +864,249 @@ add('POST', '/api/ofac/:id/cancel', ['admin'], (c) => {
   cs.archived = 1; cs.archived_at = nowIso(); cs.archived_by = c.user.name; audit(c.user, 'ofac_cancel', cs, {}); return { ok: true };
 });
 
+
+// ===================== v11 core =====================
+function cAt(c) { return c.incident_at || c.created_at; }
+function parseIncident(v, user, dflt) {
+  v = clip(v, 40); if (!v) return dflt || null;
+  const d = new Date(v); if (isNaN(d)) throw bad('invalid_incident_time');
+  const now = Date.now(); if (d.getTime() > now + 300000) throw bad('incident_future');
+  if (user.role !== 'admin' && d.getTime() < now - 72 * 3600000) throw bad('incident_too_old');
+  return d.toISOString();
+}
+// a case counts as saved only when the write reached the server and can be read back
+async function commitCase(cs, rollback, ids) {
+  lastFlushErr = null; await flushNow();
+  let ok = !lastFlushErr;
+  if (ok && FB) { try { const d = await Promise.race([FB.get('cases', String(cs.id)), sleep(9000).then(() => undefined)]); ok = !!d; } catch (_) { ok = false; } }
+  if (ok) return;
+  if (rollback) { DB.cases = DB.cases.filter((x) => x.id !== cs.id); DB.atts = DB.atts.filter((a) => a.case_id !== cs.id); for (let i = PEND.length - 1; i >= 0; i--) if (PEND[i].case_id === cs.id) PEND.splice(i, 1); delete shadow['cases/' + cs.id]; }
+  throw E(503, 'save_failed');
+}
+async function ownCaseExists(num) { try { const r = await FB.getDocs('cases', [['paramedic_uid', '==', authUid], ['case_number', '==', num]]); return r.length > 0; } catch (_) { return true; } }
+// ===================== statistics audit (admin) =====================
+const AUD_ISS = ['no_source', 'no_transport', 'legacy_source', 'no_patient', 'stale_new', 'no_arrival', 'dup_patient', 'dup_name', 'golf_stuck', 'late_entry', 'bad_pair'];
+const aRow = (c, why) => ({ id: c.id, case_number: c.case_number, report_no: c.report_no || c.case_number, at: cAt(c), entered_at: c.created_at, paramedic: c.paramedic_name, source: c.source || null, transport: c.transport_team || null, status: c.status, patient: c.patient_name || null, why: why || null });
+add('GET', '/api/audit/check', ['admin'], (c) => {
+  const q = c.query, today = localDay(nowIso());
+  const from = isDate(q.from) ? q.from : today.slice(0, 7) + '-01', to = isDate(q.to) ? q.to : today;
+  const rows = DB.cases.filter(filt({ from, to }, c.user, undefined));
+  const st = statsFor({ from, to }, c.user), k = st.counts;
+  const tot = rows.length, ADMS = ['icu', 'picu', 'admitted', 'cathlab'], isAdm = (r) => ADMS.includes(r.status);
+  // independent aggregations of the same rows
+  const byDay = {}, bySrc = {}, byTeam = {}, byStatus = {}, groups = {};
+  const bump = (m, key, r) => { const g = m[key] || (m[key] = { n: 0, adm: 0, icu: 0, picu: 0, ward: 0, cath: 0 }); g.n++; if (isAdm(r)) { g.adm++; if (r.status === 'icu') g.icu++; else if (r.status === 'picu') g.picu++; else if (r.status === 'admitted') g.ward++; else g.cath++; } };
+  for (const r of rows) { bump(byDay, localDay(cAt(r)), r); bump(bySrc, r.source || 'none', r); bump(byTeam, r.transport_team || 'none', r); byStatus[r.status] = (byStatus[r.status] || 0) + 1; const rk = r.report_no || r.case_number; groups[rk] = (groups[rk] || 0) + 1; }
+  const sumOf = (m, f) => Object.values(m).reduce((s, g) => s + g[f], 0);
+  const adm = rows.filter(isAdm).length, icu = rows.filter((r) => r.status === 'icu').length, picu = rows.filter((r) => r.status === 'picu').length, ward = rows.filter((r) => r.status === 'admitted').length, cath = rows.filter((r) => r.status === 'cathlab').length;
+  const chk = (id, a, b) => ({ id, a, b, ok: a === b });
+  const checks = [
+    chk('total_vs_dashboard', tot, k.total), chk('total_by_status', tot, Object.values(byStatus).reduce((s, n) => s + n, 0)), chk('total_by_source', tot, sumOf(bySrc, 'n')), chk('total_by_team', tot, sumOf(byTeam, 'n')), chk('total_by_day', tot, sumOf(byDay, 'n')),
+    chk('patients_by_reports', tot, Object.values(groups).reduce((s, n) => s + n, 0)),
+    chk('adm_parts', adm, icu + picu + ward + cath), chk('adm_vs_dashboard', adm, k.adm), chk('adm_by_source', adm, sumOf(bySrc, 'adm')), chk('adm_by_team', adm, sumOf(byTeam, 'adm')), chk('adm_by_day', adm, sumOf(byDay, 'adm')),
+    chk('icu_by_source', icu + picu, sumOf(bySrc, 'icu') + sumOf(bySrc, 'picu')), chk('ward_by_source', ward, sumOf(bySrc, 'ward')), chk('cath_by_source', cath, sumOf(bySrc, 'cath')),
+  ];
+  // issues
+  const iss = {}; AUD_ISS.forEach((i) => { iss[i] = []; });
+  const h6 = Date.now() - 6 * 3600000, byPid = {}, byNm = {};
+  for (const r of rows) {
+    if (!r.source) iss.no_source.push(aRow(r));
+    else if (!r.transport_team) iss.no_transport.push(aRow(r));
+    if (r.source === 'haram' || r.source === 'quba') iss.legacy_source.push(aRow(r, r.source));
+    if (!r.patient_name && !r.patient_id) iss.no_patient.push(aRow(r));
+    if (r.status === 'new' && new Date(cAt(r)).getTime() < h6) iss.stale_new.push(aRow(r));
+    if (r.status !== 'new' && !r.arrived_at) iss.no_arrival.push(aRow(r));
+    if (r.source && r.transport_team && r.source !== 'carts' && gOf(r.source) && gOf(r.transport_team) && gOf(r.source) !== gOf(r.transport_team)) iss.bad_pair.push(aRow(r, r.source + ' → ' + r.transport_team));
+    if (new Date(r.created_at).getTime() - new Date(cAt(r)).getTime() > 600000 && localDay(r.created_at) !== localDay(cAt(r))) iss.late_entry.push(aRow(r));
+    if (r.patient_id) (byPid[r.patient_id] = byPid[r.patient_id] || []).push(r);
+    if (r.patient_name) { const kk = r.patient_name.trim().toLowerCase().replace(/\s+/g, ' ') + '|' + localDay(cAt(r)); (byNm[kk] = byNm[kk] || []).push(r); }
+  }
+  for (const list of Object.values(byPid)) { const keys = new Set(list.map((x) => x.report_no || x.case_number)); if (keys.size > 1) list.forEach((x) => iss.dup_patient.push(aRow(x, x.patient_id))); }
+  for (const list of Object.values(byNm)) { const keys = new Set(list.map((x) => x.report_no || x.case_number)); if (keys.size > 1) list.forEach((x) => iss.dup_name.push(aRow(x, x.patient_name))); }
+  DB.cases.filter((x) => GST.includes(x.status) && !x.archived && (lkGroups().get(masterOf(x)) || []).length < 2 && Date.now() - new Date(x.golf_at || x.created_at).getTime() > 3 * 3600000).forEach((x) => iss.golf_stuck.push(aRow(x, x.status)));
+  Object.keys(iss).forEach((i) => { iss[i] = iss[i].slice(0, 200); });
+  const cnt = {}; Object.keys(iss).forEach((i) => { cnt[i] = iss[i].length; });
+  return { from, to, totals: { total: tot, reports: Object.keys(groups).length, adm, icu, picu, ward, cath, bySource: bySrc, byTeam }, dashboard: { total: k.total, adm: k.adm }, checks, issues: iss, counts: cnt };
+});
+const AUD_FIELDS = ['source', 'transport_team', 'receiving_team', 'incident_at', 'case_number', 'patient_name', 'patient_id'];
+add('GET', '/api/audit/changes', ['admin'], (c) => {
+  const out2 = [];
+  for (const l of DB.audit) {
+    const d = l.details || {};
+    if (l.action === 'case_update' && d.changes) for (const [f, v] of Object.entries(d.changes)) { if (AUD_FIELDS.includes(f)) out2.push({ ts: l.ts, user: l.user_name, case_id: l.case_id, case_number: l.case_number, field: f, from: v.from, to: v.to }); }
+    else if (l.action === 'status_change') out2.push({ ts: l.ts, user: l.user_name, case_id: l.case_id, case_number: l.case_number, field: 'status', from: d.from, to: d.to });
+  }
+  out2.sort((a, b) => (a.ts < b.ts ? 1 : -1));
+  const f = clip(c.query.field, 20), qq = clip(c.query.q, 40).toLowerCase();
+  const rows = out2.filter((x) => (!f || x.field === f) && (!qq || String(x.case_number || '').toLowerCase().includes(qq)));
+  return { items: rows.slice(0, 400), total: rows.length };
+});
+add('GET', '/api/audit/search', ['admin'], (c) => {
+  const q = clip(c.query.q, 40).toLowerCase(); if (!q) return { items: [] };
+  const items = DB.cases.filter((x) => String(x.case_number).toLowerCase().includes(q) || String(x.report_no || '').toLowerCase().includes(q) || String(x.patient_id || '').toLowerCase().includes(q)).slice(0, 30).map((x) => ({ ...aRow(x), archived: !!x.archived, ofac: !!x.ofac, golf: !!x.golf, group_n: groupN(x), saved_by: x.paramedic_name, closed_at: x.closed_at || null, edits: DB.audit.filter((l) => l.case_id === x.id && l.action === 'case_update').length }));
+  return { items };
+});
+
+
+// ===================== v12: master case id + report linking =====================
+const MCH = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+function newMaster() {
+  for (let i = 0; i < 20; i++) {
+    let r = ''; for (let k = 0; k < 6; k++) r += MCH[Math.floor(Math.random() * MCH.length)];
+    const m = 'HNH-' + localDay(nowIso()).slice(2).replace(/-/g, '') + '-' + r;
+    if (!DB.cases.some((x) => x.master_id === m)) return m;
+  }
+  return 'HNH-' + uid();
+}
+const masterOf = (c) => c.master_id || 'HNH-L' + Number(c.id).toString(36).toUpperCase();
+const FINAL_ST = ['discharged', 'admitted', 'icu', 'picu', 'cathlab', 'deceased'];
+const lkRank = (c) => (FINAL_ST.includes(c.status) ? 3 : c.status === 'received' ? 2 : 1);
+function lkGroups(all) {
+  const g = new Map();
+  (all || DB.cases).forEach((c) => { if (c.ofac) return; const m = masterOf(c); if (!g.has(m)) g.set(m, []); g.get(m).push(c); });
+  return g;
+}
+// records that are the same patient as a better-finished record: kept (activity), not counted as patients
+function lkSecondary() {
+  const sec = new Set();
+  for (const mem of lkGroups().values()) {
+    const reg = mem.filter((c) => !GST.includes(c.status));
+    if (reg.length < 2) continue;
+    reg.sort((a, b) => lkRank(b) - lkRank(a) || (cAt(b) < cAt(a) ? -1 : 1) || b.id - a.id);
+    reg.slice(1).forEach((c) => sec.add(c.id));
+  }
+  return sec;
+}
+const lkMask = (u, s) => { s = String(s || ''); if (u.role === 'admin' || !s) return s; return s.split(/\s+/)[0] + ' ***'; };
+const lkTail = (u, s) => { s = String(s || ''); if (u.role === 'admin' || !s) return s; return '***' + s.slice(-4); };
+const lkSee = (u, t) => u.role === 'admin' || (!t.archived && (u.role === 'er' || t.golf || t.paramedic_id === u.id || t.second_paramedic_id === u.id));
+const lkNorm = (s) => String(s || '').trim().toLowerCase().replace(/\s+/g, ' ');
+function lkCand(u, c) {
+  const mem = lkGroups().get(masterOf(c)) || [];
+  return { id: c.id, case_number: c.case_number, master: masterOf(c), kind: GST.includes(c.status) || c.golf ? 'golf' : 'case', status: c.status, at: c.golf_at || cAt(c), golf_name: c.golf_name || null, dest: c.golf_dest || null, paramedic: c.paramedic_name || null, name: lkMask(u, c.patient_name), pid: lkTail(u, c.patient_id), linked: mem.length - 1 };
+}
+add('GET', '/api/link/search', ['paramedic', 'admin'], (c) => {
+  const q = lkNorm(clip(c.query.q, 60)), ex = +c.query.exclude || 0; if (q.length < 2) return { items: [] };
+  const rows = DB.cases.filter((x) => x.id !== ex && !x.ofac && lkSee(c.user, x) && (x.archived ? c.user.role === 'admin' : true) &&
+    lkNorm([x.case_number, x.report_no, masterOf(x), x.patient_id, x.patient_name, x.golf_name].join(' ')).includes(q));
+  rows.sort((a, b) => ((a.golf_at || cAt(a)) < (b.golf_at || cAt(b)) ? 1 : -1));
+  return { items: rows.slice(0, 15).map((x) => lkCand(c.user, x)) };
+});
+add('GET', '/api/link/suggest', ['paramedic', 'admin'], (c) => {
+  const pid = normId(c.query.patient_id), nm = lkNorm(clip(c.query.name, 100)), ex = +c.query.exclude || 0, now = Date.now(), out2 = [];
+  const mine = c.query.master || '';
+  DB.cases.forEach((x) => {
+    if (x.id === ex || x.ofac || x.archived || !lkSee(c.user, x) || masterOf(x) === mine) return;
+    if (now - new Date(x.golf_at || cAt(x)).getTime() > 72 * 3600000) return;
+    let why = null;
+    if (pid && x.patient_id && x.patient_id === pid) why = 'pid';
+    else if (nm.length > 3 && x.patient_name && lkNorm(x.patient_name) === nm) why = 'name';
+    else if (x.golf && (x.status === 'golf_handed' || x.status === 'golf_recv') && x.golf_dest === 'ambulance' && now - new Date(x.golf_at).getTime() < 3 * 3600000) why = 'golf_wait';
+    if (why) out2.push({ ...lkCand(c.user, x), why });
+  });
+  return { items: out2.slice(0, 5) };
+});
+function lkApply(cs, user, t, how) {
+  const old = masterOf(cs), nm = masterOf(t), oldRaw = cs.master_id;
+  if (t.id === cs.id || nm === old) throw bad('already_linked');
+  cs.master_id = nm; cs.link_to_id = t.id; cs.link_to_num = t.case_number;
+  cs.link_log = (cs.link_log || []).concat([{ at: nowIso(), by: user.name, role: user.role, act: 'link', to_id: t.id, to_num: t.case_number, master: nm, from_master: old, via: how || 'manual' }]).slice(-20);
+  if (user.role === 'admin' && oldRaw) DB.cases.forEach((x) => { if (x.id !== cs.id && x.master_id === oldRaw) x.master_id = nm; });
+}
+function lkNew(c, f, cs0) {
+  const id = f && f.get ? f.get('link_to') : null; if (!id) return null;
+  const t = getCase(intId(String(id))); if (!t || !lkSee(c.user, t)) throw E(404, 'link_target_not_found');
+  return t;
+}
+add('POST', '/api/cases/:id/link', ['paramedic', 'admin'], async (c) => {
+  const cs = getCase(intId(c.params.id)); if (!cs || !canView(c.user, cs)) throw E(404, 'not_found');
+  if (cs.archived) throw E(409, 'case_archived');
+  if (c.user.role === 'paramedic' && cs.status !== 'new') throw E(403, 'case_locked');
+  const b = c.body || {};
+  const oldM = masterOf(cs);
+  if (b.unlink) {
+    if (!cs.link_to_id && !(cs.link_log || []).length) throw bad('not_linked');
+    const wasT = cs.link_to_num || null;
+    cs.master_id = newMaster(); cs.link_to_id = null; cs.link_to_num = null;
+    cs.link_log = (cs.link_log || []).concat([{ at: nowIso(), by: c.user.name, role: c.user.role, act: 'unlink', to_num: wasT, master: cs.master_id, from_master: oldM, via: 'manual' }]).slice(-20);
+    audit(c.user, 'case_unlink', cs, { from: oldM, to: cs.master_id });
+  } else {
+    const t = getCase(intId(String(b.target_id))); if (!t || !lkSee(c.user, t)) throw E(404, 'link_target_not_found');
+    lkApply(cs, c.user, t, b.via === 'suggest' ? 'suggest' : 'manual');
+    audit(c.user, 'case_link', cs, { from: oldM, to: masterOf(cs), target: t.case_number });
+  }
+  await commitCase(cs, false); broadcast('updated', cs);
+  return { case: out(cs) };
+});
+add('POST', '/api/links/dismiss', ['admin'], (c) => {
+  const a = getCase(intId(String(c.body.a))), b = getCase(intId(String(c.body.b))); if (!a || !b) throw E(404, 'not_found');
+  a.link_dismiss = Array.from(new Set((a.link_dismiss || []).concat([b.id]))).slice(-30);
+  audit(c.user, 'link_dismiss', a, { other: b.case_number }); return { ok: 1 };
+});
+function lkChain(user, members) {
+  members = members.slice().sort((a, b) => ((a.golf_at || cAt(a)) < (b.golf_at || cAt(b)) ? -1 : 1));
+  const sec = lkSecondary(), log = [], items = [];
+  members.forEach((x) => {
+    const seen = lkSee(user, x);
+    if (!seen) { items.push({ hidden: 1 }); return; }
+    const isGolfOnly = GST.includes(x.status);
+    const st = [];
+    if (x.golf) st.push({ stage: 'golf', who: x.golf_name, num: x.case_number, at: x.golf_at, handed: x.golf_handed_at || null, recv: x.golf_recv_at || null, dest: x.golf_dest, facility: x.golf_facility || null });
+    if (!isGolfOnly) {
+      st.push({ stage: 'ambulance', who: x.paramedic_name, num: x.case_number, at: cAt(x), source: x.source || null, team: x.transport_team || null, handover: x.handover_at || null, takeover: x.takeover_at || null });
+      if (x.arrived_at || x.status !== 'new') st.push({ stage: 'er', who: x.status_updated_by || null, num: x.case_number, at: x.arrived_at || null, outcome: x.status, outcome_at: x.status_updated_at || null });
+    }
+    items.push({ id: x.id, case_number: x.case_number, status: x.status, golf_only: isGolfOnly ? 1 : 0, counted: !isGolfOnly && !sec.has(x.id) ? 1 : 0, linked_to: x.link_to_num || null, name: lkMask(user, x.patient_name), pid: lkTail(user, x.patient_id), stages: st });
+    (x.link_log || []).forEach((l) => log.push({ ...l, case_number: x.case_number }));
+  });
+  log.sort((a, b) => (a.at < b.at ? -1 : 1));
+  return { items, log };
+}
+add('GET', '/api/links/chain', ['paramedic', 'er', 'admin'], (c) => {
+  let m = clip(c.query.master, 40); if (!m && c.query.id) { const x = getCase(intId(String(c.query.id))); if (!x || !canView(c.user, x)) throw E(404, 'not_found'); m = masterOf(x); }
+  const mem = lkGroups().get(m); if (!mem) throw E(404, 'not_found');
+  if (c.user.role === 'paramedic' && !mem.some((x) => lkSee(c.user, x) && (x.paramedic_id === c.user.id || x.second_paramedic_id === c.user.id))) throw E(404, 'not_found');
+  return { master: m, ...lkChain(c.user, mem) };
+});
+add('GET', '/api/links/summary', ['admin'], (c) => {
+  const from = isDate(c.query.from) ? c.query.from : '0000-00-00', to = isDate(c.query.to) ? c.query.to : '9999-99-99';
+  const dayOf = (x) => localDay(x.golf_at || cAt(x)), inR = (x) => dayOf(x) >= from && dayOf(x) <= to;
+  const groups = lkGroups(), sec = lkSecondary(), ambIds = new Set();
+  const gm = [...groups.entries()].filter(([, mem]) => mem.some(inR));
+  const golfDocs = DB.cases.filter((x) => x.golf && !x.ofac && inR(x));
+  const toAmb = golfDocs.filter((x) => x.golf_dest === 'ambulance');
+  const reg = DB.cases.filter((x) => !x.ofac && !GST.includes(x.status) && inR(x));
+  const mk = (m, mem) => ({ master: m, count: mem.length, nums: mem.map((x) => x.case_number), golf: mem.some((x) => x.golf), at: mem.map((x) => x.golf_at || cAt(x)).sort()[0], statuses: mem.map((x) => x.status) });
+  const linked = gm.filter(([, mem]) => mem.length > 1 && mem.some((x) => x.link_to_id)).map(([m, mem]) => mk(m, mem));
+  const changed = linked.filter((g) => new Set(g.nums.map((n) => String(n).split('-')[0])).size > 1);
+  const unlinked = toAmb.filter((x) => GST.includes(x.status) && (groups.get(masterOf(x)) || []).length < 2).map((x) => ({ id: x.id, case_number: x.case_number, status: x.status, golf_name: x.golf_name, at: x.golf_at, master: masterOf(x) }));
+  const susp = []; const seenP = new Set();
+  const vis = DB.cases.filter((x) => !x.ofac && inR(x) && (x.patient_id || x.patient_name));
+  for (let i = 0; i < vis.length; i++) for (let j = i + 1; j < vis.length; j++) {
+    const a = vis[i], b = vis[j]; if (masterOf(a) === masterOf(b)) continue;
+    if ((a.link_dismiss || []).includes(b.id) || (b.link_dismiss || []).includes(a.id)) continue;
+    if (Math.abs(new Date(a.golf_at || cAt(a)) - new Date(b.golf_at || cAt(b))) > 48 * 3600000) continue;
+    if ((a.report_no || a.case_number) === (b.report_no || b.case_number)) continue;
+    const why = a.patient_id && a.patient_id === b.patient_id ? 'pid' : a.patient_name && lkNorm(a.patient_name) === lkNorm(b.patient_name) && lkNorm(a.patient_name).length > 3 ? 'name' : null;
+    if (why) { const k = a.id + '_' + b.id; if (!seenP.has(k)) { seenP.add(k); susp.push({ a: a.id, b: b.id, an: a.case_number, bn: b.case_number, why }); } }
+  }
+  const secInR = reg.filter((x) => sec.has(x.id)).length;
+  return {
+    from: c.query.from || null, to: c.query.to || null,
+    counts: { golf_handled: golfDocs.length, golf_to_ambulance: toAmb.length, golf_other: golfDocs.length - toAmb.length, ambulance_records: reg.length, linked: linked.length, number_changed: changed.length, suspected: susp.length, unlinked: unlinked.length, records: golfDocs.filter((x) => GST.includes(x.status)).length + reg.length, actual_patients: gm.length, double_avoided: secInR },
+    linked: linked.slice(0, 200), changed: changed.slice(0, 200), unlinked: unlinked.slice(0, 200), suspected: susp.slice(0, 100),
+  };
+});
+function lkMini(u, cs) {
+  const mem = (lkGroups().get(masterOf(cs)) || []).filter((x) => x.id !== cs.id);
+  return { master: masterOf(cs), linked_to: cs.link_to_num || null, members: mem.filter((x) => lkSee(u, x)).map((x) => ({ id: x.id, case_number: x.case_number, status: x.status, golf_only: GST.includes(x.status) ? 1 : 0, at: x.golf_at || cAt(x) })), hidden: mem.filter((x) => !lkSee(u, x)).length, log: (cs.link_log || []).slice(-10) };
+}
+function lkFields(c, f) {
+  const t = lkNew(c, f); if (!t) return { master_id: newMaster() };
+  const nm = masterOf(t);
+  return { master_id: nm, link_to_id: t.id, link_to_num: t.case_number, link_log: [{ at: nowIso(), by: c.user.name, role: c.user.role, act: 'link', to_id: t.id, to_num: t.case_number, master: nm, from_master: null, via: f.get('link_via') === 'suggest' ? 'suggest' : 'manual' }] };
+}
+
 add('GET', '/api/report', ['admin', 'er'], (c) => {
   const q = c.query, arch = q.archived === '1' ? true : q.archived === '0' ? false : undefined;
   const items = sortCases(DB.cases.filter(filt(q, c.user, arch)), 'desc').slice(0, 5000).map(out);
@@ -912,7 +1164,7 @@ async function lockNum(num) {
   const id = encodeURIComponent(num);
   try { await Promise.race([FB.set('casenums', id, { case_number: num, at: nowIso(), by: authUid }), sleep(8000)]); return true; }
   catch (e) {
-    if (e && e.code === 'permission-denied') { let d = null; try { d = await FB.get('casenums', id); } catch (_) { return false; } if (d) throw E(409, 'duplicate_case_number'); }
+    if (e && e.code === 'permission-denied') { let d = null; try { d = await FB.get('casenums', id); } catch (_) { return false; } if (d) { if (d.by === authUid && !(await ownCaseExists(num))) return true; throw E(409, 'duplicate_case_number'); } }
     return false;
   }
 }
@@ -935,10 +1187,10 @@ async function completeGolf(c, f) {
   const tf = teamFields({ transport_team: f.get('transport_team'), receiving_team: f.get('receiving_team'), handover_at: f.get('handover_at'), takeover_at: f.get('takeover_at') }, source);
   const sec = resolveSecond(c.user, cs.paramedic_id, f.get('second_paramedic'), f.get('second_paramedic_other'));
   const files = await prepFiles(f), t0 = nowIso();
-  Object.assign(cs, { visa_type, chief_complaint: chief, notes: notes || null, patient_name, patient_id, source, ...tf, report_no: cs.report_no || cs.case_number, patient_seq: cs.patient_seq || 1, ...sec, status: 'new', created_at: t0 });
+  Object.assign(cs, { visa_type, chief_complaint: chief, notes: notes || null, patient_name, patient_id, source, ...tf, report_no: cs.report_no || cs.case_number, patient_seq: cs.patient_seq || 1, ...sec, status: 'new', created_at: t0, incident_at: parseIncident(f.get('incident_at'), c.user, cs.golf_at || t0) });
   (cs.timeline = cs.timeline || []).push({ at: t0, status: 'new', by: c.user.name });
   const ids = addAtts(cs, c.user, files);
-  audit(c.user, 'case_create', cs, { visa_type, attachments: ids.length, golf: true }); broadcast('created', cs);
+  audit(c.user, 'case_create', cs, { visa_type, attachments: ids.length, golf: true }); await commitCase(cs, false); broadcast('created', cs);
   return { case: out(cs) };
 }
 add('POST', '/api/golf', ['golf', 'admin'], async (c) => {
@@ -948,7 +1200,7 @@ add('POST', '/api/golf', ['golf', 'admin'], async (c) => {
   if (DB.cases.some((x) => x.case_number === case_number)) throw E(409, 'duplicate_case_number');
   await lockNum(case_number);
   const u = c.user, t0 = nowIso();
-  const cs = { id: uid(), case_number, locked: 1, golf: 1, golf_uid: u.uid, golf_id: u.id, golf_name: u.name, golf_at: t0, golf_dest: dest, golf_facility: dest === 'other' ? facility : null, golf_handed_at: null, golf_recv_at: null, golf_recv_by: null,
+  const cs = { id: uid(), case_number, locked: 1, golf: 1, master_id: newMaster(), golf_uid: u.uid, golf_id: u.id, golf_name: u.name, golf_at: t0, golf_dest: dest, golf_facility: dest === 'other' ? facility : null, golf_handed_at: null, golf_recv_at: null, golf_recv_by: null,
     created_at: t0, paramedic_id: null, paramedic_uid: null, paramedic_name: null, second_paramedic_id: null, second_uid: null, second_paramedic_name: null, second_paramedic_other: 0, visa_type: null, chief_complaint: '', notes: null, patient_name: null, patient_id: null, source: null,
     timeline: [{ at: t0, status: 'golf', by: u.name }], status: 'golf', arrived_at: null, status_updated_at: null, status_updated_by: null, closed_at: null, archived: 0, archived_at: null, archived_by: null };
   DB.cases.push(cs); audit(u, 'golf_create', cs, { dest }); broadcast('created', cs);
@@ -1054,7 +1306,7 @@ async function pool(jobs, n) {
   await Promise.all(Array.from({ length: Math.min(n, jobs.length) }, run));
   if (err) throw err;
 }
-let flushing = false, again = false;
+let flushing = false, again = false, lastFlushErr = null;
 async function flush() {
   if (!FB || !authUid) return;
   if (flushing) { again = true; return; }
@@ -1071,7 +1323,7 @@ async function flush() {
       if (u && u.role === 'admin' && HIST_OK) { const hj = cj(DB.hist); if (shadow['settings/hist'] !== hj) { shadow['settings/hist'] = hj; rest.push(() => FB.set('settings', 'hist', JSON.parse(hj))); } }
       if (rest.length) await pool(rest, 6);
     } while (again);
-  } catch (e) { console.error(e); window.dispatchEvent(new CustomEvent('ems-dberr', { detail: e && e.code })); await resync(); }
+  } catch (e) { lastFlushErr = e || new Error('flush'); console.error(e); window.dispatchEvent(new CustomEvent('ems-dberr', { detail: e && e.code })); await resync(); }
   finally { flushing = false; }
 }
 async function flushNow() { await flush(); while (flushing) await sleep(30); }
@@ -1277,7 +1529,7 @@ async function dataCheck() {
 const srcL = (v) => v ? t('src_' + v) : '—';
 const VIS = ['Umrah', 'Tourist', 'Visit', 'Resident', 'Saudi', 'Unknown', 'Other'];
 const STS = ['new', 'received', 'discharged', 'admitted', 'icu', 'picu', 'cathlab', 'deceased'];
-const NAV = { paramedic: ['new', 'ofac', 'golfin', 'mine', 'status'], er: ['incoming', 'tracking', 'update', 'census'], admin: ['overview', 'cases', 'stats', 'annual', 'histarch', 'ofacadm', 'golf', 'reports', 'users', 'archive', 'audit', 'settings'], golf: ['golfnew', 'golfmine'] };
+const NAV = { paramedic: ['new', 'ofac', 'golfin', 'mine', 'status'], er: ['incoming', 'tracking', 'update', 'census'], admin: ['overview', 'cases', 'stats', 'saudit', 'links', 'annual', 'histarch', 'ofacadm', 'golf', 'reports', 'users', 'archive', 'audit', 'settings'], golf: ['golfnew', 'golfmine'] };
 const t = (k) => D[S.lang][k] ?? D.en[k] ?? k;
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const $ = (s, r = document) => r.querySelector(s);
@@ -1497,7 +1749,7 @@ VIEWS.new = async (main) => {
   let RS = []; try { RS = (await api('GET', '/api/roster')).items.filter((r) => r.id !== S.user.id); } catch (e) { RS = []; }
   main.innerHTML = `${GF ? `<h1>⛳ ${esc(t('g_complete_title'))}</h1>` : `<h1>${esc(t('nav_new'))}</h1>${GB}`}<form class="card" id="nf" style="max-width:640px">${GF ? `<input type="hidden" name="golf_id" value="${GF.id}"><div style="margin-bottom:6px"><span class="gpill">${esc(t('g_badge'))} · ${esc(gDestFull(GF))} · ${esc(GF.golf_name || '')} · ${esc(fmtDT(GF.golf_at))}</span></div>` : ''}
   <label>${esc(t('f_case_number'))} *</label><input type="text" name="case_number" required maxlength="30" pattern="[A-Za-z0-9][A-Za-z0-9_\\/\\-]{0,29}" autocomplete="off" inputmode="text" ${GF ? `value="${esc(GF.case_number)}" readonly` : ''}>
-  <label>${esc(t('f_datetime'))} (${esc(t('f_auto'))})</label><input type="text" id="dtv" readonly>
+  <label>${esc(t('f_incident'))} *</label><input type="datetime-local" name="incident_at" id="inc" required><div class="hint" id="inch">${esc(t('f_incident_hint'))}</div>
   <label>${esc(t('f_paramedic'))} (${esc(t('f_auto'))})</label><input type="text" readonly value="${esc(S.user.name)}">${secondField(RS, null)}
   <label>${esc(t('f_visa'))} *</label><select name="visa_type" required><option value="">—</option>${opts(VIS, visaL)}</select>
   <label>${esc(t('f_source'))} *</label><select name="source" required><option value="">—</option>${opts(SRCS, srcL)}</select>
@@ -1507,12 +1759,13 @@ VIEWS.new = async (main) => {
   <label>${esc(t('f_pname'))}</label><input type="text" name="patient_name" maxlength="100" autocomplete="off" autocapitalize="words" dir="auto">
   <label>${esc(t('f_pid'))}</label><input type="text" name="patient_id" id="pid" maxlength="30" autocomplete="off" autocapitalize="characters" autocorrect="off" spellcheck="false" dir="auto"><div class="hint" id="pidh"></div>
   <label>${esc(t('f_doc'))}</label><input type="file" id="nfile" accept="image/*" multiple><div class="hint">${esc(t('f_doc_hint'))}</div><div class="thumbs" id="prev" style="margin-top:8px"></div>
-  <div class="err-msg" id="ne"></div><button class="btn big" id="nb" style="margin-top:14px">${esc(t('f_submit'))}</button></form>`;
+  ${GF ? '' : '<div id="lkbox" style="margin-top:12px"></div>'}<div class="err-msg" id="ne"></div><button class="btn big" id="nb" style="margin-top:14px">${esc(t('f_submit'))}</button></form>`;
   const tick = () => { const el = $('#dtv'); if (el) el.value = fmtDT(new Date().toISOString()); }; tick();
   const iv = setInterval(() => { if (!$('#dtv')) clearInterval(iv); else tick(); }, 20000);
   const vsel = $('select[name=visa_type]'), pidHint = () => { const k = { Saudi: 'pid_hint_national', Resident: 'pid_hint_iqama', Umrah: 'pid_hint_passport', Tourist: 'pid_hint_passport', Visit: 'pid_hint_passport' }[vsel.value] || 'pid_hint_any'; $('#pidh').textContent = t(k); $('#pid').placeholder = t(k); };
-  vsel.onchange = pidHint; pidHint(); wireSecond($('#nf')); wireTeams($('#nf'));
-  if (GF) { const so = $('select[name=source]'), tt = $('select[name=transport_team]'), hv = $('input[name=handover_at]'), tk = $('input[name=takeover_at]'); if (tt && GF.golf_dest === 'clinic') tt.value = 'clinic'; if (hv && GF.golf_handed_at) hv.value = lti(GF.golf_handed_at); if (tk && GF.golf_recv_at) tk.value = lti(GF.golf_recv_at); if (so) { so.value = 'carts'; so.dispatchEvent(new Event('change')); } }
+  vsel.onchange = pidHint; pidHint(); wireSecond($('#nf')); wireTeams($('#nf')); LK.mount($('#nf'));
+  { const inc = $('#inc'), nowL = () => lti(new Date().toISOString()), chk = () => { const day = (v) => String(v).slice(0, 10); $('#inch').textContent = t('f_incident_hint') + (inc.value && day(inc.value) !== day(nowL()) ? ' — ' + t('f_incident_other') + ' ' + day(inc.value) : ''); }; inc.value = nowL(); inc.max = nowL(); inc.onchange = chk; }
+  if (GF) { const so = $('select[name=source]'), tt = $('select[name=transport_team]'), hv = $('input[name=handover_at]'), tk = $('input[name=takeover_at]'); if (tt && GF.golf_dest === 'clinic') tt.value = 'clinic'; if (hv && GF.golf_handed_at) hv.value = lti(GF.golf_handed_at); if (tk && GF.golf_recv_at) tk.value = lti(GF.golf_recv_at); if (so) { so.value = 'carts'; so.dispatchEvent(new Event('change')); } const ic = $('#inc'); if (ic && GF.golf_at) ic.value = lti(GF.golf_at); }
   const file = $('#nfile');
   file.onchange = () => { $('#prev').innerHTML = [...file.files].map((f) => `<div class="th">${f.type.startsWith('image/') && !/heic/i.test(f.type) ? `<img alt="" src="${URL.createObjectURL(f)}">` : `<div class="file">${esc(f.name.slice(0, 18))}</div>`}</div>`).join(''); };
   $('#nf').onsubmit = async (e) => {
@@ -1573,14 +1826,14 @@ const fmtMin = (m) => (m == null ? '—' : m >= 60 ? Math.floor(m / 60) + ' ' + 
 const WD = () => D[S.lang].wd;
 function kpisPct(k) {
   const T = k.total, K = (key, val, cls, sub) => `<div class="kpi ${cls}"><b>${val}</b><span>${esc(t(key))}</span><em>${sub}</em></div>`;
-  return `<div class="kpis">${K('k_total', k.total, '', '100%')}${K('k_reports', k.reports == null ? '—' : k.reports, '', '')}${K('k_today', k.today, '', pct(k.today, T))}${K('k_month', k.month, '', pct(k.month, T))}${K('k_received', k.received, 'c-teal', pct(k.received, T))}${K('k_pending', k.pending, 'c-warn', pct(k.pending, T))}${K('k_in_er', k.in_er, 'c-teal', pct(k.in_er, T))}${K('k_discharged', k.discharged, 'c-ok', pct(k.discharged, T))}${K('k_admitted', k.admitted, 'c-gray', pct(k.admitted, T))}${K('k_icu', k.icu, 'c-bad', pct(k.icu, T))}${K('k_picu', k.picu, 'c-bad', pct(k.picu, T))}${K('k_cathlab', k.cathlab, 'c-bad', pct(k.cathlab, T))}${K('k_deceased', k.deceased, 'c-gray', pct(k.deceased, T))}</div>`;
+  return `<div class="kpis">${K('k_total', k.total, '', '100%')}${K('k_reports', k.reports == null ? '—' : k.reports, '', '')}${K('k_today', k.today, '', pct(k.today, T))}${K('k_month', k.month, '', pct(k.month, T))}${K('k_received', k.received, 'c-teal', pct(k.received, T))}${K('k_pending', k.pending, 'c-warn', pct(k.pending, T))}${K('k_in_er', k.in_er, 'c-teal', pct(k.in_er, T))}${K('k_discharged', k.discharged, 'c-ok', pct(k.discharged, T))}${K('k_adm_total', k.adm, 'c-bad', pct(k.adm, T))}${K('k_admitted', k.admitted, 'c-gray', pct(k.admitted, T))}${K('k_icu', k.icu, 'c-bad', pct(k.icu, T))}${K('k_picu', k.picu, 'c-bad', pct(k.picu, T))}${K('k_cathlab', k.cathlab, 'c-bad', pct(k.cathlab, T))}${K('k_deceased', k.deceased, 'c-gray', pct(k.deceased, T))}</div>`;
 }
 const tbl = (head, rows) => `<div class="tw"><table><thead><tr>${head.map((h, i) => `<th class="${i ? 'num' : ''}">${esc(h)}</th>`).join('')}</tr></thead><tbody>${rows.map((r) => `<tr>${r.map((c, i) => `<td class="${i ? 'num' : ''}">${c}</td>`).join('')}</tr>`).join('') || `<tr><td colspan="${head.length}">${esc(t('none'))}</td></tr>`}</tbody></table></div>`;
 const timeCard = (title, s) => `<div class="card"><h2>${esc(title)}</h2><dl class="dl"><dt>${esc(t('t_n'))}</dt><dd>${s.n}</dd><dt>${esc(t('t_avg'))}</dt><dd>${fmtMin(s.avg)}</dd><dt>${esc(t('t_median'))}</dt><dd>${fmtMin(s.median)}</dd><dt>${esc(t('t_max'))}</dt><dd>${fmtMin(s.max)}</dd></dl></div>`;
 function statsBody(st) {
   const k = st.counts, T = k.total, R = k.received;
   const rate = (key, n) => [esc(t(key)), n, pct(n, T), key === 'k_received' || key === 'k_pending' || key === 'k_in_er' ? '—' : pct(n, R)];
-  const rates = tbl([t('m_metric'), t('c_count'), t('s_pct_total'), t('s_pct_recv')], [rate('k_received', k.received), rate('k_pending', k.pending), rate('k_in_er', k.in_er), rate('k_discharged', k.discharged), rate('k_admitted', k.admitted), rate('k_icu', k.icu), rate('k_picu', k.picu), rate('k_cathlab', k.cathlab), rate('k_deceased', k.deceased)]);
+  const rates = tbl([t('m_metric'), t('c_count'), t('s_pct_total'), t('s_pct_recv')], [rate('k_received', k.received), rate('k_pending', k.pending), rate('k_in_er', k.in_er), rate('k_discharged', k.discharged), rate('k_adm_total', k.adm), rate('k_admitted', k.admitted), rate('k_icu', k.icu), rate('k_picu', k.picu), rate('k_cathlab', k.cathlab), rate('k_deceased', k.deceased)]);
   const bar = (n, d) => `<span class="bar-in" style="width:${d ? Math.max(2, Math.round(n * 80 / d)) : 0}px"></span>`;
   const stRows = STS.map((s) => [stB(s), st.byStatus[s] || 0, pct(st.byStatus[s] || 0, T) + bar(st.byStatus[s] || 0, T)]);
   const gRows = (list, nm) => list.map((g) => [esc(nm(g.name)), g.total, pct(g.total, T) + bar(g.total, T), g.received + g.discharged + g.admitted + g.icu + g.picu + g.cathlab + g.deceased, g.discharged, g.admitted, g.icu, g.picu, g.cathlab, g.deceased, fmtMin(g.avg_receipt)]);
@@ -1801,10 +2054,11 @@ function renderCase(st, load, draw) {
   }).join('');
   let h = '';
   if (st.editing) {
-    h += `<form id="ef"><label>${esc(t('f_visa'))}</label><select name="visa_type">${opts(VIS, visaL, c.visa_type)}</select>${(u.role === 'admin' || !c.source) ? `<label>${esc(t('f_source'))}</label><select name="source"><option value="">—</option>${srcOpts(c.source)}</select>${u.role === 'admin' ? `<div class="hint">${esc(t('src_hint_admin'))}</div>` : ''}` : ''}${teamHtml(c, false)}${u.role === 'admin' ? `<label>${esc(t('f_case_number'))}</label><input type="text" name="case_number" maxlength="30" value="${esc(c.case_number)}">` : ''}${secondField((st.roster || []).filter((r) => r.id !== c.paramedic_id), c)}<label>${esc(t('f_complaint'))}</label><textarea name="chief_complaint" maxlength="500" required>${esc(c.chief_complaint)}</textarea><label>${esc(t('f_notes'))}</label><textarea name="notes" maxlength="2000">${esc(c.notes || '')}</textarea><label>${esc(t('f_pname'))}</label><input type="text" name="patient_name" maxlength="100" autocomplete="off" dir="auto" value="${esc(c.patient_name || '')}"><label>${esc(t('f_pid'))}</label><input type="text" name="patient_id" maxlength="30" autocomplete="off" autocapitalize="characters" autocorrect="off" spellcheck="false" dir="auto" value="${esc(c.patient_id || '')}"><div class="err-msg" id="ee"></div><div class="row" style="margin-top:10px"><button class="btn">${esc(t('save'))}</button><button type="button" class="btn sec" id="ec">${esc(t('cancel'))}</button></div></form>`;
+    h += `<form id="ef">${u.role === 'admin' ? `<label>${esc(t('f_incident'))}</label><input type="datetime-local" name="incident_at" value="${lti(c.created_at)}">` : ''}<label>${esc(t('f_visa'))}</label><select name="visa_type">${opts(VIS, visaL, c.visa_type)}</select>${(u.role === 'admin' || !c.source) ? `<label>${esc(t('f_source'))}</label><select name="source"><option value="">—</option>${srcOpts(c.source)}</select>${u.role === 'admin' ? `<div class="hint">${esc(t('src_hint_admin'))}</div>` : ''}` : ''}${teamHtml(c, false)}${u.role === 'admin' ? `<label>${esc(t('f_case_number'))}</label><input type="text" name="case_number" maxlength="30" value="${esc(c.case_number)}">` : ''}${secondField((st.roster || []).filter((r) => r.id !== c.paramedic_id), c)}<label>${esc(t('f_complaint'))}</label><textarea name="chief_complaint" maxlength="500" required>${esc(c.chief_complaint)}</textarea><label>${esc(t('f_notes'))}</label><textarea name="notes" maxlength="2000">${esc(c.notes || '')}</textarea><label>${esc(t('f_pname'))}</label><input type="text" name="patient_name" maxlength="100" autocomplete="off" dir="auto" value="${esc(c.patient_name || '')}"><label>${esc(t('f_pid'))}</label><input type="text" name="patient_id" maxlength="30" autocomplete="off" autocapitalize="characters" autocorrect="off" spellcheck="false" dir="auto" value="${esc(c.patient_id || '')}"><div class="err-msg" id="ee"></div><div class="row" style="margin-top:10px"><button class="btn">${esc(t('save'))}</button><button type="button" class="btn sec" id="ec">${esc(t('cancel'))}</button></div></form>`;
   } else {
-    h += `<dl class="dl"><dt>${esc(t('f_complaint'))}</dt><dd>${esc(c.chief_complaint)}</dd><dt>${esc(t('f_visa'))}</dt><dd>${esc(visaL(c.visa_type))}</dd>${c.source ? `<dt>${esc(t('f_source'))}</dt><dd>${esc(srcL(c.source))}</dd>` : ''}${c.transport_team ? `<dt>${esc(t('f_transport'))}</dt><dd>${esc(trL(c.transport_team))}</dd>` : ''}${c.source === 'carts' ? `<dt>${esc(t('f_chain'))}</dt><dd>${esc(srcL('carts'))} ← ${esc(trL(c.receiving_team || c.transport_team))}${c.handover_at ? ' (' + esc(t('f_handover')) + ' ' + esc(fmtDT(c.handover_at)) + ')' : ''}${c.takeover_at ? ' (' + esc(t('f_takeover')) + ' ' + esc(fmtDT(c.takeover_at)) + ')' : ''} ← ${esc(trL(c.transport_team))}</dd>` : ''}${c.patient_name ? `<dt>${esc(t('f_pname'))}</dt><dd dir="auto">${esc(c.patient_name)}</dd>` : ''}${c.patient_id ? `<dt>${esc(t('f_pid'))}</dt><dd dir="auto">${esc(c.patient_id)}</dd>` : ''}<dt>${esc(t('f_paramedic'))}</dt><dd>${esc(c.paramedic_name)}</dd>${c.second_paramedic_name ? `<dt>${esc(t('f_para2_row'))}</dt><dd>${esc(c.second_paramedic_name)}</dd>` : ''}<dt>${esc(t('f_created'))}</dt><dd>${esc(fmtDT(c.created_at))}</dd>${c.golf ? golfRows(c) : ''}${c.notes ? `<dt>${esc(t('f_notes'))}</dt><dd>${esc(c.notes).replace(/\n/g, '<br>')}</dd>` : ''}${c.arrived_at ? `<dt>${esc(t('f_arrival'))}</dt><dd>${esc(fmtDT(c.arrived_at))}</dd>` : ''}${c.status_updated_at ? `<dt>${esc(t('f_updated'))}</dt><dd>${esc(fmtDT(c.status_updated_at))} · ${esc(c.status_updated_by || '')}</dd>` : ''}${c.archived ? `<dt>${esc(t('f_archived_at'))}</dt><dd>${esc(fmtDT(c.archived_at))} · ${esc(c.archived_by || '')}</dd>` : ''}</dl>`;
+    h += `<dl class="dl"><dt>${esc(t('f_incident'))}</dt><dd>${esc(fmtDT(c.created_at))}</dd>${c.entered_at && Math.abs(new Date(c.entered_at) - new Date(c.created_at)) > 120000 ? `<dt>${esc(t('f_entered'))}</dt><dd>${esc(fmtDT(c.entered_at))}</dd>` : ''}<dt>${esc(t('f_complaint'))}</dt><dd>${esc(c.chief_complaint)}</dd><dt>${esc(t('f_visa'))}</dt><dd>${esc(visaL(c.visa_type))}</dd>${c.source ? `<dt>${esc(t('f_source'))}</dt><dd>${esc(srcL(c.source))}</dd>` : ''}${c.transport_team ? `<dt>${esc(t('f_transport'))}</dt><dd>${esc(trL(c.transport_team))}</dd>` : ''}${c.source === 'carts' ? `<dt>${esc(t('f_chain'))}</dt><dd>${esc(srcL('carts'))} ← ${esc(trL(c.receiving_team || c.transport_team))}${c.handover_at ? ' (' + esc(t('f_handover')) + ' ' + esc(fmtDT(c.handover_at)) + ')' : ''}${c.takeover_at ? ' (' + esc(t('f_takeover')) + ' ' + esc(fmtDT(c.takeover_at)) + ')' : ''} ← ${esc(trL(c.transport_team))}</dd>` : ''}${c.patient_name ? `<dt>${esc(t('f_pname'))}</dt><dd dir="auto">${esc(c.patient_name)}</dd>` : ''}${c.patient_id ? `<dt>${esc(t('f_pid'))}</dt><dd dir="auto">${esc(c.patient_id)}</dd>` : ''}<dt>${esc(t('f_paramedic'))}</dt><dd>${esc(c.paramedic_name)}</dd>${c.second_paramedic_name ? `<dt>${esc(t('f_para2_row'))}</dt><dd>${esc(c.second_paramedic_name)}</dd>` : ''}<dt>${esc(t('f_created'))}</dt><dd>${esc(fmtDT(c.created_at))}</dd>${c.golf ? golfRows(c) : ''}${c.notes ? `<dt>${esc(t('f_notes'))}</dt><dd>${esc(c.notes).replace(/\n/g, '<br>')}</dd>` : ''}${c.arrived_at ? `<dt>${esc(t('f_arrival'))}</dt><dd>${esc(fmtDT(c.arrived_at))}</dd>` : ''}${c.status_updated_at ? `<dt>${esc(t('f_updated'))}</dt><dd>${esc(fmtDT(c.status_updated_at))} · ${esc(c.status_updated_by || '')}</dd>` : ''}${c.archived ? `<dt>${esc(t('f_archived_at'))}</dt><dd>${esc(fmtDT(c.archived_at))} · ${esc(c.archived_by || '')}</dd>` : ''}</dl>`;
   }
+  h += LK.panel(d, c, u);
   if (d.group && d.group.length > 1) h += `<h2 style="margin-top:18px">${esc(t('group_title'))} (${d.group.length})</h2>${d.group.map((g) => `<div class="case s-${g.status}" data-open="${g.id}" style="padding:8px 12px;margin-top:6px"><b>#${esc(g.case_number + (g.patient_seq > 1 ? '' : '-1'))}</b> ${stB(g.status)} <small>${esc(g.patient_name || '')} · ${esc(srcL(g.source))}</small></div>`).join('')}`;
   h += `<h2 style="margin-top:18px">${esc(t('f_attachments'))}</h2><div class="thumbs">${atts || `<span class="hint">${esc(t('none'))}</span>`}</div>${imgs.length ? `<div class="row" style="margin-top:10px">${imgs.map((a, k) => `<button type="button" class="btn" data-view="${k}">🖼 ${esc(t('view_img'))}${imgs.length > 1 ? ' ' + (k + 1) : ''}</button>`).join('')}</div>` : ''}`;
   if (canEdit) h += `<div style="margin-top:8px"><label class="btn sec sm" style="display:inline-flex;margin:0;cursor:pointer">+ ${esc(t('add_doc'))}<input type="file" id="addf" accept="image/*" multiple hidden></label></div>`;
@@ -1825,12 +2079,12 @@ function renderCase(st, load, draw) {
   const B = m.body, fail = (id, e) => { const el = $('#' + id, B); if (el) el.textContent = errText(e); else toast(errText(e), 'err'); };
   $$('[data-view]', B).forEach((b) => { b.onclick = () => viewer(imgs, +b.dataset.view); });
   $$('.th img[data-aid]', B).forEach((im) => { im.style.cursor = 'zoom-in'; im.onclick = () => viewer(imgs, imgs.findIndex((a) => String(a.id) === im.dataset.aid)); });
-  wireImgShare(B, c, imgs); wireSecond(B); wireTeams(B);
+  wireImgShare(B, c, imgs); wireSecond(B); wireTeams(B); LK.wire(B, c, reload);
   const apb = $('#apb', B); if (apb) apb.onclick = () => addPatientDialog(c);
   const eb = $('#eb', B); if (eb) eb.onclick = () => { st.editing = true; draw(); };
   const ec = $('#ec', B); if (ec) ec.onclick = () => { st.editing = false; draw(); };
   const ef = $('#ef', B);
-  if (ef) ef.onsubmit = async (e) => { e.preventDefault(); const f = e.target; const body = { visa_type: f.visa_type.value, source: f.source ? f.source.value : '', transport_team: f.transport_team.value, receiving_team: f.receiving_team.value, handover_at: f.handover_at.value, takeover_at: f.takeover_at.value, chief_complaint: f.chief_complaint.value, notes: f.notes.value, patient_name: f.patient_name.value, patient_id: f.patient_id.value, second_paramedic: f.second_paramedic.value, second_paramedic_other: f.second_paramedic_other.value }; if (f.case_number) body.case_number = f.case_number.value; try { await api('PATCH', '/api/cases/' + c.id, body); toast(t('case_updated'), 'ok'); st.editing = false; reload(); } catch (er) { fail('ee', er); } };
+  if (ef) ef.onsubmit = async (e) => { e.preventDefault(); const f = e.target; const body = { incident_at: f.incident_at ? f.incident_at.value : '', visa_type: f.visa_type.value, source: f.source ? f.source.value : '', transport_team: f.transport_team.value, receiving_team: f.receiving_team.value, handover_at: f.handover_at.value, takeover_at: f.takeover_at.value, chief_complaint: f.chief_complaint.value, notes: f.notes.value, patient_name: f.patient_name.value, patient_id: f.patient_id.value, second_paramedic: f.second_paramedic.value, second_paramedic_other: f.second_paramedic_other.value }; if (f.case_number) body.case_number = f.case_number.value; try { await api('PATCH', '/api/cases/' + c.id, body); toast(t('case_updated'), 'ok'); st.editing = false; reload(); } catch (er) { fail('ee', er); } };
   $$('[data-rm]', B).forEach((b) => { b.onclick = async (e) => { e.preventDefault(); e.stopPropagation(); if (!(await askConfirm(t('confirm_delete_att')))) return; try { await api('DELETE', '/api/attachments/' + b.dataset.rm); reload(); } catch (er) { fail('ee', er); } }; });
   const addf = $('#addf', B);
   if (addf) addf.onchange = async () => { const fd = new FormData(); for (const f of addf.files) fd.append('files', f, f.name); try { await api('POST', `/api/cases/${c.id}/attachments`, fd); reload(); } catch (er) { toast(errText(er), 'err'); } };
@@ -2029,7 +2283,7 @@ const CEN = (() => {
 
   const eff = (c) => { const g = gOf(c.transport_team) || gOf(c.source); return g === 'carts' ? 'other' : g; };
   function calc(items) {
-    const rs = new Set(), r = { carts: 0, total: 0, src: { haram: 0, quba: 0, clinic: 0, other: 0 }, nosrc: 0, icu: 0, picu: 0, ward: 0, cath: 0, adm: 0, asrc: {} };
+    const rs = new Set(), r = { carts: 0, total: 0, src: { haram: 0, quba: 0, clinic: 0, other: 0 }, nosrc: 0, icu: 0, picu: 0, ward: 0, cath: 0, adm: 0, asrc: {}, nsAdm: { icu: 0, picu: 0, ward: 0, cath: 0, n: 0 } };
     [...SK, 'other'].forEach((k) => { r.asrc[k] = { icu: 0, picu: 0, ward: 0, cath: 0, n: 0 }; });
     for (const c of items) {
       r.total++; rs.add(c.report_no || c.case_number);
@@ -2037,7 +2291,7 @@ const CEN = (() => {
       if (c.source === 'carts') r.carts++;
       if (KK) r.src[k]++; else r.nosrc++;
       const m = { icu: 'icu', picu: 'picu', admitted: 'ward', cathlab: 'cath' }[c.status];
-      if (m) { r[m]++; r.adm++; if (KK) { r.asrc[k][m]++; r.asrc[k].n++; } }
+      if (m) { r[m]++; r.adm++; if (KK) { r.asrc[k][m]++; r.asrc[k].n++; } else { r.nsAdm[m]++; r.nsAdm.n++; } }
     }
     r.reports = rs.size;
     r.rate = r.total ? r.adm * 100 / r.total : 0;
@@ -2113,7 +2367,7 @@ const CEN = (() => {
       cmp: 'مقارنة بمتوسط شهر ' + MN.ar[D.pm - 1], metric: 'المؤشر', diff: 'الفرق', avg: 'متوسط ' + MN.ar[D.pm - 1] + ' اليومي',
       now: mon ? 'متوسط ' + MN.ar[D.m - 1] + ' اليومي' : 'اليوم ' + pad(D.d) + '/' + pad(D.m),
       mTot: 'إجمالي النقل', mAdm: 'التنويم', mIcu: 'العناية المركزة (مع PICU)', mRate: 'نسبة التنويم',
-      foot: 'مستشفى الحياة الوطني · قسم طب الطوارئ · بالتعاون مع هيئة الهلال الأحمر السعودي', wk: 'الأيام المحسوبة'
+      foot: 'مستشفى الحياة - المدينة المنورة · قسم طب الطوارئ · بالتعاون مع هيئة الهلال الأحمر السعودي', wk: 'الأيام المحسوبة'
     } : {
       ttl: mon ? 'Monthly Patient Transfer Census' : 'Daily Patient Transfer Census',
       sub: 'Emergency Medicine Department – EMS',
@@ -2124,7 +2378,7 @@ const CEN = (() => {
       cmp: 'Comparison with ' + MN.en[D.pm - 1] + ' Daily Average', metric: 'Metric', diff: 'Difference', avg: MN.en[D.pm - 1] + ' daily avg',
       now: mon ? MN.en[D.m - 1] + ' daily avg' : 'Today ' + pad(D.d) + '/' + pad(D.m),
       mTot: 'Total transfers', mAdm: 'Admissions', mIcu: 'Intensive care (incl. PICU)', mRate: 'Admission rate',
-      foot: 'Al Hayat National Hospital · Emergency Medicine Department · in partnership with the Saudi Red Crescent Authority', wk: 'Days counted'
+      foot: 'Al Hayat Hospital - Al Madinah Al Munawwarah · Emergency Medicine Department · in partnership with the Saudi Red Crescent Authority', wk: 'Days counted'
     };
     const pc = (n) => (c.total ? f1(n * 100 / c.total) : '0.0') + '%';
     const pill = mon ? `<small>${MN[lang][D.m - 1]}</small><b>${L(pad(D.m) + '/' + D.y)}</b>` : `<small>${WDN[lang][D.wd]}</small><b>${L(pad(D.d) + '/' + pad(D.m) + '/' + D.y)}</b>`;
@@ -2153,6 +2407,7 @@ const CEN = (() => {
     const ban = top ? `<div class="cn-ban" style="background:${COL[top]}">${sn[top]} – ${L(c.asrc[top].n)} ${T.cs} (${L(Math.round(c.asrc[top].n * 100 / c.adm) + '%')})</div>` : `<div class="cn-ban" style="background:#9aa5b6">${T.noAdm}</div>`;
     h += `<div class="cn-card"><div class="cn-t"><i></i>${T.adms}</div>${ban}<table class="cn-tb"><thead><tr><th>${T.src}</th><th>ICU</th><th>PICU</th><th>Ward</th>${c.cath ? '<th>Cath Lab</th>' : ''}<th>${T.sum}</th></tr></thead><tbody>`;
     for (const k of SK2) { const a = c.asrc[k]; h += `<tr><td>${ss[k]}</td><td>${L(a.icu)}</td><td>${L(a.picu)}</td><td>${L(a.ward)}</td>${c.cath ? `<td>${L(a.cath)}</td>` : ''}<td><b>${L(a.n)}</b></td></tr>`; }
+    if (c.nsAdm.n) h += `<tr><td>${ar ? 'بدون جهة محددة' : 'No source specified'}</td><td>${L(c.nsAdm.icu)}</td><td>${L(c.nsAdm.picu)}</td><td>${L(c.nsAdm.ward)}</td>${c.cath ? `<td>${L(c.nsAdm.cath)}</td>` : ''}<td><b>${L(c.nsAdm.n)}</b></td></tr>`;
     h += `</tbody></table>`;
     if (top) h += `<div class="cn-note">${T.arate(ss[top])}: <b style="color:#d9232e">${L(f1(c.asrc[top].n * 100 / (c.src[top] || 1)) + '%')}</b> (${L(c.asrc[top].n)} ${ar ? 'من' : 'of'} ${L(c.src[top])})</div>`;
     h += `</div></div>`;
@@ -2667,6 +2922,193 @@ ${filtered ? `<div style="font-size:12px;color:#7a8699;margin-bottom:8px">${esc(
   return { viewArch, viewAnnual, viewOfac, viewOfacAdm };
 })();
 VIEWS.histarch = HA.viewArch; VIEWS.annual = HA.viewAnnual; VIEWS.ofac = HA.viewOfac; VIEWS.ofacadm = HA.viewOfacAdm;
+
+// ===================== statistics audit page (admin) =====================
+const SA = (() => {
+  const TX = {
+    ar: { title: 'تدقيق الإحصائيات', from: 'من', to: 'إلى', go: 'تحديث', recon: 'مطابقة الأرقام', reconH: 'كل الأرقام تُحسب من نفس سجلات المرضى وبنفس القواعد. هذا الجدول يحسبها بعدة طرق ويقارنها.', ok: 'مطابق', bad: 'اختلاف', allOk: 'كل الأرقام متطابقة', someBad: 'يوجد اختلاف يحتاج مراجعة',
+      issues: 'الحالات التي تحتاج مراجعة', none: 'لا يوجد', open: 'فتح', totals: 'الإجماليات', pat: 'مرضى', rep: 'بلاغات', adm: 'إجمالي التنويم', icu: 'ICU', picu: 'PICU', ward: 'Ward', cath: 'Cath Lab',
+      search: 'بحث برقم البلاغ أو الهوية', searchGo: 'بحث', found: 'نتائج', entered: 'أُدخلت', incident: 'وقت البلاغ', by: 'المسعف', archived: 'مؤرشفة', golfc: 'جولف', edits: 'تعديلات', grp: 'مرضى بنفس البلاغ',
+      log: 'سجل التعديلات (المصدر والمآل)', all: 'الكل', when: 'الوقت', user: 'المستخدم', case: 'البلاغ', field: 'الحقل', old: 'القيمة السابقة', nw: 'القيمة الجديدة', empty: 'فارغ',
+      c: { total_vs_dashboard: 'إجمالي الحالات = لوحة التحكم', total_by_status: 'إجمالي الحالات = مجموع المآلات', total_by_source: 'إجمالي الحالات = مجموع المصادر', total_by_team: 'إجمالي الحالات = مجموع الفرق الناقلة', total_by_day: 'إجمالي الحالات = مجموع الأيام', patients_by_reports: 'المرضى = مجموع المرضى حسب البلاغات',
+        adm_parts: 'التنويم = ICU + PICU + Ward + Cath Lab', adm_vs_dashboard: 'التنويم = لوحة التحكم', adm_by_source: 'التنويم = مجموع التنويم حسب المصدر', adm_by_team: 'التنويم = مجموع التنويم حسب الفرقة', adm_by_day: 'التنويم = مجموع التنويم حسب اليوم', icu_by_source: 'العناية المركزة حسب المصدر', ward_by_source: 'الأجنحة حسب المصدر', cath_by_source: 'الكاث لاب حسب المصدر' },
+      i: { no_source: 'بدون مصدر', no_transport: 'بدون فرقة ناقلة', legacy_source: 'مصدر قديم (غير مصنّف بدقة)', no_patient: 'بدون اسم أو هوية مريض', stale_new: 'لم تُستلم منذ أكثر من 6 ساعات', no_arrival: 'مستلمة بدون وقت وصول', dup_patient: 'هوية مريض مكررة في بلاغات مختلفة', dup_name: 'اسم مريض مكرر في نفس اليوم ببلاغات مختلفة', golf_stuck: 'حالات جولف لم تكتمل (أكثر من 3 ساعات)', late_entry: 'أُدخلت في يوم مختلف عن يوم البلاغ', bad_pair: 'مصدر وفرقة ناقلة غير متسقين' },
+      st: { new: 'جديدة', received: 'مستلمة', admitted: 'ورد', icu: 'ICU', picu: 'PICU', cathlab: 'كاث لاب', discharged: 'خروج', deceased: 'وفاة', golf: 'جولف', golf_handed: 'جولف مُسلَّمة', golf_recv: 'جولف مستلمة' }, f: { source: 'المصدر', transport_team: 'الفرقة الناقلة', receiving_team: 'الفرقة المستلمة', incident_at: 'وقت البلاغ', case_number: 'رقم البلاغ', patient_name: 'اسم المريض', patient_id: 'هوية المريض', status: 'المآل' } },
+    en: { title: 'Statistics Audit', from: 'From', to: 'To', go: 'Refresh', recon: 'Number reconciliation', reconH: 'All figures come from the same patient records and the same rules. This table recomputes them several ways and compares.', ok: 'Match', bad: 'Mismatch', allOk: 'All figures match', someBad: 'Mismatches need review',
+      issues: 'Cases needing review', none: 'None', open: 'Open', totals: 'Totals', pat: 'patients', rep: 'reports', adm: 'Total admissions', icu: 'ICU', picu: 'PICU', ward: 'Ward', cath: 'Cath Lab',
+      search: 'Search by report number or ID', searchGo: 'Search', found: 'Results', entered: 'Entered', incident: 'Incident time', by: 'Paramedic', archived: 'Archived', golfc: 'Golf', edits: 'edits', grp: 'patients in the same report',
+      log: 'Change log (source and outcome)', all: 'All', when: 'When', user: 'User', case: 'Report', field: 'Field', old: 'Previous value', nw: 'New value', empty: 'empty',
+      c: { total_vs_dashboard: 'Total cases = dashboard', total_by_status: 'Total = sum of outcomes', total_by_source: 'Total = sum of sources', total_by_team: 'Total = sum of transporting teams', total_by_day: 'Total = sum of days', patients_by_reports: 'Patients = patients summed by report',
+        adm_parts: 'Admissions = ICU + PICU + Ward + Cath Lab', adm_vs_dashboard: 'Admissions = dashboard', adm_by_source: 'Admissions = sum by source', adm_by_team: 'Admissions = sum by team', adm_by_day: 'Admissions = sum by day', icu_by_source: 'Intensive care by source', ward_by_source: 'Ward by source', cath_by_source: 'Cath Lab by source' },
+      i: { no_source: 'No source', no_transport: 'No transporting team', legacy_source: 'Legacy source (not precisely classified)', no_patient: 'No patient name or ID', stale_new: 'Not received for over 6 hours', no_arrival: 'Received without arrival time', dup_patient: 'Same patient ID in different reports', dup_name: 'Same patient name on the same day in different reports', golf_stuck: 'Golf cases not completed (over 3 hours)', late_entry: 'Entered on a different day than the incident', bad_pair: 'Source and transporting team inconsistent' },
+      st: { new: 'New', received: 'Received', admitted: 'Ward', icu: 'ICU', picu: 'PICU', cathlab: 'Cath Lab', discharged: 'Discharged', deceased: 'Deceased', golf: 'Golf', golf_handed: 'Golf handed', golf_recv: 'Golf received' }, f: { source: 'Source', transport_team: 'Transporting team', receiving_team: 'Receiving team', incident_at: 'Incident time', case_number: 'Report number', patient_name: 'Patient name', patient_id: 'Patient ID', status: 'Outcome' } }
+  };
+  const X = () => TX[S.lang] || TX.ar;
+  const val = (f, v) => { if (v == null || v === '') return `<i style="color:#7a8699">${esc(X().empty)}</i>`; if (f === 'source' || f === 'transport_team' || f === 'receiving_team') return esc(t('src_' + v) || v); if (f === 'status') return esc(X().st[v] || v); if (f === 'incident_at') return esc(fmtDT(v)); return esc(String(v)); };
+  const lbl = (v) => (v ? esc(t('src_' + v) || v) : '—');
+  const localDay = (iso) => new Date(new Date(iso).getTime() + (S.meta ? S.meta.tz_offset_min : 180) * 60000).toISOString().slice(0, 10);
+  const st = { from: null, to: null };
+  async function view(main) {
+    const today = localDay(new Date().toISOString());
+    if (!st.from) { st.from = today.slice(0, 7) + '-01'; st.to = today; }
+    main.innerHTML = `<h1>🔍 ${esc(X().title)}</h1><div id="sa"><div class="empty">…</div></div>`;
+    const draw = async () => {
+      let D, items, ch;
+      try { D = await api('GET', '/api/audit/check?' + qs({ from: st.from, to: st.to })); ch = await api('GET', '/api/audit/changes?' + qs({ field: st.cf || '' })); items = (await api('GET', '/api/report?' + qs({ from: st.from, to: st.to }))).items; } catch (e) { console.error('saudit', e); $('#sa').innerHTML = `<div class="empty">${esc(errText(e))}</div>`; return; }
+      // cross-check against the census engine (same engine that produces the daily/monthly PDF)
+      const cn = CEN.calc(items), checks = D.checks.slice();
+      checks.push({ id: 'total_vs_census', a: D.totals.total, b: cn.total, ok: D.totals.total === cn.total }, { id: 'adm_vs_census', a: D.totals.adm, b: cn.adm, ok: D.totals.adm === cn.adm }, { id: 'adm_src_vs_census', a: D.totals.adm, b: Object.values(cn.asrc).reduce((s, x) => s + x.n, 0) + cn.nsAdm.n, ok: D.totals.adm === Object.values(cn.asrc).reduce((s, x) => s + x.n, 0) + cn.nsAdm.n });
+      const names = Object.assign({}, X().c, { total_vs_census: X() === TX.ar ? 'إجمالي الحالات = تقرير PDF/الإحصائية' : 'Total = PDF/census report', adm_vs_census: X() === TX.ar ? 'التنويم = تقرير PDF/الإحصائية' : 'Admissions = PDF/census report', adm_src_vs_census: X() === TX.ar ? 'التنويم حسب الجهة في PDF = الإجمالي' : 'PDF admissions by source = total' });
+      const bad = checks.filter((c) => !c.ok).length, T = D.totals;
+      const isAr = S.lang === 'ar', iconOf = (n) => (n ? '⚠️' : '✅');
+      $('#sa').innerHTML = `<div class="card"><div class="row" style="gap:8px;align-items:flex-end;flex-wrap:wrap"><div><label>${esc(X().from)}</label><input type="date" id="saf" value="${st.from}"></div><div><label>${esc(X().to)}</label><input type="date" id="sat" value="${st.to}"></div><button class="btn" id="sago">${esc(X().go)}</button></div></div>
+<div class="card"><h2 style="margin-top:0">${esc(X().totals)}</h2><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px"><div class="kpi"><b>${T.total}</b><span>${esc(X().pat)}</span><em>${T.reports} ${esc(X().rep)}</em></div><div class="kpi c-bad"><b>${T.adm}</b><span>${esc(X().adm)}</span><em>${T.icu} ICU · ${T.picu} PICU · ${T.ward} Ward · ${T.cath} Cath</em></div></div></div>
+<div class="card"><h2 style="margin-top:0">${bad ? '⚠️ ' + esc(X().someBad) : '✅ ' + esc(X().allOk)}</h2><div class="hint">${esc(X().reconH)}</div><div class="tw"><table><thead><tr><th>${esc(X().recon)}</th><th class="num">A</th><th class="num">B</th><th></th></tr></thead><tbody>${checks.map((c) => `<tr style="${c.ok ? '' : 'background:#fdecea'}"><td>${esc(names[c.id] || c.id)}</td><td class="num">${c.a}</td><td class="num">${c.b}</td><td>${c.ok ? '✅ ' + esc(X().ok) : '❌ ' + esc(X().bad)}</td></tr>`).join('')}</tbody></table></div></div>
+<div class="card"><h2 style="margin-top:0">${esc(X().issues)}</h2>${Object.keys(X().i).map((k) => { const l = D.issues[k] || []; return `<details ${l.length ? '' : ''} style="border-bottom:1px solid #eef1f6;padding:6px 0"><summary style="cursor:pointer">${iconOf(l.length)} <b>${esc(X().i[k])}</b> <span class="badge">${l.length}</span></summary>${l.length ? `<div class="tw"><table><tbody>${l.map((r) => `<tr><td><b dir="ltr">${esc(r.case_number)}</b></td><td class="nw">${esc(fmtDT(r.at))}</td><td>${esc(r.paramedic || '')}</td><td>${lbl(r.source)} ${r.transport ? '← ' + lbl(r.transport) : ''}</td><td>${esc(X().st[r.status] || r.status)}</td><td>${r.why ? esc(r.why) : ''}</td><td><button class="btn sec sm sao" data-id="${r.id}">${esc(X().open)}</button></td></tr>`).join('')}</tbody></table></div>` : `<div class="hint">${esc(X().none)}</div>`}</details>`; }).join('')}</div>
+<div class="card"><h2 style="margin-top:0">${esc(X().search)}</h2><div class="row" style="gap:8px"><input id="saq" placeholder="4521" dir="ltr" style="flex:1"><button class="btn" id="sas">${esc(X().searchGo)}</button></div><div id="sar"></div></div>
+<div class="card"><div class="row" style="justify-content:space-between;align-items:center"><h2 style="margin:0">${esc(X().log)}</h2><select id="sacf"><option value="">${esc(X().all)}</option>${['source', 'transport_team', 'status', 'incident_at', 'case_number'].map((f) => `<option value="${f}" ${st.cf === f ? 'selected' : ''}>${esc(X().f[f])}</option>`).join('')}</select></div><div class="tw"><table><thead><tr><th>${esc(X().when)}</th><th>${esc(X().user)}</th><th>${esc(X().case)}</th><th>${esc(X().field)}</th><th>${esc(X().old)}</th><th>${esc(X().nw)}</th></tr></thead><tbody>${ch.items.map((r) => `<tr><td class="nw">${esc(fmtDT(r.ts))}</td><td>${esc(r.user)}</td><td><a class="sao" data-id="${r.case_id}" style="cursor:pointer;color:#0b5cab;font-weight:700" dir="ltr">${esc(r.case_number || '')}</a></td><td>${esc(X().f[r.field] || r.field)}</td><td>${val(r.field, r.from)}</td><td>${val(r.field, r.to)}</td></tr>`).join('') || `<tr><td colspan="6">${esc(X().none)}</td></tr>`}</tbody></table></div></div>`;
+      $('#sago').onclick = () => { st.from = $('#saf').value || st.from; st.to = $('#sat').value || st.to; draw(); };
+      $('#sacf').onchange = (e) => { st.cf = e.target.value; draw(); };
+      $$('.sao', $('#sa')).forEach((b) => { b.onclick = () => openCase(+b.dataset.id); });
+      const go = async () => { const q = $('#saq').value.trim(); if (!q) return; try { const r = await api('GET', '/api/audit/search?' + qs({ q })); $('#sar').innerHTML = r.items.length ? `<div class="tw"><table><tbody>${r.items.map((x) => `<tr><td><b dir="ltr">${esc(x.case_number)}</b>${x.group_n > 1 ? ` <small>(${x.group_n} ${esc(X().grp)})</small>` : ''}</td><td>${esc(X().incident)}: ${esc(fmtDT(x.at))}<br><small>${esc(X().entered)}: ${esc(fmtDT(x.entered_at))}</small></td><td>${esc(x.paramedic || '')}</td><td>${lbl(x.source)}${x.transport ? ' ← ' + lbl(x.transport) : ''}</td><td>${esc(X().st[x.status] || x.status)}${x.archived ? ' · ' + esc(X().archived) : ''}${x.golf ? ' · ' + esc(X().golfc) : ''}</td><td>${x.edits} ${esc(X().edits)}</td><td>${x.ofac ? '' : `<button class="btn sec sm sao" data-id="${x.id}">${esc(X().open)}</button>`}</td></tr>`).join('')}</tbody></table></div>` : `<div class="hint">${esc(X().none)}</div>`; $$('.sao', $('#sar')).forEach((b) => { b.onclick = () => openCase(+b.dataset.id); }); } catch (e) { toast(errText(e), 'err'); } };
+      $('#sas').onclick = go; $('#saq').onkeydown = (e) => { if (e.key === 'Enter') go(); };
+    };
+    draw();
+  }
+  return { view };
+})();
+VIEWS.saudit = SA.view;
+
+// ===================== v12: master case id + linked reports =====================
+const LK = (() => {
+  const TX = {
+    ar: {
+      box: 'ربط الحالة ببلاغ سابق', opt: '(اختياري)', ph: 'رقم بلاغ القولف / الرقم المرجعي / الهوية / الاسم', go: 'بحث', none: 'لا توجد نتائج', link: 'ربط', unlink: 'فك الربط', clear: 'إلغاء الربط',
+      sel: 'سيُربط بـ', sug: 'قد تكون نفس الحالة — راجع قبل الربط', notsame: 'ليست نفس الحالة', whyPid: 'نفس رقم الهوية', whyName: 'نفس الاسم', whyGolf: 'بلاغ قولف مُسلَّم للإسعاف حديثًا',
+      golf: 'قولف', amb: 'إسعاف', master: 'الرقم المرجعي', linkedTo: 'مرتبط بالبلاغ', members: 'بلاغات مرتبطة بنفس المريض', hidden: 'بلاغات أخرى لا تملك صلاحية عرضها', log: 'سجل الربط', journey: 'رحلة المريض',
+      editLink: 'ربط / تعديل الربط', confirmLink: 'ربط هذا البلاغ بالبلاغ المحدد؟ يُحتسب المريض مرة واحدة في الإحصائيات، ويمكن تصحيح الربط لاحقًا.', confirmUnlink: 'فك ربط هذا البلاغ؟ سيصبح مريضًا مستقلًا.',
+      done: 'تم الربط', undone: 'تم فك الربط', by: 'بواسطة', via_manual: 'يدويًا', via_suggest: 'من اقتراح', act_link: 'ربط', act_unlink: 'فك ربط', time: 'الوقت', who: 'المستخدم', act: 'الإجراء', to: 'البلاغ',
+      counted: 'يُحتسب مريضًا', activity: 'نشاط فقط', hiddenItem: 'بلاغ مخفي', from: 'من', toD: 'إلى', refresh: 'تحديث',
+      title: 'تتبع البلاغات المرتبطة', hint: 'يربط بلاغ القولف ببلاغ الإسعاف لنفس المريض دون حذف أي بلاغ. المريض يُحتسب مرة واحدة (والتنويم مرة واحدة حسب المآل النهائي)، ونشاط القولف والإسعاف يبقى محسوبًا منفصلًا.',
+      k_golf: 'حالات تعامل معها القولف', k_amb: 'حُوّلت لفرق الإسعاف', k_chg: 'تغيّر رقم بلاغها', k_lnk: 'مرتبطة بنجاح', k_sus: 'اشتباه تكرار للمراجعة', k_unl: 'لم تُربط بعد', k_pat: 'المرضى الفعليون (بدون تكرار)', k_rec: 'سجلات الإسعاف', k_dbl: 'تكرار تم استبعاده',
+      l_lnk: 'الحالات المرتبطة', l_chg: 'الحالات التي تغيّر رقم بلاغها', l_unl: 'بلاغات قولف سُلّمت للإسعاف ولم تُربط', l_sus: 'اشتباه تكرار (لا يُدمج تلقائيًا)', open: 'فتح', chain: 'السلسلة', dismiss: 'ليست مكررة', linkThem: 'ربط', why: 'السبب',
+      search: 'بحث بالرقم المرجعي أو رقم البلاغ أو الهوية', empty: 'لا يوجد', ghost: 'إجمالي بلاغات هذه الحالة',
+      dest: { ambulance: 'إسعاف', clinic: 'عيادة', other: 'منشأة أخرى' }, gst: { golf: 'قولف — بانتظار التسليم', golf_handed: 'قولف — مُسلَّمة', golf_recv: 'قولف — مستلمة', golf_done: 'قولف — منتهية' },
+      s_golf: 'عربة القولف', s_amb: 'فريق الإسعاف', s_er: 'الطوارئ', report: 'بلاغ', handed: 'تسليم', recv: 'استلام', outcome: 'المآل', arrive: 'وصول',
+    },
+    en: {
+      box: 'Link to an existing report', opt: '(optional)', ph: 'Golf cart report no. / Master ID / patient ID / name', go: 'Search', none: 'No results', link: 'Link', unlink: 'Unlink', clear: 'Cancel link',
+      sel: 'Will be linked to', sug: 'May be the same patient — review before linking', notsame: 'Not the same patient', whyPid: 'Same patient ID', whyName: 'Same name', whyGolf: 'Golf case recently handed to ambulance',
+      golf: 'Golf', amb: 'Ambulance', master: 'Master ID', linkedTo: 'Linked to report', members: 'Reports linked to the same patient', hidden: 'Other reports you are not allowed to view', log: 'Link log', journey: 'Patient journey',
+      editLink: 'Link / edit link', confirmLink: 'Link this report to the selected one? The patient is counted once in statistics, and the link can be corrected later.', confirmUnlink: 'Unlink this report? It becomes an independent patient.',
+      done: 'Linked', undone: 'Unlinked', by: 'by', via_manual: 'manual', via_suggest: 'from suggestion', act_link: 'Link', act_unlink: 'Unlink', time: 'Time', who: 'User', act: 'Action', to: 'Report',
+      counted: 'Counted as patient', activity: 'Activity only', hiddenItem: 'Hidden report', from: 'From', toD: 'To', refresh: 'Refresh',
+      title: 'Linked Reports Tracking', hint: 'Links the golf-cart report to the ambulance report of the same patient without deleting any report. The patient is counted once (admission once by final outcome); golf and ambulance activity stay counted separately.',
+      k_golf: 'Cases handled by golf carts', k_amb: 'Handed to ambulance teams', k_chg: 'Report number changed', k_lnk: 'Successfully linked', k_sus: 'Suspected duplicates to review', k_unl: 'Not yet linked', k_pat: 'Actual patients (no duplicates)', k_rec: 'Ambulance records', k_dbl: 'Duplicates excluded',
+      l_lnk: 'Linked cases', l_chg: 'Cases whose report number changed', l_unl: 'Golf reports handed to ambulance and not linked', l_sus: 'Suspected duplicates (never merged automatically)', open: 'Open', chain: 'Chain', dismiss: 'Not a duplicate', linkThem: 'Link', why: 'Reason',
+      search: 'Search by master ID, report number or patient ID', empty: 'None', ghost: 'Reports in this case',
+      dest: { ambulance: 'Ambulance', clinic: 'Clinic', other: 'Other facility' }, gst: { golf: 'Golf — awaiting handover', golf_handed: 'Golf — handed over', golf_recv: 'Golf — received', golf_done: 'Golf — finished' },
+      s_golf: 'Golf cart', s_amb: 'Ambulance team', s_er: 'Emergency', report: 'Report', handed: 'Handover', recv: 'Takeover', outcome: 'Outcome', arrive: 'Arrival',
+    },
+  };
+  const X = () => TX[S.lang] || TX.ar;
+  const stN = (s) => X().gst[s] || t('st_' + s);
+  const why = (w) => ({ pid: X().whyPid, name: X().whyName, golf_wait: X().whyGolf }[w] || w);
+  const css = 'border:1px solid #dfe5ee;border-radius:10px;padding:8px 10px;margin-top:6px;display:flex;gap:8px;align-items:center;justify-content:space-between;flex-wrap:wrap';
+  const candHtml = (r, btn) => `<div style="${css}"><div style="min-width:0"><b dir="ltr">#${esc(r.case_number)}</b> <span class="hint" dir="ltr">${esc(r.master)}</span> <span class="gpill">${esc(r.kind === 'golf' ? X().golf : X().amb)}</span> <small>${esc(stN(r.status))}</small>${r.why ? `<div class="hint">⚠ ${esc(why(r.why))}</div>` : ''}<div class="hint">${esc(fmtDT(r.at))}${r.golf_name ? ' · ⛳ ' + esc(r.golf_name) : ''}${r.paramedic ? ' · ' + esc(r.paramedic) : ''}${r.name ? ' · ' + esc(r.name) : ''}${r.pid ? ' · ' + esc(r.pid) : ''}${r.dest ? ' · ' + esc(X().dest[r.dest] || r.dest) : ''}</div></div>${btn || ''}</div>`;
+  // search box + results; onPick(row, via)
+  function picker(root, opt) {
+    root.innerHTML = `<div class="row" style="gap:8px"><input type="text" class="lkq" placeholder="${esc(X().ph)}" style="flex:1" dir="auto" autocomplete="off"><button type="button" class="btn sec sm lkgo">${esc(X().go)}</button></div><div class="lkres"></div>`;
+    const q = $('.lkq', root), res = $('.lkres', root), rows = {};
+    const go = async () => {
+      const v = q.value.trim(); if (v.length < 2) return;
+      try { const r = await api('GET', '/api/link/search?' + qs({ q: v, exclude: opt.exclude || '' })); r.items.forEach((x) => { rows[x.id] = x; }); res.innerHTML = r.items.length ? r.items.map((x) => candHtml(x, `<button type="button" class="btn sm lkpick" data-id="${x.id}">${esc(X().link)}</button>`)).join('') : `<div class="hint" style="margin-top:6px">${esc(X().none)}</div>`; $$('.lkpick', res).forEach((b) => { b.onclick = () => opt.onPick(rows[b.dataset.id], 'manual'); }); }
+      catch (e) { toast(errText(e), 'err'); }
+    };
+    $('.lkgo', root).onclick = go; q.onkeydown = (e) => { if (e.key === 'Enter') { e.preventDefault(); go(); } };
+  }
+  // ---- new report form
+  function mount(form) {
+    const box = $('#lkbox', form); if (!box) return;
+    box.innerHTML = `<details><summary style="cursor:pointer;font-weight:700">🔗 ${esc(X().box)} <small>${esc(X().opt)}</small></summary><div style="margin-top:8px"><div id="lkpk"></div></div></details><div id="lksel"></div><div id="lksug"></div><input type="hidden" name="link_to" id="lkv"><input type="hidden" name="link_via" id="lkvia">`;
+    const sel = $('#lksel', form), v = $('#lkv', form), via = $('#lkvia', form), dism = new Set();
+    const pick = (r, how) => { v.value = r.id; via.value = how === 'suggest' ? 'suggest' : 'manual'; sel.innerHTML = `<div style="${css};background:#eef6ff">${'<span>🔗 ' + esc(X().sel) + ' <b dir="ltr">#' + esc(r.case_number) + '</b> <span class="hint" dir="ltr">' + esc(r.master) + '</span></span>'}<button type="button" class="btn sec sm" id="lkx">${esc(X().clear)}</button></div>`; $('#lkx', form).onclick = () => { v.value = ''; via.value = ''; sel.innerHTML = ''; }; $('#lksug', form).innerHTML = ''; };
+    picker($('#lkpk', form), { onPick: (r, h) => { pick(r, h); const d = $('details', box); if (d) d.open = false; } });
+    let tm = null;
+    const sug = async () => {
+      if (v.value) return;
+      const pid = ($('#pid', form) || {}).value || '', nm = (form.patient_name || {}).value || '';
+      try {
+        const r = (await api('GET', '/api/link/suggest?' + qs({ patient_id: pid, name: nm }))).items.filter((x) => !dism.has(x.id));
+        const el = $('#lksug', form); if (!el) return;
+        el.innerHTML = r.length ? `<div class="hint" style="margin-top:8px;color:#b45309">💡 ${esc(X().sug)}</div>` + r.map((x) => candHtml(x, `<span style="display:flex;gap:6px"><button type="button" class="btn sm lks" data-id="${x.id}">${esc(X().link)}</button><button type="button" class="btn sec sm lkn" data-id="${x.id}">${esc(X().notsame)}</button></span>`)).join('') : '';
+        $$('.lks', el).forEach((b) => { b.onclick = () => pick(r.find((x) => String(x.id) === b.dataset.id), 'suggest'); });
+        $$('.lkn', el).forEach((b) => { b.onclick = () => { dism.add(+b.dataset.id); sug(); }; });
+      } catch (_) {}
+    };
+    const trig = () => { clearTimeout(tm); tm = setTimeout(sug, 500); };
+    const p = $('#pid', form); if (p) p.addEventListener('input', trig); if (form.patient_name) form.patient_name.addEventListener('input', trig);
+    // a golf report handed over shortly before: suggest it as soon as the form opens
+    setTimeout(sug, 300);
+  }
+  // ---- chain
+  function stageHtml(s) {
+    if (s.stage === 'golf') return `<div>⛳ <b>${esc(X().s_golf)}</b>: ${esc(s.who || '—')} · ${esc(X().report)} <b dir="ltr">${esc(s.num)}</b> · ${esc(fmtDT(s.at))}${s.handed ? ' · ' + esc(X().handed) + ' ' + esc(fmtDT(s.handed)) : ''}${s.recv ? ' · ' + esc(X().recv) + ' ' + esc(fmtDT(s.recv)) : ''} → ${esc(X().dest[s.dest] || s.dest || '')}${s.facility ? ' (' + esc(s.facility) + ')' : ''}</div>`;
+    if (s.stage === 'ambulance') return `<div>🚑 <b>${esc(X().s_amb)}</b>: ${esc(s.who || '—')} · ${esc(X().report)} <b dir="ltr">${esc(s.num)}</b> · ${esc(fmtDT(s.at))}${s.source ? ' · ' + esc(t('src_' + s.source) || s.source) : ''}${s.team ? ' · ' + esc(t('src_' + s.team) || s.team) : ''}${s.handover ? ' · ' + esc(X().handed) + ' ' + esc(fmtDT(s.handover)) : ''}${s.takeover ? ' · ' + esc(X().recv) + ' ' + esc(fmtDT(s.takeover)) : ''}</div>`;
+    return `<div>🏥 <b>${esc(X().s_er)}</b>: ${s.at ? esc(X().arrive) + ' ' + esc(fmtDT(s.at)) + ' · ' : ''}${esc(X().outcome)} ${stB(s.outcome)}${s.outcome_at ? ' <small>' + esc(fmtDT(s.outcome_at)) + '</small>' : ''}${s.who ? ' · ' + esc(s.who) : ''}</div>`;
+  }
+  function chainHtml(D) {
+    const items = D.items.map((x) => x.hidden ? `<div class="hint" style="${css}">🔒 ${esc(X().hiddenItem)}</div>` : `<div style="border:1px solid #dfe5ee;border-radius:10px;padding:8px 10px;margin-top:6px"><div class="row" style="justify-content:space-between;gap:8px"><b dir="ltr">#${esc(x.case_number)}</b><span>${x.golf_only ? `<span class="gpill">${esc(X().golf)}</span> ` : ''}<span class="hint">${esc(x.counted ? X().counted : X().activity)}</span></span></div>${x.name || x.pid ? `<div class="hint">${esc(x.name || '')} ${esc(x.pid || '')}</div>` : ''}${x.stages.map(stageHtml).join('')}</div>`).join('<div style="text-align:center;color:#7a8699">⬇</div>');
+    const log = D.log.length ? `<h3 style="margin:14px 0 4px">${esc(X().log)}</h3><div class="tw"><table><thead><tr><th>${esc(X().time)}</th><th>${esc(X().who)}</th><th>${esc(X().act)}</th><th>${esc(X().to)}</th></tr></thead><tbody>${D.log.map((l) => `<tr><td class="nw">${esc(fmtDT(l.at))}</td><td>${esc(l.by)}</td><td>${esc(l.act === 'unlink' ? X().act_unlink : X().act_link)} <small>(${esc(l.via === 'suggest' ? X().via_suggest : X().via_manual)})</small></td><td dir="ltr">${esc(l.case_number)} ↔ ${esc(l.to_num || '—')}</td></tr>`).join('')}</tbody></table></div>` : '';
+    return `<div class="hint" dir="ltr" style="margin-bottom:4px">${esc(X().master)}: <b>${esc(D.master)}</b></div>${items}${log}`;
+  }
+  // ---- inside the case dialog
+  function panel(d, c, u) {
+    const L = d.links; if (!L) return '';
+    const canLink = !c.archived && (u.role === 'admin' || (u.role === 'paramedic' && c.status === 'new'));
+    const can = L.members.length > 0 || L.log.length > 0;
+    return `<h2 style="margin-top:18px">🔗 ${esc(X().master)}</h2><dl class="dl"><dt>${esc(X().master)}</dt><dd dir="ltr"><b>${esc(L.master)}</b></dd>${L.linked_to ? `<dt>${esc(X().linkedTo)}</dt><dd dir="ltr">#${esc(L.linked_to)}</dd>` : ''}</dl>${L.members.length ? `<div class="hint">${esc(X().members)}</div>${L.members.map((m) => `<div class="case s-${m.status}" data-open="${m.id}" style="padding:8px 12px;margin-top:6px"><b dir="ltr">#${esc(m.case_number)}</b> ${m.golf_only ? `<span class="gpill">${esc(X().golf)}</span> ` : ''}<small>${esc(stN(m.status))} · ${esc(fmtDT(m.at))}</small></div>`).join('')}` : ''}${L.hidden ? `<div class="hint">🔒 ${L.hidden} ${esc(X().hidden)}</div>` : ''}<div class="row" style="margin-top:8px;gap:8px">${can ? `<button type="button" class="btn sec sm" id="lkj">${esc(X().journey)}</button>` : ''}${canLink ? `<button type="button" class="btn sec sm" id="lke">🔗 ${esc(X().editLink)}</button>` : ''}${canLink && (c.link_to_id || L.log.length) && (c.link_to_id || L.log.slice(-1)[0].act === 'link') ? `<button type="button" class="btn sec sm" id="lku">${esc(X().unlink)}</button>` : ''}</div><div id="lkpkc" style="display:none;margin-top:6px"></div><div id="lkch"></div>`;
+  }
+  function wire(B, c, reload) {
+    const j = $('#lkj', B), e = $('#lke', B), un = $('#lku', B);
+    if (j) j.onclick = async () => { const el = $('#lkch', B); if (el.innerHTML) { el.innerHTML = ''; return; } try { el.innerHTML = chainHtml(await api('GET', '/api/links/chain?' + qs({ id: c.id }))); } catch (er) { toast(errText(er), 'err'); } };
+    if (e) e.onclick = () => { const pk = $('#lkpkc', B); if (pk.style.display === 'none') { pk.style.display = ''; picker(pk, { exclude: c.id, onPick: async (r, h) => { if (!(await askConfirm(X().confirmLink + '\n#' + r.case_number))) return; try { await api('POST', `/api/cases/${c.id}/link`, { target_id: r.id, via: h }); toast(X().done, 'ok'); reload(); } catch (er) { toast(errText(er), 'err'); } } }); } else pk.style.display = 'none'; };
+    if (un) un.onclick = async () => { if (!(await askConfirm(X().confirmUnlink))) return; try { await api('POST', `/api/cases/${c.id}/link`, { unlink: true }); toast(X().undone, 'ok'); reload(); } catch (er) { toast(errText(er), 'err'); } };
+  }
+  // ---- admin tracking page
+  const st = { from: null, to: null };
+  const lday = (iso) => new Date(new Date(iso).getTime() + (S.meta ? S.meta.tz_offset_min : 180) * 60000).toISOString().slice(0, 10);
+  async function showChain(master) { const m = openModal('🔗 ' + X().journey); m.body.innerHTML = '…'; try { m.body.innerHTML = chainHtml(await api('GET', '/api/links/chain?' + qs({ master }))); } catch (e) { m.body.innerHTML = esc(errText(e)); } }
+  async function view(main) {
+    const today = lday(new Date().toISOString());
+    if (!st.from) { st.from = today.slice(0, 7) + '-01'; st.to = today; }
+    main.innerHTML = `<h1>🔗 ${esc(X().title)}</h1><div id="lkv2"><div class="empty">…</div></div>`;
+    const draw = async () => {
+      let D; try { D = await api('GET', '/api/links/summary?' + qs({ from: st.from, to: st.to })); } catch (e) { $('#lkv2').innerHTML = `<div class="err-msg">${esc(errText(e))}</div>`; return; }
+      const C = D.counts, K = (n, l, cl) => `<div class="kpi"${cl ? ` style="border-color:${cl}"` : ''}><b>${n}</b><span>${esc(l)}</span></div>`;
+      const row = (g) => `<tr><td dir="ltr"><b>${esc(g.master)}</b></td><td dir="ltr">${g.nums.map(esc).join(' ↔ ')}</td><td>${g.golf ? '⛳' : ''}</td><td><button class="btn sec sm lkc" data-m="${esc(g.master)}">${esc(X().chain)}</button></td></tr>`;
+      const tbl = (l, body) => (l.length ? `<div class="tw"><table><tbody>${body}</tbody></table></div>` : `<div class="hint">${esc(X().empty)}</div>`);
+      $('#lkv2').innerHTML = `<div class="card"><div class="hint">${esc(X().hint)}</div><div class="row" style="gap:8px;align-items:flex-end;flex-wrap:wrap;margin-top:8px"><div><label>${esc(X().from)}</label><input type="date" id="lkf" value="${st.from}"></div><div><label>${esc(X().toD)}</label><input type="date" id="lkt" value="${st.to}"></div><button class="btn" id="lkr">${esc(X().refresh)}</button></div></div>
+<div class="card"><div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px">${K(C.golf_handled, X().k_golf)}${K(C.golf_to_ambulance, X().k_amb)}${K(C.number_changed, X().k_chg)}${K(C.linked, X().k_lnk)}${K(C.suspected, X().k_sus, C.suspected ? '#d97706' : '')}${K(C.unlinked, X().k_unl, C.unlinked ? '#d97706' : '')}${K(C.ambulance_records, X().k_rec)}${K(C.double_avoided, X().k_dbl)}${K(C.actual_patients, X().k_pat, '#0f7b6c')}</div></div>
+<div class="card"><h2 style="margin-top:0">${esc(X().search)}</h2><div class="row" style="gap:8px"><input id="lkqq" dir="ltr" style="flex:1"><button class="btn" id="lkqs">${esc(X().go)}</button></div><div id="lkqr"></div></div>
+<div class="card"><h2 style="margin-top:0">⚠ ${esc(X().l_sus)} (${D.suspected.length})</h2>${tbl(D.suspected, D.suspected.map((s) => `<tr><td dir="ltr"><b>${esc(s.an)}</b> ⇄ <b>${esc(s.bn)}</b></td><td class="hint">${esc(why(s.why))}</td><td style="white-space:nowrap"><button class="btn sec sm lko" data-id="${s.a}">${esc(X().open)} ${esc(s.an)}</button> <button class="btn sec sm lko" data-id="${s.b}">${esc(X().open)} ${esc(s.bn)}</button> <button class="btn sm lkl" data-a="${s.a}" data-b="${s.b}">${esc(X().linkThem)}</button> <button class="btn sec sm lkd" data-a="${s.a}" data-b="${s.b}">${esc(X().dismiss)}</button></td></tr>`).join(''))}</div>
+<div class="card"><h2 style="margin-top:0">${esc(X().l_unl)} (${D.unlinked.length})</h2>${tbl(D.unlinked, D.unlinked.map((x) => `<tr><td dir="ltr"><b>${esc(x.case_number)}</b></td><td>${esc(x.golf_name || '')}</td><td class="nw">${esc(fmtDT(x.at))}</td><td><button class="btn sec sm lko" data-id="${x.id}">${esc(X().open)}</button></td></tr>`).join(''))}</div>
+<div class="card"><h2 style="margin-top:0">${esc(X().l_chg)} (${D.changed.length})</h2>${tbl(D.changed, D.changed.map(row).join(''))}</div>
+<div class="card"><h2 style="margin-top:0">${esc(X().l_lnk)} (${D.linked.length})</h2>${tbl(D.linked, D.linked.map(row).join(''))}</div>`;
+      $('#lkr').onclick = () => { st.from = $('#lkf').value || st.from; st.to = $('#lkt').value || st.to; draw(); };
+      $$('.lkc', $('#lkv2')).forEach((b) => { b.onclick = () => showChain(b.dataset.m); });
+      $$('.lko', $('#lkv2')).forEach((b) => { b.onclick = () => openCase(+b.dataset.id); });
+      $$('.lkl', $('#lkv2')).forEach((b) => { b.onclick = async () => { if (!(await askConfirm(X().confirmLink))) return; try { await api('POST', `/api/cases/${b.dataset.b}/link`, { target_id: +b.dataset.a }); toast(X().done, 'ok'); draw(); } catch (er) { toast(errText(er), 'err'); } }; });
+      $$('.lkd', $('#lkv2')).forEach((b) => { b.onclick = async () => { try { await api('POST', '/api/links/dismiss', { a: +b.dataset.a, b: +b.dataset.b }); draw(); } catch (er) { toast(errText(er), 'err'); } }; });
+      const go = async () => { const q = $('#lkqq').value.trim(); if (q.length < 2) return; try { const r = await api('GET', '/api/link/search?' + qs({ q })); $('#lkqr').innerHTML = r.items.length ? r.items.map((x) => candHtml(x, `<button class="btn sm lks2" data-m="${esc(x.master)}">${esc(X().chain)}</button>`)).join('') : `<div class="hint">${esc(X().none)}</div>`; $$('.lks2', $('#lkqr')).forEach((b) => { b.onclick = () => showChain(b.dataset.m); }); } catch (er) { toast(errText(er), 'err'); } };
+      $('#lkqs').onclick = go; $('#lkqq').onkeydown = (e) => { if (e.key === 'Enter') go(); };
+    };
+    draw();
+  }
+  return { mount, panel, wire, view };
+})();
+VIEWS.links = LK.view;
+window.LK = LK;
 
   applyLang();
   try { const r = await api('GET', '/api/me'); S.user = r.user; } catch (_) { S.user = null; }

@@ -8,7 +8,7 @@
 <meta name="robots" content="noindex, nofollow">
 <title>Al Hayat EMS</title>
 <script>
-window.__BUILD='1794614176';
+window.__BUILD='1794783167';
 (function(){var B=window.__BUILD,busy=false;
 function idle(){var a=document.activeElement;return !(a&&/^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName))&&!document.querySelector('.ovl');}
 async function chk(){if(busy||!idle())return;busy=true;try{var r=await fetch(location.pathname+'?_='+Date.now(),{cache:'no-store'});var t=await r.text();var m=t.match(/window\.__BUILD='([^']+)'/);
@@ -468,7 +468,7 @@ const ROLES = ['paramedic', 'er', 'admin', 'golf'];
 const GST = ['golf', 'golf_handed', 'golf_recv', 'golf_done'], GDEST = ['ambulance', 'clinic', 'other'];
 let DB, cur = null, FB = null, authUid = null, READY = null, subs = [], spec = {}, DATA = {}, PEND = [], lastU = 0;
 const shadow = {}, MEM = {};
-const emptyDB = () => ({ users: [], cases: [], atts: [], audit: [], roster: [], settings: { archive_after_days: 30, auto_archive: true }, hist: { records: [], names: [], log: [] }, perf: { evals: {}, stars: {}, log: [] } });
+const emptyDB = () => ({ users: [], cases: [], atts: [], audit: [], roster: [], settings: { archive_after_days: 30, auto_archive: true }, hist: { records: [], names: [], log: [] }, perf: { evals: {}, stars: {}, log: [] }, golfRoster: [] });
 DB = emptyDB();
 const uid = () => { let v = Math.floor((Date.now() - 1.7e12) / 10) * 100 + Math.floor(Math.random() * 100); if (v <= lastU) v = lastU + 1; lastU = v; return v; };
 const nowIso = () => new Date().toISOString();
@@ -502,7 +502,7 @@ let _gc = null, _gl = -1;
 const groupN = (c) => { if (!_gc || _gl !== DB.cases.length) { _gc = {}; DB.cases.forEach((x) => { const k = x.report_no || x.case_number; _gc[k] = (_gc[k] || 0) + 1; }); _gl = DB.cases.length; } return _gc[c.report_no || c.case_number] || 1; };
 const out = (c) => ({ ...c, entered_at: c.created_at, created_at: c.incident_at || c.created_at, att_count: attCount(c), group_n: groupN(c) });
 const rosterNow = () => DB.users.filter((u) => u.role === 'paramedic' && u.active && u.id).map((u) => ({ id: u.id, uid: u.uid, name: u.name })).sort((a, b) => String(a.name).localeCompare(String(b.name)));
-const settingsDoc = () => ({ ...DB.settings, roster: rosterNow() });
+const settingsDoc = () => ({ ...DB.settings, roster: rosterNow(), golf_roster: DB.users.filter((u) => u.role === 'golf' && u.active && u.id).map((u) => ({ id: u.id, uid: u.uid, name: u.name })).sort((a, b) => String(a.name).localeCompare(String(b.name))) });
 function resolveSecond(user, ownId, sel, other) {
   sel = clip(sel, 20); other = clip(other, 100);
   if (!sel) return { second_paramedic_id: null, second_uid: null, second_paramedic_name: null, second_paramedic_other: 0 };
@@ -1151,8 +1151,8 @@ add('GET', '/api/golf/daily', ['admin'], (c) => {
   const rows = DB.cases.filter((x) => x.golf && !x.deleted && !x.ofac && localDay(x.golf_at) >= from && localDay(x.golf_at) <= to);
   const teams = DB.users.filter((u) => u.role === 'golf').map((u) => ({ id: u.id, name: u.name, total: 0, ambulance: 0, clinic: 0, other: 0 }));
   const tm = new Map(teams.map((t) => [t.id, t]));
-  rows.forEach((x) => { let t = tm.get(x.golf_id); if (!t) { t = { id: x.golf_id, name: x.golf_name || '—', total: 0, ambulance: 0, clinic: 0, other: 0 }; tm.set(x.golf_id, t); teams.push(t); } t.total++; if (t[x.golf_dest] !== undefined) t[x.golf_dest]++; });
-  const days = {}; rows.forEach((x) => { const d = localDay(x.golf_at); (days[d] = days[d] || { total: 0, teams: {} }); days[d].total++; days[d].teams[x.golf_id] = (days[d].teams[x.golf_id] || 0) + 1; });
+  rows.forEach((x) => { let t = tm.get(x.golf_id); if (!t) { t = { id: x.golf_id, name: x.golf_name || '—', total: 0, ambulance: 0, clinic: 0, other: 0 }; tm.set(x.golf_id, t); teams.push(t); } t.total++; if (t[x.golf_dest] !== undefined) t[x.golf_dest]++; if (x.second_golf_id) { let t2 = tm.get(x.second_golf_id); if (!t2) { t2 = { id: x.second_golf_id, name: x.second_golf_name || '—', total: 0, ambulance: 0, clinic: 0, other: 0 }; tm.set(x.second_golf_id, t2); teams.push(t2); } t2.total++; if (t2[x.golf_dest] !== undefined) t2[x.golf_dest]++; } });
+  const days = {}; rows.forEach((x) => { const d = localDay(x.golf_at); (days[d] = days[d] || { total: 0, teams: {} }); days[d].total++; days[d].teams[x.golf_id] = (days[d].teams[x.golf_id] || 0) + 1; if (x.second_golf_id) days[d].teams[x.second_golf_id] = (days[d].teams[x.second_golf_id] || 0) + 1; });
   const list = []; { let d = new Date(from + 'T00:00:00Z'); const e = new Date(to + 'T00:00:00Z'); while (d <= e) { const k = d.toISOString().slice(0, 10); list.push({ day: k, total: (days[k] || { total: 0 }).total, teams: (days[k] || { teams: {} }).teams }); d = new Date(d.getTime() + 86400000); } }
   teams.sort((a, b) => b.total - a.total || String(a.name).localeCompare(String(b.name)));
   return { mode, from, to, total: rows.length, ambulance: rows.filter((x) => x.golf_dest === 'ambulance').length, clinic: rows.filter((x) => x.golf_dest === 'clinic').length, other: rows.filter((x) => x.golf_dest === 'other').length, teams, days: list };
@@ -1202,11 +1202,12 @@ function pfCompute(m, withDetail) {
       perf = acts >= PF_MIN ? pfAvg([[pfSpeed(med, 10, 90), 40], [mt.closed_rate, 40], [100 - Math.round(100 * flips / (mine.length || 1)), 20]]) : null;
     } else if (u.role === 'golf') {
       const g = DB.cases.filter((x) => x.golf && !x.deleted && !x.ofac && x.golf_id === u.id && inM(x.golf_at));
-      g.forEach((x) => bump(x.golf_at));
+      const g2 = DB.cases.filter((x) => x.golf && !x.deleted && !x.ofac && x.second_golf_id === u.id && inM(x.golf_at));
+      g.forEach((x) => bump(x.golf_at)); g2.forEach((x) => bump(x.golf_at));
       const fin = g.filter((x) => x.status !== 'golf' || Date.now() - new Date(x.golf_at).getTime() < 3 * 3600000), handed = g.filter((x) => x.golf_handed_at);
       const mins = handed.map((x) => pfDiff(x.golf_at, x.golf_handed_at)).filter((v) => v !== null && v >= 0), med = pfMed(mins);
-      Object.assign(mt, { registered: g.length, handed: handed.length, to_ambulance: g.filter((x) => x.golf_dest === 'ambulance').length, to_clinic: g.filter((x) => x.golf_dest === 'clinic').length, to_other: g.filter((x) => x.golf_dest === 'other').length, median_handover_min: med, completed_rate: g.length ? Math.round(100 * fin.length / g.length) : null });
-      acts = g.length; points = g.length * 3 + handed.length;
+      Object.assign(mt, { registered: g.length, as_second: g2.length, handed: handed.length, to_ambulance: g.filter((x) => x.golf_dest === 'ambulance').length, to_clinic: g.filter((x) => x.golf_dest === 'clinic').length, to_other: g.filter((x) => x.golf_dest === 'other').length, median_handover_min: med, completed_rate: g.length ? Math.round(100 * fin.length / g.length) : null });
+      acts = g.length + g2.length; points = g.length * 3 + g2.length * 2 + handed.length;
       perf = acts >= PF_MIN ? pfAvg([[mt.completed_rate, 50], [pfSpeed(med, 15, 90), 50]]) : null;
     } else {
       const seen = new Set(); au.filter((a) => a.user_id === u.id && !PF_SKIP.includes(a.action)).forEach((a) => { const k = a.action + '|' + (a.case_id || a.details && JSON.stringify(a.details).slice(0, 60) || '') + '|' + localDay(a.ts); if (!seen.has(k)) { seen.add(k); bump(a.ts); } });
@@ -1251,6 +1252,21 @@ add('POST', '/api/perf/star', ['admin'], (c) => {
   audit(c.user, 'perf_star', null, { month: m, user: u.name }); return { ok: 1 };
 });
 function pfAch(r) { const x = r.m, a = []; if (r.role === 'paramedic') { a.push(['registered', x.registered]); if (x.as_second) a.push(['as_second', x.as_second]); if (x.early) a.push(['early', x.early]); if (x.complete_rate !== null) a.push(['complete_rate', x.complete_rate]); } else if (r.role === 'er') { a.push(['received', x.received]); a.push(['outcomes', x.outcomes]); if (x.median_receipt_min !== null) a.push(['median_receipt_min', x.median_receipt_min]); } else if (r.role === 'golf') { a.push(['registered', x.registered]); a.push(['handed', x.handed]); if (x.median_handover_min !== null) a.push(['median_handover_min', x.median_handover_min]); } else { a.push(['actions', x.actions]); a.push(['active_days', x.active_days]); } return a.map(([k, v]) => ({ k, v })); }
+
+
+// ===================== v14: second paramedic on golf-cart reports =====================
+const golfRosterNow = () => DB.users.filter((u) => u.role === 'golf' && u.active && u.id).map((u) => ({ id: u.id, uid: u.uid, name: u.name })).sort((a, b) => String(a.name).localeCompare(String(b.name)));
+add('GET', '/api/golf/roster', ['golf', 'admin'], (c) => ({ items: (c.user.role === 'admin' ? golfRosterNow() : DB.golfRoster || []).filter((r) => r.id !== c.user.id) }));
+function resolveGolfSecond(user, sel, other) {
+  sel = clip(sel, 20); other = clip(other, 100);
+  const none = { second_golf_id: null, second_golf_uid: null, second_golf_name: null, second_golf_other: 0 };
+  if (!sel) return none;
+  if (sel === 'other') { if (!other) throw bad('second_name_required'); return { second_golf_id: null, second_golf_uid: null, second_golf_name: other, second_golf_other: 1 }; }
+  const id = +sel; if (!Number.isFinite(id)) throw bad('bad_request');
+  if (id === user.id) throw bad('second_same');
+  const r = (user.role === 'admin' ? golfRosterNow() : DB.golfRoster || []).find((x) => x.id === id); if (!r) throw bad('bad_request');
+  return { second_golf_id: r.id, second_golf_uid: r.uid || null, second_golf_name: r.name, second_golf_other: 0 };
+}
 
 add('GET', '/api/report', ['admin', 'er'], (c) => {
   const q = c.query, arch = q.archived === '1' ? true : q.archived === '0' ? false : undefined;
@@ -1319,7 +1335,7 @@ async function backfillLocks() {
   try { await pool(jobs, 4); } catch (_) {}
   flush();
 }
-const gOut = (c) => ({ id: c.id, case_number: c.case_number, status: c.status, golf_id: c.golf_id, golf_name: c.golf_name, golf_at: c.golf_at, golf_dest: c.golf_dest, golf_facility: c.golf_facility || null, golf_handed_at: c.golf_handed_at || null, golf_recv_at: c.golf_recv_at || null, golf_recv_by: c.golf_recv_by || null, paramedic_name: c.paramedic_name || null, created_at: c.created_at, arrived_at: c.arrived_at || null, status_updated_at: c.status_updated_at || null, closed_at: c.closed_at || null, archived: c.archived || 0, patient_name: c.patient_name || null });
+const gOut = (c) => ({ id: c.id, case_number: c.case_number, status: c.status, golf_id: c.golf_id, golf_name: c.golf_name, golf_at: c.golf_at, golf_dest: c.golf_dest, golf_facility: c.golf_facility || null, golf_handed_at: c.golf_handed_at || null, golf_recv_at: c.golf_recv_at || null, golf_recv_by: c.golf_recv_by || null, second_golf_id: c.second_golf_id || null, second_golf_name: c.second_golf_name || null, second_golf_other: c.second_golf_other || 0, paramedic_name: c.paramedic_name || null, created_at: c.created_at, arrived_at: c.arrived_at || null, status_updated_at: c.status_updated_at || null, closed_at: c.closed_at || null, archived: c.archived || 0, patient_name: c.patient_name || null });
 const gReached = (c) => !!c.arrived_at || ['received', 'discharged', 'admitted', 'icu', 'picu', 'cathlab', 'deceased'].includes(c.status);
 async function completeGolf(c, f) {
   const cs = getCase(intId(String(f.get('golf_id')))); if (!cs || !cs.golf || cs.archived) throw E(404, 'not_found');
@@ -1343,9 +1359,10 @@ add('POST', '/api/golf', ['golf', 'admin'], async (c) => {
   if (!caseRx.test(case_number)) throw bad('invalid_case_number');
   if (!GDEST.includes(dest)) throw bad('golf_dest_required');
   if (DB.cases.some((x) => x.case_number === case_number)) throw E(409, 'duplicate_case_number');
+  const sg = resolveGolfSecond(c.user, b.second, b.second_other);
   await lockNum(case_number);
   const u = c.user, t0 = nowIso();
-  const cs = { id: uid(), case_number, locked: 1, golf: 1, master_id: newMaster(), golf_uid: u.uid, golf_id: u.id, golf_name: u.name, golf_at: t0, golf_dest: dest, golf_facility: dest === 'other' ? facility : null, golf_handed_at: null, golf_recv_at: null, golf_recv_by: null,
+  const cs = { id: uid(), case_number, locked: 1, golf: 1, master_id: newMaster(), golf_uid: u.uid, golf_id: u.id, golf_name: u.name, golf_at: t0, golf_dest: dest, golf_facility: dest === 'other' ? facility : null, golf_handed_at: null, golf_recv_at: null, golf_recv_by: null, ...sg,
     created_at: t0, paramedic_id: null, paramedic_uid: null, paramedic_name: null, second_paramedic_id: null, second_uid: null, second_paramedic_name: null, second_paramedic_other: 0, visa_type: null, chief_complaint: '', notes: null, patient_name: null, patient_id: null, source: null,
     timeline: [{ at: t0, status: 'golf', by: u.name }], status: 'golf', arrived_at: null, status_updated_at: null, status_updated_by: null, closed_at: null, archived: 0, archived_at: null, archived_by: null };
   DB.cases.push(cs); audit(u, 'golf_create', cs, { dest }); broadcast('created', cs);
@@ -1375,7 +1392,7 @@ add('POST', '/api/cases/:id/receive', ['paramedic', 'admin'], (c) => {
 });
 add('GET', '/api/golf/cases', ['golf', 'admin'], (c) => {
   const q = c.query, u = c.user;
-  let rows = DB.cases.filter((x) => x.golf && !x.deleted && (u.role !== 'golf' || x.golf_uid === u.uid));
+  let rows = DB.cases.filter((x) => x.golf && !x.deleted && (u.role !== 'golf' || x.golf_uid === u.uid || x.second_golf_uid === u.uid));
   if (isDate(q.from)) rows = rows.filter((x) => localDay(x.golf_at) >= q.from);
   if (isDate(q.to)) rows = rows.filter((x) => localDay(x.golf_at) <= q.to);
   if (q.golfer) rows = rows.filter((x) => String(x.golf_id) === String(q.golfer));
@@ -1388,6 +1405,7 @@ add('GET', '/api/golf/cases', ['golf', 'admin'], (c) => {
     k[x.golf_dest]++; if (x.status === 'golf') k.waiting++; if (x.status === 'golf_handed') k.awaiting++; if (gReached(x)) k.reached++;
     const p = per[x.golf_id] || (per[x.golf_id] = { name: x.golf_name, total: 0, ambulance: 0, clinic: 0, other: 0, reached: 0, ho: [] });
     p.total++; p[x.golf_dest]++; if (gReached(x)) p.reached++;
+    if (x.second_golf_id) { const p2 = per[x.second_golf_id] || (per[x.second_golf_id] = { name: x.second_golf_name, total: 0, ambulance: 0, clinic: 0, other: 0, reached: 0, ho: [] }); p2.total++; p2[x.golf_dest]++; if (gReached(x)) p2.reached++; }
     const a = gmin(x.golf_at, x.golf_handed_at); if (a !== null) { ho.push(a); p.ho.push(a); }
     const r = gmin(x.golf_handed_at, x.golf_recv_at); if (r !== null) rv.push(r);
     hour[+localKey(x.golf_at).slice(11, 13)]++;
@@ -1498,18 +1516,18 @@ async function attach() {
   const first = [];
   const listen = (col, wheres, opts) => { (spec[col] = Array.isArray(spec[col]) ? spec[col] : []).push({ wheres, opts }); const mem = new Set(); (MEM[col] = MEM[col] || []).push(mem); first.push(new Promise((res) => { let f = true; subs.push(FB.listen(col, wheres, opts, (chs) => { applyChanges(col, chs, f, mem); if (f) { f = false; res(); } }, (e) => { console.error(col, e); if (f) { f = false; res(); } })); })); };
   const listenDoc = (col, id) => { spec[col] = { doc: id }; first.push(new Promise((res) => { let f = true; subs.push(FB.listenDoc(col, id, (d) => { applyChanges(col, [{ type: d ? 'modified' : 'removed', id, data: d }], f); if (f) { f = false; res(); } }, (e) => { console.error(col, e); if (f) { f = false; res(); } })); })); };
-  const listenRoster = () => first.push(new Promise((res) => { let f = true; subs.push(FB.listenDoc('settings', 'main', (d) => { DB.roster = d && Array.isArray(d.roster) ? d.roster : []; if (f) { f = false; res(); } }, () => { if (f) { f = false; res(); } })); }));
+  const listenRoster = () => first.push(new Promise((res) => { let f = true; subs.push(FB.listenDoc('settings', 'main', (d) => { DB.roster = d && Array.isArray(d.roster) ? d.roster : []; DB.golfRoster = d && Array.isArray(d.golf_roster) ? d.golf_roster : []; if (f) { f = false; res(); } }, () => { if (f) { f = false; res(); } })); }));
   HIST_OK = false; PERF_OK = false;
   const listenPerf = () => first.push(new Promise((res) => { let f = true; subs.push(FB.listenDoc('settings', 'perf', (d) => { const nd = d ? { evals: d.evals && typeof d.evals === 'object' ? d.evals : {}, stars: d.stars && typeof d.stars === 'object' ? d.stars : {}, log: Array.isArray(d.log) ? d.log : [] } : { evals: {}, stars: {}, log: [] }; if (f || shadow['settings/perf'] === cj(DB.perf)) { DB.perf = nd; shadow['settings/perf'] = cj(nd); } PERF_OK = true; if (f) { f = false; res(); } }, (e) => { console.error('perf', e); if (f) { f = false; res(); } })); }));
   const listenHist = () => first.push(new Promise((res) => { let f = true; subs.push(FB.listenDoc('settings', 'hist', (d) => { const nd = d ? { records: Array.isArray(d.records) ? d.records : [], names: Array.isArray(d.names) ? d.names : [], log: Array.isArray(d.log) ? d.log : [] } : { records: [], names: [], log: [] }; if (f || shadow['settings/hist'] === cj(DB.hist)) { DB.hist = nd; shadow['settings/hist'] = cj(nd); } HIST_OK = true; if (f) { f = false; res(); } }, (e) => { console.error('hist', e); if (f) { f = false; res(); } })); }));
   if (prof.role === 'admin') {
     listenHist(); listenPerf();
     listen('users', []); listen('cases', []); listen('atts', []); listen('audit', [], { orderBy: ['ts', 'desc'], limit: 3000 });
-    first.push(new Promise((res) => { let f = true; subs.push(FB.listenDoc('settings', 'main', (d) => { if (d) { DB.settings = { archive_after_days: +d.archive_after_days || 30, auto_archive: !!d.auto_archive }; shadow['settings/main'] = cj({ ...DB.settings, roster: Array.isArray(d.roster) ? d.roster : [] }); } if (f) { f = false; res(); } }, () => { if (f) { f = false; res(); } })); }));
+    first.push(new Promise((res) => { let f = true; subs.push(FB.listenDoc('settings', 'main', (d) => { if (d) { DB.settings = { archive_after_days: +d.archive_after_days || 30, auto_archive: !!d.auto_archive }; shadow['settings/main'] = cj({ ...DB.settings, roster: Array.isArray(d.roster) ? d.roster : [], golf_roster: Array.isArray(d.golf_roster) ? d.golf_roster : [] }); } if (f) { f = false; res(); } }, () => { if (f) { f = false; res(); } })); }));
   } else if (prof.role === 'er') {
     listenDoc('users', au); listenRoster(); listen('cases', [['archived', '==', 0]]); listen('atts', []);
   } else if (prof.role === 'golf') {
-    listenDoc('users', au); listen('cases', [['golf_uid', '==', au], ['archived', '==', 0]]);
+    listenDoc('users', au); listenRoster(); listen('cases', [['golf_uid', '==', au], ['archived', '==', 0]]); listen('cases', [['second_golf_uid', '==', au], ['archived', '==', 0]]);
   } else {
     listenDoc('users', au); listenRoster(); listen('cases', [['status', '==', 'golf_handed'], ['archived', '==', 0]]); listen('cases', [['paramedic_uid', '==', au], ['archived', '==', 0]]); listen('atts', [['paramedic_uid', '==', au]]); listen('cases', [['second_uid', '==', au], ['archived', '==', 0]]); listen('atts', [['second_uid', '==', au]]);
   }
@@ -2253,24 +2271,28 @@ const gDestFull = (c) => gDestL(c.golf_dest) + (c.golf_dest === 'other' && c.gol
 function golfRows(c) {
   return `<dt>${esc(t('g_staff'))}</dt><dd>⛳ ${esc(c.golf_name || '')}</dd><dt>${esc(t('g_dest'))}</dt><dd>${esc(gDestFull(c))}</dd><dt>${esc(t('g_at'))}</dt><dd>${esc(fmtDT(c.golf_at))}</dd>${c.golf_handed_at ? `<dt>${esc(t('g_handed_at'))}</dt><dd>${esc(fmtDT(c.golf_handed_at))}</dd>` : ''}${c.golf_recv_at ? `<dt>${esc(t('g_recv_at'))}</dt><dd>${esc(fmtDT(c.golf_recv_at))} · ${esc(c.golf_recv_by || '')}</dd>` : ''}`;
 }
+const G2 = { lbl: () => (S.lang === 'en' ? 'Second paramedic' : 'المسعف الثاني'), opt: () => (S.lang === 'en' ? '(optional)' : '(اختياري)'), none: () => (S.lang === 'en' ? '— none —' : '— بدون —'), other: () => (S.lang === 'en' ? 'Other' : 'أخرى'), ph: () => (S.lang === 'en' ? 'Enter the second paramedic name' : 'اكتب اسم المسعف الثاني') };
 function gCard(c, extra) {
-  return `<div class="case s-${c.status}"><div class="case-h"><b>#${esc(c.case_number)}</b>${stB(c.status)}</div><div class="meta"><span>📍 ${esc(gDestFull(c))}</span><span>⛳ ${esc(c.golf_name || '')} · ${esc(fmtDT(c.golf_at))}</span>${c.golf_handed_at ? `<span>🤝 ${esc(fmtDT(c.golf_handed_at))}</span>` : ''}${c.golf_recv_by ? `<span>🚑 ${esc(c.golf_recv_by)} · ${esc(fmtDT(c.golf_recv_at))}</span>` : ''}</div>${extra || ''}</div>`;
+  return `<div class="case s-${c.status}"><div class="case-h"><b>#${esc(c.case_number)}</b>${stB(c.status)}</div><div class="meta"><span>📍 ${esc(gDestFull(c))}</span><span>⛳ ${esc(c.golf_name || '')} · ${esc(fmtDT(c.golf_at))}</span>${c.second_golf_name ? `<span>👥 ${esc(G2.lbl())}: ${esc(c.second_golf_name)}</span>` : ''}${c.golf_handed_at ? `<span>🤝 ${esc(fmtDT(c.golf_handed_at))}</span>` : ''}${c.golf_recv_by ? `<span>🚑 ${esc(c.golf_recv_by)} · ${esc(fmtDT(c.golf_recv_at))}</span>` : ''}</div>${extra || ''}</div>`;
 }
 const tickInto = (sel) => { const f = () => { const el = $(sel); if (el) el.value = fmtDT(new Date().toISOString()); }; f(); const iv = setInterval(() => { if (!$(sel)) clearInterval(iv); else f(); }, 20000); };
 VIEWS.golfnew = async (main) => {
+  let GR = []; try { GR = (await api('GET', '/api/golf/roster')).items; } catch (_) { GR = []; }
   main.innerHTML = `<h1>⛳ ${esc(t('nav_golfnew'))}</h1><form class="card" id="gf" style="max-width:640px">
   <label>${esc(t('f_case_number'))} *</label><input type="text" name="case_number" required maxlength="30" pattern="[A-Za-z0-9][A-Za-z0-9_\\/\\-]{0,29}" autocomplete="off">
   <label>${esc(t('g_dest'))} *</label><div class="gdest">${GDS.map((d) => `<label class="gopt"><input type="radio" name="dest" value="${d}" required> ${esc(gDestL(d))}</label>`).join('')}</div>
   <div id="gfac" hidden><label>${esc(t('g_facility'))}</label><input type="text" name="facility" maxlength="120" autocomplete="off" dir="auto"></div>
+  <label>${esc(G2.lbl())} <small>${esc(G2.opt())}</small></label><select name="second"><option value="">${esc(G2.none())}</option>${GR.map((r) => `<option value="${r.id}">${esc(r.name)}</option>`).join('')}<option value="other">${esc(G2.other())}</option></select><div id="gsec2" hidden><input type="text" name="second_other" maxlength="100" dir="auto" autocomplete="off" placeholder="${esc(G2.ph())}"></div>
   <label>${esc(t('g_staff'))} (${esc(t('f_auto'))})</label><input type="text" readonly value="${esc(S.user.name)}">
   <label>${esc(t('g_at'))} (${esc(t('f_auto'))})</label><input type="text" id="gdt" readonly>
   <div class="err-msg" id="ge"></div><button class="btn big" id="gb" style="margin-top:14px">${esc(t('g_submit'))}</button></form>`;
   tickInto('#gdt');
   const f = $('#gf');
   $$('input[name=dest]', f).forEach((r) => { r.onchange = () => { $('#gfac').hidden = f.dest.value !== 'other'; }; });
+  f.second.onchange = () => { const on = f.second.value === 'other'; $('#gsec2').hidden = !on; f.second_other.required = on; };
   f.onsubmit = async (e) => {
     e.preventDefault(); $('#ge').textContent = ''; const b = $('#gb'); b.disabled = true;
-    try { await api('POST', '/api/golf', { case_number: f.case_number.value.trim(), dest: f.dest.value, facility: f.facility.value }); toast(t('g_created'), 'ok'); S.view0 = 'golfmine'; route(); }
+    try { await api('POST', '/api/golf', { case_number: f.case_number.value.trim(), dest: f.dest.value, facility: f.facility.value, second: f.second.value, second_other: f.second_other.value }); toast(t('g_created'), 'ok'); S.view0 = 'golfmine'; route(); }
     catch (er) { $('#ge').textContent = errText(er); b.disabled = false; }
   };
 };

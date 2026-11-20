@@ -8,7 +8,7 @@
 <meta name="robots" content="noindex, nofollow">
 <title>Al Hayat EMS</title>
 <script>
-window.__BUILD='1794843911';
+window.__BUILD='1795158110';
 (function(){var B=window.__BUILD,busy=false;
 function idle(){var a=document.activeElement;return !(a&&/^(INPUT|TEXTAREA|SELECT)$/.test(a.tagName))&&!document.querySelector('.ovl');}
 async function chk(){if(busy||!idle())return;busy=true;try{var r=await fetch(location.pathname+'?_='+Date.now(),{cache:'no-store'});var t=await r.text();var m=t.match(/window\.__BUILD='([^']+)'/);
@@ -226,6 +226,79 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .g15top b{font-size:15px}
 @media (max-width:560px){.g15tr{grid-template-columns:78px 1fr 92px}}
 
+.annv{position:fixed;inset:0;z-index:95;background:rgba(8,18,38,.64);display:flex;align-items:center;justify-content:center;padding:14px;animation:annFade .25s ease;backdrop-filter:blur(2px)}
+.annv.out{opacity:0;transition:opacity .16s}
+@keyframes annFade{from{opacity:0}to{opacity:1}}
+@keyframes annPop{0%{opacity:0;transform:translateY(18px) scale(.94)}100%{opacity:1;transform:none}}
+.annc{position:relative;width:min(560px,100%);max-height:92vh;overflow:auto;background:#fff;border-radius:22px;box-shadow:0 24px 70px rgba(0,0,0,.42);animation:annPop .34s cubic-bezier(.2,.9,.3,1.1);-webkit-overflow-scrolling:touch;color:#14233c}
+.anh{display:flex;align-items:center;gap:10px;padding:15px 20px;font-weight:800;font-size:16px;color:#fff;background:linear-gradient(135deg,#0b5cab,#0b2545)}
+.ani{font-size:22px}
+.anb{padding:18px 22px 22px}
+.ann-t{margin:0 0 10px;font-size:22px;line-height:1.4}
+.ann-b{font-size:16px;line-height:1.85}
+.ann-b p{margin:0 0 10px}.ann-b ul{margin:0 0 10px;padding-inline-start:22px}
+.ann-2{margin-top:14px;padding-top:12px;border-top:1px dashed #c9d3e0;color:#4b5a70}
+.ann-img{display:block;max-width:100%;max-height:340px;margin:14px auto 0;border-radius:12px;box-shadow:0 4px 14px rgba(0,0,0,.18)}
+.ann-pdf{margin-top:12px}
+.ann-f{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.ann-f .btn{flex:1 1 140px}
+.ann-ok{margin-top:10px;color:#15733f;font-weight:700;font-size:14px}
+.ann-pv{margin-top:12px;text-align:center;font-size:13px;color:#b3121f;font-weight:700;background:#fdecee;border-radius:10px;padding:6px}
+.ann-person{text-align:center;margin:2px 0 12px}
+.ann-ph{width:104px;height:104px;border-radius:50%;object-fit:cover;border:4px solid #fff;box-shadow:0 4px 16px rgba(0,0,0,.28);display:block;margin:0 auto 8px}
+.ann-ph0{display:flex;align-items:center;justify-content:center;font-size:44px;background:#eef3fb}
+.ann-name{font-size:28px;font-weight:900;line-height:1.3}
+.ann-dept{font-size:15px;font-weight:700;opacity:.8;margin-top:2px}
+.k-alert .anh{background:linear-gradient(135deg,#e2342f,#a3121c)}.k-alert .ani{animation:annShake 1.4s infinite}
+.k-alert .annc{border:2px solid #e2342f}
+@keyframes annShake{0%,100%{transform:none}10%,30%{transform:rotate(-12deg)}20%,40%{transform:rotate(12deg)}50%{transform:none}}
+.k-circular .anh{background:linear-gradient(135deg,#0b2545,#143a6b);border-bottom:4px solid #c9a227}
+.k-circular .ann-t{border-inline-start:5px solid #c9a227;padding-inline-start:10px}
+.k-personal .anh{background:linear-gradient(135deg,#3b82c4,#1d4f8f)}
+.k-thanks .annc{background:#fffaf0;border:3px double #c9a227}
+.k-thanks .anh{background:linear-gradient(135deg,#a8791a,#7a5710)}
+.k-thanks .ann-t,.k-thanks .ann-name{font-family:Georgia,'Amiri','Times New Roman',serif;text-align:center}
+.k-thanks .ann-t{font-size:24px;color:#7a5710}
+.k-congrats .anh{background:linear-gradient(135deg,#7c3aed,#0ea5a4)}
+.k-congrats .annc{background:radial-gradient(circle at 12% 8%,#f3e8ff 0,transparent 32%),radial-gradient(circle at 90% 90%,#d5f6f4 0,transparent 34%),#fff}
+.k-employee_month .annc{background:radial-gradient(ellipse at 50% 0,#1d3f73 0,#0b2545 58%,#06172f 100%);color:#fff;border:2px solid #d4a017;box-shadow:0 24px 80px rgba(212,160,23,.35),0 24px 70px rgba(0,0,0,.5)}
+.k-employee_month .ann-b{color:#e9eef8;background:rgba(255,255,255,.07);border-radius:14px;padding:12px 16px}
+.k-employee_month .ann-t{color:#f7d774;text-align:center;font-size:18px}
+.k-employee_month .ann-name{background:linear-gradient(90deg,#f7d774,#ffe9a0,#d4a017,#f7d774);-webkit-background-clip:text;background-clip:text;color:transparent;font-size:34px;text-shadow:none}
+.k-employee_month .ann-dept{color:#cfd9ec}
+.k-employee_month .ann-ph{border-color:#d4a017;box-shadow:0 0 0 4px rgba(212,160,23,.25),0 0 26px rgba(247,215,116,.55);width:116px;height:116px}
+.k-employee_month .ann-2{color:#cfd9ec;border-color:rgba(255,255,255,.25)}
+.k-employee_month .ann-ok{color:#9ae6b4}
+.k-employee_month .ann-f .btn.sec{background:rgba(255,255,255,.12);color:#fff;border-color:rgba(255,255,255,.3)}
+.ann-top{text-align:center;padding:22px 20px 4px;position:relative}
+.ann-star{width:96px;height:92px;filter:drop-shadow(0 0 14px rgba(247,215,116,.85));animation:annStar 2.6s ease-in-out infinite}
+@keyframes annStar{0%,100%{transform:scale(1) rotate(0);filter:drop-shadow(0 0 10px rgba(247,215,116,.6))}50%{transform:scale(1.08) rotate(-3deg);filter:drop-shadow(0 0 22px rgba(247,215,116,1))}}
+.ann-kt{font-size:30px;font-weight:900;color:#f7d774;margin-top:6px;letter-spacing:.3px}
+.ann-mon{font-size:13px;color:#cfd9ec;font-weight:700;margin-top:2px}
+.ann-sp{position:absolute;inset:0;pointer-events:none;overflow:hidden;border-radius:22px}
+.sp{position:absolute;left:var(--x);top:var(--y);font-style:normal;font-size:var(--s,14px);color:#f7d774;opacity:0;animation:annTw 2.8s ease-in-out infinite var(--d)}
+@keyframes annTw{0%,100%{opacity:0;transform:scale(.3) rotate(0)}50%{opacity:1;transform:scale(1) rotate(30deg)}}
+@media (prefers-reduced-motion:reduce){.annv,.annc,.annv *{animation:none!important}}
+.an-card{margin-bottom:12px}
+.ann-lk{font-size:13px;font-weight:700;color:#4b5a70}
+.ann-lt{font-size:17px}
+.an-bar{height:8px;border-radius:5px;background:#e8ecf2;overflow:hidden;margin-top:6px;direction:ltr}.an-bar span{display:block;height:8px;background:linear-gradient(90deg,#1e9e5a,#16a085)}
+.an-nums{display:flex;gap:16px;font-weight:700;font-size:14px;margin-top:6px;color:#34445c}
+.an-st.an-ok{background:#e3f6ea;color:#15733f}.an-st.an-warn{background:#fff3d6;color:#8a5a00}.an-st.an-gray{background:#eceff4;color:#4b5a70}.an-st.an-bad{background:#fde8ea;color:#b3121f}
+.an-kinds{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:4px 0 8px}
+.an-k{display:block;margin:0;cursor:pointer}.an-k input{position:absolute;opacity:0;pointer-events:none}
+.an-k span{display:block;border:2px solid #d5dde8;border-radius:12px;padding:12px;font-weight:700;background:#fff;text-align:center}
+.an-k input:checked+span{border-color:#0b2545;background:#eef5ff;box-shadow:0 0 0 3px rgba(11,37,69,.12)}
+.an-k.k-employee_month input:checked+span{border-color:#d4a017;background:#fff8e1}
+.an-k.k-alert input:checked+span{border-color:#d9232e;background:#fdecee}
+.an-modes{display:grid;gap:8px;margin:4px 0 8px}
+.an-people{max-height:220px;overflow:auto;border:1.5px solid #d5dde8;border-radius:12px;padding:6px;margin-top:6px;background:#fff}
+.an-p{display:flex;align-items:center;gap:8px;padding:8px;margin:0;border-bottom:1px solid #eef1f6;font-weight:600}.an-p input{width:20px;height:20px;margin:0}
+.an-tb{display:flex;gap:6px;margin-bottom:6px}
+.an-form details summary{cursor:pointer;font-weight:700;color:#0b5cab}
+.k-employee_month .ann-f .btn:not(.sec){background:linear-gradient(135deg,#f7d774,#d4a017);color:#3a2a00;border:0;font-weight:800}
+.an-flt{display:grid;gap:8px 12px;grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}.an-flt input,.an-flt select{width:100%;box-sizing:border-box}
+
 </style>
 </head>
 <body>
@@ -408,6 +481,9 @@ Object.assign(I18N.en,{nav_perf:'Engagement & Performance',nav_golfday:'Golf Dai
 Object.assign(I18N.ar,{err_golf_team_required:'اختر الفرقة (D1 إلى E3)',err_golf_hosp_required:'اختر جهة نقل الحالة (مستشفى خاص أو حكومي)',a_golf_meta:'تعديل فرقة/جهة نقل بلاغ قولف'});
 Object.assign(I18N.en,{err_golf_team_required:'Select the team (D1 to E3)',err_golf_hosp_required:'Select the transfer destination (private or government hospital)',a_golf_meta:'Golf case team/destination edited'});
 
+Object.assign(I18N.ar,{nav_anns:'الإعلانات والتنبيهات العامة',nav_myanns:'الإعلانات',err_ann_title_required:'اكتب عنوان الإعلان',err_ann_body_required:'اكتب نص الإعلان',err_ann_no_audience:'حدّد المستهدفين بالإعلان',err_ann_bad_dates:'التواريخ غير صحيحة (النهاية بعد البداية)',err_ann_end_required:'حدّد تاريخ النهاية للمدة المحددة',err_ann_bad_file:'ملف غير مدعوم (صورة أو PDF فقط)',err_ann_too_big:'حجم المرفقات كبير، صغّر الصورة أو الملف',err_ann_nobody_to_resend:'لا يوجد من يحتاج إعادة الإرسال',a_ann_publish:'نشر إعلان',a_ann_edit:'تعديل إعلان',a_ann_stop:'إيقاف إعلان',a_ann_resume:'استئناف إعلان',a_ann_delete:'حذف إعلان',a_ann_restore:'استعادة إعلان',a_ann_resend:'إعادة إرسال إعلان'});
+Object.assign(I18N.en,{nav_anns:'Announcements & Alerts',nav_myanns:'Announcements',err_ann_title_required:'Enter a title',err_ann_body_required:'Enter the message',err_ann_no_audience:'Choose who the announcement is for',err_ann_bad_dates:'Invalid dates (end must be after start)',err_ann_end_required:'Set an end date for a timed announcement',err_ann_bad_file:'Unsupported file (image or PDF only)',err_ann_too_big:'Attachments are too large; use a smaller image or file',err_ann_nobody_to_resend:'Nobody needs a resend',a_ann_publish:'Announcement published',a_ann_edit:'Announcement edited',a_ann_stop:'Announcement stopped',a_ann_resume:'Announcement resumed',a_ann_delete:'Announcement deleted',a_ann_restore:'Announcement restored',a_ann_resend:'Announcement resent'});
+
 </script>
 <script>
 
@@ -484,7 +560,7 @@ const ROLES = ['paramedic', 'er', 'admin', 'golf'];
 const GST = ['golf', 'golf_handed', 'golf_recv', 'golf_done'], GDEST = ['ambulance', 'clinic', 'other'];
 let DB, cur = null, FB = null, authUid = null, READY = null, subs = [], spec = {}, DATA = {}, PEND = [], lastU = 0;
 const shadow = {}, MEM = {};
-const emptyDB = () => ({ users: [], cases: [], atts: [], audit: [], roster: [], settings: { archive_after_days: 30, auto_archive: true }, hist: { records: [], names: [], log: [] }, perf: { evals: {}, stars: {}, log: [] }, golfRoster: [] });
+const emptyDB = () => ({ users: [], cases: [], atts: [], audit: [], roster: [], settings: { archive_after_days: 30, auto_archive: true }, hist: { records: [], names: [], log: [] }, perf: { evals: {}, stars: {}, log: [] }, golfRoster: [], anns: [], annbox: [] });
 DB = emptyDB();
 const uid = () => { let v = Math.floor((Date.now() - 1.7e12) / 10) * 100 + Math.floor(Math.random() * 100); if (v <= lastU) v = lastU + 1; lastU = v; return v; };
 const nowIso = () => new Date().toISOString();
@@ -1312,6 +1388,162 @@ add('POST', '/api/golf/:id/meta', ['admin'], async (c) => {
   return { case: gOut(cs) };
 });
 
+
+// ===================== v16: announcements & alerts =====================
+const AKINDS = ['general', 'circular', 'alert', 'employee_month', 'thanks', 'congrats', 'personal'];
+const AFREQ = ['once', 'every', 'until_ack', 'timed'], AMODES = ['all', 'one', 'many', 'dept'];
+const AROLES = ['admin', 'er', 'paramedic', 'golf'];
+const ANNC = {};
+const annId = () => 'a' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+const tms = (s) => (s ? Date.parse(s) : NaN);
+function annState(a) {
+  if (a.deleted) return 'deleted'; if (a.status === 'paused') return 'paused';
+  const n = Date.now(); if (tms(a.start_at) > n) return 'scheduled'; if (a.end_at && tms(a.end_at) < n) return 'expired'; return 'active';
+}
+function annAudience(a) {
+  const us = DB.users.filter((u) => u.active && u.uid && AROLES.includes(u.role));
+  if (a.aud_mode === 'all') return us;
+  if (a.aud_mode === 'dept') return us.filter((u) => (a.aud_roles || []).includes(u.role));
+  return us.filter((u) => (a.aud_uids || []).includes(u.uid));
+}
+const boxCopy = (a) => ({ title: a.title || a.title_en || '', kind: a.kind, start_at: a.start_at, end_at: a.end_at || null, freq: a.freq, require_ack: a.require_ack ? 1 : 0, status: a.status, deleted: a.deleted ? 1 : 0, ver: a.ver });
+function syncBoxes(a, create) {
+  const aud = annAudience(a), want = new Set(aud.map((u) => u.uid)), now = nowIso();
+  const mine = DB.annbox.filter((b) => b.ann_id === a.id);
+  mine.forEach((b) => { const keep = want.has(b.uid); Object.assign(b, boxCopy(a), { removed: keep ? 0 : 1 }); });
+  let added = 0;
+  aud.forEach((u) => { if (mine.some((b) => b.uid === u.uid)) return; added++; DB.annbox.push({ id: a.id + '_' + u.uid, ann_id: a.id, uid: u.uid, user_id: u.id, name: u.name, role: u.role, emp_no: u.emp_no || '', ...boxCopy(a), removed: 0, delivered_at: now, resend_at: null, resend_seen: null, views: 0, first_seen_at: null, last_seen_at: null, closed_at: null, ack_at: null }); });
+  return { added, total: aud.length };
+}
+function annStats(a) {
+  const bs = DB.annbox.filter((b) => b.ann_id === a.id && !b.removed);
+  const seen = bs.filter((b) => b.first_seen_at).length, acked = bs.filter((b) => b.ack_at).length;
+  return { targeted: bs.length, seen, acked, pending: a.require_ack ? bs.length - acked : null, unseen: bs.length - seen };
+}
+const annRow = (a) => ({ id: a.id, title: a.title, title_en: a.title_en || '', kind: a.kind, status: a.status, state: annState(a), start_at: a.start_at, end_at: a.end_at || null, freq: a.freq, require_ack: a.require_ack ? 1 : 0, aud_mode: a.aud_mode, aud_roles: a.aud_roles || [], created_at: a.created_at, created_by: a.created_by, person_name: a.person_name || '', has_img: a.img ? 1 : 0, has_pdf: a.pdf ? 1 : 0, has_photo: a.photo ? 1 : 0, resend_at: a.resend_at || null, stats: annStats(a) });
+function annClean(b, old) {
+  const kind = AKINDS.includes(b.kind) ? b.kind : 'general';
+  const title = clip(b.title, 120), title_en = clip(b.title_en, 120), body = clip(b.body, 4000), body_en = clip(b.body_en, 4000);
+  const person_name = clip(b.person_name, 100), person_dept = clip(b.person_dept, 100);
+  if (!title && !title_en) throw bad('ann_title_required');
+  if (!body && !body_en && !person_name) throw bad('ann_body_required');
+  const mode = AMODES.includes(b.aud_mode) ? b.aud_mode : 'all';
+  const aud_uids = Array.isArray(b.aud_uids) ? [...new Set(b.aud_uids.map((x) => clip(x, 60)).filter(Boolean))].slice(0, 300) : [];
+  const aud_roles = Array.isArray(b.aud_roles) ? [...new Set(b.aud_roles.filter((r) => AROLES.includes(r)))] : [];
+  if (mode === 'one' && aud_uids.length !== 1) throw bad('ann_no_audience');
+  if (mode === 'many' && !aud_uids.length) throw bad('ann_no_audience');
+  if (mode === 'dept' && !aud_roles.length) throw bad('ann_no_audience');
+  const freq = AFREQ.includes(b.freq) ? b.freq : 'once';
+  const require_ack = (freq === 'until_ack' || b.require_ack) ? 1 : 0;
+  const now = Date.now();
+  const iso = (v) => { const d = new Date(v); if (Number.isNaN(d.getTime())) throw bad('ann_bad_dates'); return d.toISOString(); };
+  const start_at = b.start_at ? iso(b.start_at) : (old ? old.start_at : new Date(now - 1000).toISOString());
+  const end_at = b.end_at ? iso(b.end_at) : null;
+  if (end_at && tms(end_at) <= tms(start_at)) throw bad('ann_bad_dates');
+  if (freq === 'timed' && !end_at) throw bad('ann_end_required');
+  const okU = (s, re) => !s || (typeof s === 'string' && re.test(s.slice(0, 40)));
+  const img = b.img ? String(b.img) : '', photo = b.photo ? String(b.photo) : '', pdf = b.pdf ? String(b.pdf) : '';
+  if (!okU(img, /^data:image\/(jpeg|png|webp);base64,/) || !okU(photo, /^data:image\/(jpeg|png|webp);base64,/) || !okU(pdf, /^data:application\/pdf;base64,/)) throw bad('ann_bad_file');
+  if (img.length > 480000 || photo.length > 200000 || pdf.length > 600000 || img.length + photo.length + pdf.length + body.length + body_en.length > 900000) throw bad('ann_too_big');
+  return { kind, title, title_en, body, body_en, person_name, person_dept, person_uid: clip(b.person_uid, 60), aud_mode: mode, aud_uids: mode === 'one' || mode === 'many' ? aud_uids : [], aud_roles: mode === 'dept' ? aud_roles : [], freq, require_ack, start_at, end_at, img, photo, pdf, pdf_name: pdf ? clip(b.pdf_name, 80) || 'file.pdf' : '' };
+}
+async function commitAnn(id, n) {
+  await flushNow();
+  const ok = DB.anns.some((x) => x.id === id) && DB.annbox.filter((b) => b.ann_id === id).length >= (n || 0);
+  if (!ok) throw E(503, 'save_failed');
+}
+add('GET', '/api/anns/users', ['admin'], () => ({ items: DB.users.filter((u) => u.active && u.uid && AROLES.includes(u.role)).map((u) => ({ id: u.id, uid: u.uid, name: u.name, role: u.role })).sort((a, b) => (a.role + a.name).localeCompare(b.role + b.name)) }));
+add('GET', '/api/anns', ['admin'], () => ({ items: [...DB.anns].sort((a, b) => (a.created_at < b.created_at ? 1 : -1)).map(annRow), now: nowIso() }));
+add('GET', '/api/anns/mine', ['admin', 'er', 'paramedic', 'golf'], async (c) => {
+  const me = c.user, shown = new Set(String(c.query.shown || '').split(',').filter(Boolean));
+  const mine = DB.annbox.filter((b) => b.uid === me.uid && !b.removed && !b.deleted);
+  const live = (b) => b.status === 'active' && tms(b.start_at) <= Date.now() && !(b.end_at && tms(b.end_at) < Date.now());
+  const due = mine.filter((b) => {
+    if (!live(b) || shown.has(b.ann_id)) return false;
+    if (b.resend_at && b.resend_at > (b.resend_seen || '')) return true;
+    if (b.require_ack && b.ack_at) return false;
+    if (b.freq === 'once') return !b.first_seen_at;
+    if (b.freq === 'until_ack') return !b.ack_at;
+    return true;
+  });
+  const pr = { alert: 0, circular: 1, personal: 2, employee_month: 3, thanks: 4, congrats: 5, general: 6 };
+  due.sort((x, y) => (pr[x.kind] - pr[y.kind]) || (tms(x.start_at) - tms(y.start_at)));
+  const out = [];
+  for (const b of due.slice(0, 6)) {
+    let a = me.role === 'admin' ? DB.anns.find((x) => x.id === b.ann_id) : null;
+    if (!a) { const ch = ANNC[b.ann_id]; if (ch && ch.ver === b.ver) a = ch.data; else { try { a = await FB.get('anns', b.ann_id); } catch (_) { a = null; } if (a) ANNC[b.ann_id] = { ver: b.ver, data: a }; } }
+    if (!a) continue;
+    out.push({ ...a, box: { ack_at: b.ack_at, closed_at: b.closed_at, resend: b.resend_at && b.resend_at > (b.resend_seen || '') ? 1 : 0 } });
+  }
+  const list = mine.filter((b) => tms(b.start_at) <= Date.now()).sort((x, y) => (x.start_at < y.start_at ? 1 : -1)).slice(0, 80).map((b) => ({ id: b.ann_id, title: b.title, kind: b.kind, start_at: b.start_at, end_at: b.end_at, require_ack: b.require_ack, ack_at: b.ack_at, closed_at: b.closed_at, first_seen_at: b.first_seen_at, live: live(b) ? 1 : 0 }));
+  return { due: out, list, unread: mine.filter((b) => live(b) && b.require_ack && !b.ack_at).length };
+});
+add('GET', '/api/anns/open/:id', ['admin', 'er', 'paramedic', 'golf'], async (c) => {
+  const b = DB.annbox.find((x) => x.id === c.params.id + '_' + c.user.uid);
+  if (!b || b.removed || b.deleted || tms(b.start_at) > Date.now()) throw E(404, 'not_found');
+  let a = c.user.role === 'admin' ? DB.anns.find((x) => x.id === b.ann_id) : null;
+  if (!a) { const ch = ANNC[b.ann_id]; if (ch && ch.ver === b.ver) a = ch.data; else { a = await FB.get('anns', b.ann_id); if (a) ANNC[b.ann_id] = { ver: b.ver, data: a }; } }
+  if (!a) throw E(404, 'not_found');
+  return { ann: { ...a, box: { ack_at: b.ack_at, closed_at: b.closed_at } } };
+});
+add('GET', '/api/anns/find', ['admin'], (c) => {
+  const q = clip(c.query.q, 60).toLowerCase(); if (!q) return { ids: [] };
+  return { ids: [...new Set(DB.annbox.filter((b) => !b.removed && String(b.name || '').toLowerCase().includes(q)).map((b) => b.ann_id))] };
+});
+add('GET', '/api/anns/:id', ['admin'], (c) => { const a = DB.anns.find((x) => x.id === c.params.id); if (!a) throw E(404, 'not_found'); return { ann: a, row: annRow(a) }; });
+add('GET', '/api/anns/:id/detail', ['admin'], (c) => {
+  const a = DB.anns.find((x) => x.id === c.params.id); if (!a) throw E(404, 'not_found');
+  const rows = DB.annbox.filter((b) => b.ann_id === a.id && !b.removed).map((b) => ({ uid: b.uid, name: b.name, role: b.role, emp_no: b.emp_no || '', views: b.views || 0, first_seen_at: b.first_seen_at, last_seen_at: b.last_seen_at, closed_at: b.closed_at, ack_at: b.ack_at })).sort((x, y) => (x.role + x.name).localeCompare(y.role + y.name));
+  return { row: annRow(a), rows, log: (a.log || []).slice(-30).reverse() };
+});
+add('POST', '/api/anns', ['admin'], async (c) => {
+  const f = annClean(c.body || {}, null), id = annId(), t = nowIso();
+  const a = { id, ...f, status: 'active', deleted: 0, ver: 1, created_at: t, created_by: c.user.name, created_by_id: c.user.id, updated_at: t, resend_at: null, log: [{ at: t, by: c.user.name, act: 'publish' }] };
+  DB.anns.push(a); const r = syncBoxes(a, true);
+  if (!r.total) { DB.anns = DB.anns.filter((x) => x.id !== id); throw bad('ann_no_audience'); }
+  audit(c.user, 'ann_publish', null, { id, title: a.title || a.title_en, kind: a.kind, targeted: r.total });
+  await commitAnn(id, r.total); emit('sync'); return { ann: annRow(a) };
+});
+add('PUT', '/api/anns/:id', ['admin'], async (c) => {
+  const a = DB.anns.find((x) => x.id === c.params.id); if (!a) throw E(404, 'not_found');
+  const f = annClean(c.body || {}, a), t = nowIso();
+  Object.assign(a, f, { ver: (a.ver || 1) + 1, updated_at: t, log: (a.log || []).concat([{ at: t, by: c.user.name, act: 'edit' }]).slice(-40) });
+  const r = syncBoxes(a, false);
+  if (!r.total) throw bad('ann_no_audience');
+  audit(c.user, 'ann_edit', null, { id: a.id, title: a.title || a.title_en });
+  await commitAnn(a.id, r.total); emit('sync'); return { ann: annRow(a) };
+});
+const annAct = (act, fn) => add('POST', '/api/anns/:id/' + act, ['admin'], async (c) => {
+  const a = DB.anns.find((x) => x.id === c.params.id); if (!a) throw E(404, 'not_found');
+  const t = nowIso(); fn(a, c); a.ver = (a.ver || 1) + 1; a.updated_at = t; a.log = (a.log || []).concat([{ at: t, by: c.user.name, act }]).slice(-40);
+  syncBoxes(a, false); audit(c.user, 'ann_' + act, null, { id: a.id, title: a.title || a.title_en });
+  await commitAnn(a.id, 0); emit('sync'); return { ann: annRow(a) };
+});
+annAct('stop', (a) => { a.status = 'paused'; });
+annAct('resume', (a) => { a.status = 'active'; });
+annAct('delete', (a) => { a.deleted = 1; });
+annAct('restore', (a) => { a.deleted = 0; });
+add('POST', '/api/anns/:id/resend', ['admin'], async (c) => {
+  const a = DB.anns.find((x) => x.id === c.params.id); if (!a) throw E(404, 'not_found');
+  const only = Array.isArray((c.body || {}).uids) ? new Set(c.body.uids) : null, t = nowIso();
+  const tg = DB.annbox.filter((b) => b.ann_id === a.id && !b.removed && (only ? only.has(b.uid) : (a.require_ack ? !b.ack_at : !b.first_seen_at)));
+  if (!tg.length) throw bad('ann_nobody_to_resend');
+  tg.forEach((b) => { b.resend_at = t; });
+  a.log = (a.log || []).concat([{ at: t, by: c.user.name, act: 'resend', n: tg.length }]).slice(-40); a.resend_at = t; a.updated_at = t;
+  audit(c.user, 'ann_resend', null, { id: a.id, title: a.title || a.title_en, n: tg.length });
+  await commitAnn(a.id, 0); emit('sync'); return { n: tg.length };
+});
+const myBox = (c) => { const b = DB.annbox.find((x) => x.id === c.params.id + '_' + c.user.uid); if (!b || b.removed || b.deleted) throw E(404, 'not_found'); return b; };
+add('POST', '/api/anns/:id/seen', ['admin', 'er', 'paramedic', 'golf'], (c) => {
+  const b = myBox(c), t = nowIso(); b.views = (b.views || 0) + 1; b.first_seen_at = b.first_seen_at || t; b.last_seen_at = t; if (b.resend_at) b.resend_seen = b.resend_at;
+  flush(); return { ok: 1 };
+});
+add('POST', '/api/anns/:id/close', ['admin', 'er', 'paramedic', 'golf'], (c) => { const b = myBox(c); b.closed_at = nowIso(); flush(); return { ok: 1 }; });
+add('POST', '/api/anns/:id/ack', ['admin', 'er', 'paramedic', 'golf'], async (c) => {
+  const b = myBox(c), t = nowIso(); if (!b.ack_at) { b.ack_at = t; b.closed_at = b.closed_at || t; b.first_seen_at = b.first_seen_at || t; }
+  await flushNow(); if (!DB.annbox.find((x) => x.id === b.id && x.ack_at)) throw E(503, 'save_failed'); return { ok: 1, ack_at: b.ack_at };
+});
+
 add('GET', '/api/report', ['admin', 'er'], (c) => {
   const q = c.query, arch = q.archived === '1' ? true : q.archived === '0' ? false : undefined;
   const items = sortCases(DB.cases.filter(filt(q, c.user, arch)), 'desc').slice(0, 5000).map(out);
@@ -1493,7 +1725,7 @@ window.fetch = async (url, opt = {}) => {
 
 const cj = (o) => JSON.stringify(o, (k, v) => (v && typeof v === 'object' && !Array.isArray(v) ? Object.fromEntries(Object.entries(v).sort(([a], [b]) => (a < b ? -1 : 1))) : v));
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
-const COLS = ['users', 'cases', 'atts', 'audit'];
+const COLS = ['users', 'cases', 'atts', 'audit', 'anns', 'annbox'];
 const docKey = (col, it) => (col === 'users' ? it.uid : String(it.id));
 const curUser = () => (cur ? DB.users.find((x) => x.id === cur) : null);
 function emit(type, c) {
@@ -1513,7 +1745,7 @@ function applyChanges(col, changes, initial, mem) {
     if (i >= 0) DB[col][i] = obj; else DB[col].push(obj);
     shadow[key] = js;
     if (initial) continue;
-    if (col === 'cases' && obj.ofac) emit('sync'); else if (col === 'cases') emit(!prev || (GST.includes(prev.status) && obj.status === 'new') ? 'created' : prev.status !== obj.status ? 'status' : 'updated', obj); else emit('sync');
+    if (col === 'cases' && obj.ofac) emit('sync'); else if (col === 'cases') emit(!prev || (GST.includes(prev.status) && obj.status === 'new') ? 'created' : prev.status !== obj.status ? 'status' : 'updated', obj); else if (col === 'anns' || col === 'annbox') window.dispatchEvent(new CustomEvent('ems-anns')); else emit('sync');
   }
 }
 async function pool(jobs, n) {
@@ -1575,7 +1807,7 @@ async function attach() {
   const listenHist = () => first.push(new Promise((res) => { let f = true; subs.push(FB.listenDoc('settings', 'hist', (d) => { const nd = d ? { records: Array.isArray(d.records) ? d.records : [], names: Array.isArray(d.names) ? d.names : [], log: Array.isArray(d.log) ? d.log : [] } : { records: [], names: [], log: [] }; if (f || shadow['settings/hist'] === cj(DB.hist)) { DB.hist = nd; shadow['settings/hist'] = cj(nd); } HIST_OK = true; if (f) { f = false; res(); } }, (e) => { console.error('hist', e); if (f) { f = false; res(); } })); }));
   if (prof.role === 'admin') {
     listenHist(); listenPerf();
-    listen('users', []); listen('cases', []); listen('atts', []); listen('audit', [], { orderBy: ['ts', 'desc'], limit: 3000 });
+    listen('users', []); listen('cases', []); listen('atts', []); listen('audit', [], { orderBy: ['ts', 'desc'], limit: 3000 }); listen('anns', []); listen('annbox', []);
     first.push(new Promise((res) => { let f = true; subs.push(FB.listenDoc('settings', 'main', (d) => { if (d) { DB.settings = { archive_after_days: +d.archive_after_days || 30, auto_archive: !!d.auto_archive }; shadow['settings/main'] = cj({ ...DB.settings, roster: Array.isArray(d.roster) ? d.roster : [], golf_roster: Array.isArray(d.golf_roster) ? d.golf_roster : [] }); } if (f) { f = false; res(); } }, () => { if (f) { f = false; res(); } })); }));
   } else if (prof.role === 'er') {
     listenDoc('users', au); listenRoster(); listen('cases', [['archived', '==', 0]]); listen('atts', []);
@@ -1584,6 +1816,7 @@ async function attach() {
   } else {
     listenDoc('users', au); listenRoster(); listen('cases', [['status', '==', 'golf_handed'], ['archived', '==', 0]]); listen('cases', [['paramedic_uid', '==', au], ['archived', '==', 0]]); listen('atts', [['paramedic_uid', '==', au]]); listen('cases', [['second_uid', '==', au], ['archived', '==', 0]]); listen('atts', [['second_uid', '==', au]]);
   }
+  if (prof.role !== 'admin') listen('annbox', [['uid', '==', au]]);
   await Promise.race([Promise.all(first), sleep(20000)]);
   const me = DB.users.find((x) => x.uid === au); if (!me) { detach(); return null; }
   if (!me.id) { me.id = uid(); me.uid = au; delete shadow['users/' + au]; }
@@ -1747,7 +1980,7 @@ async function dataCheck() {
 const srcL = (v) => v ? t('src_' + v) : '—';
 const VIS = ['Umrah', 'Tourist', 'Visit', 'Resident', 'Saudi', 'Unknown', 'Other'];
 const STS = ['new', 'received', 'discharged', 'admitted', 'icu', 'picu', 'cathlab', 'deceased'];
-const NAV = { paramedic: ['new', 'ofac', 'golfin', 'mine', 'status'], er: ['incoming', 'tracking', 'update', 'census'], admin: ['overview', 'cases', 'stats', 'saudit', 'links', 'perf', 'deleted', 'annual', 'histarch', 'ofacadm', 'golf', 'reports', 'users', 'archive', 'audit', 'settings'], golf: ['golfnew', 'golfmine'] };
+const NAV = { paramedic: ['new', 'ofac', 'golfin', 'mine', 'status', 'myanns'], er: ['incoming', 'tracking', 'update', 'census', 'myanns'], admin: ['overview', 'cases', 'stats', 'saudit', 'links', 'anns', 'perf', 'deleted', 'annual', 'histarch', 'ofacadm', 'golf', 'reports', 'users', 'archive', 'audit', 'settings'], golf: ['golfnew', 'golfmine', 'myanns'] };
 const t = (k) => D[S.lang][k] ?? D.en[k] ?? k;
 const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const $ = (s, r = document) => r.querySelector(s);
@@ -1852,7 +2085,7 @@ async function start() {
   if (!S.user) return showLogin();
   if (S.user.blocked) return showSetup();
   try { S.meta = await api('GET', '/api/meta'); } catch (e) { return showLogin(); }
-  renderShell(); connectEvents(); route();
+  renderShell(); connectEvents(); route(); ANN.begin();
 }
 function renderShell() {
   applyLang();
@@ -3698,6 +3931,278 @@ VIEWS.golf = G15.view;
     const g = main.querySelector('#cgB'); if (g) g.onclick = () => { const v = main.querySelector('#cgD').value; if (v) G15.generate(v, g); };
   };
 }
+
+// ===================== v16: announcements & alerts (admin page + popup for users) =====================
+const ANN = (() => {
+  const en = () => S.lang === 'en';
+  const X = (a, e) => (en() ? e : a);
+  const KINDS = ['general', 'circular', 'alert', 'employee_month', 'thanks', 'congrats', 'personal'];
+  const KL = { general: ['إعلان عام', 'General announcement', '📢'], circular: ['تعميم إداري', 'Administrative circular', '📑'], alert: ['تنبيه مهم', 'Important alert', '⚠️'], employee_month: ['موظف الشهر', 'Employee of the Month', '⭐'], thanks: ['شهادة شكر وتقدير', 'Certificate of appreciation', '🏅'], congrats: ['رسالة تهنئة أو تحفيز', 'Congratulations', '🎉'], personal: ['إشعار خاص بموظف', 'Personal notice', '✉️'] };
+  const kl = (k) => (KL[k] || KL.general)[en() ? 1 : 0];
+  const ki = (k) => (KL[k] || KL.general)[2];
+  const DEPT = { admin: ['الإدارة', 'Administration'], er: ['الطوارئ والاستقبال', 'ER & Reception'], paramedic: ['الإسعاف', 'Paramedics'], golf: ['القولف', 'Golf teams'] };
+  const dl = (r) => (DEPT[r] ? DEPT[r][en() ? 1 : 0] : r);
+  const HOSP = 'مستشفى الحياة - المدينة المنورة';
+  const TPL = {
+    employee_month: [`يسر ${HOSP} أن يتقدم بخالص الشكر والتقدير للموظف المتميز، تقديرًا لجهوده وتفاعله المستمر وحرصه على تطوير جودة العمل والمساهمة في تحقيق أهداف الفريق.\n\nمع تمنياتنا له بمزيد من النجاح والتميز.`, `Al Hayat Hospital - Al Madinah Al Munawwarah is pleased to extend its sincere thanks and appreciation to our outstanding employee, in recognition of their efforts, continuous engagement and commitment to improving the quality of work and helping the team achieve its goals.\n\nWe wish them continued success and excellence.`],
+    thanks: [`تتقدم إدارة ${HOSP} بخالص الشكر والتقدير لجهودكم المتميزة وإخلاصكم في أداء العمل، سائلين الله لكم دوام التوفيق.`, `The management of Al Hayat Hospital - Al Madinah Al Munawwarah extends its sincere thanks and appreciation for your outstanding efforts and dedication.`],
+    congrats: [`نبارك لكم هذا الإنجاز، ونتمنى لكم دوام التوفيق والتميز.`, `Congratulations on this achievement. We wish you continued success and excellence.`],
+    circular: [`يُرجى الاطلاع على ما يلي والالتزام به:\n\n- `, `Please read the following and comply:\n\n- `],
+    alert: [`تنبيه مهم، يرجى الانتباه لما يلي:\n\n`, `Important alert. Please note the following:\n\n`],
+  };
+  const DEF = { general: { freq: 'once', ack: 0 }, circular: { freq: 'until_ack', ack: 1 }, alert: { freq: 'every', ack: 0 }, employee_month: { freq: 'once', ack: 0 }, thanks: { freq: 'once', ack: 0 }, congrats: { freq: 'once', ack: 0 }, personal: { freq: 'once', ack: 0 } };
+  const FREQ = { once: ['مرة واحدة فقط', 'Once only'], every: ['عند كل فتح للمنصة', 'Every time the platform is opened'], until_ack: ['حتى تأكيد الاطلاع', 'Until read is confirmed'], timed: ['خلال فترة محددة (حتى تاريخ النهاية)', 'During the set period (until the end date)'] };
+  const fl = (f) => (FREQ[f] || FREQ.once)[en() ? 1 : 0];
+  const day = (iso) => (iso ? fmtDT(iso) : '—');
+  const stateL = { active: ['نشط', 'Active', 'ok'], scheduled: ['مجدول', 'Scheduled', 'warn'], expired: ['منتهي', 'Expired', 'gray'], paused: ['موقوف', 'Paused', 'gray'], deleted: ['محذوف', 'Deleted', 'bad'] };
+
+  // ---------- rendering of the message body (safe mini-markup)
+  const bodyHtml = (txt) => {
+    const blocks = String(txt || '').replace(/\r/g, '').split(/\n{2,}/), out = [];
+    blocks.forEach((b) => {
+      const lines = b.split('\n'); const li = lines.every((l) => /^\s*[-•]\s+/.test(l));
+      const inl = (l) => esc(l).replace(/\*\*(.+?)\*\*/g, '<b>$1</b>');
+      if (li) out.push('<ul>' + lines.map((l) => '<li>' + inl(l.replace(/^\s*[-•]\s+/, '')) + '</li>').join('') + '</ul>');
+      else if (b.trim()) out.push('<p>' + lines.map((l) => (/^\s*[-•]\s+/.test(l) ? '• ' + inl(l.replace(/^\s*[-•]\s+/, '')) : inl(l))).join('<br>') + '</p>');
+    });
+    return out.join('');
+  };
+  const monthName = (iso) => { const d = new Date(new Date(iso || Date.now()).getTime() + (S.meta ? S.meta.tz_offset_min : 180) * 60000); const M = en() ? ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'] : ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو', 'يوليو', 'أغسطس', 'سبتمبر', 'أكتوبر', 'نوفمبر', 'ديسمبر']; return M[d.getUTCMonth()] + ' ' + d.getUTCFullYear(); };
+  const STAR = '<svg class="ann-star" viewBox="0 0 100 96" aria-hidden="true"><defs><linearGradient id="ag" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe9a0"/><stop offset=".55" stop-color="#f0b429"/><stop offset="1" stop-color="#b8860b"/></linearGradient></defs><path d="M50 4l13.5 28.6 31.3 4.3-22.9 21.9 5.8 31.1L50 74.2 22.3 89.9l5.8-31.1L5.2 36.9l31.3-4.3z" fill="url(#ag)" stroke="#fff3c4" stroke-width="2.2" stroke-linejoin="round"/></svg>';
+  const SP = [[8, 12, 0, 16], [86, 8, .5, 12], [16, 46, 1.1, 10], [90, 44, 1.6, 18], [30, 6, 1.9, 12], [70, 14, .9, 10], [6, 78, 2.2, 12], [92, 80, 1.3, 14]].map(([x, y, d, s]) => `<i class="sp" style="--x:${x}%;--y:${y}%;--d:${d}s;--s:${s}px">✦</i>`).join('');
+  const pick = (a, ar, enx) => (en() ? (a[enx] || a[ar]) : (a[ar] || a[enx]));
+  function popup(a, o) {
+    o = o || {}; const k = KINDS.includes(a.kind) ? a.kind : 'general';
+    const title = pick(a, 'title', 'title_en'), body = pick(a, 'body', 'body_en');
+    const t2 = en() ? a.title : a.title_en, b2 = en() ? a.body : a.body_en, has2 = (t2 && t2 !== title) || (b2 && b2 !== body);
+    const needAck = !!a.require_ack && !(a.box && a.box.ack_at), person = a.person_name;
+    const special = k === 'employee_month';
+    let h = `<div class="annc">${special ? `<div class="ann-sp">${SP}</div>` : ''}`;
+    if (special) h += `<div class="ann-top">${STAR}<div class="ann-kt">${esc(kl(k))}</div><div class="ann-mon">${esc(monthName(a.start_at))}</div></div>`;
+    else h += `<div class="anh"><span class="ani">${ki(k)}</span><span class="ant">${esc(kl(k))}</span></div>`;
+    h += `<div class="anb">`;
+    if (person) {
+      h += `<div class="ann-person">${a.photo ? `<img class="ann-ph" src="${esc(a.photo)}" alt="">` : (special ? '' : `<div class="ann-ph ann-ph0">${ki(k)}</div>`)}<div class="ann-name">${esc(person)}</div>${a.person_dept ? `<div class="ann-dept">${esc(a.person_dept)}</div>` : ''}</div>`;
+    }
+    if (title) h += `<h2 class="ann-t">${esc(title)}</h2>`;
+    if (body) h += `<div class="ann-b">${bodyHtml(body)}</div>`;
+    if (has2) h += `<div class="ann-2" dir="${en() ? 'rtl' : 'ltr'}">${t2 ? `<b>${esc(t2)}</b>` : ''}${b2 ? `<div class="ann-b">${bodyHtml(b2)}</div>` : ''}</div>`;
+    if (a.img) h += `<img class="ann-img" src="${esc(a.img)}" alt="">`;
+    if (a.pdf) h += `<button type="button" class="btn sec ann-pdf" data-pdf="1">📄 ${esc(a.pdf_name || 'PDF')}</button>`;
+    h += `<div class="ann-f">${needAck ? `<button class="btn ok big" data-ack="1">✓ ${esc(X('تم الاطلاع', 'I have read this'))}</button><button class="btn sec" data-close="1">${esc(X('لاحقًا', 'Later'))}</button>` : `<button class="btn big" data-close="1">${esc(a.box && a.box.ack_at ? X('إغلاق', 'Close') : X('إغلاق', 'Close'))}</button>`}</div>`;
+    if (a.box && a.box.ack_at) h += `<div class="ann-ok">✓ ${esc(X('تم تأكيد الاطلاع', 'Read confirmed'))} · ${esc(fmtDT(a.box.ack_at))}</div>`;
+    if (o.preview) h += `<div class="ann-pv">${esc(X('معاينة فقط — لم يُنشر بعد', 'Preview only — not published yet'))}</div>`;
+    h += `</div></div>`;
+    const el = document.createElement('div'); el.className = `annv k-${k}`; el.setAttribute('role', 'dialog'); el.setAttribute('aria-modal', 'true'); el.innerHTML = h;
+    const done = () => { el.classList.add('out'); setTimeout(() => el.remove(), 160); };
+    el.addEventListener('mousedown', (e) => { if (e.target === el && !needAck) { done(); o.onClose && o.onClose(); } });
+    $$('[data-close]', el).forEach((b) => { b.onclick = () => { done(); o.onClose && o.onClose(); }; });
+    const ab = $('[data-ack]', el); if (ab) ab.onclick = async () => { if (o.preview) { done(); return; } ab.disabled = true; try { await o.onAck(); done(); } catch (e) { ab.disabled = false; toast(errText(e), 'err'); } };
+    const pb = $('[data-pdf]', el); if (pb) pb.onclick = () => { try { const bin = atob(a.pdf.split(',')[1]), u8 = new Uint8Array(bin.length); for (let i = 0; i < bin.length; i++) u8[i] = bin.charCodeAt(i); const url = URL.createObjectURL(new Blob([u8], { type: 'application/pdf' })); window.open(url, '_blank'); setTimeout(() => URL.revokeObjectURL(url), 60000); } catch (_) { toast(X('تعذّر فتح الملف', 'Could not open the file'), 'err'); } };
+    return el;
+  }
+
+  // ---------- user-side popup manager
+  const ST = { shown: new Set(), q: [], cur: null, busy: false, hid: 0, timer: null, node: null };
+  const setBadge = (n) => { const a = $('a[data-nav="myanns"]'); if (!a) return; let b = $('.badge-n', a); if (!b) { b = document.createElement('span'); b.className = 'badge-n'; a.appendChild(b); } b.textContent = n; b.hidden = !n; };
+  async function tick() {
+    if (!S.user || S.user.blocked || !S.meta || ST.busy) return; ST.busy = true;
+    try {
+      const r = await api('GET', '/api/anns/mine?shown=' + [...ST.shown].join(','));
+      if (!S.user) return; setBadge(r.unread);
+      r.due.forEach((a) => { if (!ST.shown.has(a.id) && ST.cur !== a.id && !ST.q.some((x) => x.id === a.id)) ST.q.push(a); });
+      next();
+    } catch (_) {} finally { ST.busy = false; }
+  }
+  function next() { if (ST.cur || !ST.q.length || !S.user) return; show(ST.q.shift(), {}); }
+  function show(a, o) {
+    ST.cur = a.id; ST.shown.add(a.id); api('POST', `/api/anns/${a.id}/seen`).catch(() => {});
+    const fin = () => { ST.cur = null; ST.node = null; if (o.after) o.after(); setTimeout(next, 220); };
+    const node = popup(a, { onClose: () => { if (!(a.box && a.box.ack_at)) api('POST', `/api/anns/${a.id}/close`).catch(() => {}); fin(); }, onAck: async () => { await api('POST', `/api/anns/${a.id}/ack`); a.box = { ...(a.box || {}), ack_at: new Date().toISOString() }; fin(); if (S.view === 'myanns' && S.refresh) S.refresh(); setBadge(Math.max(0, (parseInt(($('a[data-nav="myanns"] .badge-n') || {}).textContent, 10) || 1) - 1)); } });
+    ST.node = node; document.body.appendChild(node);
+  }
+  const newVisit = () => { ST.shown.clear(); ST.q = []; tick(); };
+  function begin() {
+    ST.shown.clear(); ST.q = []; ST.cur = null; if (ST.node) { ST.node.remove(); ST.node = null; }
+    if (!ST.timer) {
+      ST.timer = setInterval(tick, 30000);
+      document.addEventListener('visibilitychange', () => { if (document.hidden) ST.hid = Date.now(); else if (S.user) { if (ST.hid && Date.now() - ST.hid > 60000) newVisit(); else tick(); } });
+      window.addEventListener('ems-anns', debounce(() => { tick(); if (S.refresh && (S.view === 'anns' || S.view === 'myanns')) S.refresh(); }, 400));
+    }
+    setTimeout(tick, 300);
+  }
+
+  // ---------- user page: my announcements
+  async function myView(main) {
+    main.innerHTML = `<h1>📢 ${esc(t('nav_myanns'))}</h1><div id="mal"><div class="empty">${esc(t('loading'))}</div></div>`;
+    const load = async () => {
+      const r = await api('GET', '/api/anns/mine'); const el = $('#mal'); if (!el) return; setBadge(r.unread);
+      el.innerHTML = r.list.length ? `<div class="list">${r.list.map((x) => `<div class="card ann-li k-${x.kind}"><div class="row" style="justify-content:space-between;align-items:flex-start;gap:10px"><div><div class="ann-lk">${ki(x.kind)} ${esc(kl(x.kind))}</div><b class="ann-lt">${esc(x.title)}</b><div class="hint">${esc(day(x.start_at))}</div></div><div>${x.require_ack ? (x.ack_at ? `<span class="g15p g15-b-private">✓ ${esc(X('تم الاطلاع', 'Confirmed'))}</span>` : `<span class="g15p g15-b-gov">${esc(X('بانتظار تأكيدك', 'Awaiting your confirmation'))}</span>`) : ''}</div></div><div style="margin-top:8px"><button class="btn sm" data-o="${x.id}">${esc(X('فتح', 'Open'))}</button></div></div>`).join('')}</div>` : `<div class="empty">${esc(X('لا توجد إعلانات موجهة إليك.', 'No announcements addressed to you.'))}</div>`;
+      $$('[data-o]', el).forEach((b) => { b.onclick = async () => { try { const r2 = await api('GET', '/api/anns/open/' + b.dataset.o); const a = r2.ann; if (ST.cur) return; ST.cur = a.id; api('POST', `/api/anns/${a.id}/seen`).catch(() => {}); const node = popup(a, { onClose: () => { ST.cur = null; if (!(a.box && a.box.ack_at)) api('POST', `/api/anns/${a.id}/close`).catch(() => {}); }, onAck: async () => { await api('POST', `/api/anns/${a.id}/ack`); ST.cur = null; load(); } }); document.body.appendChild(node); } catch (e) { toast(errText(e), 'err'); } }; });
+    };
+    S.refresh = load; await load();
+  }
+
+  // ---------- admin page
+  const readFile = (file, max, q) => new Promise((res, rej) => {
+    const r = new FileReader(); r.onerror = rej;
+    r.onload = () => {
+      if (file.type === 'application/pdf') return res(r.result);
+      const im = new Image(); im.onerror = rej;
+      im.onload = () => { const k = Math.min(1, max / Math.max(im.width, im.height)), c = document.createElement('canvas'); c.width = Math.round(im.width * k); c.height = Math.round(im.height * k); const g = c.getContext('2d'); g.fillStyle = '#fff'; g.fillRect(0, 0, c.width, c.height); g.drawImage(im, 0, 0, c.width, c.height); res(c.toDataURL('image/jpeg', q)); };
+      im.src = r.result;
+    };
+    r.readAsDataURL(file);
+  });
+  const ROLES = ['golf', 'paramedic', 'er', 'admin'];
+  async function adminView(main) {
+    const f = S.annF || (S.annF = { tab: 'active', q: '', dept: '', emp: '' });
+    main.innerHTML = `<h1>📢 ${esc(t('nav_anns'))}</h1><div id="anr"><div class="empty">${esc(t('loading'))}</div></div>`;
+    let data = null, empIds = null;
+    const load = async () => {
+      const el = $('#anr'); if (!el) return;
+      data = await api('GET', '/api/anns');
+      if (f.emp) { try { empIds = new Set((await api('GET', '/api/anns/find?q=' + encodeURIComponent(f.emp))).ids); } catch (_) { empIds = null; } } else empIds = null;
+      draw();
+    };
+    const draw = () => {
+      const el = $('#anr'); if (!el) return; const it = data.items;
+      const cnt = (s) => it.filter((x) => x.state === s).length, act = cnt('active'), sch = cnt('scheduled'), arc = it.filter((x) => ['expired', 'paused', 'deleted'].includes(x.state)).length;
+      const tabs = [['active', X('النشطة', 'Active'), act], ['scheduled', X('المجدولة', 'Scheduled'), sch], ['archive', X('الأرشيف', 'Archive'), arc]];
+      let rows = it.filter((x) => (f.tab === 'active' ? x.state === 'active' : f.tab === 'scheduled' ? x.state === 'scheduled' : ['expired', 'paused', 'deleted'].includes(x.state)));
+      if (f.q) rows = rows.filter((x) => (x.title + ' ' + x.title_en + ' ' + x.person_name).toLowerCase().includes(f.q.toLowerCase()));
+      if (f.dept) rows = rows.filter((x) => x.aud_mode === 'all' || (x.aud_mode === 'dept' && x.aud_roles.includes(f.dept)) || x.aud_mode === 'one' || x.aud_mode === 'many');
+      if (empIds) rows = rows.filter((x) => empIds.has(x.id));
+      const tot = it.reduce((a, x) => ({ t: a.t + x.stats.targeted, s: a.s + x.stats.seen, k: a.k + x.stats.acked }), { t: 0, s: 0, k: 0 });
+      el.innerHTML = `<div class="kpis"><div class="kpi"><b>${it.filter((x) => x.state !== 'deleted').length}</b><span>${esc(X('إجمالي الإعلانات', 'Total announcements'))}</span></div><div class="kpi c-ok"><b>${act}</b><span>${esc(X('نشطة', 'Active'))}</span></div><div class="kpi c-warn"><b>${sch}</b><span>${esc(X('مجدولة', 'Scheduled'))}</span></div><div class="kpi c-gray"><b>${it.filter((x) => x.state === 'expired').length}</b><span>${esc(X('منتهية', 'Expired'))}</span></div></div>`
+        + `<div class="row" style="margin-bottom:10px;gap:8px;flex-wrap:wrap"><button class="btn" id="anNew">＋ ${esc(X('إعلان جديد', 'New announcement'))}</button>${tabs.map(([k, l, n]) => `<button class="btn ${f.tab === k ? '' : 'sec'}" data-tab="${k}">${esc(l)} (${n})</button>`).join('')}</div>`
+        + `<div class="card an-flt" style="margin-bottom:12px"><div><label>${esc(X('بحث في الإعلانات', 'Search announcements'))}</label><input type="search" id="anQ" value="${esc(f.q)}" placeholder="${esc(X('عنوان أو اسم', 'Title or name'))}"></div><div><label>${esc(X('القسم', 'Department'))}</label><select id="anD"><option value="">${esc(t('f_all'))}</option>${ROLES.map((r) => `<option value="${r}" ${f.dept === r ? 'selected' : ''}>${esc(dl(r))}</option>`).join('')}</select></div><div><label>${esc(X('موظف', 'Employee'))}</label><input type="search" id="anE" value="${esc(f.emp)}" placeholder="${esc(X('اسم الموظف', 'Employee name'))}"></div></div>`
+        + (rows.length ? rows.map(card).join('') : `<div class="empty">${esc(X('لا توجد إعلانات في هذا القسم.', 'No announcements here.'))}</div>`)
+        + (tot.t ? `<div class="hint" style="margin-top:8px">${esc(X('إجمالي مرات الإرسال', 'Total deliveries'))}: ${tot.t} · ${esc(X('اطّلع', 'seen'))}: ${tot.s} · ${esc(X('أكّد', 'confirmed'))}: ${tot.k}</div>` : '');
+      $('#anNew').onclick = () => compose(null, load);
+      $$('[data-tab]', el).forEach((b) => { b.onclick = () => { f.tab = b.dataset.tab; draw(); }; });
+      const dq = debounce(() => { f.q = $('#anQ').value.trim(); draw(); $('#anQ').focus(); $('#anQ').setSelectionRange(f.q.length, f.q.length); }, 300); $('#anQ').oninput = dq;
+      $('#anD').onchange = () => { f.dept = $('#anD').value; draw(); };
+      const de = debounce(async () => { f.emp = $('#anE').value.trim(); await load(); const e2 = $('#anE'); if (e2) { e2.focus(); e2.setSelectionRange(f.emp.length, f.emp.length); } }, 450); $('#anE').oninput = de;
+      $$('[data-act2]', el).forEach((b) => { b.onclick = () => act2(b.dataset.act2, b.dataset.id, load); });
+    };
+    const card = (x) => {
+      const st = stateL[x.state] || stateL.active, s = x.stats, pctv = s.targeted ? Math.round((x.require_ack ? s.acked : s.seen) * 100 / s.targeted) : 0;
+      const aud = x.aud_mode === 'all' ? X('الجميع', 'Everyone') : x.aud_mode === 'dept' ? x.aud_roles.map(dl).join('، ') : X('أفراد محددون', 'Selected staff') + ` (${s.targeted})`;
+      return `<div class="card an-card k-${x.kind}"><div class="row" style="justify-content:space-between;gap:10px;align-items:flex-start"><div><div class="ann-lk">${ki(x.kind)} ${esc(kl(x.kind))}${x.person_name ? ' · ' + esc(x.person_name) : ''}</div><b class="ann-lt">${esc(x.title || x.title_en)}</b></div><span class="g15p an-st an-${st[2]}">${esc(st[en() ? 1 : 0])}</span></div>`
+        + `<div class="hint" style="margin:6px 0">${esc(X('من', 'From'))} ${esc(day(x.start_at))}${x.end_at ? ' ' + esc(X('إلى', 'to')) + ' ' + esc(day(x.end_at)) : ''} · ${esc(fl(x.freq))}${x.require_ack ? ' · ' + esc(X('يتطلب تأكيد الاطلاع', 'Read confirmation required')) : ''}<br>${esc(X('المستهدفون', 'Audience'))}: ${esc(aud)}</div>`
+        + `<div class="an-bar"><span style="width:${pctv}%"></span></div><div class="an-nums"><span>👥 ${s.targeted}</span><span>👁 ${s.seen}</span>${x.require_ack ? `<span>✓ ${s.acked}</span><span>⏳ ${s.pending}</span>` : ''}</div>`
+        + `<div class="row" style="gap:6px;flex-wrap:wrap;margin-top:8px"><button class="btn sm" data-act2="detail" data-id="${x.id}">📊 ${esc(X('المتابعة', 'Tracking'))}</button><button class="btn sm sec" data-act2="edit" data-id="${x.id}">✏️ ${esc(X('تعديل', 'Edit'))}</button>`
+        + (x.state === 'deleted' ? `<button class="btn sm sec" data-act2="restore" data-id="${x.id}">↩ ${esc(X('استعادة', 'Restore'))}</button>` : (x.state === 'paused' ? `<button class="btn sm sec" data-act2="resume" data-id="${x.id}">▶ ${esc(X('استئناف', 'Resume'))}</button>` : `<button class="btn sm sec" data-act2="stop" data-id="${x.id}">⏸ ${esc(X('إيقاف', 'Stop'))}</button>`))
+        + (x.state === 'active' && (x.require_ack ? s.pending : s.unseen) ? `<button class="btn sm sec" data-act2="resend" data-id="${x.id}">🔔 ${esc(X('إعادة إرسال لغير المطّلعين', 'Resend to those who have not read'))}</button>` : '')
+        + (x.state !== 'deleted' ? `<button class="btn sm sec" data-act2="delete" data-id="${x.id}">🗑</button>` : '') + `</div></div>`;
+    };
+    S.refresh = load; await load();
+  }
+  async function act2(a, id, reload) {
+    try {
+      if (a === 'detail') return detail(id, reload);
+      if (a === 'edit') { const r = await api('GET', '/api/anns/' + id); return compose(r.ann, reload); }
+      if (a === 'delete' && !(await askConfirm(X('حذف هذا الإعلان؟ سيُنقل إلى الأرشيف ويمكن استعادته.', 'Delete this announcement? It moves to the archive and can be restored.')))) return;
+      if (a === 'stop' && !(await askConfirm(X('إيقاف الإعلان؟ لن يظهر للمستخدمين.', 'Stop this announcement? Users will no longer see it.')))) return;
+      if (a === 'resend') { if (!(await askConfirm(X('إعادة إرسال الإعلان لمن لم يطّلع عليه فقط؟', 'Resend only to those who have not read it?')))) return; const r = await api('POST', `/api/anns/${id}/resend`, {}); toast(X('أُعيد الإرسال إلى ', 'Resent to ') + r.n, 'ok'); return reload(); }
+      await api('POST', `/api/anns/${id}/${a}`, {}); toast(X('تم', 'Done'), 'ok'); reload();
+    } catch (e) { toast(errText(e), 'err'); }
+  }
+  async function detail(id, reload) {
+    const m = openModal(esc(X('متابعة الإعلان', 'Announcement tracking'))); m.body.dataset.full = '1';
+    const f = { q: '', role: '', st: '' }; let d = null;
+    const draw = () => {
+      const rows = d.rows.filter((r) => (!f.q || r.name.toLowerCase().includes(f.q.toLowerCase())) && (!f.role || r.role === f.role) && (!f.st || (f.st === 'ack' ? r.ack_at : f.st === 'noack' ? !r.ack_at : f.st === 'unseen' ? !r.first_seen_at : r.first_seen_at)));
+      const s = d.row.stats;
+      m.body.innerHTML = `<h2 style="margin:0 0 4px">${ki(d.row.kind)} ${esc(d.row.title || d.row.title_en)}</h2><div class="kpis"><div class="kpi"><b>${s.targeted}</b><span>${esc(X('المستهدفون', 'Targeted'))}</span></div><div class="kpi c-teal"><b>${s.seen}</b><span>${esc(X('شاهدوه', 'Seen'))}</span></div>${d.row.require_ack ? `<div class="kpi c-ok"><b>${s.acked}</b><span>${esc(X('أكّدوا الاطلاع', 'Confirmed'))}</span></div><div class="kpi c-warn"><b>${s.pending}</b><span>${esc(X('لم يؤكدوا', 'Not confirmed'))}</span></div>` : `<div class="kpi c-warn"><b>${s.unseen}</b><span>${esc(X('لم يشاهدوه', 'Not seen'))}</span></div>`}</div>`
+        + `<div class="card an-flt" style="margin-bottom:10px"><div><label>${esc(X('الاسم', 'Name'))}</label><input type="search" id="dq" value="${esc(f.q)}"></div><div><label>${esc(X('القسم', 'Department'))}</label><select id="dr"><option value="">${esc(t('f_all'))}</option>${ROLES.map((r) => `<option value="${r}" ${f.role === r ? 'selected' : ''}>${esc(dl(r))}</option>`).join('')}</select></div><div><label>${esc(X('الحالة', 'Status'))}</label><select id="ds"><option value="">${esc(t('f_all'))}</option><option value="seen" ${f.st === 'seen' ? 'selected' : ''}>${esc(X('شاهد', 'Seen'))}</option><option value="unseen" ${f.st === 'unseen' ? 'selected' : ''}>${esc(X('لم يشاهد', 'Not seen'))}</option><option value="ack" ${f.st === 'ack' ? 'selected' : ''}>${esc(X('أكّد الاطلاع', 'Confirmed'))}</option><option value="noack" ${f.st === 'noack' ? 'selected' : ''}>${esc(X('لم يؤكد', 'Not confirmed'))}</option></select></div></div>`
+        + (rows.length ? `<div class="tw"><table><thead><tr><th>${esc(X('الموظف', 'Employee'))}</th><th>${esc(X('القسم', 'Dept'))}</th><th>${esc(X('الرقم الوظيفي', 'Emp. no.'))}</th><th>${esc(X('أول مشاهدة', 'First seen'))}</th><th>${esc(X('تأكيد الاطلاع', 'Confirmed at'))}</th></tr></thead><tbody>${rows.map((r) => `<tr><td><b>${esc(r.name)}</b></td><td>${esc(dl(r.role))}</td><td>${esc(r.emp_no || '—')}</td><td class="nw">${r.first_seen_at ? esc(fmtDT(r.first_seen_at)) : '<small>—</small>'}</td><td class="nw">${r.ack_at ? '✓ ' + esc(fmtDT(r.ack_at)) : '<small>—</small>'}</td></tr>`).join('')}</tbody></table></div>` : `<div class="empty">${esc(t('none'))}</div>`)
+        + (d.log.length ? `<div class="hint" style="margin-top:10px">${d.log.slice(0, 6).map((l) => esc(fmtDT(l.at) + ' · ' + l.by + ' · ' + l.act + (l.n ? ' (' + l.n + ')' : ''))).join('<br>')}</div>` : '');
+      $('#dq').oninput = debounce(() => { f.q = $('#dq').value.trim(); draw(); const e = $('#dq'); e.focus(); e.setSelectionRange(f.q.length, f.q.length); }, 250); $('#dr').onchange = () => { f.role = $('#dr').value; draw(); }; $('#ds').onchange = () => { f.st = $('#ds').value; draw(); };
+    };
+    try { d = await api('GET', `/api/anns/${id}/detail`); draw(); } catch (e) { m.body.innerHTML = `<div class="empty">${esc(errText(e))}</div>`; }
+  }
+
+  // ---------- composer
+  async function compose(old, reload) {
+    let people = []; try { people = (await api('GET', '/api/anns/users')).items; } catch (_) {}
+    const F = old ? { ...old } : { kind: 'general', title: '', title_en: '', body: '', body_en: '', person_name: '', person_dept: '', person_uid: '', aud_mode: 'all', aud_uids: [], aud_roles: [], freq: 'once', require_ack: 0, start_at: '', end_at: '', img: '', photo: '', pdf: '', pdf_name: '' };
+    const main = $('#main'); const back = () => adminView($('#main'));
+    const sched = !!(old && Date.parse(old.start_at) > Date.now() + 60000);
+    main.innerHTML = `<h1>${old ? '✏️ ' + esc(X('تعديل إعلان', 'Edit announcement')) : '＋ ' + esc(X('إعلان جديد', 'New announcement'))}</h1><form id="anf" class="card an-form" autocomplete="off">
+      <label>${esc(X('نوع الإعلان', 'Announcement type'))}</label><div class="an-kinds">${KINDS.map((k) => `<label class="an-k k-${k}"><input type="radio" name="kind" value="${k}" ${F.kind === k ? 'checked' : ''}><span>${ki(k)} ${esc(kl(k))}</span></label>`).join('')}</div>
+      <div id="anTheme" class="hint"></div>
+      <div id="anPerson" hidden><label>${esc(X('الموظف المكرَّم / المعني', 'Honoured / concerned employee'))}</label><select name="person_sel"><option value="">${esc(X('— اختر من القائمة —', '— Select from the list —'))}</option>${people.map((p) => `<option value="${esc(p.uid)}" ${F.person_uid === p.uid ? 'selected' : ''}>${esc(p.name)} (${esc(dl(p.role))})</option>`).join('')}<option value="other" ${F.person_name && !F.person_uid ? 'selected' : ''}>${esc(X('أخرى (اكتب الاسم)', 'Other (type the name)'))}</option></select>
+        <input type="text" name="person_name" maxlength="100" placeholder="${esc(X('اسم الموظف', 'Employee name'))}" value="${esc(F.person_name || '')}" style="margin-top:6px"><label>${esc(X('القسم', 'Department'))}</label><input type="text" name="person_dept" maxlength="100" value="${esc(F.person_dept || '')}">
+        <label>${esc(X('الصورة الشخصية (اختياري)', 'Photo (optional)'))}</label><div class="row" style="gap:10px;align-items:center"><img id="anPh" class="ann-ph" style="width:64px;height:64px;${F.photo ? '' : 'display:none'}" src="${esc(F.photo || '')}" alt=""><input type="file" id="anPhF" accept="image/*"><button type="button" class="btn sm sec" id="anPhX" ${F.photo ? '' : 'hidden'}>✕</button></div></div>
+      <label>${esc(X('العنوان', 'Title'))} *</label><input type="text" name="title" maxlength="120" value="${esc(F.title)}">
+      <label>${esc(X('نص الإعلان', 'Message'))} *</label><div class="an-tb"><button type="button" class="btn sm sec" data-fmt="b"><b>B</b></button><button type="button" class="btn sm sec" data-fmt="li">• ${esc(X('قائمة', 'List'))}</button></div><textarea name="body" rows="7" maxlength="4000">${esc(F.body)}</textarea>
+      <details ${F.title_en || F.body_en ? 'open' : ''} style="margin-top:8px"><summary>🌐 ${esc(X('النسخة الإنجليزية (اختياري — للموظفين غير الناطقين بالعربية)', 'English version (optional — for non-Arabic-speaking staff)'))}</summary><label>Title (EN)</label><input type="text" name="title_en" maxlength="120" value="${esc(F.title_en || '')}" dir="ltr"><label>Message (EN)</label><textarea name="body_en" rows="5" maxlength="4000" dir="ltr">${esc(F.body_en || '')}</textarea></details>
+      <label>${esc(X('مرفقات (اختياري)', 'Attachments (optional)'))}</label><div class="row" style="gap:8px;flex-wrap:wrap;align-items:center"><span>🖼 ${esc(X('صورة / شهادة', 'Image / certificate'))}</span><input type="file" id="anImg" accept="image/*"><button type="button" class="btn sm sec" id="anImgX" ${F.img ? '' : 'hidden'}>✕</button></div><img id="anImgP" class="ann-img" style="${F.img ? '' : 'display:none'};max-height:160px;width:auto" src="${esc(F.img || '')}" alt="">
+      <div class="row" style="gap:8px;flex-wrap:wrap;align-items:center;margin-top:6px"><span>📄 PDF</span><input type="file" id="anPdf" accept="application/pdf"><span id="anPdfN" class="hint">${esc(F.pdf_name || '')}</span><button type="button" class="btn sm sec" id="anPdfX" ${F.pdf ? '' : 'hidden'}>✕</button></div>
+      <h2 style="margin:16px 0 4px">${esc(X('المستهدفون', 'Audience'))}</h2>
+      <div class="an-modes">${[['all', X('إرسال عام للجميع', 'Everyone')], ['one', X('إرسال فردي (موظف واحد)', 'One employee')], ['many', X('إرسال متعدد (مجموعة موظفين)', 'Several employees')], ['dept', X('حسب القسم', 'By department')]].map(([v, l]) => `<label class="gopt"><input type="radio" name="aud_mode" value="${v}" ${F.aud_mode === v ? 'checked' : ''}> ${esc(l)}</label>`).join('')}</div>
+      <div id="anOne" hidden><select name="aud_one"><option value="">${esc(X('— اختر الموظف —', '— Select employee —'))}</option>${people.map((p) => `<option value="${esc(p.uid)}" ${F.aud_mode === 'one' && F.aud_uids[0] === p.uid ? 'selected' : ''}>${esc(p.name)} (${esc(dl(p.role))})</option>`).join('')}</select></div>
+      <div id="anMany" hidden><input type="search" id="anMq" placeholder="${esc(X('بحث بالاسم', 'Search by name'))}"><div class="an-people">${people.map((p) => `<label class="an-p" data-n="${esc(p.name.toLowerCase())}"><input type="checkbox" name="aud_many" value="${esc(p.uid)}" ${F.aud_uids.includes(p.uid) ? 'checked' : ''}> ${esc(p.name)} <small>${esc(dl(p.role))}</small></label>`).join('')}</div></div>
+      <div id="anDept" hidden><div class="an-modes">${ROLES.map((r) => `<label class="gopt"><input type="checkbox" name="aud_roles" value="${r}" ${F.aud_roles.includes(r) ? 'checked' : ''}> ${esc(dl(r))}</label>`).join('')}</div></div>
+      <h2 style="margin:16px 0 4px">${esc(X('الجدولة وطريقة الظهور', 'Schedule and display'))}</h2>
+      <div class="an-modes"><label class="gopt"><input type="radio" name="when" value="now" ${sched ? '' : 'checked'}> ${esc(X('نشر الآن', 'Publish now'))}</label><label class="gopt"><input type="radio" name="when" value="later" ${sched ? 'checked' : ''}> ${esc(X('جدولة لوقت لاحق', 'Schedule for later'))}</label></div>
+      <div id="anWhen" ${sched ? '' : 'hidden'}><label>${esc(X('تاريخ ووقت البداية', 'Start date and time'))}</label><input type="datetime-local" name="start_at" value="${sched ? esc(lti(old.start_at)) : ''}"></div>
+      <label>${esc(X('تاريخ ووقت النهاية (اختياري، مطلوب للمدة المحددة)', 'End date and time (optional, required for a set period)'))}</label><input type="datetime-local" name="end_at" value="${F.end_at ? esc(lti(F.end_at)) : ''}">
+      <label>${esc(X('طريقة وتكرار الظهور', 'How often it appears'))}</label><select name="freq">${Object.keys(FREQ).map((k) => `<option value="${k}" ${F.freq === k ? 'selected' : ''}>${esc(fl(k))}</option>`).join('')}</select>
+      <label class="gopt" style="margin-top:8px"><input type="checkbox" name="require_ack" ${F.require_ack ? 'checked' : ''}> ${esc(X('يتطلب تأكيد الاطلاع (يسجَّل الاسم والوقت)', 'Requires read confirmation (name and time are recorded)'))}</label>
+      <div class="err-msg" id="anErr"></div>
+      <div class="row" style="gap:8px;flex-wrap:wrap;margin-top:14px"><button type="button" class="btn sec" id="anPv">👁 ${esc(X('معاينة', 'Preview'))}</button><button class="btn big">${old ? esc(X('حفظ التعديلات', 'Save changes')) : '📢 ' + esc(X('نشر الإعلان', 'Publish'))}</button><button type="button" class="btn sec" id="anCx">${esc(t('cancel'))}</button></div></form>`;
+    const f = $('#anf');
+    const val = (n) => (f.elements[n] ? f.elements[n].value : '');
+    const sync = () => {
+      const k = f.kind.value, sp = ['employee_month', 'thanks', 'congrats', 'personal'].includes(k);
+      $('#anPerson').hidden = !sp; $('#anTheme').textContent = k === 'employee_month' ? X('⭐ سيُطبَّق تلقائيًا تصميم احتفالي ذهبي خاص بموظف الشهر.', '⭐ A golden celebratory theme is applied automatically.') : k === 'alert' ? X('⚠️ تصميم تنبيه بارز بلون مميز.', '⚠️ A prominent alert design.') : '';
+      const m = f.aud_mode.value; $('#anOne').hidden = m !== 'one'; $('#anMany').hidden = m !== 'many'; $('#anDept').hidden = m !== 'dept';
+      $('#anWhen').hidden = f.when.value !== 'later';
+      const ua = f.freq.value === 'until_ack'; if (ua) f.require_ack.checked = true; f.require_ack.disabled = ua;
+    };
+    let lastTpl = null;
+    const applyTpl = () => { const k = f.kind.value, tp = TPL[k]; if (!tp) return; const curA = f.body.value.trim(), curE = f.title_en.value ? f.body_en.value.trim() : f.body_en.value.trim(); const prev = lastTpl; const isTpl = (v, i) => !v || (prev && prev[i] && v === prev[i].trim()) || Object.values(TPL).some((x) => x[i].trim() === v); if (isTpl(curA, 0)) f.body.value = tp[0]; if (isTpl(curE, 1)) f.body_en.value = tp[1]; lastTpl = tp; };
+    if (!old) { applyTpl(); }
+    $$('input[name=kind]', f).forEach((r) => { r.onchange = () => { const d = DEF[f.kind.value]; if (!old || true) { f.freq.value = d.freq; f.require_ack.checked = !!d.ack; } if (f.kind.value === 'personal' && f.aud_mode.value === 'all') { f.aud_mode.value = 'one'; } applyTpl(); sync(); }; });
+    $$('input[name=aud_mode],input[name=when]', f).forEach((r) => { r.onchange = sync; }); f.freq.onchange = sync; sync();
+    f.person_sel.onchange = () => { const v = f.person_sel.value, p = people.find((x) => x.uid === v); if (p) { f.person_name.value = p.name; f.person_dept.value = dl(p.role); F.person_uid = p.uid; } else { F.person_uid = ''; } };
+    $('#anMq').oninput = (e) => { const q = e.target.value.trim().toLowerCase(); $$('.an-p', f).forEach((l) => { l.hidden = !!q && !l.dataset.n.includes(q); }); };
+    $$('[data-fmt]', f).forEach((b) => { b.onclick = () => { const ta = f.body, s = ta.selectionStart, e = ta.selectionEnd, sel = ta.value.slice(s, e); if (b.dataset.fmt === 'b') { ta.setRangeText('**' + (sel || X('نص عريض', 'bold')) + '**', s, e, 'end'); } else { ta.setRangeText((s && ta.value[s - 1] !== '\n' ? '\n' : '') + '- ' + sel, s, e, 'end'); } ta.focus(); }; });
+    const bad = (m) => { $('#anErr').textContent = m; };
+    $('#anPhF').onchange = async (e) => { const fl2 = e.target.files[0]; if (!fl2) return; try { F.photo = await readFile(fl2, 420, 0.8); $('#anPh').src = F.photo; $('#anPh').style.display = ''; $('#anPhX').hidden = false; } catch (_) { bad(X('تعذّر قراءة الصورة', 'Could not read the image')); } };
+    $('#anPhX').onclick = () => { F.photo = ''; $('#anPh').style.display = 'none'; $('#anPhX').hidden = true; $('#anPhF').value = ''; };
+    $('#anImg').onchange = async (e) => { const fl2 = e.target.files[0]; if (!fl2) return; try { let d = await readFile(fl2, 1100, 0.78); if (d.length > 470000) d = await readFile(fl2, 900, 0.6); if (d.length > 470000) return bad(X('الصورة كبيرة جدًا، اختر صورة أصغر', 'Image too large')); F.img = d; $('#anImgP').src = d; $('#anImgP').style.display = ''; $('#anImgX').hidden = false; bad(''); } catch (_) { bad(X('تعذّر قراءة الصورة', 'Could not read the image')); } };
+    $('#anImgX').onclick = () => { F.img = ''; $('#anImgP').style.display = 'none'; $('#anImgX').hidden = true; $('#anImg').value = ''; };
+    $('#anPdf').onchange = async (e) => { const fl2 = e.target.files[0]; if (!fl2) return; if (fl2.size > 420000) { e.target.value = ''; return bad(X('ملف PDF كبير (الحد الأقصى 400 كيلوبايت تقريبًا). صغّر الملف أو أرفقه كصورة.', 'PDF too large (about 400 KB max). Compress it or attach it as an image.')); } try { F.pdf = await readFile(fl2); F.pdf_name = fl2.name.slice(0, 80); $('#anPdfN').textContent = F.pdf_name; $('#anPdfX').hidden = false; bad(''); } catch (_) { bad(X('تعذّر قراءة الملف', 'Could not read the file')); } };
+    $('#anPdfX').onclick = () => { F.pdf = ''; F.pdf_name = ''; $('#anPdfN').textContent = ''; $('#anPdfX').hidden = true; $('#anPdf').value = ''; };
+    const collect = () => {
+      const mode = f.aud_mode.value, b = {
+        kind: f.kind.value, title: f.elements.title.value.trim(), title_en: f.title_en.value.trim(), body: f.body.value.trim(), body_en: f.body_en.value.trim(),
+        person_name: ['employee_month', 'thanks', 'congrats', 'personal'].includes(f.kind.value) ? f.person_name.value.trim() : '', person_dept: f.person_dept.value.trim(), person_uid: F.person_uid || '',
+        aud_mode: mode, aud_uids: mode === 'one' ? [f.aud_one.value].filter(Boolean) : mode === 'many' ? $$('input[name=aud_many]:checked', f).map((x) => x.value) : [], aud_roles: mode === 'dept' ? $$('input[name=aud_roles]:checked', f).map((x) => x.value) : [],
+        freq: f.freq.value, require_ack: f.require_ack.checked ? 1 : 0, start_at: f.when.value === 'later' && f.start_at.value ? new Date(f.start_at.value).toISOString() : (old && !sched ? old.start_at : ''), end_at: f.end_at.value ? new Date(f.end_at.value).toISOString() : '',
+        img: F.img || '', photo: ['employee_month', 'thanks', 'congrats', 'personal'].includes(f.kind.value) ? (F.photo || '') : '', pdf: F.pdf || '', pdf_name: F.pdf_name || '',
+      };
+      return b;
+    };
+    $('#anPv').onclick = () => { const b = collect(); if (!b.title && !b.title_en && !b.body && !b.person_name) return bad(X('اكتب العنوان أو النص أولًا', 'Enter a title or message first')); bad(''); const n = popup({ ...b, id: 'pv', start_at: b.start_at || new Date().toISOString(), box: null }, { preview: true }); document.body.appendChild(n); };
+    $('#anCx').onclick = () => back();
+    f.onsubmit = async (e) => {
+      e.preventDefault(); const b = collect(); bad('');
+      if (f.when.value === 'later' && !f.start_at.value) return bad(X('حدّد تاريخ ووقت البداية', 'Set the start date and time'));
+      const btn = $('button.big', f); btn.disabled = true;
+      try { if (old) await api('PUT', '/api/anns/' + old.id, b); else await api('POST', '/api/anns', b); toast(old ? X('تم حفظ التعديلات', 'Saved') : X('تم نشر الإعلان', 'Published'), 'ok'); S.annF = S.annF || {}; S.annF.tab = f.when.value === 'later' ? 'scheduled' : 'active'; back(); } catch (er) { bad(errText(er)); btn.disabled = false; }
+    };
+    window.scrollTo(0, 0);
+  }
+  return { begin, tick, myView, adminView, popup };
+})();
+window.ANN = ANN;
+VIEWS.anns = ANN.adminView;
+VIEWS.myanns = ANN.myView;
 
   applyLang();
   try { const r = await api('GET', '/api/me'); S.user = r.user; } catch (_) { S.user = null; }
